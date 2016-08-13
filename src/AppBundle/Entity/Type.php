@@ -14,6 +14,10 @@ class Type implements \Serializable
 	public function unserialize($serialized) {
 		throw new \Exception("unserialize() method unsupported");
 	}
+
+    public function toString() {
+        return $this->name;
+    }
 	
 	/**
      * @var integer
