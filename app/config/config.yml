@@ -8,6 +8,20 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    locale_names:
+        en: English
+        de: Deutsch
+        fr: Français
+        es: Español
+        it: Italiano
+        pl: Polskie
+        kr: 한국어
+        jp: 日本語
+        zh: 中文
+    supported_locales:
+        - en
+        - es
+    default_locale: en
 
 framework:
     #esi:             ~
@@ -77,11 +91,23 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        dql:
-            numeric_functions:
-                power: AppBundle\DQL\PowerFunction
+        entity_managers:
+            default:
+                auto_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                dql:
+                    string_functions:
+                        replace: AppBundle\DQL\ReplaceFunction
+                        binary: AppBundle\DQL\BinaryFunction
+                    numeric_functions:
+                        power: AppBundle\DQL\PowerFunction
+                mappings:
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                        is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:

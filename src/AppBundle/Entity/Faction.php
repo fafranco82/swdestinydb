@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-class Faction implements \Serializable
+class Faction implements \Gedmo\Translatable\Translatable, \Serializable
 {
 	public function serialize() {
 		return [
@@ -197,5 +197,15 @@ class Faction implements \Serializable
     public function getCards()
     {
         return $this->cards;
+    }
+
+    /*
+    * I18N vars
+    */
+    private $locale = 'en';
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

@@ -1,6 +1,10 @@
 AppBundle\Entity\Card:
     type: entity
     table: card
+    repositoryClass: AppBundle\Repository\CardRepository
+    gedmo:
+        translation:
+            locale: locale
     manyToOne:
         pack:
             targetEntity: Pack
@@ -42,12 +46,16 @@ AppBundle\Entity\Card:
             type: string
             length: 1024
             nullable: false
+            gedmo:
+                - translatable
         cost:
             type: smallint
             nullable: true
         text:
             type: text
             nullable: true
+            gedmo:
+                - translatable
         dateCreation:
             type: datetime
             nullable: false
@@ -88,9 +96,13 @@ AppBundle\Entity\Card:
             type: string
             length: 255
             nullable: true
+            gedmo:
+                - translatable
         flavor:
             type: text
             nullable: true
+            gedmo:
+                - translatable
         illustrator:
             type: string
             length: 255
