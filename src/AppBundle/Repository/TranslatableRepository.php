@@ -134,6 +134,11 @@ class TranslatableRepository extends EntityRepository
 
 		$query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
 
+		$query->setHint(
+			TranslatableListener::HINT_FALLBACK, 
+			1
+		);
+
 		return $query;
 	}
 }

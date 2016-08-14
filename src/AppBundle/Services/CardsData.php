@@ -56,7 +56,7 @@ class CardsData
 
 	public function allsetsdata()
 	{
-		$list_cycles = $this->doctrine->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
+		$list_cycles = $this->doctrine->getRepository('AppBundle:Cycle')->findAll();
 		$lines = [];
 		/* @var $cycle \AppBundle\Entity\Cycle */
 		foreach($list_cycles as $cycle) {
@@ -88,7 +88,7 @@ class CardsData
 
 	public function getPrimaryFactions()
 	{
-		$factions = $this->doctrine->getRepository('AppBundle:Faction')->findBy(array("isPrimary" => TRUE), array("code" => "ASC"));
+		$factions = $this->doctrine->getRepository('AppBundle:Faction')->findPrimaries();
 		return $factions;
 	}
 
@@ -97,11 +97,13 @@ class CardsData
 		$i=0;
 
 		// construction de la requete sql
-		$qb = $this->doctrine->getRepository('AppBundle:Card')->createQueryBuilder('c');
-		$qb->leftJoin('c.pack', 'p')
-			->leftJoin('p.cycle', 'y')
-			->leftJoin('c.type', 't')
-			->leftJoin('c.faction', 'f');
+		$repo = $this->doctrine->getRepository('AppBundle:Card');
+		$qb = $repo->createQueryBuilder('c')
+		           ->select('c', 'p', 'y', 't', 'f')
+				   ->leftJoin('c.pack', 'p')
+				   ->leftJoin('p.cycle', 'y')
+				   ->leftJoin('c.type', 't')
+				   ->leftJoin('c.faction', 'f');
 		$qb2 = null;
 		$qb3 = null;
 
@@ -332,8 +334,7 @@ class CardsData
 		}
 		$qb->addOrderBy('c.name');
 		$qb->addOrderBy('c.code');
-		$query = $qb->getQuery();
-		$rows = $query->getResult();
+		$rows = $repo->getResult($qb);
 
 		return $rows;
 	}
@@ -346,6 +347,7 @@ class CardsData
 	 */
 	public function getCardInfo($card, $api = false)
 	{
+		$locale = $this->request_stack->getCurrentRequest()->getLocale();
 	    $cardinfo = [];
 
 	    $metadata = $this->doctrine->getManager()->getClassMetadata('AppBundle:Card');
@@ -382,7 +384,7 @@ class CardsData
 	    }
 
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
-		$imageurl = $this->assets_helper->getUrl('bundles/cards/'.$card->getCode().'.png');
+		$imageurl = $this->assets_helper->getUrl('bundles/cards/'.$locale.'/'.$card->getCode().'.png');
 		$imagepath= $this->rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
 		if(file_exists($imagepath)) {
 			$cardinfo['imagesrc'] = $imageurl;

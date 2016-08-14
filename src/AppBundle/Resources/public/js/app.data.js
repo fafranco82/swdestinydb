@@ -131,12 +131,12 @@ data.query = function query() {
  * @memberOf data
  */
 data.update_done = function update_done(packs_updated, cards_updated) {
-	if(force_update) {
+	if(force_update || (packs_updated[1] === true && cards_updated[1] === true)) {
 		data.release();
 		return;
 	}
 
-	if(packs_updated === true || cards_updated === true) {
+	if(packs_updated[0] === true || cards_updated[0] === true) {
 		/*
 		 * we display a message informing the user that they can reload their page to use the updated data
 		 * except if we are on the front page, because data is not essential on the front page
@@ -171,19 +171,22 @@ data.update_fail = function update_fail(packs_loaded, cards_loaded) {
  * updates the database if necessary, from fetched data
  * @memberOf data
  */
-data.update_collection = function update_collection(data, collection, lastModifiedData, deferred) {
-	var lastChangeDatabase = new Date(collection.metaData().lastChange)
+data.update_collection = function update_collection(data, collection, lastModifiedData, locale, deferred) {
+	var lastChangeDatabase = new Date(collection.metaData().lastChange);
+	var lastLocale = collection.metaData().locale;
 	var isCollectionUpdated = false;
 
 	/*
 	 * if we decided to force the update,
 	 * or if the database is fresh,
 	 * or if the database is older than the data,
+	 * or if the locale has changed
 	 * then we update the database
 	 */
-	if(force_update || !lastChangeDatabase || lastChangeDatabase < lastModifiedData) {
-		console.log('data is newer than database or update forced => update the database')
+	if(force_update || !lastChangeDatabase || lastChangeDatabase < lastModifiedData || locale != lastLocale) {
+		console.log('data is newer than database or update forced or locale has changed => update the database')
 		collection.setData(data);
+		collection.metaData().locale = locale;
 		isCollectionUpdated = true;
 	}
 
@@ -192,7 +195,7 @@ data.update_collection = function update_collection(data, collection, lastModifi
 			console.log('error when saving '+collection.name(), err);
 			deferred.reject(true)
 		} else {
-			deferred.resolve(isCollectionUpdated);
+			deferred.resolve(isCollectionUpdated, locale != lastLocale);
 		}
 	});
 }
@@ -203,7 +206,8 @@ data.update_collection = function update_collection(data, collection, lastModifi
  */
 data.parse_packs = function parse_packs(response, textStatus, jqXHR) {
 	var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
-	data.update_collection(response, data.masters.packs, lastModified, data.dfd.packs);
+	var locale = jqXHR.getResponseHeader('Content-Language');
+	data.update_collection(response, data.masters.packs, lastModified, locale, data.dfd.packs);
 };
 
 /**
@@ -212,7 +216,8 @@ data.parse_packs = function parse_packs(response, textStatus, jqXHR) {
  */
 data.parse_cards = function parse_cards(response, textStatus, jqXHR) {
 	var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
-	data.update_collection(response, data.masters.cards, lastModified, data.dfd.cards);
+	var locale = jqXHR.getResponseHeader('Content-Language');
+	data.update_collection(response, data.masters.cards, lastModified, locale, data.dfd.cards);
 };
 
 $(function() {

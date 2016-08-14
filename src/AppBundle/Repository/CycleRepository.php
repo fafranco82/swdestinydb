@@ -8,4 +8,14 @@ class CycleRepository extends TranslatableRepository
 	{
 		parent::__construct($entityManager, $entityManager->getClassMetadata('AppBundle\Entity\Cycle'));
 	}
+
+	public function findAll()
+	{
+		$qb = $this->createQueryBuilder('y')
+			->select('y, p')
+			->leftJoin('y.packs', 'p')
+			->orderBy('y.position', 'ASC');
+
+		return $this->getResult($qb);
+	}
 }

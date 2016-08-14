@@ -51,6 +51,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
+        default_locale: %default_locale%
+        supported_locales: %supported_locales%
         cards_data: "@cards_data"
         deck_validation_helper: "@deck_validation_helper"
         google_analytics_tracking_code: "%google_analytics_tracking_code%"
