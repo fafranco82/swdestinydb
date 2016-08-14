@@ -35,20 +35,17 @@ class ImportImagesCommand extends ContainerAwareCommand
         $cards = $repo->findBy([], ['code' => 'ASC']);
         foreach($cards as $card) {
           $card_code = $card->getCode();
-          $imageurl = $assets_helper->getUrl('bundles/cards/en/'.$card_code.'.png');
+          $imageurl = $assets_helper->getUrl('bundles/cards/'.$card_code.'.png');
           $imagepath= $rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
           if(file_exists($imagepath)) {
             $output->writeln("Skip ".$card_code);
           }
           else {
-              #$cgdbfile = sprintf('GT%02d_%d.jpg', $card->getPack()->getId(), $card->getPosition());
-              #$cgdburl = "http://lcg-cdn.fantasyflightgames.com/got2nd/" . $cgdbfile;
-
-              $cgdbfile = sprintf('%s.png', $card->getCode());
-              $cgdburl = "https://thronesdb.com/bundles/cards/" . $cgdbfile;
+              $cgdbfile = sprintf('GT%02d_%d.jpg', $card->getPack()->getId(), $card->getPosition());
+              $cgdburl = "http://lcg-cdn.fantasyflightgames.com/got2nd/" . $cgdbfile;
 
               $dirname = dirname($imagepath);
-              $outputfile = $dirname . DIRECTORY_SEPARATOR . $card_code . ".png";
+              $outputfile = $dirname . DIRECTORY_SEPARATOR . $card_code . ".jpg";
 
               $image = file_get_contents($cgdburl);
               if($image !== FALSE) {

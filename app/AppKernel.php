@@ -17,11 +17,13 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-        	new FOS\UserBundle\FOSUserBundle(),
-        	new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-        	new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-        	new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
         	new AppBundle\AppBundle(),
         );
 

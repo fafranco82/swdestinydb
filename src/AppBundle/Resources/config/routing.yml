@@ -1,18 +1,22 @@
 app_admin:
     resource: "@AppBundle/Resources/config/routing/routing_admin.yml"
     prefix: /admin
+    options:
+        i18n: false
 
 app_api:
     resource: "@AppBundle/Resources/config/routing/routing_api.yml"
-    prefix: /{_locale}/api
+    prefix: /api
+    options:
+        i18n: false
 
 app_cards:
     resource: "@AppBundle/Resources/config/routing/routing_cards.yml"
-    prefix: /{_locale}
+    prefix: /
 
 app_deck:
     resource: "@AppBundle/Resources/config/routing/routing_deck.yml"
-    prefix: /{_locale}/deck
+    prefix: /deck
 
 app_decklist:
     resource: "@AppBundle/Resources/config/routing/routing_decklist.yml"
@@ -43,7 +47,7 @@ donators:
         _controller: AppBundle:Social:donators
 
 decks_list:
-    path: /{_locale}/decks
+    path: /decks
     methods: [GET]
     defaults:
         _controller: AppBundle:Builder:list

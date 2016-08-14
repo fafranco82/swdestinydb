@@ -5,7 +5,7 @@
 
 <div class="main container">
 <h1 class="site-title hidden-xs">Thr<span style="position:relative">o<span class="icon icon-power" style="position:absolute;left: .65em;top: 1.2em;font-size: 30%;"></span></span>nesDB</h1>
-<div class="site-slogan">Deckbuilder for A Game of Thrones LCG 2nd Edition</div>
+<div class="site-slogan">{{ 'shortdescription' | trans }}</div>
 </div> <!-- .container -->
 
 <div class="main container">
@@ -29,7 +29,7 @@
             </div>
             <div>{{ data.factions }}</div>
             <p>{{ data.count_by_type|raw }}</p>
-            <div class="text-center small"><a href="{{ path('decklists_list',{type:'find',faction:data.faction.code}) }}">More in this faction</a></div>
+            <div class="text-center small"><a href="{{ path('decklists_list',{type:'find',faction:data.faction.code}) }}">{{ 'seemore.faction' | trans }}</a></div>
             <div style="clear:both"></div>
         </div>
     </div>

@@ -43,3 +43,6 @@ oauth_server_auth_login_check:
     path:  /oauth/v2/auth_login_check
     defaults:
         _controller: AppBundle:Security:loginCheck
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"

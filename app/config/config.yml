@@ -111,6 +111,12 @@ doctrine:
                         alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
                         is_bundle: false
 
+#
+jms_i18n_routing:
+    default_locale: %default_locale%
+    locales: %supported_locales%
+    strategy: prefix_except_default
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
