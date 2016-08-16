@@ -1,14 +1,10 @@
 app_admin:
     resource: "@AppBundle/Resources/config/routing/routing_admin.yml"
     prefix: /admin
-    options:
-        i18n: false
 
 app_api:
     resource: "@AppBundle/Resources/config/routing/routing_api.yml"
     prefix: /api
-    options:
-        i18n: false
 
 app_cards:
     resource: "@AppBundle/Resources/config/routing/routing_cards.yml"
