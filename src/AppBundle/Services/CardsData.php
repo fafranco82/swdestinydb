@@ -47,6 +47,22 @@ class CardsData
 		
 		return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);
 	}
+
+	/**
+	 * Searches for single keywords and surround them with <abbr>
+	 * @param string $text
+	 * @return string
+	 */
+	public function addAbbrTags($text)
+	{
+		static $keywords = ['Renown','Intimidate','Stealth','Insight','Limited','Pillage','Terminal','Ambush'];
+		
+		$regexp = implode('|', $keywords);
+		
+		return preg_replace_callback("/($regexp)\./", function ($matches) {
+			return "<abbr>".$matches[1]."</abbr>.";
+		}, $text);
+	}
 	
 	public function splitInParagraphs($text)
 	{
@@ -395,6 +411,7 @@ class CardsData
 			$cardinfo = array_filter($cardinfo, function ($var) { return isset($var); });
 		} else {
 			$cardinfo['text'] = $this->replaceSymbols($cardinfo['text']);
+			$cardinfo['text'] = $this->addAbbrTags($cardinfo['text']);
 			$cardinfo['text'] = $this->splitInParagraphs($cardinfo['text']);
 			
 			$cardinfo['flavor'] = $this->replaceSymbols($cardinfo['flavor']);
