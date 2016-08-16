@@ -7,7 +7,23 @@
 
 <div class="row">
 
-<div class="col-md-12">
+<div class="col-md-3">
+	<h2>Browse by set</h2>
+	<ol>
+	{% for cycle in cards_data.allsetsdatathreaded() %}
+		<li><a href="{{ cycle['url'] }}">{{ cycle['label'] }}</a></li>
+		{% if cycle['packs'] is defined %}
+		<ol>
+		{% for pack in cycle['packs'] %}
+		<li><a href="{{ pack['url'] }}">{{ pack['label'] }}</a></li>
+		{% endfor %}
+		</ol>
+		{% endif %}
+	{% endfor %}
+	</ol>
+</div>
+
+<div class="col-md-9">
 
 <h1>{{ block('title') }}</h1>
 <form method="GET" action="{{ path('cards_processSearchForm') }}" role="form" style="margin-bottom:2em">

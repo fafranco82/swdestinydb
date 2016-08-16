@@ -134,6 +134,11 @@ div.tags span.tag:not(:first-child)::before {
     font-size: 70%;
 }
 
+/* for the sets list in card search */
+ol {
+    padding-left: 30px;
+}
+
 /********** icon-bg ***********/
 
 .icon-bg:before {
