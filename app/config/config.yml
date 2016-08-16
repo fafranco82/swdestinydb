@@ -115,7 +115,11 @@ doctrine:
 jms_i18n_routing:
     default_locale: %default_locale%
     locales: %supported_locales%
-    strategy: prefix_except_default
+    strategy: custom
+    hosts:
+        en: "%website_url%"
+        es: "es.%website_url%" 
+    redirect_to_host: true
 
 # Swiftmailer Configuration
 swiftmailer:
