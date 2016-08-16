@@ -12,6 +12,7 @@ class Pack implements \Serializable
 				'name' => $this->name,
 				'position' => $this->position,
 				'size' => $this->size,
+				'cgdb_id' => $this->cgdbId
 		];
 	}
 	
@@ -63,6 +64,11 @@ class Pack implements \Serializable
      */
     private $dateRelease;
 
+    /**
+     * @var integer
+     */
+    private $cgdbId;
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -259,6 +265,30 @@ class Pack implements \Serializable
         return $this->dateRelease;
     }
 
+    /**
+     * Set cgdbId
+     *
+     * @param integer $cgdbId
+     *
+     * @return Pack
+     */
+    public function setCgdbId($cgdbId)
+    {
+    	$this->cgdbId = $cgdbId;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get cgdbId
+     *
+     * @return integer
+     */
+    public function getCgdbId()
+    {
+    	return $this->cgdbId;
+    }
+    
     /**
      * Add card
      *

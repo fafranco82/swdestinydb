@@ -51,7 +51,10 @@ AppBundle\Entity\Pack:
             type: date
             nullable: true
             column: date_release
+        cgdbId:
+            type: integer
+            nullable: true
+            column: cgdb_id
     uniqueConstraints:
         pack_code_idx:
             columns: [ code ]
-            

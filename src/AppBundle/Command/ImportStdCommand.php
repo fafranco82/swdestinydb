@@ -199,7 +199,8 @@ class ImportStdCommand extends ContainerAwareCommand
 					'name', 
 					'position', 
 					'size', 
-					'date_release'
+					'date_release',
+					'cgdb_id'
 			], [
 					'cycle_code'
 			], []);
