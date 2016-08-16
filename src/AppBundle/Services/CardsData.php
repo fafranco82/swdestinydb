@@ -19,8 +19,7 @@ class CardsData
         $this->request_stack = $request_stack;
         $this->router = $router;
         $this->assets_helper = $assets_helper;
-				$this->rootDir = $rootDir;
-
+        $this->rootDir = $rootDir;
 	}
 
 	/**
@@ -347,8 +346,7 @@ class CardsData
 	 */
 	public function getCardInfo($card, $api = false)
 	{
-		$locale = $this->request_stack->getCurrentRequest()->getLocale();
-	    $cardinfo = [];
+		$cardinfo = [];
 
 	    $metadata = $this->doctrine->getManager()->getClassMetadata('AppBundle:Card');
 	    $fieldNames = $metadata->getFieldNames();
@@ -384,7 +382,7 @@ class CardsData
 	    }
 
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
-		$imageurl = $this->assets_helper->getUrl('bundles/cards/'.$locale.'/'.$card->getCode().'.png');
+		$imageurl = $this->assets_helper->getUrl('bundles/cards/'.$card->getCode().'.png');
 		$imagepath= $this->rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
 		if(file_exists($imagepath)) {
 			$cardinfo['imagesrc'] = $imageurl;
