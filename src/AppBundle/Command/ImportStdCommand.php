@@ -136,7 +136,8 @@ class ImportStdCommand extends ContainerAwareCommand
 		{
 			$faction = $this->getEntityFromData('AppBundle\\Entity\\Faction', $data, [
 					'code',
-					'name'
+					'name',
+					'is_primary'
 			], [], []);
 			if($faction) {
 				$result[] = $faction;

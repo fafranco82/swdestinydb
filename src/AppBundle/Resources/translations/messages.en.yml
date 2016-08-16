@@ -1,0 +1,53 @@
+shortdescription: Deckbuilder for A Game of Thrones LCG 2nd Edition
+
+seemore:
+  faction: More in this faction
+
+nav:
+  mydecks: My decks
+  decklists: Decklists
+  cards: Cards
+  rules: Rules
+  advancedsearch: Advanced Search
+  cardsearch: Card Search
+
+search:
+  label: Search
+  sort:
+    name: Sort by Name
+    set: Sort by Set
+    faction: Sort by Faction
+    type: Sort by Type
+    costgold: Sort by Cost/Gold
+    strini: Sort by Strength/Initiative
+  view:
+    list: View as a Checklist
+    spoiler: View as a Spoiler
+    card: View as Full Cards
+    scan: View as Scans Only
+    short: View as Simple List
+
+pag:
+  cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
+
+challengues:
+  military: Military
+  intrigue: Intrigue
+  power: Power
+
+card:
+  info:
+    name: Name
+    faction: Faction
+    cost: Cost
+    type: Type
+    str: STR
+    traits: Traits
+    set: Set
+    loyal: Loyal
+    nonloyal: Non-Loyal
+    income: Income
+    initiative: Initiative
+    claim: Claim
+    reserve: Reserve
+    plotlimit: Plot deck limit

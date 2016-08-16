@@ -31,11 +31,14 @@ class ApiController extends Controller
 		$response = new Response();
 		$response->setPublic();
 		$response->setMaxAge($this->container->getParameter('cache_expiration'));
-		$response->headers->add(array('Access-Control-Allow-Origin' => '*'));
+		$response->headers->add(array(
+			'Access-Control-Allow-Origin' => '*',
+			'Content-Language' => $request->getLocale()
+		));
 
 		$jsonp = $request->query->get('jsonp');
 
-		$list_packs = $this->getDoctrine()->getRepository('AppBundle:Pack')->findBy(array(), array("dateRelease" => "ASC", "position" => "ASC"));
+		$list_packs = $this->getDoctrine()->getRepository('AppBundle:Pack')->findAll();
 
 		// check the last-modified-since header
 
@@ -115,7 +118,10 @@ class ApiController extends Controller
 		$response = new Response();
 		$response->setPublic();
 		$response->setMaxAge($this->container->getParameter('cache_expiration'));
-		$response->headers->add(array('Access-Control-Allow-Origin' => '*'));
+		$response->headers->add(array(
+			'Access-Control-Allow-Origin' => '*',
+			'Content-Language' => $request->getLocale()
+		));
 
 		$jsonp = $request->query->get('jsonp');
 
@@ -168,15 +174,19 @@ class ApiController extends Controller
 	 */
 	public function listCardsAction(Request $request)
 	{
+		$locale = $request->getLocale();
 
 		$response = new Response();
 		$response->setPublic();
 		$response->setMaxAge($this->container->getParameter('cache_expiration'));
-		$response->headers->add(array('Access-Control-Allow-Origin' => '*'));
+		$response->headers->add(array(
+			'Access-Control-Allow-Origin' => '*',
+			'Content-Language' => $locale
+		));
 
 		$jsonp = $request->query->get('jsonp');
 
-		$list_cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array(), array("code" => "ASC"));
+		$list_cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAll();
 
 		// check the last-modified-since header
 
@@ -197,7 +207,7 @@ class ApiController extends Controller
 		$cards = array();
 		/* @var $card \AppBundle\Entity\Card */
 		foreach($list_cards as $card) {
-			$cards[] = $this->get('cards_data')->getCardInfo($card, true, "en");
+			$cards[] = $this->get('cards_data')->getCardInfo($card, true, $locale);
 		}
 
 		$content = json_encode($cards);

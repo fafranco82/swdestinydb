@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
   <head>
     <title>{{ pagetitle|default('Deckbuilder') }} &middot; ThronesDB</title>
     <meta charset="utf-8">
@@ -7,6 +7,11 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png" />
+    {% if app.request.locale != "en" and app.request.attributes.get('_route') != "" %}
+      {% set _route_params = app.request.attributes.get('_route_params')|default({}) %}
+      {% set _get_params = app.request.query.all()|default({}) %}
+      <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), _route_params|merge(_get_params)|merge({'_locale': 'en'})) }}"/>
+    {% endif %}
     {% if pagedescription is defined %}<meta name="description" content="{{ pagedescription }}">{% endif %}
 
     <link href='https://fonts.googleapis.com/css?family=Amiri:400,400italic,700,700italic|Julius+Sans+One|Open+Sans:400,400italic,700,700italic|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
@@ -17,6 +22,7 @@
     	'bundles/app/css/bootstrap.css'
     	'bundles/app/css/style.css'
     	'bundles/app/css/icons.css'
+      'bundles/app/css/languages.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
@@ -45,12 +51,12 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{{ path('decks_list') }}">My Decks</a></li>
-            <li><a href="{{ path('decklists_list') }}">Decklists</a></li>
+            <li><a href="{{ path('decks_list') }}">{{ 'nav.mydecks' | trans}}</a></li>
+            <li><a href="{{ path('decklists_list') }}">{{ 'nav.decklists' | trans}}</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Cards <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'nav.cards' | trans}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ path('cards_search') }}">Advanced Search</a></li>
+                <li><a href="{{ path('cards_search') }}">{{ 'nav.advancedsearch' | trans}}</a></li>
                 <li class="divider"></li>
               {% for line in cards_data.allsetsdata() %}
                 <li><a href="{{ line['url'] }}">{{ line['label'] }}</a></li>
@@ -60,24 +66,43 @@
             {#
             <li class="hidden-sm"><a href="{{ path('card_reviews_list') }}">Reviews</a></li>
             #}
-            <li><a href="{{ path('rules') }}">Rules</a></li>
+            <li><a href="{{ path('rules') }}">{{ 'nav.rules' | trans}}</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown hidden-xs hidden-lg">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-search"></span></a>
                 <div class="dropdown-menu">
                   <form action="{{ path('cards_find') }}" target="_blank">
-                    <input type="text" placeholder="Card Search" class="form-control" name="q">
+                    <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
                   </form>
               </div>
             </li>
             <li id="login">
                 <a href="#" class="disabled"><span class="fa fa-user"></span></a>
             </li>
+            <!-- locale selection -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">
+                <span class="lang-sm" lang="{{ app.request.locale | default(default_locale) }}"></span>
+                <span class="caret">
+              </a>
+              <ul class="dropdown-menu">
+                {% for supported_locale in supported_locales %}
+                  {% set _route = app.request.attributes.get('_route') %}
+                  {% set _route_params = app.request.attributes.get('_route_params')|default({})|merge(app.request.query.all) %}
+                  {% set _get_params = app.request.attributes.get('_get_params')|default({}) %}
+                  <li>
+                    <a href="{{ path(_route, _route_params|merge(_get_params)|merge({'_locale': supported_locale})) }}">
+                      <span lang="{{ supported_locale }}" class="lang-sm lang-lbl lang-lbl-full"></span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
           </ul>
           <form class="navbar-form navbar-right visible-lg-block visible-xs-block external" action="{{ path('cards_find') }}" target="_blank">
             <div class="form-group">
-              <input type="text" placeholder="Card Search" class="form-control" name="q">
+              <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
             </div>
           </form>
         </div><!--/.navbar-collapse -->
@@ -92,38 +117,7 @@
     <div class="container">
 
 {% block footer %}
-<div class="row">
-    <div class="col-xs-12">
-
-    <ul class="list-inline">
-    <li><a href="{{ path('about') }}">About</a></li>
-    <li><a href="{{ path('api_intro') }}">API</a></li>
-    <li><a href="{{ path('donators') }}">Donators</a> <span class="fa fa-gift donator" title="The Gracious Donator"></span></li>
-    </ul>
-
-    <p>
-    Designed and built by Alsciende. 
-    Contact: 
-    <a href="https://twitter.com/alsciende" title="Twitter"><span class="fa fa-twitter"></span></a>
-    <a href="https://reddit.com/user/Alsciende/" title="Reddit"><span class="fa fa-reddit"></span></a>
-    <a href="mailto:alsciende@icloud.com" title="E-mail"><span class="fa fa-envelope"></span></a>
-    </p>
-
-    <p>
-    Please post bug reports and feature requests on <a href="https://github.com/Alsciende/thronesdb/issues">GitHub</a>
-    </p>
-
-    <p>
-    You may contribute by giving money on <a href="https://paypal.me/alsciende">Paypal</a>.
-    </p>
-
-    <p>
-    The information presented on this site about A Game of Thrones: The Card Game Second Edition, both literal and graphical, is copyrighted by Fantasy Flight Games.
-    This website is not produced, endorsed, supported, or affiliated with Fantasy Flight Games.
-    </p>
-
-    </div>
-</div>
+  {% include 'AppBundle::footer.'~ app.request.locale ~'.html.twig' %}
 {% endblock %}
 
     </div>
@@ -132,6 +126,13 @@
 
     <script src="{{ asset('/bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    {% javascripts
+        'bundles/bazingajstranslation/js/translator.min.js'
+        'js/translations/config.js'
+        'js/translations/*/*.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -142,9 +143,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.7/highcharts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/js/bootstrap-markdown.min.js"></script>
+    <script>
+      var locale = '{{ app.request.locale }}';
+      $(function () {
+          // change name of initial method
+          Routing.generateImpl = Routing.generate;
+          // override generate fonction by adding a default _locale from request locale (if _locale is not default)
+          {% if app.request.locale != default_locale %}
+          Routing.generate = function (url, params) {
+              var paramsExt = {};
+              if (params) {
+                  paramsExt = params;
+              }
+              if (!paramsExt._locale){
+                  paramsExt._locale = '{{ app.request.locale }}';
+              }
+              return Routing.generateImpl(url, paramsExt);
+          };
+          {% endif %}
+      })
+    </script>
     <script type="text/javascript">
-	var app = {};
-    moment.locale('en-US');
+	  var app = {};
+    moment.locale('{{ app.request.locale }}');
     $(function() {
     {% for flashMessage in app.session.flashbag.get('notice') %}
     	app.ui.insert_alert_message('success', {{ flashMessage|json_encode|raw }});

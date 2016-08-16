@@ -25,9 +25,8 @@ class BuilderController extends Controller
 		/* @var $em \Doctrine\ORM\EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$factions = $em->getRepository('AppBundle:Faction')->findBy(["isPrimary" => TRUE]);
-		$agenda = $em->getRepository('AppBundle:Type')->findOneBy(['code' => 'agenda']);
-		$agendas = $em->getRepository('AppBundle:Card')->findBy(['type' => $agenda]);
+		$factions = $em->getRepository('AppBundle:Faction')->findPrimaries();
+		$agendas = $em->getRepository('AppBundle:Card')->findByType("agenda");
 
 		return $this->render('AppBundle:Builder:initbuild.html.twig', [
 				'pagetitle' => "New deck",

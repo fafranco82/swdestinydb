@@ -22,8 +22,9 @@ parameters:
     
     # Branding
     website_name: ~
+    website_url: ~
     game_name: ~
-    publisher_name: ~ 
+    publisher_name: ~
     
     # Analytics & AdSense
     google_analytics_tracking_code: UA-00000000-1

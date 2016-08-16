@@ -1,0 +1,53 @@
+shortdescription: Constructor de mazos para Juego de Tronos LCG 2ª Edición
+
+seemore:
+  faction: Más de esta facción
+
+nav:
+  mydecks: Mis mazos
+  decklists: Lista de Mazos
+  cards: Cartas
+  rules: Reglas
+  advancedsearch: Búsqueda avanzada
+  cardsearch: Buscar carta
+
+search:
+  label: Buscar
+  sort:
+    name: Ordenar por nombre
+    set: Ordenar por capítulo
+    faction: Ordenar por facción
+    type: Ordenar por tipo
+    costgold: Ordenar por coste/oro
+    strini: Ordenar por fuerza/iniciativa
+  view:
+    list: Ver como listado
+    spoiler: Ver como spoilers
+    card: Ver carta completa
+    scan: Ver solo imágenes
+    short: Ver como lista simple
+
+pag:
+  cardscount: "{0} No hay cartas | {1} Una carta | ]1,Inf] %count% cartas"
+
+challengues:
+  military: Militar
+  intrigue: Intriga
+  power: Poder
+
+card:
+  info:
+    name: Nombre
+    faction: Facción
+    cost: Coste
+    type: Tipo
+    str: FUE
+    traits: Rasgos
+    set: Capítulo
+    loyal: Leal
+    nonloyal: No Leal
+    income: Ingresos
+    initiative: Iniciativa
+    claim: Conquista
+    reserve: Reserva
+    plotlimit: Límite por mazo

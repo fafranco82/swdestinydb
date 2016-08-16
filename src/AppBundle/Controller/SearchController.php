@@ -103,7 +103,7 @@ class SearchController extends Controller
 
 	public function zoomAction($card_code, Request $request)
 	{
-		$card = $this->getDoctrine()->getRepository('AppBundle:Card')->findOneBy(array("code" => $card_code));
+		$card = $this->getDoctrine()->getRepository('AppBundle:Card')->findByCode($card_code);
 		if(!$card) throw $this->createNotFoundException('Sorry, this card is not in the database (yet?)');
 
 		$game_name = $this->container->getParameter('game_name');
@@ -127,7 +127,7 @@ class SearchController extends Controller
 
 	public function listAction($pack_code, $view, $sort, $page, Request $request)
 	{
-		$pack = $this->getDoctrine()->getRepository('AppBundle:Pack')->findOneBy(array("code" => $pack_code));
+		$pack = $this->getDoctrine()->getRepository('AppBundle:Pack')->findByCode($pack_code);
 		if(!$pack) {
 			throw $this->createNotFoundException('This pack does not exist');
 		}
@@ -264,7 +264,9 @@ class SearchController extends Controller
 				'view' => $view,
 				'sort' => $sort,
 				'page' => $page,
-				'_route' => $request->get('_route')
+				'_route' => $request->get('_route'),
+				'_route_params' => $request->attributes->get('_route_params'),
+				'_get_params' => $request->query->all()
 			)
 		);
 	}
@@ -409,9 +411,9 @@ class SearchController extends Controller
 
 	public function setnavigation($card, $q, $view, $sort)
 	{
-	    $em = $this->getDoctrine();
-	    $prev = $em->getRepository('AppBundle:Card')->findOneBy(array("pack" => $card->getPack(), "position" => $card->getPosition()-1));
-	    $next = $em->getRepository('AppBundle:Card')->findOneBy(array("pack" => $card->getPack(), "position" => $card->getPosition()+1));
+	    $repo = $this->getDoctrine()->getRepository('AppBundle:Card');
+	    $prev = $repo->findPreviousCard($card);
+	    $next = $repo->findNextCard($card);
 	    return $this->renderView('AppBundle:Search:setnavigation.html.twig', array(
 	            "prevtitle" => $prev ? $prev->getName() : "",
 	            "prevhref" => $prev ? $this->get('router')->generate('cards_zoom', array('card_code' => $prev->getCode())) : "",

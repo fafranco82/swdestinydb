@@ -19,7 +19,6 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
-        "gedmo/doctrine-extensions": "^2.4",
         "doctrine/dbal": "^2.5",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.5",
@@ -32,7 +31,10 @@
         "friendsofsymfony/oauth-server-bundle": "^1.4",
         "phpunit/phpunit": "4.8.*",
         "nelmio/api-doc-bundle": "^2.9",
-        "erusev/parsedown": "^1.6"
+        "erusev/parsedown": "^1.6",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "willdurand/js-translation-bundle": "^2.5",
+        "jms/i18n-routing-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -46,6 +48,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "php app/console bazinga:js-translation:dump",
             "php app/console assetic:dump",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
@@ -56,6 +59,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "php app/console bazinga:js-translation:dump",
             "php app/console assetic:dump",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",

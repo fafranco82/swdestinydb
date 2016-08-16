@@ -1,19 +1,19 @@
 <div class="col-sm-4" style="margin-bottom:.5em">
 <select name="sort" class="form-control">
-	<option value="name"    {% if sort|default('name') == "name"    %}selected{% endif %}>Sort by Name</option>
-	<option value="set"     {% if sort|default('name') == "set"     %}selected{% endif %}>Sort by Set</option>
-	<option value="faction" {% if sort|default('name') == "faction" %}selected{% endif %}>Sort by Faction</option>
-	<option value="type"    {% if sort|default('name') == "type"    %}selected{% endif %}>Sort by Type</option>
-	<option value="cost"    {% if sort|default('name') == "cost"    %}selected{% endif %}>Sort by Cost/Gold</option>
-	<option value="strength"{% if sort|default('name') == "strength"%}selected{% endif %}>Sort by Strength/Initiative</option>
+	<option value="name"    {% if sort|default('name') == "name"    %}selected{% endif %}>{{ 'search.sort.name' | trans }}</option>
+	<option value="set"     {% if sort|default('name') == "set"     %}selected{% endif %}>{{ 'search.sort.set' | trans }}</option>
+	<option value="faction" {% if sort|default('name') == "faction" %}selected{% endif %}>{{ 'search.sort.faction' | trans }}</option>
+	<option value="type"    {% if sort|default('name') == "type"    %}selected{% endif %}>{{ 'search.sort.type' | trans }}</option>
+	<option value="cost"    {% if sort|default('name') == "cost"    %}selected{% endif %}>{{ 'search.sort.costgold' | trans }}</option>
+	<option value="strength"{% if sort|default('name') == "strength"%}selected{% endif %}>{{ 'search.sort.strini' | trans }}</option>
 </select>
 </div>
 <div class="col-sm-4" style="margin-bottom:.5em">
 <select name="view" class="form-control">
-	<option value="list"    {% if view|default('list') == "list"    %}selected{% endif %}>View as a Checklist</option>
-	<option value="spoiler" {% if view|default('list') == "spoiler" %}selected{% endif %}>View as a Spoiler</option>
-	<option value="card"    {% if view|default('list') == "card"    %}selected{% endif %}>View as Full Cards</option>
-	<option value="scan"    {% if view|default('list') == "scan"    %}selected{% endif %}>View as Scans only</option>
-	<option value="short"   {% if view|default('list') == "short"   %}selected{% endif %}>View as Simple List</option>
+	<option value="list"    {% if view|default('list') == "list"    %}selected{% endif %}>{{ 'search.view.list' | trans}}</option>
+	<option value="spoiler" {% if view|default('list') == "spoiler" %}selected{% endif %}>{{ 'search.view.spoiler' | trans}}</option>
+	<option value="card"    {% if view|default('list') == "card"    %}selected{% endif %}>{{ 'search.view.card' | trans}}</option>
+	<option value="scan"    {% if view|default('list') == "scan"    %}selected{% endif %}>{{ 'search.view.scan' | trans}}</option>
+	<option value="short"   {% if view|default('list') == "short"   %}selected{% endif %}>{{ 'search.view.short' | trans}}</option>
 </select>
 </div>

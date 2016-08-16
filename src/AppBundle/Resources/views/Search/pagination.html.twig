@@ -13,6 +13,8 @@
 </ul>
 </div>
 <div class="col-sm-2 text-right">
-	<p style="margin:27px 0">{{ count }} cards</p>
+	<p style="margin:27px 0">
+		{% transchoice count with {'%count%': count} %}pag.cardscount{% endtranschoice %}
+	</p>
 </div>
 </div>
