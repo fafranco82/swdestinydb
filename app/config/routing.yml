@@ -7,38 +7,26 @@ fos_js_routing:
     
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-    options:
-        i18n: false
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
-    options:
-        i18n: false
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /register
-    options:
-        i18n: false
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /resetting
-    options:
-        i18n: false
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
-    options:
-        i18n: false
 
 nelmio_api_doc_bundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
-    options:
-        i18n: false
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

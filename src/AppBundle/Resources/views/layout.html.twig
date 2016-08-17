@@ -143,26 +143,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.7/highcharts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/js/bootstrap-markdown.min.js"></script>
-    <script>
-      var locale = '{{ app.request.locale }}';
-      $(function () {
-          // change name of initial method
-          Routing.generateImpl = Routing.generate;
-          // override generate fonction by adding a default _locale from request locale (if _locale is not default)
-          {% if app.request.locale != default_locale %}
-          Routing.generate = function (url, params) {
-              var paramsExt = {};
-              if (params) {
-                  paramsExt = params;
-              }
-              if (!paramsExt._locale){
-                  paramsExt._locale = '{{ app.request.locale }}';
-              }
-              return Routing.generateImpl(url, paramsExt);
-          };
-          {% endif %}
-      })
-    </script>
+    
     <script type="text/javascript">
 	  var app = {};
     moment.locale('{{ app.request.locale }}');
