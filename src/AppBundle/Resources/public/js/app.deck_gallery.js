@@ -13,7 +13,7 @@ deck_gallery.display = function display(container) {
 		if(card.imagesrc) {
 			card_element = '<img src="'+card.imagesrc+'">';
 		} else {
-			card_element = '<div class="card-proxy"><div>'+card.name+'</div></div>';
+			card_element = '<div class="card-proxy"><div>'+card.label+'</div></div>';
 		}
 
 		var cell = $('<td><div>'+card_element+'<div>' + card.indeck + '</div></div></td>');

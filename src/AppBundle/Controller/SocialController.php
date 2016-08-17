@@ -318,7 +318,9 @@ class SocialController extends Controller
     
     private function searchForm(Request $request)
     {
-        $dbh = $this->getDoctrine()->getConnection();
+    	$doctrine = $this->getDoctrine();
+        $dbh = $doctrine->getConnection();
+        $em = $doctrine->getEntityManager();
 
         $cards_code = $request->query->get('cards');
         $faction_code = filter_var($request->query->get('faction'), FILTER_SANITIZE_STRING);
@@ -374,22 +376,15 @@ class SocialController extends Controller
         $params['faction_selected'] = $faction_code;
 
         if (! empty($cards_code) && is_array($cards_code)) {
-            $cards = $dbh->executeQuery(
-                    "SELECT
-    				c.name,
-    				c.code,
-                    f.code faction_code
-    				from card c
-                    join faction f on f.id=c.faction_id
-                    where c.code in (?)
-    				order by c.code desc", array($cards_code), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY))
-            				->fetchAll();
+            $query = $em->createQuery("SELECT c FROM AppBundle:Card c WHERE c.code in (?1)");
+            $query->setParameter(1, $cards_code);
+            $cards = $query->getResult();
 
             $params['cards'] = '';
             foreach($cards as $card) {
-                $params['cards'] .= $this->renderView('AppBundle:Search:card.html.twig', $card);
+            	$cardinfo = $this->get('cards_data')->getCardInfo($card);
+                $params['cards'] .= $this->renderView('AppBundle:Search:card.html.twig', $cardinfo);
             }
-
         }
 
         return $this->renderView('AppBundle:Search:form.html.twig', $params);

@@ -21,10 +21,10 @@ textcomplete.setup = function setup(textarea, options) {
 				}));
 			},
 			template : function(value) {
-				return value.name;
+				return value.label;
 			},
 			replace : function(value) {
-				return '[' + value.name + ']('
+				return '[' + value.label + ']('
 						+ Routing.generate('cards_zoom', {card_code:value.code})
 						+ ')';
 			},

@@ -23,17 +23,17 @@
     		minLength: 2
     	},{
     		name : 'cardnames',
-    		displayKey: 'name',
+    		displayKey: 'label',
     		source: findMatches
     	});
 
 
         $('#card').on('typeahead:selected typeahead:autocompleted', function(event, data) {
             var card = app.data.cards.find({
-                name : data.name
+                label : data.label
             })[0];
             var line = $('<p class="fg-'+card.faction_code+'" style="padding: 3px 5px;border-radius: 3px;border: 1px solid silver"><button type="button" class="close" aria-hidden="true">&times;</button><input type="hidden" name="cards[]" value="'+card.code+'">'+
-                      card.name + '</p>');
+                      card.label + '</p>');
             line.on({
                 click: function(event) { line.remove(); }
             });

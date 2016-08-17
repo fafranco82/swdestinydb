@@ -119,7 +119,7 @@ ui.on_button_card = function ui_on_button_card(e)
 		cards = cards.slice(0, 10);
 	}
 	cards.forEach(function (card) {
-		menu.append('<li data-code="'+card.code+'" data-name="'+card.name+'"><a href="#">' + card.name + ' <small><i>' + card.pack_name + '</i></small></a></li>');
+		menu.append('<li data-code="'+card.code+'" data-name="'+card.name+'"><a href="#">' + card.label + ' <small><i>' + card.pack_name + '</i></small></a></li>');
 	})
 	$(button).dropdown();
 }

@@ -136,7 +136,7 @@ suggestions.div = function div(record) {
 				+ '</div></td><td><a class="card" href="'
 				+ Routing.generate('cards_zoom', {card_code:record.code})
 				+ '" data-target="#cardModal" data-remote="false" data-toggle="modal">'
-				+ record.name + '</a></td><td class="influence-' + faction
+				+ record.label + '</a></td><td class="influence-' + faction
 				+ '">' + influ + '</td><td class="type" title="' + record.type
 				+ '"><img src="/web/bundles/app/images/types/'
 				+ record.type_code + '.png" alt="'+record.type+'">'

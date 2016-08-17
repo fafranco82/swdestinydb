@@ -21,7 +21,7 @@ var date_creation,
 		agenda: "Doesn't comply with the Agenda conditions"
 	},
 	header_tpl = _.template('<h5><span class="icon icon-<%= code %>"></span> <%= name %> (<%= quantity %>)</h5>'),
-	card_line_tpl = _.template('<span class="icon icon-<%= card.type_code %> fg-<%= card.faction_code %>"></span> <a href="<%= card.url %>" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="<%= card.code %>"><%= card.name %></a>'),
+	card_line_tpl = _.template('<span class="icon icon-<%= card.type_code %> fg-<%= card.faction_code %>"></span> <a href="<%= card.url %>" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="<%= card.code %>"><%= card.label %></a>'),
 	layouts = {},
 	layout_data = {};
 
@@ -287,9 +287,6 @@ deck.get_layout_data_one_section = function get_layout_data_one_section(sortKey,
 			var $div = $('<div>').addClass(deck.can_include_card(card) ? '' : 'invalid-card');
 			$div.append($(card_line_tpl({card:card})));
 			$div.prepend(card.indeck+'x ');
-			if(app.data.cards.find({'name': card.name}).length > 1) {
-				$div.append(' ('+card.pack_code+')');
-			}
 			$div.appendTo(section);
 		});
 	}
