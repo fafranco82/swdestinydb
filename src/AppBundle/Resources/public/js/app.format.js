@@ -18,7 +18,7 @@ format.faction = function faction(card) {
 	var text = '<span class="fg-'+card.faction_code+' icon-'+card.faction_code+'"></span> '+ card.faction_name + '. ';
 	if(card.faction_code != 'neutral') {
 		if(card.is_loyal) text += Translator.trans('card.info.loyal')+'. ';
-		else text += Translator.trans('card.info.loyal')+'. ';
+		else text += Translator.trans('card.info.nonloyal')+'. ';
 	}
 	return text;
 }
