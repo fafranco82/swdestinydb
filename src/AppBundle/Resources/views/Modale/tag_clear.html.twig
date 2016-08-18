@@ -4,19 +4,21 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="tagClearModalLabel">Clear all tags</h3>
+				<h3 class="modal-title" id="tagClearModalLabel">{{ 'decks.form.selection.tags.clear' | trans }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
 						<form>
 						<div class="form-group">
-							<label>Are you sure you want to clear all tags from the selected decks?</label>
+							<label>{{ 'decks.modals.tags.clear.question' | trans }}</label>
 						</div>
 						<div class="pull-right">
 							<input type="hidden" name="ids" id="tag_clear_ids">
-							<button type="submit" class="btn btn-success" onclick="$('#tagClearModal').modal('hide');app.ui.tag_clear_process(event)">Yes, clear</button>
-							<button type="button" class="btn btn-default" onclick="$('#tagClearModal').modal('hide')">Cancel</button>
+							<button type="submit" class="btn btn-success" onclick="$('#tagClearModal').modal('hide');app.ui.tag_clear_process(event)">
+								{{ 'decks.modals.tags.clear.confirm' | trans }}
+							</button>
+							<button type="button" class="btn btn-default" onclick="$('#tagClearModal').modal('hide')">{{ 'forms.cancel' | trans}}</button>
 						</div>
 						</form>
 					</div><!-- /#modal-info -->

@@ -53,10 +53,10 @@ deck_charts.chart_faction = function chart_faction() {
             type: 'column'
         },
 		title: {
-            text: "Card Factions"
+            text: Translator.trans("decks.charts.faction.title")
         },
 		subtitle: {
-            text: "Draw deck only"
+            text: Translator.trans("decks.charts.faction.subtitle")
         },
 		xAxis: {
 			categories: _.pluck(data, 'label'),
@@ -79,7 +79,7 @@ deck_charts.chart_faction = function chart_faction() {
         series: [{
 			type: "column",
 			animation: false,
-            name: '# cards',
+            name: Translator.trans("decks.charts.faction.label"),
 			showInLegend: false,
             data: data
         }],
@@ -96,17 +96,17 @@ deck_charts.chart_faction = function chart_faction() {
 deck_charts.chart_icon = function chart_icon() {
 
 	var data = [{
-		name: 'Military',
+		name: Translator.trans('challengues.military'),
 		label: '<span class="icon icon-military"></span>',
 		color: '#c8232a',
 		y: 0
 	}, {
-		name: 'Intrigue',
+		name: Translator.trans('challengues.intrigue'),
 		label: '<span class="icon icon-intrigue"></span>',
 		color: '#13522f',
 		y: 0
 	}, {
-		name: 'Power',
+		name: Translator.trans('challengues.power'),
 		label: '<span class="icon icon-power"></span>',
 		color: '#292e5f',
 		y: 0
@@ -124,11 +124,11 @@ deck_charts.chart_icon = function chart_icon() {
 			type: 'column'
 		},
 		title: {
-			text: "Character Icons"
-		},
+            text: Translator.trans("decks.charts.icon.title")
+        },
 		subtitle: {
-			text: "Duplicates not counted"
-		},
+            text: Translator.trans("decks.charts.icon.subtitle")
+        },
 		xAxis: {
 			categories: _.pluck(data, 'label'),
 			labels: {
@@ -148,12 +148,13 @@ deck_charts.chart_icon = function chart_icon() {
 			}
 		},
 		tooltip: {
-			headerFormat: '<span style="font-size: 10px">{point.key} Icon</span><br/>'
+			//headerFormat: '<span style="font-size: 10px">{point.key} Icon</span><br/>'
+			headerFormat: '<span style="font-size: 10px">'+Translator.trans('decks.charts.icon.tooltip.header', {type: '{point.key}'})+'</span><br/>'
 		},
 		series: [{
 			type: "column",
 			animation: false,
-			name: '# characters',
+			name: Translator.trans('decks.charts.icon.tooltip.label'),
 			showInLegend: false,
 			data: data
 		}],
@@ -185,11 +186,11 @@ deck_charts.chart_strength = function chart_strength() {
 				type: 'line'
 			},
 			title: {
-				text: "Character Strength"
-			},
+	            text: Translator.trans("decks.charts.strength.title")
+	        },
 			subtitle: {
-				text: "Duplicates not counted"
-			},
+	            text: Translator.trans("decks.charts.strength.subtitle")
+	        },
 			xAxis: {
 				allowDecimals: false,
 				tickInterval: 1,
@@ -207,11 +208,11 @@ deck_charts.chart_strength = function chart_strength() {
 				}
 			},
 			tooltip: {
-				headerFormat: '<span style="font-size: 10px">STR {point.key}</span><br/>'
+				headerFormat: '<span style="font-size: 10px">'+Translator.trans('decks.charts.strength.tooltip.header', {str: '{point.key}'})+'</span><br/>'
 			},
 			series: [{
 				animation: false,
-				name: '# characters',
+				name: Translator.trans('decks.charts.strength.tooltip.label'),
 				showInLegend: false,
 				data: data
 			}]
@@ -236,11 +237,11 @@ deck_charts.chart_cost = function chart_cost() {
 				type: 'line'
 			},
 			title: {
-				text: "Card Cost"
-			},
+	            text: Translator.trans("decks.charts.cost.title")
+	        },
 			subtitle: {
-				text: "Cost X ignored"
-			},
+	            text: Translator.trans("decks.charts.cost.subtitle")
+	        },
 			xAxis: {
 				allowDecimals: false,
 				tickInterval: 1,
@@ -258,11 +259,11 @@ deck_charts.chart_cost = function chart_cost() {
 				}
 			},
 			tooltip: {
-				headerFormat: '<span style="font-size: 10px">Cost {point.key}</span><br/>'
+				headerFormat: '<span style="font-size: 10px">'+Translator.trans('decks.charts.cost.tooltip.header', {cost: '{point.key}'})+'</span><br/>'
 			},
 			series: [{
 				animation: false,
-				name: '# cards',
+				name: Translator.trans('decks.charts.cost.tooltip.label'),
 				showInLegend: false,
 				data: data
 			}]

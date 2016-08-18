@@ -1,4 +1,6 @@
-shortdescription: Deckbuilder for A Game of Thrones LCG 2nd Edition
+slogan: Deckbuilder for A Game of Thrones LCG 2nd Edition
+
+data_load_fail: "Unable to load the data. Click <a href='javascript:window.location.reload(true)'>here</a> to reload your page."
 
 seemore:
   faction: More in this faction
@@ -10,6 +12,207 @@ nav:
   rules: Rules
   advancedsearch: Advanced Search
   cardsearch: Card Search
+  user:
+    loginregister: Login or register
+    editaccount: Edit account
+    profile: Public profile
+    logout: Logout
+
+forms:
+  save: Guardar
+  edit: Edit
+  publish: Publish
+  delete: Delete
+  cancel: Cancel
+  add: Add
+  remove: Remove
+  import: Import
+  upload: Upload
+  reset: Reset
+  clone: Clone
+  close: Close
+
+decks:
+  privatedecks: My private decks
+  slotcount: "(%current%/%max% slots)"
+  problems:
+    too_many_plots: Contains too many Plots
+    too_few_plots: Contains too few Plots
+    too_many_different_plots: Contains more than one duplicated Plot
+    too_many_agendas: Contains more than one Agenda
+    too_few_cards: Contains too few cards
+    too_many_copies: Contains too many copies of a card (by title)
+    invalid_cards: Contains forbidden cards (cards no permitted by Faction or Agenda)
+    agenda: Doesn't comply with the Agenda conditions
+  build:
+    choose:
+      faction: Choose your faction
+      agenda: Choose an agenda
+      noagenda: No agenda
+    start: Create the deck and start building
+    newname:
+      noagenda: "New deck: %faction%"
+      agenda: "New deck: %faction%, %agenda%"
+    errors:
+      nofaction: A faction is required.
+  edit:
+    unsaved: This deck has unsaved changes. Please save the deck or cancel the changes before making further edits.
+    refresh: Refresh all application data
+    tabs:
+      build: Build
+      notes: Notes
+      test: Test
+      charts: Charts
+      history: History
+    build:
+      help: Filter help
+      sets:
+        label: Sets
+        hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+      options:
+        label: Options
+        show:
+          unusable: Show unusabled cards
+          onlyused: Show only used cards
+        display: "{1} Display on 1 column | ]1, Inf] Display on %cols% columns"
+        usecore: "{1} Use 1 Core Set | ]1, Inf] Use %core% Core Sets"
+        suggestions: "{0} Show no suggestion | {1} Show %count% suggestion | ]1, Inf] Show %count% suggestions"
+        factype:
+          cumulative: Faction/Type cumulative
+          exclusive: Faction/Type exclusive
+      searchhint: Find a card or filter the list
+    notes:
+      tags:
+        label: Tags
+        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>melee</i>.
+      notes:
+        label: Notes
+        hint: "Type # to enter a card name. Type $ to enter a symbol."
+    form:
+      name: Name
+      cancel: Cancel edits
+    meta:
+      drawdeck: "{0} Draw deck: %count% cards | {1} Draw deck: %count% card | ]1,Inf] Draw deck: %count% cards"
+      plotdeck: "{0} Plot deck: %count% cards | {1} Plot deck: %count% card | ]1,Inf] Plot deck: %count% cards"
+      packs: "Packs: %packs%"
+  form:
+    build: Build New Deck
+    uploadarchive: Upload archive
+    new: New Deck
+    import:
+      label: Import Deck
+      copypaste: Copy/paste
+      file: File
+    selection: 
+      label: With Selection
+      compare:
+        label: Compare
+        twodecks: Compare two decks
+      tags:
+        label: Tags
+        add: Add one or more tags
+        remove: Remove one or more tags
+        clear: Clear all tags
+      delete:
+        label: Delete
+        selected: Delete all decks selected
+    labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
+  modals:
+    card:
+      go: Go to card page
+    fileimport:
+      title: Upload deck file
+      file:
+        label: File
+      type:
+        label: File type
+        options:
+          auto: Auto
+          octgn: OCTGN
+          text: Text
+    delete:
+      title: Delete deck
+      question: Are you sure you want to delete the deck %name%?
+      confirm: Yes, delete
+    deletelist:
+      title: Delete decks
+      question: Are you sure you want to delete all the decks selected?
+      confirm: Yes, delete
+    tags:
+      label: Please enter the list of tags, separated by spaces
+      hint: a-tag another
+      clear:
+        question: Are you sure you want to clear all tags from the selected decks?
+        confirm: Yes, clear
+  suggestions:
+    title: Card suggestions
+  published:
+    title: Published versions
+    none: None
+  simulator:
+    title: Card draw simulator
+    hint: Click to draw; Shift-click to reset and draw
+    draw: Draw
+    all: all
+    oddhint: "Odds to have at least 1 copy of a desired card, after having drawn that many cards from the deck, depending of the number of copies in the deck (1 - 2 - 3)"
+    odds: Odds
+    more: more
+  smartfilter:
+    title: Smart filter syntax
+    example: "Example: <tt>m:1 s>3</tt> shows all characters with a <span class='icon-military'></span> icon and a STR greater than 3"
+    filters:
+      flavor: Flavor text
+      claim: Claim value
+      pack_code: Pack
+      faction_code: Faction
+      is_intrigue: Intrigue icon
+      reserve: Reserve value
+      illustrator: Illustrator
+      traits: Traits
+      is_loyal: Loyalty
+      is_military: Military icon
+      income: Gold value
+      cost: Cost
+      is_power: Power icon
+      strength: Strength
+      type_code: Type
+      is_unique: Uniqueness
+      initiative: Initiative value
+      text: Text
+      quantity: Quantity in pack
+  charts:
+    faction:
+      title: Card Factions
+      subtitle: Draw deck only
+      label: "# cards"
+    icon:
+      title: Character Icons
+      subtitle: Duplicates not counted
+      tooltip:
+        header: "%type% Icon"
+        label: "# characters"
+    strength:
+      title: Character Strength
+      subtitle: Duplicates not counted
+      tooltip:
+        header: "STR %str%"
+        label: "# characters"
+    cost:
+      title: Card Cost
+      subtitle: Cost X ignored
+      tooltip:
+        header: "Cost %cost%"
+        label: "# cards"
+  history:
+    timeremaining: Time Remaining
+    columns:
+      date: Date
+      version: Version
+      changes: Changes
+      action: Action
+    firstversion: First version
+    unsaved: unsaved
+    revert: Revert
 
 search:
   label: Search
@@ -30,18 +233,15 @@ search:
 pag:
   cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
 
-challengues:
-  military: Military
-  intrigue: Intrigue
-  power: Power
-
 card:
   info:
     name: Name
     faction: Faction
     cost: Cost
+    costgold: Cost/Gold
     type: Type
     str: STR
+    strini: Strength/Initiative
     traits: Traits
     set: Set
     loyal: Loyal
@@ -51,3 +251,35 @@ card:
     claim: Claim
     reserve: Reserve
     plotlimit: Plot deck limit
+    quantity: Quantity
+    short:
+      costgold: C.
+      strini: S.
+      type: T.
+      faction: F.
+
+challengues:
+  military: Military
+  intrigue: Intrigue
+  power: Power
+
+icon:
+  baratheon: Baratheon
+  greyjoy: Greyjoy
+  intrigue: Intrigue
+  lannister: Lannister
+  martell: Martell
+  military: Military
+  thenightswatch: The Night's Watch
+  power: Power
+  stark: Stark
+  targaryen: Targaryen
+  tyrell: Tyrell
+  unique: Unique
+  plot: Plot
+  attachment: Attachment
+  location: Location
+  character: Character
+  event: Event
+  agenda: Agenda
+  neutral: Neutral

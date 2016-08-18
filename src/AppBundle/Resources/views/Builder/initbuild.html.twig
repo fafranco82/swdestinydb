@@ -8,7 +8,7 @@
 <form action="{{ path('deck_initbuild') }}" method="post" enctype="application/x-www-form-urlencoded">
 <div class="row">
 	<div class="col-md-8">
-		<h1>Choose your faction</h1>
+		<h1>{{ 'decks.build.choose.faction' | trans }}</h1>
 		<div class="row">
 			{% for faction in factions %}
 			<div class="col-md-3 col-sm-4">
@@ -23,12 +23,12 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<h2>Choose an agenda</h2>
+		<h2>{{ 'decks.build.choose.agenda' | trans }}</h2>
 		<ul class="list-group">
 			<li class="list-group-item radio">
 				<label>
 					<input type="radio" name="agenda" value="" checked="checked">
-					No agenda
+					{{ 'decks.build.choose.noagenda' | trans }}
 				</label>
 			</li>
 		{% for agenda in agendas %}
@@ -44,7 +44,7 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<button type="submit" class="btn btn-primary btn-block">Create the deck and start building</button>
+		<button type="submit" class="btn btn-primary btn-block">{{ 'decks.build.start' | trans }}</button>
 	</div>
 </div>
 </form>

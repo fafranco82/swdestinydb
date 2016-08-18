@@ -10,16 +10,13 @@ var date_creation,
 	faction_name,
 	unsaved,
 	user_id,
-	problem_labels = {
-		too_many_plots: "Contains too many Plots",
-		too_few_plots: "Contains too few Plots",
-		too_many_different_plots: "Contains more than one duplicated Plot",
-		too_many_agendas: "Contains more than one Agenda",
-		too_few_cards: "Contains too few cards",
-		too_many_copies: "Contains too many copies of a card (by title)",
-		invalid_cards: "Contains forbidden cards (cards no permitted by Faction or Agenda)",
-		agenda: "Doesn't comply with the Agenda conditions"
-	},
+	problem_labels = _.reduce(
+		['too_many_plots', 'too_few_plots', 'too_many_different_plots', 'too_many_agendas', 'too_few_cards', 'too_many_copies', 'invalid_cards', 'agenda'],
+		function(problems, key) {
+			problems[key] = Translator.trans('decks.problems.'+key);
+			return problems;
+		},
+		{}),
 	header_tpl = _.template('<h5><span class="icon icon-<%= code %>"></span> <%= name %> (<%= quantity %>)</h5>'),
 	card_line_tpl = _.template('<span class="icon icon-<%= card.type_code %> fg-<%= card.faction_code %>"></span> <a href="<%= card.url %>" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="<%= card.code %>"><%= card.label %></a>'),
 	layouts = {},
@@ -256,9 +253,11 @@ deck.get_layout_data = function get_layout_data(options) {
 		agenda_line.find('.icon').remove();
 		deck.update_layout_section(data, 'meta', agenda_line);
 	}
-	deck.update_layout_section(data, 'meta', $('<div>Draw deck: '+deck.get_draw_deck_size()+' cards</div>').addClass(deck.get_draw_deck_size() < 60 ? 'text-danger': ''));
-	deck.update_layout_section(data, 'meta', $('<div>Plot deck: '+deck.get_plot_deck_size()+' cards</div>').addClass(deck.get_plot_deck_size() != 7 ? 'text-danger': ''));
-	deck.update_layout_section(data, 'meta', $('<div>Packs: ' + _.map(deck.get_included_packs(), function (pack) { return pack.name+(pack.quantity > 1 ? ' ('+pack.quantity+')' : ''); }).join(', ') + '</div>'));
+	deck.update_layout_section(data, 'meta', $('<div>'+Translator.transChoice('decks.edit.meta.drawdeck', deck.get_draw_deck_size(), {count: deck.get_draw_deck_size()})+'</div>').addClass(deck.get_draw_deck_size() < 60 ? 'text-danger': ''));
+	deck.update_layout_section(data, 'meta', $('<div>'+Translator.transChoice('decks.edit.meta.plotdeck', deck.get_plot_deck_size(), {count: deck.get_plot_deck_size()})+'</div>').addClass(deck.get_plot_deck_size() != 7 ? 'text-danger': ''));
+	//deck.update_layout_section(data, 'meta', $('<div>Packs: ' + _.map(deck.get_included_packs(), function (pack) { return pack.name+(pack.quantity > 1 ? ' ('+pack.quantity+')' : ''); }).join(', ') + '</div>'));
+	var packs = _.map(deck.get_included_packs(), function (pack) { return pack.name+(pack.quantity > 1 ? ' ('+pack.quantity+')' : ''); }).join(', ');
+	deck.update_layout_section(data, 'meta', $('<div>'+Translator.trans('decks.edit.meta.packs', {"packs": packs})+'</div>'));
 	if(problem) {
 		deck.update_layout_section(data, 'meta', $('<div class="text-danger small"><span class="fa fa-exclamation-triangle"></span> '+problem_labels[problem]+'</div>'));
 	}

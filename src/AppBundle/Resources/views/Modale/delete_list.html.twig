@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="deleteListModalLabel">Delete decks</h3>
+				<h3 class="modal-title" id="deleteListModalLabel">{{ 'decks.modals.deletelist.title' | trans }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -12,11 +12,11 @@
 						<form action="{{ path('deck_delete_list') }}" method="POST" enctype="application/x-www-form-urlencoded" id="delete-deck-list-form">
 							<input type="hidden" name="ids" id="delete-deck-list-id" value="">
 							<p>
-							Are you sure that you want to delete all the decks selected?
+								{{ 'decks.modals.deletelist.question' | trans }}
 							</p>
 							<div class="pull-right">
-								<button type="submit" class="btn btn-danger">Yes, delete</button>
-								<button type="button" class="btn btn-default" onclick="$('#deleteListModal').modal('hide')">Cancel</button>
+								<button type="submit" class="btn btn-danger">{{ 'decks.modals.deletelist.confirm' | trans }}</button>
+								<button type="button" class="btn btn-default" onclick="$('#deleteListModal').modal('hide')">{{ 'forms.cancel' | trans }}</button>
 							</div>
 						</form>
 					</div><!-- /#modal-info -->

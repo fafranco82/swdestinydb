@@ -15,7 +15,7 @@
 <div class="main white container">
 
 {% if deck.isUnsaved %}
-<div class="alert alert-danger" role="alert" id="deck-unsaved-alert"><span class="fa fa-exclamation-triangle"></span> This deck has unsaved changes. Please save the deck or cancel the changes before making further edits.</div>
+<div class="alert alert-danger" role="alert" id="deck-unsaved-alert"><span class="fa fa-exclamation-triangle"></span> {{ 'decks.edit.unsaved' | trans }}</div>
 {% endif %}
 
 <div class="row">
@@ -38,12 +38,12 @@
 	<input type="hidden" name="faction_code" value="{{ deck.faction.code }}">
 	<input type="hidden" name="tags">
 		<div class="form-group">
-			<label for="name">Name</label>
+			<label for="name">{{ 'decks.edit.form.name' | trans }}</label>
 			<input type="text" class="form-control decklist-name" name="name" value="{{ deck.name }}">
 		</div>
-	<button type="submit" class="btn btn-success">Save</button>
+	<button type="submit" class="btn btn-success">{{ 'forms.save' | trans }}</button>
 {#	<button type="submit" id="btn-save-as-copy" class="btn btn-default">Save as Copy</button> #}
-	<button type="submit" id="btn-cancel-edits" class="btn btn-link">Cancel edits</button>
+	<button type="submit" id="btn-cancel-edits" class="btn btn-link">{{ 'decks.edit.form.cancel' | trans }}</button>
 </form>
 
 </div>
@@ -53,11 +53,31 @@
 <div class="col-md-6">
 	<div role="tabpanel">
 	  <ul class="nav nav-tabs" role="tablist">
-	    <li role="presentation" class="active"><a href="#tab-pane-build" aria-controls="tab-pane-build" role="tab" data-toggle="tab"><span class="fa fa-puzzle-piece"></span> Build</a></li>
-	    <li role="presentation"><a href="#tab-pane-infos" aria-controls="tab-pane-infos" role="tab" data-toggle="tab"><span class="fa fa-pencil-square-o"></span> Notes</a></li>
-	    <li role="presentation"><a href="#tab-pane-draw" aria-controls="tab-pane-draw" role="tab" data-toggle="tab"><span class="fa fa-repeat"></span> Test</a></li>
-		<li role="presentation"><a href="#tab-pane-charts" aria-controls="tab-pane-charts" role="tab" data-toggle="tab"><span class="fa fa-bar-chart"></span> Charts</a></li>
-	    <li role="presentation"><a href="#tab-pane-history" aria-controls="tab-pane-history" role="tab" data-toggle="tab" id="tab-header-history"><span class="fa fa-history"></span> History</a></li>
+	    <li role="presentation" class="active">
+	    	<a href="#tab-pane-build" aria-controls="tab-pane-build" role="tab" data-toggle="tab">
+	    		<span class="fa fa-puzzle-piece"></span> {{ 'decks.edit.tabs.build' | trans }}
+	    	</a>
+	    </li>
+	    <li role="presentation">
+	    	<a href="#tab-pane-infos" aria-controls="tab-pane-infos" role="tab" data-toggle="tab">
+	    		<span class="fa fa-pencil-square-o"></span> {{ 'decks.edit.tabs.notes' | trans }}
+	    	</a>
+	    </li>
+	    <li role="presentation">
+	    	<a href="#tab-pane-draw" aria-controls="tab-pane-draw" role="tab" data-toggle="tab">
+	    		<span class="fa fa-repeat"></span> {{ 'decks.edit.tabs.test' | trans }}
+	    	</a>
+	    </li>
+		<li role="presentation">
+			<a href="#tab-pane-charts" aria-controls="tab-pane-charts" role="tab" data-toggle="tab">
+				<span class="fa fa-bar-chart"></span> {{ 'decks.edit.tabs.charts' | trans }}
+			</a>
+		</li>
+	    <li role="presentation">
+	    	<a href="#tab-pane-history" aria-controls="tab-pane-history" role="tab" data-toggle="tab" id="tab-header-history">
+	    		<span class="fa fa-history"></span> {{ 'decks.edit.tabs.history' | trans }}
+	    	</a>
+	    </li>
 	   </ul>
 	  <div class="tab-content">
 	  	<div role="tabpanel" class="tab-pane active" id="tab-pane-build">
@@ -84,7 +104,7 @@
 
 <div class="row">
 	<p class="text-center text-muted small">
-		<a href="#" class="data-update">Refresh all application data</a>
+		<a href="#" class="data-update">{{ 'decks.edit.refresh' | trans }}</a>
 	</p>
 </div>
 </div><!-- .container -->

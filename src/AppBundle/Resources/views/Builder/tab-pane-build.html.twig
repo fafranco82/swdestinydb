@@ -1,27 +1,48 @@
 
 <div class="row">
 	<div class="col-md-12 text-right" style="margin-bottom:10px">
-        <button class="btn btn-default btn-xs" type="button" id="filter-text-button">Filter help</button>
+        <button class="btn btn-default btn-xs" type="button" id="filter-text-button">{{'decks.edit.build.help' | trans}}</button>
         <div class="btn-group">
-			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Sets <span class="caret"></span></button>
-			<ul class="dropdown-menu pull-right" data-filter="pack_code" title="Shift+Click to select only one option ; Alt+Shift+Click to select all other options"></ul>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{ 'decks.edit.build.sets.label' | trans}} <span class="caret"></span></button>
+			<ul class="dropdown-menu pull-right" data-filter="pack_code" title="{{ 'decks.edit.build.sets.hint' | trans }}"></ul>
 		</div>
 		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Options <span class="caret"></span></button>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{ 'decks.edit.build.options.label' | trans}} <span class="caret"></span></button>
 			<ul class="dropdown-menu pull-right" id="config-options">
-			    <li><a href="#"><label><input type="checkbox" name="show-unusable"> Show unusable cards</label></a></li>
-				<li><a href="#"><label><input type="checkbox" name="show-only-deck"> Show only used cards</label></a></li>
-				<li><a href="#"><label><input type="radio" name="display-column" value="1"> Display on 1 column</label></a></li>
-				<li><a href="#"><label><input type="radio" name="display-column" value="2"> Display on 2 columns</label></a></li>
-				<li><a href="#"><label><input type="radio" name="display-column" value="3"> Display on 3 columns</label></a></li>
-				<li><a href="#"><label><input type="radio" name="core-set" value="1"> Use 1 Core Set</label></a></li>
-				<li><a href="#"><label><input type="radio" name="core-set" value="2"> Use 2 Core Sets</label></a></li>
-				<li><a href="#"><label><input type="radio" name="core-set" value="3"> Use 3 Core Sets</label></a></li>
-				<li><a href="#"><label><input type="radio" name="show-suggestions" value="0"> Show no suggestion</label></a></li>
-				<li><a href="#"><label><input type="radio" name="show-suggestions" value="3"> Show 3 suggestions</label></a></li>
-				<li><a href="#"><label><input type="radio" name="show-suggestions" value="10"> Show 10 suggestions</label></a></li>
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative"> Faction/type cumulative</label></a></li>
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive"> Faction/type exclusive</label></a></li>
+			    <li><a href="#"><label><input type="checkbox" name="show-unusable"> {{ 'decks.edit.build.options.show.unusable' | trans }}</label></a></li>
+				<li><a href="#"><label><input type="checkbox" name="show-only-deck"> {{ 'decks.edit.build.options.show.onlyused' | trans }}</label></a></li>
+				{% for i in 1..3 %}
+				<li>
+					<a href="#">
+						<label>
+							<input type="radio" name="display-column" value="{{i}}">
+							{% transchoice i with {'%cols%': i} %}decks.edit.build.options.display{% endtranschoice %}
+						</label>
+					</a>
+				</li>
+				{% endfor %}
+				{% for i in 1..3 %}
+				<li>
+					<a href="#">
+						<label>
+							<input type="radio" name="core-set" value="{{i}}">
+							{% transchoice i with {'%core%': i} %}decks.edit.build.options.usecore{% endtranschoice %}
+						</label>
+					</a>
+				</li>
+				{% endfor %}
+				{% for i in [0, 3, 10] %}
+				<li>
+					<a href="#">
+						<label>
+							<input type="radio" name="show-suggestions" value="{{i}}">
+							{% transchoice i with {'%count%': i} %}decks.edit.build.options.suggestions{% endtranschoice %}
+						</label>
+					</a>
+				</li>
+				{% endfor %}
+				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative"> {{ 'decks.edit.build.options.factype.cumulative' | trans }}</label></a></li>
+				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive"> {{ 'decks.edit.build.options.factype.exclusive' | trans }}</label></a></li>
 			</ul>
 		</div><!-- /.btn-group -->
 	</div><!-- /.col-sm-6 -->
@@ -30,7 +51,7 @@
 <div class="row">
 	<!-- Search Bar -->
 	<div class="col-sm-12" style="margin-bottom:10px">
-		<input type="text" class="form-control" id="filter-text" placeholder="Find a card or filter the list" tabindex="1">
+		<input type="text" class="form-control" id="filter-text" placeholder="{{ 'decks.edit.build.searchhint' | trans }}" tabindex="1">
 	</div>
 	<!-- Search Bar -->
 	<div class="col-sm-12" style="margin-bottom:10px">
@@ -47,12 +68,12 @@
 		<table class="table table-condensed table-hover" style="margin-bottom:10px">
 			<thead>
 				<tr>
-					<th style="min-width:85px"><a href="#" data-sort="indeck">Quantity</a></th>
-					<th><a href="#" data-sort="name">Name</a></th>
-					<th class="cost"><a href="#" data-sort="cost|income" title="Cost/Gold">C.</a></th>
-					<th class="strength"><a href="#" data-sort="strength|initiative" title="Strength/Initiative">S.</a></th>
-					<th class="type"><a href="#" data-sort="type_code" title="Type">T.</a></th>
-					<th class="faction"><a href="#" data-sort="faction_code" title="Faction">F.</a></th>
+					<th style="min-width:85px"><a href="#" data-sort="indeck">{{ 'card.info.quantity' | trans}}</a></th>
+					<th><a href="#" data-sort="name">{{ 'card.info.name' | trans}}</a></th>
+					<th class="cost"><a href="#" data-sort="cost|income" title="{{ 'card.info.costgold' | trans}}">{{ 'card.info.short.costgold' | trans}}</a></th>
+					<th class="strength"><a href="#" data-sort="strength|initiative" title="{{ 'card.info.strini' | trans}}">{{ 'card.info.short.strini' | trans}}</a></th>
+					<th class="type"><a href="#" data-sort="type_code" title="{{ 'card.info.type' | trans}}">{{ 'card.info.short.type' | trans}}</a></th>
+					<th class="faction"><a href="#" data-sort="faction_code" title="{{ 'card.info.faction' | trans}}">{{ 'card.info.short.faction' | trans}}</a></th>
 				</tr>
 			</thead>
 			<tbody id="collection-table" class="collection"></tbody>

@@ -3,25 +3,25 @@
 var SmartFilterQuery = [];
 
 var configuration = {
-	a: [ add_string_sf, 'flavor', "Flavor text" ],
-	b: [ add_integer_sf, 'claim', "Claim value" ],
-	e: [ add_string_sf, 'pack_code', "Pack" ],
-	f: [ add_string_sf, 'faction_code', "Faction" ],
-	g: [ add_boolean_sf, 'is_intrigue', "Intrigue icon" ],
-	h: [ add_integer_sf, 'reserve', "Reserve value" ],
-	i: [ add_string_sf, 'illustrator', "Illustrator" ],
-	k: [ add_string_sf, 'traits', "Traits" ],
-	l: [ add_boolean_sf, 'is_loyal', "Loyalty" ],
-	m: [ add_boolean_sf, 'is_military', "Military icon" ],
-	n: [ add_integer_sf, 'income', "Gold value" ],
-	o: [ add_integer_sf, 'cost', "Cost" ],
-	p: [ add_boolean_sf, 'is_power', "Power icon" ],
-	s: [ add_integer_sf, 'strength', "Strength" ],
-	t: [ add_string_sf, 'type_code', "Type" ],
-	u: [ add_boolean_sf, 'is_unique', "Uniqueness" ],
-	v: [ add_integer_sf, 'initiative', "Initiative value" ],
-	x: [ add_string_sf, 'text', "Text" ],
-	y: [ add_integer_sf, 'quantity', "Quantity in pack" ]
+	a: [ add_string_sf, 'flavor', Translator.trans('decks.smartfilter.filters.flavor') ],
+	b: [ add_integer_sf, 'claim', Translator.trans('decks.smartfilter.filters.claim') ],
+	e: [ add_string_sf, 'pack_code', Translator.trans('decks.smartfilter.filters.pack_code') ],
+	f: [ add_string_sf, 'faction_code', Translator.trans('decks.smartfilter.filters.faction_code') ],
+	g: [ add_boolean_sf, 'is_intrigue', Translator.trans('decks.smartfilter.filters.is_intrigue') ],
+	h: [ add_integer_sf, 'reserve', Translator.trans('decks.smartfilter.filters.reserve') ],
+	i: [ add_string_sf, 'illustrator', Translator.trans('decks.smartfilter.filters.illustrator') ],
+	k: [ add_string_sf, 'traits', Translator.trans('decks.smartfilter.filters.traits') ],
+	l: [ add_boolean_sf, 'is_loyal', Translator.trans('decks.smartfilter.filters.is_loyal') ],
+	m: [ add_boolean_sf, 'is_military', Translator.trans('decks.smartfilter.filters.is_military') ],
+	n: [ add_integer_sf, 'income', Translator.trans('decks.smartfilter.filters.income') ],
+	o: [ add_integer_sf, 'cost', Translator.trans('decks.smartfilter.filters.cost') ],
+	p: [ add_boolean_sf, 'is_power', Translator.trans('decks.smartfilter.filters.is_power') ],
+	s: [ add_integer_sf, 'strength', Translator.trans('decks.smartfilter.filters.strength') ],
+	t: [ add_string_sf, 'type_code', Translator.trans('decks.smartfilter.filters.type_code') ],
+	u: [ add_boolean_sf, 'is_unique', Translator.trans('decks.smartfilter.filters.is_unique') ],
+	v: [ add_integer_sf, 'initiative', Translator.trans('decks.smartfilter.filters.initiative') ],
+	x: [ add_string_sf, 'text', Translator.trans('decks.smartfilter.filters.text') ],
+	y: [ add_integer_sf, 'quantity', Translator.trans('decks.smartfilter.filters.quantity') ]
 };
 
 /**
@@ -57,7 +57,7 @@ smart_filter.get_help = function get_help() {
 	var items = _.map(configuration, function (value, key) {
 		return '<li><tt>'+key+'</tt> &ndash; '+value[2]+'</li>';
 	});
-	return '<ul>'+items.join('')+'</ul><p>Example: <tt>m:1 s>3</tt> shows all characters with a Military icon and a STR greater than 3</p>';
+	return '<ul>'+items.join('')+'</ul><p>'+Translator.trans('decks.smartfilter.example')+'</p>';
 }
 
 function add_integer_sf(key, operator, values) {

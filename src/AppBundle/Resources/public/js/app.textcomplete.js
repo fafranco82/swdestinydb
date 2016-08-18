@@ -36,13 +36,13 @@ textcomplete.setup = function setup(textarea, options) {
 		actions.push({
 			match : /\$([\-+\w]*)$/,
 			search : function(term, callback) {
-				var regexp = new RegExp('^' + term, 'i');
+				var regexp = new RegExp(term, 'i');
 				callback(_.filter(icons,
-					function(symbol) { return regexp.test(symbol); }
+					function(symbol) { return regexp.test(Translator.trans('icon.'+symbol)); }
 				));
 			},
 			template : function(value) {
-				return value;
+				return Translator.trans('icon.'+value);
 			},
 			replace : function(value) {
 				return '<span class="icon-' + value + '"></span>';

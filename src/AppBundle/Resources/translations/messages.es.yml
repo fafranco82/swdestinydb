@@ -1,15 +1,218 @@
-shortdescription: Constructor de mazos para Juego de Tronos LCG 2ª Edición
+slogan: Constructor de mazos para Juego de Tronos LCG 2ª Edición
+
+data_load_fail: "No fue posible cargar los datos. Haga click <a href='javascript:window.location.reload(true)'>aquí</a> para recargar la página."
 
 seemore:
   faction: Más de esta facción
 
 nav:
   mydecks: Mis mazos
-  decklists: Lista de Mazos
+  decklists: Mazos
   cards: Cartas
   rules: Reglas
   advancedsearch: Búsqueda avanzada
   cardsearch: Buscar carta
+  user:
+    loginregister: Identificarse o registrarse
+    editaccount: Editar cuenta
+    profile: Perfil público
+    logout: Salir
+
+forms:
+  save: Guardar
+  edit: Editar
+  publish: Publicar
+  delete: Borrar
+  cancel: Cancelar
+  add: Añadir
+  remove: Eliminar
+  import: Importar
+  upload: Subir
+  reset: Limpiar
+  clone: Clonar
+  close: Cerrar
+
+decks:
+  privatedecks: Mis mazos privados
+  slotcount: "(%current%/%max% mazos)"
+  problems:
+    too_many_plots: Contiene demasiadas Tramas
+    too_few_plots: Contiene muy pocas Tramas
+    too_many_different_plots: Contiene más de una Trama duplicada
+    too_many_agendas: Contiene más de una Estrategia
+    too_few_cards: Contiene muy pocas cartas
+    too_many_copies: Contiene demasiadas copias de la misma carta (por título)
+    invalid_cards: Contiene cartas prohibidas (cartas no permitidas por la Facción o la Estrategia)
+    agenda: No se ajusta a las condiciones de la Estrategia
+  build:
+    choose:
+      faction: Elige tu Facción
+      agenda: Elige tu Estrategia
+      noagenda: Sin Estrategia
+    start: Crear el mazo y empezar a construirlo
+    newname:
+      noagenda: "Nuevo mazo: %faction%"
+      agenda: "Nuevo mazo: %faction%, %agenda%"
+    errors:
+      nofaction: Se requiere una Facción.
+  edit:
+    unsaved: Este mazo tiene cambios sin guardar. Por favor, guarda el mazo o cancela los cambios antes de seguir modificándolo.
+    refresh: Recargar los datos de la aplicación
+    tabs:
+      build: Construir
+      notes: Notas
+      test: Pruebas
+      charts: Gráficas
+      history: Historia
+    build:
+      help: Ayuda de filtros
+      sets:
+        label: Capítulos
+        hint: Mayús+Click para seleccionar solo uno; Alt+Mayús+Click para seleccionar todas las otras opciones
+      options:
+        label: Opciones
+        show:
+          unusable: Mostrar cartas que no se pueden usar
+          onlyused: Sólo mostrar cartas usadas
+        display: "{1} Mostrar en 1 columna | ]1, Inf] Mostrar en %cols% columnas"
+        usecore: "{1} Usar 1 Caja básica | ]1, Inf] Usar %core% Cajas básicas"
+        suggestions: "{0} No mostrar sugerencias | {1} Mostrar %count% sugerencia | ]1, Inf] Mostrar %count% sugerencias"
+        factype:
+          cumulative: Facción/Tipo acumulativo
+          exclusive: Facción/Tipo exclusivo
+      searchhint: Encuentra una carta o filtra la lista
+    notes:
+      tags:
+        label: Etiquetas
+        hint: Las etiquetas son útiles para filtrar tu lista de mazos, p. ej., <i>competitivo</i> o <i>justa</i>.
+      notes:
+        label: Notas
+        hint: "Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo."
+    form:
+      name: Nombre
+      cancel: Cancelar cambios
+    meta:
+      drawdeck: "{0} Mazo de robo: %count% cartas | {1} Mazo de robo: %count% carta | ]1,Inf] Mazo de robo: %count% cartas"
+      plotdeck: "{0} Mazo de tramas: %count% cartas | {1} Mazo de tramas: %count% carta | ]1,Inf] Mazo de tramas: %count% cartas"
+      packs: "Capítulos: %packs%"
+  form:
+    build: Construir nuevo mazo
+    uploadarchive: Subir archivo
+    new: Nuevo mazo
+    import:
+      label: Importar mazo
+      copypaste: Copiar/pegar
+      file: Fichero
+    selection: 
+      label: Con los seleccionados
+      compare:
+        label: Comparar
+        twodecks: Comparar dos mazos
+      tags:
+        label: Etiquetas
+        add: Añadir una o más etiquetas
+        remove: Eliminar una o más etiquetas
+        clear: Quitar todas las etiquetas
+      delete:
+        label: Borrar
+        selected: Borrar todos los mazos seleccionados
+    labelswitch: Click para cambiar a esta etiqueta. Mayús+Click para alternar esta etiqueta.
+  modals:
+    card:
+      go: Ir a la página de la carta
+    fileimport:
+      title: Subir fichero de mazo
+      file:
+        label: Fichero
+      type:
+        label: Tipo de fichero
+        options:
+          auto: Automático
+          octgn: OCTGN
+          text: Texto
+    delete:
+      title: Borrar mazo
+      question: ¿Estás seguro de que deseas borrar el mazo %name%?
+      confirm: Sí, bórralo
+    deletelist:
+      title: Borrar mazos
+      question: ¿Estás seguro de que deseas borrar todos los mazos seleccionados?
+      confirm: Sí, bórralos
+    tags:
+      label: Por favor, introduzca la lista de etiquetas, separadas por espacios
+      hint: una-etiqueta otra
+      clear:
+        question: ¿Estás seguro de que deseas quitar todas las etiquetas de los mazos seleccionados?
+        confirm: Sí, quítalas
+  suggestions:
+    title: Sugerencias de cartas
+  published:
+    title: Versiones publicadas
+    none: Ninguna
+  simulator:
+    title: Simulador de robo
+    hint: Click para robar; Mayús-click para robar desde el principio
+    draw: Robar
+    all: todo
+    oddhint: "Probabilidades de robar al menos una copia de las cartas deseadas, después de robar tantas del mazo, dependiendo del número de copias incluidas (1 - 2 - 3)"
+    odds: Probabilidades
+    more: más
+  smartfilter:
+    title: Sintaxis del filtro inteligente
+    example: "Ejemplo: <tt>m:1 s>3</tt> muestra todos los Personajes con icono <span class='icon-military'></span> y FUE mayor que 3"
+    filters:
+      flavor: Texto de ambientación
+      claim: Valor de conquista
+      pack_code: Capítulo
+      faction_code: Facción
+      is_intrigue: Icono de intriga
+      reserve: Valor de reserva
+      illustrator: Ilustrador
+      traits: Rasgos
+      is_loyal: Lealtad
+      is_military: Icono militar
+      income: Valor de ingresos
+      cost: Coste
+      is_power: Icono de poder
+      strength: Fuerza
+      type_code: Tipo
+      is_unique: Único
+      initiative: Valor de iniciativa
+      text: Texto
+      quantity: Cantidad en el capítulo
+  charts:
+    faction:
+      title: Cartas por Facción
+      subtitle: Solo mazo de robo
+      label: "# cartas"
+    icon:
+      title: Iconos de Personajes
+      subtitle: No se cuentan los duplicados
+      tooltip:
+        header: "Icono %type%"
+        label: "# Personajes"
+    strength:
+      title: Fuerza de Personajes
+      subtitle: No se cuentan los duplicados
+      tooltip:
+        header: "FUE %str%"
+        label: "# Personajes"
+    cost:
+      title: Coste de las cartas
+      subtitle: Se ignoran los costes X
+      tooltip:
+        header: "Coste %cost%"
+        label: "# cartas"
+  history:
+    timeremaining: Tiempo restante
+    columns:
+      date: Fecha
+      version: Versión
+      changes: Cambios
+      action: Acción
+    firstversion: Primera versión
+    unsaved: sin guardar
+    revert: Deshacer
 
 search:
   label: Buscar
@@ -30,18 +233,15 @@ search:
 pag:
   cardscount: "{0} No hay cartas | {1} Una carta | ]1,Inf] %count% cartas"
 
-challengues:
-  military: Militar
-  intrigue: Intriga
-  power: Poder
-
 card:
   info:
     name: Nombre
     faction: Facción
     cost: Coste
+    costgold: Coste/Oro
     type: Tipo
     str: FUE
+    strini: Fuerza/Iniciativa
     traits: Rasgos
     set: Capítulo
     loyal: Leal
@@ -51,3 +251,35 @@ card:
     claim: Conquista
     reserve: Reserva
     plotlimit: Límite por mazo
+    quantity: Cantidad
+    short:
+      costgold: C.
+      strini: Fu.
+      type: T.
+      faction: F.
+
+challengues:
+  military: Militar
+  intrigue: Intriga
+  power: Poder
+
+icon:
+  baratheon: Baratheon
+  greyjoy: Greyjoy
+  intrigue: Intriga
+  lannister: Lannister
+  martell: Martell
+  military: Militar
+  thenightswatch: Guardia de la Noche
+  power: Poder
+  stark: Stark
+  targaryen: Targaryen
+  tyrell: Tyrell
+  unique: Único
+  plot: Trama
+  attachment: Accesorio
+  location: Lugar
+  character: Personaje
+  event: Evento
+  agenda: Estrategia
+  neutral: Neutral
