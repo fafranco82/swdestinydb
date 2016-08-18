@@ -50,7 +50,7 @@ format.info = function info(card) {
 		text += Translator.trans('card.info.cost')+': '+(card.cost != null ? card.cost : 'X')+'. ';
 		break;
 	case 'plot':
-		text += Translator.trans('card.info.gold')+': '+card.income+'. ';
+		text += Translator.trans('card.info.income')+': '+card.income+'. ';
 		text += Translator.trans('card.info.initiative')+': '+card.initiative+'. ';
 		text += Translator.trans('card.info.claim')+': '+card.claim+'. ';
 		text += Translator.trans('card.info.reserve')+': '+card.reserve+'. ';

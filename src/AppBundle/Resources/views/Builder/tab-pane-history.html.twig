@@ -2,15 +2,17 @@
 <div class="row">
 	<div class="col-sm-12" id="history">
 	   <div class="progress">
-	       <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="60" style="width:0%"><span class="sr-only">Time remaining</span></div>
+	       <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="60" style="width:0%">
+	       	<span class="sr-only">{{ 'decks.history.timeremaining' | trans }}</span>
+	       </div>
 	   </div>
 		<table class="table">
 		  <thead>
 		      <tr>
-		          <th>Date</th>
-		          <th>Version</th>
-		          <th>Changes</th>
-		          <th>Action</th>
+		          <th>{{ 'decks.history.columns.date' | trans }}</th>
+		          <th>{{ 'decks.history.columns.version' | trans }}</th>
+		          <th>{{ 'decks.history.columns.changes' | trans }}</th>
+		          <th>{{ 'decks.history.columns.action' | trans }}</th>
 		      </tr>
 		  </thead>
 		  <tbody>
@@ -23,7 +25,7 @@
 <!-- Published decklists Table -->
 <table class="table table-condensed" id="table-predecessor">
 	<thead>
-		<tr><th colspan="{% if deck.children|length %}4{% else %}1{% endif %}"><span class="fa fa-share"></span> Published versions</th></tr>
+		<tr><th colspan="{% if deck.children|length %}4{% else %}1{% endif %}"><span class="fa fa-share"></span> {{ 'decks.published.title' | trans }}</th></tr>
 	</thead>
 	<tbody>
 	{% if deck.children|length %}
@@ -31,7 +33,7 @@
 		{{ macros.decklist_table_row(decklist) }}
 	{% endfor %}
 	{% else %}
-		<tr><td>None.</td></tr>
+		<tr><td>{{ 'decks.published.none' | trans }}.</td></tr>
 	{% endif %}
 	</tbody>
 </table>

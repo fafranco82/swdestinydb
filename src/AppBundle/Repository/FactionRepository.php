@@ -14,4 +14,11 @@ class FactionRepository extends TranslatableRepository
 		$qb = $this->createQueryBuilder('f')->andWhere('f.isPrimary = 1');
 		return $this->getResult($qb);
 	}
+
+	public function findByCode($code)
+	{
+		$qb = $this->createQueryBuilder('f')->andWhere('f.code = ?1');
+		$qb->setParameter(1, $code);
+		return $this->getOneOrNullResult($qb);
+	}
 }

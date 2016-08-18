@@ -17,14 +17,14 @@
 
 <div class="row" style="margin-bottom:10px">
 <div class="col-md-12">
-	<a href="{{ path('deck_buildform') }}" class="btn btn-default btn-sm"{% if cannotcreate %} disabled="disabled"{% endif %}><span class="fa fa-plus"></span> New Deck</a>
+	<a href="{{ path('deck_buildform') }}" class="btn btn-default btn-sm"{% if cannotcreate %} disabled="disabled"{% endif %}><span class="fa fa-plus"></span> {{ 'decks.form.new' | trans}}</a>
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"{% if cannotcreate %} disabled="disabled"{% endif %}>
-			<span class="fa fa-upload"></span> Import Deck <span class="caret"></span>
+			<span class="fa fa-upload"></span> {{ 'decks.form.import.label' | trans}} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
-			<li><a href="{{ path('deck_import') }}" id="btn-import-paste">Copy/paste</a></li>
-			<li><a href="#" onclick="$('#fileModal').modal('show')" id="btn-import-file">File</a></li>
+			<li><a href="{{ path('deck_import') }}" id="btn-import-paste">{{ 'decks.form.import.copypaste' | trans}}</a></li>
+			<li><a href="#" onclick="$('#fileModal').modal('show')" id="btn-import-file">{{ 'decks.form.import.file' | trans}}</a></li>
 		</ul>
 	</div>
 </div>
@@ -34,23 +34,23 @@
 <div class="col-md-12">
 	<div class="btn-group" id="btn-group-selection">
 		<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
-			<span class="fa fa-check-square-o"></span> With Selection <span class="caret"></span>
+			<span class="fa fa-check-square-o"></span> {{ 'decks.form.selection.label' | trans}} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
-			<li class="dropdown-header"><span class="fa fa-exchange"></span> Compare</li>
-		    <li><a href="#" id="btn-compare">Compare two decks</a></li>
-		    <li class="dropdown-header"><span class="fa fa-tag"></span> Tags</li>
-		    <li><a href="#" id="btn-tag-add">Add one or more tags</a></li>
-			<li><a href="#" id="btn-tag-remove-one">Remove one or more tags</a></li>
-			<li><a href="#" id="btn-tag-remove-all">Clear all tags</a></li>
-			<li class="dropdown-header"><span class="fa fa-trash-o"></span> Delete</li>
-			<li><a href="#" id="btn-delete-selected"><span style="color:red" class="fa fa-exclamation-triangle"></span> Delete all decks selected</a></li>
+			<li class="dropdown-header"><span class="fa fa-exchange"></span> {{ 'decks.form.selection.compare.label' | trans}}</li>
+		    <li><a href="#" id="btn-compare">{{ 'decks.form.selection.compare.twodecks' | trans}}</a></li>
+		    <li class="dropdown-header"><span class="fa fa-tag"></span> {{ 'decks.form.selection.tags.label' | trans}}</li>
+		    <li><a href="#" id="btn-tag-add">{{ 'decks.form.selection.tags.add' | trans}}</a></li>
+			<li><a href="#" id="btn-tag-remove-one">{{ 'decks.form.selection.tags.remove' | trans}}</a></li>
+			<li><a href="#" id="btn-tag-remove-all">{{ 'decks.form.selection.tags.clear' | trans}}</a></li>
+			<li class="dropdown-header"><span class="fa fa-trash-o"></span> {{ 'decks.form.selection.delete.label' | trans}}</li>
+			<li><a href="#" id="btn-delete-selected"><span style="color:red" class="fa fa-exclamation-triangle"></span> {{ 'decks.form.selection.delete.selected' | trans}}</a></li>
 		</ul>
 	</div>
 </div>
 </div>
 <div class="row" style="margin-bottom:10px">
-<div class="col-md-12" id="tag_toggles" title="Click to switch to this tag. Shift-click to toggle this tag."></div>
+<div class="col-md-12" id="tag_toggles" title="{{ 'decks.form.labelswitch' | trans }}"></div>
 </div>
 
 </div>
@@ -59,7 +59,12 @@
 <!-- Left-side column -->
 <div class="col-md-8 col-md-pull-4">
 
-<h1>My private decks <small style="font-size:16px" class="hidden-xs {% if cannotcreate %}text-danger{% endif %}">({{ nbdecks }}/{{ nbmax }} slots)</small></h1>
+<h1>
+	{{ 'decks.privatedecks' | trans}}
+	<small style="font-size:16px" class="hidden-xs {% if cannotcreate %}text-danger{% endif %}">
+		{{ 'decks.slotcount' | trans({'%max%': nbmax, '%current%': nbdecks}) }}
+	</small>
+</h1>
 
 <table class="table table-expanded list-decks">
 <tbody id="decks">
@@ -84,9 +89,9 @@
 			</div>
 		</td>
 		<td class="decks-actions text-right">
-			<a href="{{ path('deck_edit',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="Edit"><span class="fa fa-pencil fa-fw"></span></a>
-			<a href="{{ path('deck_publish_form',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="Publish"><span class="fa fa-share fa-fw"></span></a>
-			<button class="btn btn-xs btn-default btn-delete-deck" data-toggle="tooltip" title="Delete"><span class="fa fa-trash-o fa-fw"></span></button>
+			<a href="{{ path('deck_edit',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.edit' | trans}}"><span class="fa fa-pencil fa-fw"></span></a>
+			<a href="{{ path('deck_publish_form',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.publish' | trans}}"><span class="fa fa-share fa-fw"></span></a>
+			<button class="btn btn-xs btn-default btn-delete-deck" data-toggle="tooltip" title="{{ 'forms.delete' | trans}}"><span class="fa fa-trash-o fa-fw"></span></button>
 		</td>
 	</tr>
 {% endfor %}

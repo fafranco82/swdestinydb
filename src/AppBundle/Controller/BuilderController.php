@@ -29,7 +29,7 @@ class BuilderController extends Controller
 		$agendas = $em->getRepository('AppBundle:Card')->findByType("agenda");
 
 		return $this->render('AppBundle:Builder:initbuild.html.twig', [
-				'pagetitle' => "New deck",
+				'pagetitle' => $this->get('translator')->trans('decks.form.new'),
 				'factions' => $factions,
 				'agendas' => $agendas,
 		], $response);
@@ -37,6 +37,8 @@ class BuilderController extends Controller
 
     public function initbuildAction (Request $request)
     {
+        $translator = $this->get('translator');
+
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
 
@@ -45,14 +47,14 @@ class BuilderController extends Controller
 
         if(!$faction_code)
         {
-        	$this->get('session')->getFlashBag()->set('error', "A faction is required.");
+        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.nofaction"));
         	return $this->redirect($this->generateUrl('deck_buildform'));
         }
 
-        $faction = $em->getRepository('AppBundle:Faction')->findOneBy(array("code" => $faction_code));
+        $faction = $em->getRepository('AppBundle:Faction')->findByCode($faction_code);
         if(!$faction)
         {
-        	$this->get('session')->getFlashBag()->set('error', "A faction is required.");
+        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.nofaction"));
         	return $this->redirect($this->generateUrl('deck_buildform'));
         }
 		$tags = [ $faction_code ];
@@ -60,13 +62,18 @@ class BuilderController extends Controller
         if(!$agenda_code)
         {
         	$agenda = NULL;
-        	$name = sprintf("New deck: %s", $faction->getName());
+            $name = $translator->trans("decks.build.newname.noagenda", array(
+                "%faction%" => $faction->getName()
+            ));
         	$pack = $em->getRepository('AppBundle:Pack')->findOneBy(array("code" => "Core"));
         }
         else
         {
-        	$agenda = $em->getRepository('AppBundle:Card')->findOneBy(array("code" => $agenda_code));
-        	$name = sprintf("New deck: %s, %s", $faction->getName(), $agenda->getName());
+        	$agenda = $em->getRepository('AppBundle:Card')->findByCode($agenda_code);
+            $name = $translator->trans("decks.build.newname.noagenda", array(
+                "%faction%" => $faction->getName(),
+                "%agenda%" => $agenda->getName()
+            ));
         	$pack = $agenda->getPack();
 			$tags[] = $this->get('agenda_helper')->getMinorFactionCode($agenda);
         }
@@ -592,7 +599,7 @@ class BuilderController extends Controller
 			$tags = array_unique($tags);
         	return $this->render('AppBundle:Builder:decks.html.twig',
         			array(
-        					'pagetitle' => "My Decks",
+        					'pagetitle' => $this->get("translator")->trans('nav.mydecks'),
         					'pagedescription' => "Create custom decks with the help of a powerful deckbuilder.",
         					'decks' => $decks,
 							'tags' => $tags,
@@ -607,7 +614,7 @@ class BuilderController extends Controller
         {
         	return $this->render('AppBundle:Builder:no-decks.html.twig',
         			array(
-        					'pagetitle' => "My Decks",
+        					'pagetitle' => $this->get("translator")->trans('nav.mydecks'),
         					'pagedescription' => "Create custom decks with the help of a powerful deckbuilder.",
         					'nbmax' => $user->getMaxNbDecks(),
         					'tournaments' => $tournaments,

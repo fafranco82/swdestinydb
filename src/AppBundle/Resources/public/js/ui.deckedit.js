@@ -614,7 +614,7 @@ ui.init_filter_help = function init_filter_help() {
 		content: app.smart_filter.get_help(),
 		html: true,
 		placement: 'bottom',
-		title: 'Smart filter syntax'
+		title: Translator.trans('decks.smartfilter.title')
 	});
 }
 

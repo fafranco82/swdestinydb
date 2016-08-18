@@ -155,7 +155,7 @@ data.update_done = function update_done(packs_updated, cards_updated) {
  */
 data.update_fail = function update_fail(packs_loaded, cards_loaded) {
 	if(packs_loaded === false || cards_loaded === false) {
-		var message = "Unable to load the data. Click <a href=\"javascript:window.location.reload(true)\">here</a> to reload your page.";
+		var message = Translator.trans('data_load_fail');
 		app.ui.insert_alert_message('danger', message);
 	} else {
 		/*

@@ -4,23 +4,26 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="fileModalLabel">Upload deck file</h3>
+				<h3 class="modal-title" id="fileModalLabel">{{ 'decks.modals.fileimport.title' | trans}}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
 						<form action="{{ path('deck_fileimport') }}" method="POST" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="upfile">File</label>
+								<label for="upfile">{{ 'decks.modals.fileimport.file.label' | trans}}</label>
 								<input class="form-control" type="file" id="upfile" name="upfile">
 							</div>
 							<div class="form-group">
-								<label for="type">File type</label>
-								<select class="form-control" id="type" name="type"><option value="auto">auto</option><option value="octgn">OCTGN</option><option value="text">Text</option></select>
+								<label for="type">{{ 'decks.modals.fileimport.type.label' | trans}}</label>
+								<select class="form-control" id="type" name="type">
+									<option value="auto">{{ 'decks.modals.fileimport.type.options.auto' | trans}}</option>
+									<option value="octgn">{{ 'decks.modals.fileimport.type.options.octgn' | trans}}</option>
+									<option value="text">{{ 'decks.modals.fileimport.type.options.text' | trans}}</option></select>
 							</div>
 							<div class="pull-right">
-								<button type="submit" class="btn btn-success">Upload</button>
-								<button type="button" class="btn btn-default" onclick="$('#fileModal').modal('hide')">Cancel</button>
+								<button type="submit" class="btn btn-success">{{ 'forms.upload' | trans }}</button>
+								<button type="button" class="btn btn-default" onclick="$('#fileModal').modal('hide')">{{ 'forms.cancel' | trans }}</button>
 							</div>
 						</form>
 					</div><!-- /#modal-info -->
