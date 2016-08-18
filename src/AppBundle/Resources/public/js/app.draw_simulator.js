@@ -76,7 +76,7 @@ draw_simulator.do_draw = function do_draw(draw) {
 		if(card.imagesrc) {
 			card_element = $('<img src="'+card.imagesrc+'">');
 		} else {
-			card_element = $('<div class="card-proxy"><div>'+card.name+'</div></div>');
+			card_element = $('<div class="card-proxy"><div>'+card.label+'</div></div>');
 		}
 		container.append(card_element);
 		draw_count++;

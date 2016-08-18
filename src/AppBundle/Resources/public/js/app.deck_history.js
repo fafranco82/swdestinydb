@@ -90,12 +90,12 @@ deck_history.add_snapshot = function add_snapshot(snapshot) {
 		_.each(snapshot.variation[0], function (qty, code) {
 			var card = app.data.cards.findById(code);
 			if(!card) return;
-			list.push('+'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.name+'</a>');
+			list.push('+'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.label+'</a>');
 		});
 		_.each(snapshot.variation[1], function (qty, code) {
 			var card = app.data.cards.findById(code);
 			if(!card) return;
-			list.push('&minus;'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.name+'</a>');
+			list.push('&minus;'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.label+'</a>');
 		});
 	} else {
 		list.push(Translator.trans('decks.history.firstversion'));

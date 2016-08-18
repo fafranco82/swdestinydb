@@ -30,6 +30,7 @@ forms:
   upload: Subir
   reset: Limpiar
   clone: Clonar
+  close: Cerrar
 
 decks:
   privatedecks: Mis mazos privados
@@ -117,6 +118,8 @@ decks:
         selected: Borrar todos los mazos seleccionados
     labelswitch: Click para cambiar a esta etiqueta. Mayús+Click para alternar esta etiqueta.
   modals:
+    card:
+      go: Ir a la página de la carta
     fileimport:
       title: Subir fichero de mazo
       file:

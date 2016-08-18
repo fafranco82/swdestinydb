@@ -92,6 +92,7 @@
 			<a href="{{ path('deck_edit',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.edit' | trans}}"><span class="fa fa-pencil fa-fw"></span></a>
 			<a href="{{ path('deck_publish_form',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.publish' | trans}}"><span class="fa fa-share fa-fw"></span></a>
 			<button class="btn btn-xs btn-default btn-delete-deck" data-toggle="tooltip" title="{{ 'forms.delete' | trans}}"><span class="fa fa-trash-o fa-fw"></span></button>
+                        <a href="{{ path('deck_clone', {deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.clone' | trans}}"><span class="fa fa-clone"></span></a>
 		</td>
 	</tr>
 {% endfor %}

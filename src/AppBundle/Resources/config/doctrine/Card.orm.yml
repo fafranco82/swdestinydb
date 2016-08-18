@@ -44,7 +44,7 @@ AppBundle\Entity\Card:
             nullable: false
         name:
             type: string
-            length: 1024
+            length: 50
             nullable: false
             gedmo:
                 - translatable
@@ -134,3 +134,6 @@ AppBundle\Entity\Card:
     uniqueConstraints:
         card_code_idx:
             columns: [ code ]
+    indexes:
+        card_name_idx:
+            columns: [ name ]

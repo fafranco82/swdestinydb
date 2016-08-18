@@ -30,6 +30,7 @@ forms:
   upload: Upload
   reset: Reset
   clone: Clone
+  close: Close
 
 decks:
   privatedecks: My private decks
@@ -117,6 +118,8 @@ decks:
         selected: Delete all decks selected
     labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
   modals:
+    card:
+      go: Go to card page
     fileimport:
       title: Upload deck file
       file:
