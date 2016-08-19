@@ -19,7 +19,7 @@ nav:
     logout: Logout
 
 forms:
-  save: Guardar
+  save: Save
   edit: Edit
   publish: Publish
   delete: Delete
