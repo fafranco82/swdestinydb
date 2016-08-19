@@ -1,6 +1,7 @@
 slogan: Constructor de mazos para Juego de Tronos LCG 2ª Edición
 
 data_load_fail: "No fue posible cargar los datos. Haga click <a href='javascript:window.location.reload(true)'>aquí</a> para recargar la página."
+login_required: Debes estar identificado para realizar esta operación
 
 seemore:
   faction: Más de esta facción
@@ -225,6 +226,34 @@ decks:
     decknumber: "Mazo #%id%"
     plotdecks: Mazos de trama
     drawdecks: Mazos de robo
+
+decklist:
+  publish:
+    name: Nombre
+    placedhigh: ¿Consiguió una posición alta en un torneo?
+    no: No
+    derived: Derivado de (copia el id o la dirección del mazo del cual se ha inspirado éste)
+    description: Descripción
+    editor:
+      hint: "Presiona # para insertar el nombre de una carta, $ para inserta un símbolo del juego."
+      cardtolink: Convertir el nombre de una carta en un enlace a ésta
+      entersymbol: Insertar un símbolo del juego
+      heading: Cabecera %number%
+    errors:
+      unauthorized: No tienes acceso a este mazo.
+      antispam:
+        newbie: Para prevenir el spam, las cuentas recién creadas deben esperar 24 horas antes de que puedan publicar un mazo.
+        limit: Para prevenir el spam, las cuentas no pueden publicar durante 24 horas más mazos que su reputación.
+      unreleased: Aún no puedes publicar este mazo porque tiene cartas que no han sido publicadas oficialmente.
+      invalid: No se puede publicar este mazo porque es inválido.
+      pagetitle:
+        spam: Prevención de spam
+    warnings:
+      published: "Este mazo <a href='%url%'>ya ha sido publicado</a> antes. Vas a crear un duplicado."
+  view:
+    errors:
+      notfound: Mazo no encontrado.
+
 
 search:
   label: Buscar
