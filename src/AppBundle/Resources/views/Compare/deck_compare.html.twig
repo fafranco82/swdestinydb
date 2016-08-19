@@ -5,13 +5,13 @@
 <div class="main white container">
 	
 	<div class="row">
-	    <div class="col-xs-6"><h1>Deck #{{ deck1.id }}</h1><h3>{{ deck1.name }}</h3></div>
-	    <div class="col-xs-6"><h1>Deck #{{ deck2.id }}</h1><h3>{{ deck2.name }}</h3></div>
+	    <div class="col-xs-6"><h1>{{ 'decks.compare.decknumber' | trans({'%id%': deck1.id}) }}</h1><h3>{{ deck1.name }}</h3></div>
+	    <div class="col-xs-6"><h1>{{ 'decks.compare.decknumber' | trans({'%id%': deck2.id}) }}</h1><h3>{{ deck2.name }}</h3></div>
 	</div>
 
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<h4>Plot Decks</h4>
+			<h4>{{ 'decks.compare.plotdecks' | trans }}</h4>
 		</div>
 	</div>
 	
@@ -49,7 +49,7 @@
 	
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<h4>Draw Decks</h4>
+			<h4>{{ 'decks.compare.drawdecks' | trans }}</h4>
 		</div>
 	</div>
 	

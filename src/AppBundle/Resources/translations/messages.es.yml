@@ -31,10 +31,15 @@ forms:
   reset: Limpiar
   clone: Clonar
   close: Cerrar
+  print: Imprimir
+  download: Descargar
 
 decks:
   privatedecks: Mis mazos privados
   slotcount: "(%current%/%max% mazos)"
+  version: Versión %version%
+  description: Descripción
+  defaultemptydesc: "*Sin descripción*"
   problems:
     too_many_plots: Contiene demasiadas Tramas
     too_few_plots: Contiene muy pocas Tramas
@@ -117,6 +122,9 @@ decks:
         label: Borrar
         selected: Borrar todos los mazos seleccionados
     labelswitch: Click para cambiar a esta etiqueta. Mayús+Click para alternar esta etiqueta.
+    download:
+      text: Fichero de texto
+      octgn: Fichero OCTGN
   modals:
     card:
       go: Ir a la página de la carta
@@ -213,6 +221,10 @@ decks:
     firstversion: Primera versión
     unsaved: sin guardar
     revert: Deshacer
+  compare:
+    decknumber: "Mazo #%id%"
+    plotdecks: Mazos de trama
+    drawdecks: Mazos de robo
 
 search:
   label: Buscar

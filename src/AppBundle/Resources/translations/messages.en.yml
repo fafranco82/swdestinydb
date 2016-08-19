@@ -31,10 +31,15 @@ forms:
   reset: Reset
   clone: Clone
   close: Close
+  print: Print
+  download: Download
 
 decks:
   privatedecks: My private decks
   slotcount: "(%current%/%max% slots)"
+  version: Version %version%
+  description: Description
+  defaultemptydesc: "*No description.*"
   problems:
     too_many_plots: Contains too many Plots
     too_few_plots: Contains too few Plots
@@ -117,6 +122,9 @@ decks:
         label: Delete
         selected: Delete all decks selected
     labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
+    download:
+      text: Text file
+      octgn: Octgn file
   modals:
     card:
       go: Go to card page
@@ -213,6 +221,10 @@ decks:
     firstversion: First version
     unsaved: unsaved
     revert: Revert
+  compare:
+    decknumber: "Deck #%id%"
+    plotdecks: Plot Decks
+    drawdecks: Draw Decks
 
 search:
   label: Search
