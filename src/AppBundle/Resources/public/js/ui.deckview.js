@@ -69,7 +69,7 @@ ui.on_data_loaded = function on_data_loaded() {
  * @memberOf ui
  */
 ui.on_all_loaded = function on_all_loaded() {
-	app.markdown && app.markdown.update(app.deck.get_description_md() || '*No description.*', '#description');
+	app.markdown && app.markdown.update(app.deck.get_description_md() || Translator.trans('decks.defaultemptydesc'), '#description');
 	ui.refresh_deck();
 };
 

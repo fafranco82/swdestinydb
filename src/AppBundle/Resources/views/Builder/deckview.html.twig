@@ -1,6 +1,13 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% import "AppBundle::macros.html.twig" as macros %}
 
+{% block stylesheets %}
+	<style type="text/css">
+	    /* Shrink a bit these buttons in Spanish to keep them showing in a single row */
+		#btn-group-deck:lang(es) .btn {	padding-left: 9px; padding-right: 9px; }
+	</style>
+{% endblock %}
+
 {% block javascripts %}
 	{% javascripts '@AppBundle/Resources/public/js/ui.deckview.js' %}
 	<script src="{{ asset_url }}"></script>
@@ -35,32 +42,32 @@
 			<div style="margin-bottom:20px" id="btn-group-deck">
 				<div style="margin-bottom:5px">
 					{% if is_owner %}
-					<a href="{{ path('deck_edit', {deck_id:deck_id}) }}" class="btn btn-primary"><span class="fa fa-pencil"></span> Edit</a>
-					<a href="{{ path('deck_publish_form', {deck_id:deck_id}) }}" id="btn-publish" class="btn btn-success"><span class="fa fa-share"></span> Publish</a>
-					<button type="button" id="btn-delete" class="btn btn-danger"><span class="fa fa-trash"></span> Delete</button>
+					<a href="{{ path('deck_edit', {deck_id:deck_id}) }}" class="btn btn-primary"><span class="fa fa-pencil"></span> {{ 'forms.edit' | trans }}</a>
+					<a href="{{ path('deck_publish_form', {deck_id:deck_id}) }}" id="btn-publish" class="btn btn-success"><span class="fa fa-share"></span> {{ 'forms.publish' | trans }}</a>
+					<button type="button" id="btn-delete" class="btn btn-danger"><span class="fa fa-trash"></span> {{ 'forms.delete' | trans }}</button>
 					{% endif %}
-					<a href="{{ path('deck_clone', {deck_id:deck_id}) }}" id="btn-clone" class="btn btn-info"><span class="fa fa-clone"></span> Clone</a>
-					<button type="button" id="btn-print" class="btn btn-default"><span class="fa fa-print"></span> Print</button>
+					<a href="{{ path('deck_clone', {deck_id:deck_id}) }}" id="btn-clone" class="btn btn-info"><span class="fa fa-clone"></span> {{ 'forms.clone' | trans }}</a>
+					<button type="button" id="btn-print" class="btn btn-default"><span class="fa fa-print"></span> {{ 'forms.print' | trans }}</button>
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<span class="fa fa-download"></span> Download <span class="caret"></span>
+							<span class="fa fa-download"></span> {{ 'forms.download' | trans }} <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ path('deck_export_text', {deck_id:deck_id}) }}">Text file</a></li>
-							<li><a href="{{ path('deck_export_octgn', {deck_id:deck_id}) }}">Octgn file</a></li>
+							<li><a href="{{ path('deck_export_text', {deck_id:deck_id}) }}">{{ 'decks.form.download.text' | trans }}</a></li>
+							<li><a href="{{ path('deck_export_octgn', {deck_id:deck_id}) }}">{{ 'decks.form.download.octgn' | trans }}</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 
 			<p>
-				Version {{ deck.version }}
+				{{ 'decks.version' | trans({'%version%': deck.version}) }}
 			</p>
 			
 			<!-- Description -->
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">Description</h3>
+			    <h3 class="panel-title">{{ 'decks.description' | trans }}</h3>
 			  </div>
 			  <div class="panel-body" id="description">
 			  </div>
@@ -73,7 +80,7 @@
 			<!-- Published decklists Table -->
 			<table class="table table-condensed" id="table-predecessor">
 				<thead>
-					<tr><th colspan="4"><span class="fa fa-share"></span> Published versions</th></tr>
+					<tr><th colspan="4"><span class="fa fa-share"></span> {{ 'decks.published.title' | trans }}</th></tr>
 				</thead>
 				<tbody>
 				{% if deck.children|length %}
@@ -81,7 +88,7 @@
 					{{ macros.decklist_table_row(decklist) }}
 				{% endfor %}
 				{% else %}
-					<tr><td>None.</td></tr>
+					<tr><td>{{ 'decks.published.none' | trans }}.</td></tr>
 				{% endif %}
 				</tbody>
 			</table>
