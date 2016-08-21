@@ -1,19 +1,19 @@
-<a href="{{ path('decklist_edit', {decklist_id:decklist.id}) }}" title="Edit decklist name / description" id="decklist-edit" class="btn btn-sm btn-default" style="display:none">
-	<span class="fa fa-pencil text-primary"></span> Edit
+<a href="{{ path('decklist_edit', {decklist_id:decklist.id}) }}" title="{{ 'decklist.view.toolbar.edit' | trans }}" id="decklist-edit" class="btn btn-sm btn-default" style="display:none">
+	<span class="fa fa-pencil text-primary"></span> {{ 'forms.edit' | trans }}
 </a>
 <a href="#" title="Delete decklist" id="decklist-delete" class="btn btn-sm btn-default" style="display:none">
-	<span class="fa fa-trash-o text-danger"></span> Delete
+	<span class="fa fa-trash-o text-danger"></span> {{ 'forms.delete' | trans }}
 </a>
 <a href="{{ path('deck_copy', {decklist_id:decklist.id}) }}" class="btn btn-sm btn-default">
-	<span class="fa fa-save"></span> <span class="hidden-xs">Copy</span>
+	<span class="fa fa-save"></span> <span class="hidden-xs">{{ 'forms.copy' | trans }}</span>
 </a>
 <div class="btn-group">
 	<button type="button" class="btn btn-sm btn-default dropdown-toggle " data-toggle="dropdown">
-		<span class="fa fa-download"></span> <span class="hidden-xs">Download</span> <span class="caret"></span>
+		<span class="fa fa-download"></span> <span class="hidden-xs">{{ 'forms.download' | trans }}</span> <span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="#" id="btn-download-text">Text file</a></li>
-		<li><a href="#" id="btn-download-octgn">Octgn file</a></li>
+		<li><a href="#" id="btn-download-text">{{ 'decks.form.download.text' | trans }}</a></li>
+		<li><a href="#" id="btn-download-octgn">{{ 'decks.form.download.octgn' | trans }}</a></li>
 	</ul>
 </div>
 {#

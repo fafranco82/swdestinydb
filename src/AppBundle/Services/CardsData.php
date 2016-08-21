@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /*
@@ -14,11 +15,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class CardsData
 {
-	public function __construct(Registry $doctrine, RequestStack $request_stack, Router $router, AssetsHelper $assets_helper, $rootDir) {
+	public function __construct(Registry $doctrine, RequestStack $request_stack, Router $router, AssetsHelper $assets_helper, DataCollectorTranslator $translator, $rootDir) {
 		$this->doctrine = $doctrine;
         $this->request_stack = $request_stack;
         $this->router = $router;
         $this->assets_helper = $assets_helper;
+        $this->translator = $translator;
         $this->rootDir = $rootDir;
 	}
 
@@ -54,13 +56,22 @@ class CardsData
 	 */
 	public function addAbbrTags($text)
 	{
-		static $keywords = ['Renown','Intimidate','Stealth','Insight','Limited','Pillage','Terminal','Ambush'];
+		static $keywords = ['renown','intimidate','stealth','insight','limited','pillage','terminal','ambush'];
+
+		$locale = $this->request_stack->getCurrentRequest()->getLocale();
+
+		foreach($keywords as $keyword)
+		{
+			$translated = $this->translator->trans('keyword.'.$keyword.".name", array(), "messages", $locale);
+			
+			$text = preg_replace_callback("/\b($translated)\b/i", function ($matches) use ($keyword) {
+				return "<abbr data-keyword=\"$keyword\">".$matches[1]."</abbr>";
+			}, $text);
+		}
 		
-		$regexp = implode('|', $keywords);
 		
-		return preg_replace_callback("/($regexp)\./", function ($matches) {
-			return "<abbr>".$matches[1]."</abbr>.";
-		}, $text);
+		
+		return $text;
 	}
 	
 	public function splitInParagraphs($text)

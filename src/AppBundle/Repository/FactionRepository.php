@@ -9,6 +9,13 @@ class FactionRepository extends TranslatableRepository
 		parent::__construct($entityManager, $entityManager->getClassMetadata('AppBundle\Entity\Faction'));
 	}
 
+	public function findAllAndOrderByName()
+	{
+		$qb = $this->createQueryBuilder('f')->orderBy('f.name', 'ASC');
+		return $this->getResult($qb);
+	}
+
+
 	public function findPrimaries()
 	{
 		$qb = $this->createQueryBuilder('f')->andWhere('f.isPrimary = 1');

@@ -1,6 +1,6 @@
 <table class="table">
 <thead>
-<tr><th><span class="fa fa-comment"></span> {{ decklist.nbComments }} comments</th></tr>
+<tr><th><span class="fa fa-comment"></span>{% transchoice decklist.nbComments with {'%count%': decklist.nbComments} %}decklist.view.comments.count{% endtranschoice %}</th></tr>
 </thead>
 <tbody>
 {% for comment in decklist.comments %}
@@ -10,7 +10,9 @@
     </div>
     <div class="collapse{% if not comment.isHidden %} in{% endif %}" id="div-comment-{{ comment.id }}">
     	<h4 class="comment-header">
-    		<span class="comment-date pull-right" title="{{ comment.dateCreation|date('r') }}">{{ comment.dateCreation|date('M d, Y') }}</span>
+    		<span class="comment-date pull-right">
+                <time datetime="{{ comment.dateCreation|date('c') }}">{{ comment.dateCreation|date('M d, Y') }}</time>
+            </span>
         	<span class="comment-author">{{ macros.username(comment.user) }}</span>
     	</h4>
         <div class="comment-text">{{ comment.text|raw }}</div>

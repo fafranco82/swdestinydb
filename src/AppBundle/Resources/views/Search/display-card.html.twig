@@ -39,7 +39,7 @@
         			{% if card.imagesrc %}
         			   <img src="{{ card.imagesrc }}" alt="{{ card.name }}" class="img-responsive" style="margin:auto">
         			{% else %}
-        			   <div class="no-image" style="margin:auto"><div class="no-image-text">No image</div></div>
+        			   <div class="no-image" style="margin:auto"><div class="no-image-text">{{ 'noimage' | trans }}</div></div>
         			{% endif %}
         		</div>
         	</div>

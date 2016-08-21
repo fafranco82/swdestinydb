@@ -27,23 +27,25 @@ class SocialController extends Controller
      */
     public function publishFormAction($deck_id, Request $request)
     {
+        $translator = $this->get('translator');
+
     	/* @var $em \Doctrine\ORM\EntityManager */
     	$em = $this->getDoctrine()->getManager();
 
         /* @var $user \AppBundle\Entity\User */
     	$user = $this->getUser();
     	if (! $user) {
-    		throw $this->createAccessDeniedException("You must be logged in for this operation.");
+    		throw $this->createAccessDeniedException($translator->trans('login_required'));
     	}
 
         $deck = $em->getRepository('AppBundle:Deck')->find($deck_id);
         if (! $deck || $deck->getUser()->getId() != $user->getId()) {
-            throw $this->createAccessDeniedException("You don't have access to this decklist.");
+            throw $this->createAccessDeniedException($translator->trans('decklist.publish.errors.unauthorized'));
         }
 
         $yesterday = (new \DateTime())->modify('-24 hours');
         if($user->getDateCreation() > $yesterday) {
-            $this->get('session')->getFlashBag()->set('error', "To prevent spam, newly created accounts must wait 24 hours before being allowed to publish a decklist.");
+            $this->get('session')->getFlashBag()->set('error', $translator->trans('decklist.publish.errors.antispam.newbie'));
             return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
         }
 
@@ -53,19 +55,19 @@ class SocialController extends Controller
         $decklistsSinceYesterday = $query->getSingleScalarResult();
 
         if($decklistsSinceYesterday > $user->getReputation()) {
-            $this->get('session')->getFlashBag()->set('error', "To prevent spam, accounts cannot publish more decklists than their reputation per 24 hours.");
+            $this->get('session')->getFlashBag()->set('error', $translator->trans('decklist.publish.errors.antispam.limit'));
             return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
         }
 
         $lastPack = $deck->getLastPack();
         if(!$lastPack->getDateRelease() || $lastPack->getDateRelease() > new \DateTime()) {
-        	$this->get('session')->getFlashBag()->set('error', "You cannot publish this deck yet, because it has unreleased cards.");
+        	$this->get('session')->getFlashBag()->set('error', $translator->trans('decklist.publish.errors.unreleased'));
         	return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
         }
         
     	$problem = $this->get('deck_validation_helper')->findProblem($deck);
     	if ($problem) {
-    		$this->get('session')->getFlashBag()->set('error', "This deck cannot be published because it is invalid.");
+    		$this->get('session')->getFlashBag()->set('error', $translator->trans('decklist.publish.errors.invalid'));
     		return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
     	}
     	
@@ -80,7 +82,7 @@ class SocialController extends Controller
     					'decklist_id' => $decklist->getId(),
     					'decklist_name' => $decklist->getNameCanonical()
     			));
-    			$this->get('session')->getFlashBag()->set('warning', "This deck <a href=\"$url\">has already been published</a> before. You are going to create a duplicate.");
+    			$this->get('session')->getFlashBag()->set('warning', $translator->trans('decklist.publish.warnings.published', array("%url%" => $url)));
     		}
     	}
     	
@@ -102,6 +104,8 @@ class SocialController extends Controller
 	 */
     public function createAction (Request $request)
     {
+        $translator = $this->get("translator");
+
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var $user \AppBundle\Entity\User */
@@ -110,8 +114,8 @@ class SocialController extends Controller
         $yesterday = (new \DateTime())->modify('-24 hours');
         if($user->getDateCreation() > $yesterday) {
             return $this->render('AppBundle:Default:error.html.twig', [
-                'pagetitle' => "Spam prevention",
-                'error' => "To prevent spam, newly created accounts must wait 24 hours before being allowed to publish a decklist.",
+                'pagetitle' => $translator->trans('decklist.publish.errors.pagetitle.spam'),
+                'error' => $translator->trans('decklist.publish.errors.antispam.newbie'),
             ]);
         }
 
@@ -122,8 +126,8 @@ class SocialController extends Controller
 
         if($decklistsSinceYesterday > $user->getReputation()) {
             return $this->render('AppBundle:Default:error.html.twig', [
-                'pagetitle' => "Spam prevention",
-                'error' => "To prevent spam, accounts cannot publish more decklists than their reputation per 24 hours.",
+                'pagetitle' => $translator->trans('decklist.publish.errors.pagetitle.spam'),
+                'error' => $translator->trans('decklist.publish.errors.antispam.limit'),
             ]);
         }
 
@@ -335,13 +339,13 @@ class SocialController extends Controller
 
         $categories = [];
         $on = 0; $off = 0;
-        $categories[] = array("label" => "Core / Deluxe", "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
+        $categories[] = array("label" => $this->get("translator")->trans('decklist.list.search.allowed.core'), "packs" => []);
+        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
         foreach($list_cycles as $cycle) {
             $size = count($cycle->getPacks());
             if($cycle->getPosition() == 0 || $size == 0) continue;
             $first_pack = $cycle->getPacks()[0];
-            if($size === 1 && $first_pack->getName() == $cycle->getName()) {
+            if($cycle->getCode() == 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
                 $checked = count($packs) ? in_array($first_pack->getId(), $packs) : true;
                 if($checked) $on++;
                 else $off++;
@@ -366,19 +370,11 @@ class SocialController extends Controller
                 'name' => $decklist_name
         );
         $params['sort_'.$sort] = ' selected="selected"';
-        $params['factions'] = $dbh->executeQuery(
-                "SELECT
-                f.name,
-                f.code
-                from faction f
-                order by f.name asc")
-            ->fetchAll();
+        $params['factions'] = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
         $params['faction_selected'] = $faction_code;
 
         if (! empty($cards_code) && is_array($cards_code)) {
-            $query = $em->createQuery("SELECT c FROM AppBundle:Card c WHERE c.code in (?1)");
-            $query->setParameter(1, $cards_code);
-            $cards = $query->getResult();
+            $cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAllByCodes($cards_code);
 
             $params['cards'] = '';
             foreach($cards as $card) {
@@ -395,6 +391,8 @@ class SocialController extends Controller
 	 */
     public function listAction ($type, $faction = null, $page = 1, Request $request)
     {
+        $translator = $this->get('translator');
+
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
@@ -408,12 +406,10 @@ class SocialController extends Controller
         
         $request_attributes = $request->attributes->all();
         
-        $pagetitle = "Decklists";
         $header = '';
 
         switch ($type) {
             case 'find':
-                $pagetitle = "Decklist search results";
                 $header = $this->searchForm($request);
                 $paginator = $decklist_manager->findDecklistsWithComplexSearch();
                 break;
@@ -428,7 +424,6 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
-                $pagetitle = "Favorite Decklists";
                 break;
             case 'mine':
                 $response->setPrivate();
@@ -441,30 +436,27 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
-                $pagetitle = "My Decklists";
                 break;
             case 'recent':
             	$paginator = $decklist_manager->findDecklistsByAge(false);
-                $pagetitle = "Recent Decklists";
                 break;
             case 'halloffame':
             	$paginator = $decklist_manager->findDecklistsInHallOfFame();
-                $pagetitle = "Hall of Fame";
                 break;
             case 'hottopics':
             	$paginator = $decklist_manager->findDecklistsInHotTopic();
-                $pagetitle = "Hot Topics";
                 break;
             case 'tournament':
             	$paginator = $decklist_manager->findDecklistsInTournaments();
-                $pagetitle = "Tournaments";
                 break;
             case 'popular':
             default:
+                $type = 'popular';
             	$paginator = $decklist_manager->findDecklistsByPopularity();
-            	$pagetitle = "Popular Decklists";
                 break;
         }
+
+        $pagetitle = $translator->trans('decklist.list.titles.'.$type);
         
         return $this->render('AppBundle:Decklist:decklists.html.twig',
                 array(
@@ -490,12 +482,14 @@ class SocialController extends Controller
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
-        $decklist = $this->getDoctrine()->getManager()->getRepository('AppBundle:Decklist')->find($decklist_id);
+        $decklistRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:Decklist');
+
+        $decklist = $decklistRepo->find($decklist_id);
         if(!$decklist) {
-            throw $this->createNotFoundException("Decklist not found.");
+            throw $this->createNotFoundException($this->get("translator")->trans('decklist.view.errors.notfound'));
         }
 
-        $duplicate = $this->getDoctrine()->getManager()->getRepository('AppBundle:Decklist')->findOneBy(['signature' => $decklist->getSignature()], ['dateCreation' => 'ASC']);
+        $duplicate = $decklistRepo->findDuplicate($decklist);
         if($duplicate->getDateCreation() >= $decklist->getDateCreation() || $duplicate->getId() === $decklist->getId()) {
         	$duplicate = null;
         }
@@ -504,7 +498,7 @@ class SocialController extends Controller
         	return $comment->getUser()->getUsername();
         }, $decklist->getComments()->getValues());
         
-        $versions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Decklist')->findBy([ 'parent' => $decklist->getParent() ], [ 'version' => 'DESC' ]);
+        $versions = $decklistRepo->findVersions($decklist);
         
         return $this->render('AppBundle:Decklist:decklist.html.twig',
                 array(
@@ -1019,27 +1013,22 @@ class SocialController extends Controller
 
     public function searchAction (Request $request)
     {
+        $translator = $this->get("translator");
+
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
-        $dbh = $this->getDoctrine()->getConnection();
-        $factions = $dbh->executeQuery(
-                "SELECT
-				f.name,
-				f.code
-				from faction f
-				order by f.name asc")
-            ->fetchAll();
+        $factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
 
         $categories = []; $on = 0; $off = 0;
-        $categories[] = array("label" => "Core / Deluxe", "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
+        $categories[] = array("label" => $translator->trans("decklist.list.search.allowed.core"), "packs" => []);
+        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
         foreach($list_cycles as $cycle) {
             $size = count($cycle->getPacks());
             if($cycle->getPosition() == 0 || $size == 0) continue;
             $first_pack = $cycle->getPacks()[0];
-            if($size === 1 && $first_pack->getName() == $cycle->getName()) {
+            if($cycle->getCode() === 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
                 $checked = $first_pack->getDateRelease() !== NULL;
                 if($checked) $on++;
                 else $off++;
@@ -1069,7 +1058,7 @@ class SocialController extends Controller
 
         return $this->render('AppBundle:Decklist:decklists.html.twig',
         		array(
-        				'pagetitle' => 'Decklist Search',
+        				'pagetitle' => $translator->trans('decklist.list.titles.search'),
         				'decklists' => null,
         				'url' => $request->getRequestUri(),
         				'header' => $searchForm,

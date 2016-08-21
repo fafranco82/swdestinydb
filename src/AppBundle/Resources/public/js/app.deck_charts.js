@@ -96,17 +96,17 @@ deck_charts.chart_faction = function chart_faction() {
 deck_charts.chart_icon = function chart_icon() {
 
 	var data = [{
-		name: Translator.trans('challengues.military'),
+		name: Translator.trans('challenges.military'),
 		label: '<span class="icon icon-military"></span>',
 		color: '#c8232a',
 		y: 0
 	}, {
-		name: Translator.trans('challengues.intrigue'),
+		name: Translator.trans('challenges.intrigue'),
 		label: '<span class="icon icon-intrigue"></span>',
 		color: '#13522f',
 		y: 0
 	}, {
-		name: Translator.trans('challengues.power'),
+		name: Translator.trans('challenges.power'),
 		label: '<span class="icon icon-power"></span>',
 		color: '#292e5f',
 		y: 0

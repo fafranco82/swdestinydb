@@ -9,13 +9,14 @@ ui.on_dom_loaded = function on_dom_loaded() {
 		autofocus: true,
 		iconlibrary: 'fa',
 		hiddenButtons: ['cmdHeading', 'cmdImage', 'cmdCode'],
-		footer: 'Press # to insert a card name, $ to insert a game symbol.',
+		footer: Translator.trans('decklist.publish.editor.hint'),
+		language: "es",
 		additionalButtons: 
 			[[{
 				name: "groupCard",
 				data: [{
 					name: "cmdCard",
-					title: "Turn a card name into a card link",
+					title: Translator.trans('decklist.publish.editor.cardtolink'),
 					icon: "fa fa-clone",
 					callback: ui.on_button_card
 				}]
@@ -23,7 +24,7 @@ ui.on_dom_loaded = function on_dom_loaded() {
 				name: "groupSymbol",
 				data: [{
 					name: "cmdSymbol",
-					title: "Insert a game symbol",
+					title: Translator.trans('decklist.publish.editor.entersymbol'),
 					icon: "icon-power",
 					callback: ui.on_button_symbol
 				}]
@@ -31,17 +32,17 @@ ui.on_dom_loaded = function on_dom_loaded() {
 				name: "groupCustom",
 				data: [{
 					name: "cmdCustom1",
-					title: "Heading 1",
+					title: Translator.trans('decklist.publish.editor.heading', {number: 1}),
 					icon: "fa fa-header",
 					callback: _.partial(ui.on_button_heading, '#')
 				},{
 					name: "cmdCustom2",
-					title: "Heading 2",
+					title: Translator.trans('decklist.publish.editor.heading', {number: 2}),
 					icon: "fa fa-header small",
 					callback: _.partial(ui.on_button_heading, '##')
 				},{
 					name: "cmdCustom3",
-					title: "Heading 3",
+					title: Translator.trans('decklist.publish.editor.heading', {number: 3}),
 					icon: "fa fa-header smaller",
 					callback: _.partial(ui.on_button_heading, '###')
 				}]
@@ -95,7 +96,7 @@ ui.on_button_symbol = function ui_on_button_symbol(e)
 	
 	var icons = 'baratheon greyjoy intrigue lannister martell military thenightswatch power stark targaryen tyrell unique plot attachment location character event agenda neutral'.split(' ');
 	icons.forEach(function (icon) {
-		menu.append('<li data-icon="'+icon+'"><a href="#"><span style="display:inline-block;width:2em;text-align:center" class="icon-'+icon+'"></span> '+icon+'</a></li>');
+		menu.append('<li data-icon="'+icon+'"><a href="#"><span style="display:inline-block;width:2em;text-align:center" class="icon-'+icon+'"></span> '+Translator.trans('icon.'+icon)+'</a></li>');
 	});
 	$(button).dropdown();
 }

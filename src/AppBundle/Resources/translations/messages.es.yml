@@ -1,9 +1,12 @@
 slogan: Constructor de mazos para Juego de Tronos LCG 2ª Edición
 
 data_load_fail: "No fue posible cargar los datos. Haga click <a href='javascript:window.location.reload(true)'>aquí</a> para recargar la página."
+login_required: Debes estar identificado para realizar esta operación
 
+userby: por %user%
 seemore:
   faction: Más de esta facción
+noimage: Sin imagen
 
 nav:
   mydecks: Mis mazos
@@ -29,10 +32,12 @@ forms:
   import: Importar
   upload: Subir
   reset: Limpiar
+  copy: Copiar
   clone: Clonar
   close: Cerrar
   print: Imprimir
   download: Descargar
+  search: Buscar
 
 decks:
   privatedecks: Mis mazos privados
@@ -226,8 +231,111 @@ decks:
     plotdecks: Mazos de trama
     drawdecks: Mazos de robo
 
+decklist:
+  publish:
+    name: Nombre
+    placedhigh: ¿Consiguió una posición alta en un torneo?
+    no: No
+    derived: Derivado de (copia el id o la dirección del mazo del cual se ha inspirado éste)
+    description: Descripción
+    editor:
+      hint: "Presiona # para insertar el nombre de una carta, $ para inserta un símbolo del juego."
+      cardtolink: Convertir el nombre de una carta en un enlace a ésta
+      entersymbol: Insertar un símbolo del juego
+      heading: Cabecera %number%
+    errors:
+      unauthorized: No tienes acceso a este mazo.
+      antispam:
+        newbie: Para prevenir el spam, las cuentas recién creadas deben esperar 24 horas antes de que puedan publicar un mazo.
+        limit: Para prevenir el spam, las cuentas no pueden publicar durante 24 horas más mazos que su reputación.
+      unreleased: Aún no puedes publicar este mazo porque tiene cartas que no han sido publicadas oficialmente.
+      invalid: No se puede publicar este mazo porque es inválido.
+      pagetitle:
+        spam: Prevención de spam
+    warnings:
+      published: "Este mazo <a href='%url%'>ya ha sido publicado</a> antes. Vas a crear un duplicado."
+  view:
+    versions: Versiones
+    published: publicado
+    duplicate: Duplicado de %duplicate%
+    comments:
+      count: "{0} Sin comentarios | {1} %count% comentario | ]1,Inf] %count% comentarios"
+      hint: "Introduce tu comentario en formato Markdown. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo. Escribe @ para introducir el nombre de un usuario."
+      submit: Enviar comentario
+    social:
+      like: Me gusta
+      favorite: Favorito
+      comment: Comentario
+      version: Versión
+    derived:
+      title: Derivado de
+      none: Ninguno. Éste es un mazo hecho de cero.
+    inspire:
+      title: Inspiración para
+      none: Ninguno todavía.
+    toolbar:
+      edit: Editar nombre y descripción del mazo
+    errors:
+      notfound: Mazo no encontrado.
+  list:
+    types:
+      popular: Populares
+      recent: Recientes
+      tournaments: Torneos
+      hottopics: Mazos de moda
+      hof: Salón de la Fama
+      myfavorites: Mis favoritos
+      mydecklists: Mis mazos
+    titles:
+      search: Búsqueda de mazos
+      find: Resultado de la búsqueda de mazos
+      popular: Mazos populares
+      recent: Mazos recientes
+      tournament: Torneos
+      hottopics: Mazos de moda
+      halloffame: Salón de la Fama
+      favorites: Mazos favoritos
+      mine: Mis mazos
+    search:
+      faction:
+        label: Facción
+        any: cualquiera
+      author: 
+        label: Nombre del autor
+        hint: Introduce el nombre del autor
+      used:
+        label: Cartas usadas
+        hint: Introduce nombre de carta
+      decklist:
+        label: Nombre del mazo
+        hint: Introduce nombre del mazo
+      sort:
+        label: Ordenar
+        popularity: por Popularidad
+        date: por Fecha
+        likes: por Número de \"me gusta\"
+        reputation: por Reputación del autor
+      allowed: 
+        label: Capítulos permitidos
+        onoff: "(%on% sí, %off% no)"
+        core: "Caja básica / Deluxe"
+        all: todo
+        none: ninguno
+
 search:
   label: Buscar
+  setbrowse: Explorar capítulos
+  title: Búsqueda de cartas
+  nametexts: Nombre y textos
+  attributes: Atributos
+  numerics: Numéricos
+  other: Otros
+  previews: Adelantos
+  submit: Búsqueda
+  any: cualquiera
+  yes: Sí
+  no: No
+  only: Sólo
   sort:
     name: Ordenar por nombre
     set: Ordenar por capítulo
@@ -246,12 +354,34 @@ pag:
   cardscount: "{0} No hay cartas | {1} Una carta | ]1,Inf] %count% cartas"
 
 card:
+  reviews: 
+    title: Reseñas
+    none: Aún no hay reseñas para esta carta.
+    unreleased: Las reseñas para esta carta se habilitarán cuando ésta sea publicada oficialmente.
+    like: Me gusta esta reseña
+    edit: Editar reseña
+    write: Escribir una reseña
+    hint: "Escribe tu análisis de esta carta en al menos %min% caracteres. Puedes escribir tantas reseñas como tu reputación. Éste no es lugar para preguntas o comentarios. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo."
+    submit: Enviar reseña
+    posted: Tu reseña ha sido enviada. Aparacerá dentro de unos minutos.
+    comments:
+      add: Añadir un comentario
+      hint: Tu comentario
+      post: Enviar
+      posted: Tu comentario se ha enviado. Aparecerá en unos pocos minutos.
+    alerts:
+      minimum: Tu reseña debe tener al menos %min% caracteres.
   info:
     name: Nombre
+    unique: Único
+    text: Texto
+    flavor: Texto de ambientación
     faction: Facción
+    set: Capítulo
     cost: Coste
     costgold: Coste/Oro
     type: Tipo
+    strength: Fuerza
     str: FUE
     strini: Fuerza/Iniciativa
     traits: Rasgos
@@ -264,13 +394,14 @@ card:
     reserve: Reserva
     plotlimit: Límite por mazo
     quantity: Cantidad
+    illustrator: Ilustrador
     short:
       costgold: C.
       strini: Fu.
       type: T.
       faction: F.
 
-challengues:
+challenges:
   military: Militar
   intrigue: Intriga
   power: Poder
@@ -295,3 +426,29 @@ icon:
   event: Evento
   agenda: Estrategia
   neutral: Neutral
+
+keyword:
+  renown:
+    name: Renombre
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes ganar 1 de Poder para este Personaje."
+  intimidate:
+    name: Intimidación
+    title: "Después de que ganes un Reto en el que participe este Personaje, puedes elegir y arrodillar un Personaje controlado por el adversario derrotado cuya FUE sea igual o inferior a la diferencia de FUE por la que has ganado el reto."
+  stealth:
+    name: Sigilo
+    title: "Cuando este Personaje sea declarado como atacante, puedes elegir un Personaje sin Sigilo controlado por el jugador defensor. Ese Personaje no puede ser declaro defensor para este reto."
+  insight:
+    name: Perspicacia
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes robar 1 carta."
+  limited:
+    name: Limitada
+    title: "Un jugador no puede reclutar ni jugar más de 1 carta Limitada en cada ronda, ni tampoco colocar más de 1 carta Limitada durante los preparativos de la partida."
+  pillage:
+    name: Pillaje
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes descartar 1 carta de la parte superior del mazo del adversario derrotado."
+  terminal:
+    name: Terminal
+    title: "Si la carta vinculada abandona el juego, descarta este Accesorio."
+  ambush:
+    name: Emboscada
+    title: "Puedes pagar X de Oro para poner esta carta en juego desde tu mano durante la fase de Reto."
