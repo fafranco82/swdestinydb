@@ -40,9 +40,9 @@ format.info = function info(card) {
 	case 'character':
 		text += Translator.trans('card.info.cost')+': '+(card.cost != null ? card.cost : 'X')+'. ';
 		text += Translator.trans('card.info.str')+': '+(card.strength != null ? card.strength : 'X')+'. '
-		if(card.is_military) text += '<span class="color-military icon-military" title="'+Translator.trans('challengues.military')+'"></span> ';
-		if(card.is_intrigue) text += '<span class="color-intrigue icon-intrigue" title="'+Translator.trans('challengues.intrigue')+'"></span> ';
-		if(card.is_power) text += '<span class="color-power icon-power" title="'+Translator.trans('challengues.power')+'"></span> ';
+		if(card.is_military) text += '<span class="color-military icon-military" title="'+Translator.trans('challenges.military')+'"></span> ';
+		if(card.is_intrigue) text += '<span class="color-intrigue icon-intrigue" title="'+Translator.trans('challenges.intrigue')+'"></span> ';
+		if(card.is_power) text += '<span class="color-power icon-power" title="'+Translator.trans('challenges.power')+'"></span> ';
 		break;
 	case 'attachment':
 	case 'location':

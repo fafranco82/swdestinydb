@@ -5,7 +5,7 @@
 	 */
 	ui.setup_edit = function setup_edit(review_id) 
 	{
-		var button = $('<button class="btn btn-default" id="review-button"><span class="glyphicon glyphicon-pencil"></span> Edit review</a>');
+		var button = $('<button class="btn btn-default" id="review-button"><span class="glyphicon glyphicon-pencil"></span> '+Translator.trans('card.reviews.edit')+'</a>');
 		$('#review-'+review_id+' .review-text').append(button);
 		$('input[name=review_id').val(review_id);
 	}
@@ -15,7 +15,7 @@
 	 */
 	ui.setup_write = function setup_write()
 	{
-		var button = $('<button class="pull-right btn btn-default" id="review-button"><span class="glyphicon glyphicon-plus"></span> Write a review</button>');
+		var button = $('<button class="pull-right btn btn-default" id="review-button"><span class="glyphicon glyphicon-plus"></span> '+Translator.trans('card.reviews.write')+'</button>');
 		$('#reviews-header').prepend(button);
 	}
 	
@@ -23,7 +23,7 @@
 	{
 		event.preventDefault();
 		if($('#review-form-preview').text().length < 200) {
-			alert('Your review must at least 200 characters long.');
+			alert(Translator.trans('card.reviews.alerts.minimum', {min: 200}));
 			return;
 		}
 	
@@ -41,7 +41,7 @@
 			type: 'POST',
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR) {
-				ui.notify(form, 'success', "Your review has been posted. It will appear on the site in a few minutes.");
+				ui.notify(form, 'success', Translator.trans('card.reviews.posted'));
 				form.remove();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -71,9 +71,9 @@
 		 */
 		var form = $("#review-edit-form");
 		form.append('<div><div class="form-group">'
-				+ '<textarea id="review-form-text" class="form-control" rows="20" name="review" placeholder="Write your analysis of the card, in at least 200 characters. You can write a number of card reviews equal to your reputation. This is not a place for questions or comments. Type # to enter a card name. Type $ to enter a symbol."></textarea>'
+				+ '<textarea id="review-form-text" class="form-control" rows="20" name="review" placeholder="'+Translator.trans('card.reviews.hint', {min: 200})+'"></textarea>'
 				+ '</div><div class="well text-muted" id="review-form-preview"><small>Preview. Look <a href="http://daringfireball.net/projects/markdown/dingus">here</a> for a Markdown syntax reference.</small></div>'
-				+ '<button type="submit" class="btn btn-success">Submit review</button></div>');
+				+ '<button type="submit" class="btn btn-success">'+Translator.trans('card.reviews.submit')+'</button></div>');
 		form.on('submit', ui.check_review);
 		
 		/**
@@ -97,7 +97,7 @@
 	ui.write_comment = function write_comment(event)
 	{
 		event.preventDefault();
-		$(this).replaceWith('<div class="input-group"><input type="text" class="form-control" name="comment" placeholder="Your comment"><span class="input-group-btn"><button class="btn btn-primary" type="submit">Post</button></span></div>');
+		$(this).replaceWith('<div class="input-group"><input type="text" class="form-control" name="comment" placeholder="'+Translator.trans('card.reviews.comments.hint')+'"><span class="input-group-btn"><button class="btn btn-primary" type="submit">'+Translator.trans('card.reviews.comments.post')+'</button></span></div>');
 	}
 
 	/**
@@ -115,7 +115,7 @@
 			type: 'POST',
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR) {
-				ui.notify(form, 'success', "Your comment has been posted. It will appear on the site in a few minutes.");
+				ui.notify(form, 'success', Translator.trans('card.reviews.comments.posted'));
 				form.remove();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

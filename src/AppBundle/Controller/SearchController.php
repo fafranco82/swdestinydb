@@ -69,11 +69,11 @@ class SearchController extends Controller
 
 		$packs = $this->get('cards_data')->allsetsdata();
 
-		$cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
-		$types = $this->getDoctrine()->getRepository('AppBundle:Type')->findBy([], array("name" => "ASC"));
-		$factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findBy([], array("id" => "ASC"));
+		$cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
+		$types = $this->getDoctrine()->getRepository('AppBundle:Type')->findAll();
+		$factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
 
-		$list_traits = $dbh->executeQuery("SELECT DISTINCT c.traits FROM card c WHERE c.traits != ''")->fetchAll();
+		$list_traits = $this->getDoctrine()->getRepository('AppBundle:Card')->findTraits();
 		$traits = [];
 		foreach($list_traits as $card) {
 			$subs = explode('.', $card["traits"]);
@@ -90,7 +90,7 @@ class SearchController extends Controller
 		}, $list_illustrators);
 
 		return $this->render('AppBundle:Search:searchform.html.twig', array(
-				"pagetitle" => "Card Search",
+				"pagetitle" => $this->get("translator")->trans('search.title'),
 				"pagedescription" => "Find all the cards of the game, easily searchable.",
 				"packs" => $packs,
 				"cycles" => $cycles,

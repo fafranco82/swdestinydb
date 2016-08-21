@@ -86,4 +86,12 @@ class CardRepository extends TranslatableRepository
 	{
 		return $this->findByRelativePosition($card, 1);
 	}
+
+	public function findTraits()
+	{
+		$qb = $this->createQueryBuilder('c')
+			->select('DISTINCT c.traits')
+			->andWhere("c.traits != ''");
+		return $this->getResult($qb);
+	}
 }

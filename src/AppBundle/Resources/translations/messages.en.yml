@@ -6,6 +6,7 @@ login_required: You must be logged in for this operation.
 userby: by %user%
 seemore:
   faction: More in this faction
+noimage: No image
 
 nav:
   mydecks: My decks
@@ -323,6 +324,18 @@ decklist:
 
 search:
   label: Search
+  setbrowse: Browse by set
+  title: Card Search
+  nametexts: Name and texts
+  attributes: Attributes
+  numerics: Numerics
+  other: Other
+  previews: Previews
+  submit: Submit
+  any: any
+  yes: Yes
+  no: No
+  only: Only
   sort:
     name: Sort by Name
     set: Sort by Set
@@ -341,12 +354,34 @@ pag:
   cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
 
 card:
+  reviews:
+    title: Reviews
+    none: No review yet for this card.
+    unreleased: Reviews will be enabled for this card when it is officially released.
+    like: Like that review
+    edit: Edit review
+    write: Write a review
+    hint: "Write your analysis of the card, in at least %min% characters. You can write a number of card reviews equal to your reputation. This is not a place for questions or comments. Type # to enter a card name. Type $ to enter a symbol."
+    submit: Submit preview
+    posted: Your review has been posted. It will appear on the site in a few minutes.
+    comments:
+      add: Add a comment
+      hint: Your comment
+      post: Post
+      posted: Your comment has been posted. It will appear on the site in a few minutes.
+    alerts:
+      minimum: Your review must at least %min% characters long.
   info:
     name: Name
+    unique: Unique
+    text: Text
+    flavor: Flavor text
     faction: Faction
+    set: Set
     cost: Cost
     costgold: Cost/Gold
     type: Type
+    strength: Fuerza
     str: STR
     strini: Strength/Initiative
     traits: Traits
@@ -359,13 +394,14 @@ card:
     reserve: Reserve
     plotlimit: Plot deck limit
     quantity: Quantity
+    illustrator: Illustrator
     short:
       costgold: C.
       strini: S.
       type: T.
       faction: F.
 
-challengues:
+challenges:
   military: Military
   intrigue: Intrigue
   power: Power

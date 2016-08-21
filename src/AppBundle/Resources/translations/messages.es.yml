@@ -6,6 +6,7 @@ login_required: Debes estar identificado para realizar esta operación
 userby: por %user%
 seemore:
   faction: Más de esta facción
+noimage: Sin imagen
 
 nav:
   mydecks: Mis mazos
@@ -323,6 +324,18 @@ decklist:
 
 search:
   label: Buscar
+  setbrowse: Explorar capítulos
+  title: Búsqueda de cartas
+  nametexts: Nombre y textos
+  attributes: Atributos
+  numerics: Numéricos
+  other: Otros
+  previews: Adelantos
+  submit: Búsqueda
+  any: cualquiera
+  yes: Sí
+  no: No
+  only: Sólo
   sort:
     name: Ordenar por nombre
     set: Ordenar por capítulo
@@ -341,12 +354,34 @@ pag:
   cardscount: "{0} No hay cartas | {1} Una carta | ]1,Inf] %count% cartas"
 
 card:
+  reviews: 
+    title: Reseñas
+    none: Aún no hay reseñas para esta carta.
+    unreleased: Las reseñas para esta carta se habilitarán cuando ésta sea publicada oficialmente.
+    like: Me gusta esta reseña
+    edit: Editar reseña
+    write: Escribir una reseña
+    hint: "Escribe tu análisis de esta carta en al menos %min% caracteres. Puedes escribir tantas reseñas como tu reputación. Éste no es lugar para preguntas o comentarios. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo."
+    submit: Enviar reseña
+    posted: Tu reseña ha sido enviada. Aparacerá dentro de unos minutos.
+    comments:
+      add: Añadir un comentario
+      hint: Tu comentario
+      post: Enviar
+      posted: Tu comentario se ha enviado. Aparecerá en unos pocos minutos.
+    alerts:
+      minimum: Tu reseña debe tener al menos %min% caracteres.
   info:
     name: Nombre
+    unique: Único
+    text: Texto
+    flavor: Texto de ambientación
     faction: Facción
+    set: Capítulo
     cost: Coste
     costgold: Coste/Oro
     type: Tipo
+    strength: Fuerza
     str: FUE
     strini: Fuerza/Iniciativa
     traits: Rasgos
@@ -359,13 +394,14 @@ card:
     reserve: Reserva
     plotlimit: Límite por mazo
     quantity: Cantidad
+    illustrator: Ilustrador
     short:
       costgold: C.
       strini: Fu.
       type: T.
       faction: F.
 
-challengues:
+challenges:
   military: Militar
   intrigue: Intriga
   power: Poder
