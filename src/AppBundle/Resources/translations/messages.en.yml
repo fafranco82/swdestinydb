@@ -36,6 +36,7 @@ forms:
   close: Close
   print: Print
   download: Download
+  search: Search
 
 decks:
   privatedecks: My private decks
@@ -275,6 +276,50 @@ decklist:
       edit: Edit decklist name / description
     errors:
       notfound: Decklist not found.
+  list:
+    types:
+      popular: Popular
+      recent: Recent
+      tournaments: Tournaments
+      hottopics: Hot topics
+      hof: Hall of Fame
+      myfavorites: My favorites
+      mydecklists: My decklists
+    titles:
+      search: Decklist Search
+      find: Decklist search results
+      popular: Popular decklists
+      recent: Recent decklists
+      tournament: Tournaments
+      hottopics: Hot topics
+      halloffame: Hall of Fame
+      favorites: Favorite decklists
+      mine: My decklists
+    search:
+      faction:
+        label: Faction
+        any: any
+      author: 
+        label: Author name
+        hint: Enter author name
+      used:
+        label: Cards used
+        hint: Enter card name
+      decklist:
+        label: Decklist name
+        hint: Enter text to search in name
+      sort:
+        label: Sort
+        popularity: By Popularity
+        date: By Date
+        likes: By Number of Likes
+        reputation: By Reputation of Author
+      allowed:
+        label: Select allowed packs
+        onoff: "(%on% on, %off% off)"
+        core: "Core / Deluxe"
+        all: all
+        none: none
 
 search:
   label: Search

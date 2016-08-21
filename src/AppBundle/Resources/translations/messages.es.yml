@@ -36,6 +36,7 @@ forms:
   close: Cerrar
   print: Imprimir
   download: Descargar
+  search: Buscar
 
 decks:
   privatedecks: Mis mazos privados
@@ -263,7 +264,7 @@ decklist:
     social:
       like: Me gusta
       favorite: Favorito
-      comment: Comentar
+      comment: Comentario
       version: Versión
     derived:
       title: Derivado de
@@ -275,6 +276,50 @@ decklist:
       edit: Editar nombre y descripción del mazo
     errors:
       notfound: Mazo no encontrado.
+  list:
+    types:
+      popular: Populares
+      recent: Recientes
+      tournaments: Torneos
+      hottopics: Mazos de moda
+      hof: Salón de la Fama
+      myfavorites: Mis favoritos
+      mydecklists: Mis mazos
+    titles:
+      search: Búsqueda de mazos
+      find: Resultado de la búsqueda de mazos
+      popular: Mazos populares
+      recent: Mazos recientes
+      tournament: Torneos
+      hottopics: Mazos de moda
+      halloffame: Salón de la Fama
+      favorites: Mazos favoritos
+      mine: Mis mazos
+    search:
+      faction:
+        label: Facción
+        any: cualquiera
+      author: 
+        label: Nombre del autor
+        hint: Introduce el nombre del autor
+      used:
+        label: Cartas usadas
+        hint: Introduce nombre de carta
+      decklist:
+        label: Nombre del mazo
+        hint: Introduce nombre del mazo
+      sort:
+        label: Ordenar
+        popularity: por Popularidad
+        date: por Fecha
+        likes: por Número de \"me gusta\"
+        reputation: por Reputación del autor
+      allowed: 
+        label: Capítulos permitidos
+        onoff: "(%on% sí, %off% no)"
+        core: "Caja básica / Deluxe"
+        all: todo
+        none: ninguno
 
 search:
   label: Buscar

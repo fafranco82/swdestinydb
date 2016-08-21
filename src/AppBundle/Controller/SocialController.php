@@ -339,13 +339,13 @@ class SocialController extends Controller
 
         $categories = [];
         $on = 0; $off = 0;
-        $categories[] = array("label" => "Core / Deluxe", "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
+        $categories[] = array("label" => $this->get("translator")->trans('decklist.list.search.allowed.core'), "packs" => []);
+        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
         foreach($list_cycles as $cycle) {
             $size = count($cycle->getPacks());
             if($cycle->getPosition() == 0 || $size == 0) continue;
             $first_pack = $cycle->getPacks()[0];
-            if($size === 1 && $first_pack->getName() == $cycle->getName()) {
+            if($cycle->getCode() == 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
                 $checked = count($packs) ? in_array($first_pack->getId(), $packs) : true;
                 if($checked) $on++;
                 else $off++;
@@ -370,19 +370,11 @@ class SocialController extends Controller
                 'name' => $decklist_name
         );
         $params['sort_'.$sort] = ' selected="selected"';
-        $params['factions'] = $dbh->executeQuery(
-                "SELECT
-                f.name,
-                f.code
-                from faction f
-                order by f.name asc")
-            ->fetchAll();
+        $params['factions'] = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
         $params['faction_selected'] = $faction_code;
 
         if (! empty($cards_code) && is_array($cards_code)) {
-            $query = $em->createQuery("SELECT c FROM AppBundle:Card c WHERE c.code in (?1)");
-            $query->setParameter(1, $cards_code);
-            $cards = $query->getResult();
+            $cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAllByCodes($cards_code);
 
             $params['cards'] = '';
             foreach($cards as $card) {
@@ -399,6 +391,8 @@ class SocialController extends Controller
 	 */
     public function listAction ($type, $faction = null, $page = 1, Request $request)
     {
+        $translator = $this->get('translator');
+
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
@@ -412,12 +406,10 @@ class SocialController extends Controller
         
         $request_attributes = $request->attributes->all();
         
-        $pagetitle = "Decklists";
         $header = '';
 
         switch ($type) {
             case 'find':
-                $pagetitle = "Decklist search results";
                 $header = $this->searchForm($request);
                 $paginator = $decklist_manager->findDecklistsWithComplexSearch();
                 break;
@@ -432,7 +424,6 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
-                $pagetitle = "Favorite Decklists";
                 break;
             case 'mine':
                 $response->setPrivate();
@@ -445,30 +436,27 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
-                $pagetitle = "My Decklists";
                 break;
             case 'recent':
             	$paginator = $decklist_manager->findDecklistsByAge(false);
-                $pagetitle = "Recent Decklists";
                 break;
             case 'halloffame':
             	$paginator = $decklist_manager->findDecklistsInHallOfFame();
-                $pagetitle = "Hall of Fame";
                 break;
             case 'hottopics':
             	$paginator = $decklist_manager->findDecklistsInHotTopic();
-                $pagetitle = "Hot Topics";
                 break;
             case 'tournament':
             	$paginator = $decklist_manager->findDecklistsInTournaments();
-                $pagetitle = "Tournaments";
                 break;
             case 'popular':
             default:
+                $type = 'popular';
             	$paginator = $decklist_manager->findDecklistsByPopularity();
-            	$pagetitle = "Popular Decklists";
                 break;
         }
+
+        $pagetitle = $translator->trans('decklist.list.titles.'.$type);
         
         return $this->render('AppBundle:Decklist:decklists.html.twig',
                 array(
@@ -1025,27 +1013,22 @@ class SocialController extends Controller
 
     public function searchAction (Request $request)
     {
+        $translator = $this->get("translator");
+
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
-        $dbh = $this->getDoctrine()->getConnection();
-        $factions = $dbh->executeQuery(
-                "SELECT
-				f.name,
-				f.code
-				from faction f
-				order by f.name asc")
-            ->fetchAll();
+        $factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
 
         $categories = []; $on = 0; $off = 0;
-        $categories[] = array("label" => "Core / Deluxe", "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
+        $categories[] = array("label" => $translator->trans("decklist.list.search.allowed.core"), "packs" => []);
+        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
         foreach($list_cycles as $cycle) {
             $size = count($cycle->getPacks());
             if($cycle->getPosition() == 0 || $size == 0) continue;
             $first_pack = $cycle->getPacks()[0];
-            if($size === 1 && $first_pack->getName() == $cycle->getName()) {
+            if($cycle->getCode() === 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
                 $checked = $first_pack->getDateRelease() !== NULL;
                 if($checked) $on++;
                 else $off++;
@@ -1075,7 +1058,7 @@ class SocialController extends Controller
 
         return $this->render('AppBundle:Decklist:decklists.html.twig',
         		array(
-        				'pagetitle' => 'Decklist Search',
+        				'pagetitle' => $translator->trans('decklist.list.titles.search'),
         				'decklists' => null,
         				'url' => $request->getRequestUri(),
         				'header' => $searchForm,

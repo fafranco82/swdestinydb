@@ -47,6 +47,22 @@ class CardRepository extends TranslatableRepository
 		return $this->getOneOrNullResult($qb);
 	}
 
+	public function findAllByCodes($codes)
+	{
+		$qb = $this->createQueryBuilder('c')
+			->select('c, t, f, p, y')
+			->join('c.type', 't')
+			->join('c.faction', 'f')
+			->join('c.pack', 'p')
+			->join('p.cycle', 'y')
+			->andWhere('c.code in (?1)')
+			->orderBY('c.code', 'ASC');
+
+		$qb->setParameter(1, $codes);
+
+		return $this->getResult($qb);
+	}
+
 	public function findByRelativePosition($card, $position)
 	{
 		$qb = $this->createQueryBuilder('c')
