@@ -3,6 +3,7 @@ slogan: Deckbuilder for A Game of Thrones LCG 2nd Edition
 data_load_fail: "Unable to load the data. Click <a href='javascript:window.location.reload(true)'>here</a> to reload your page."
 login_required: You must be logged in for this operation.
 
+userby: by %user%
 seemore:
   faction: More in this faction
 
@@ -30,6 +31,7 @@ forms:
   import: Import
   upload: Upload
   reset: Reset
+  copy: Copy
   clone: Clone
   close: Close
   print: Print
@@ -251,6 +253,26 @@ decklist:
     warnings:
       published: "This deck <a href='%url%'>has already been published</a> before. You are going to create a duplicate."
   view:
+    versions: Versions
+    published: published
+    duplicate: Duplicate of %duplicate%
+    comments: 
+      count: "{0} No comments | {1} %count% comment | ]1,Inf] %count% comments"
+      hint: "Enter your comment in Markdown format. Type # to enter a card name. Type $ to enter a symbol. Type @ to enter a user name."
+      submit: Submit comment
+    social:
+      like: Like
+      favorite: Favorite
+      comment: Comment
+      version: Version
+    derived:
+      title: Derived from
+      none: None. Self-made deck here.
+    inspire:
+      title: Inspiration for
+      none: None yet.
+    toolbar:
+      edit: Edit decklist name / description
     errors:
       notfound: Decklist not found.
 

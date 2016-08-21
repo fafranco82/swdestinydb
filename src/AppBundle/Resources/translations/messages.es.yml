@@ -3,6 +3,7 @@ slogan: Constructor de mazos para Juego de Tronos LCG 2ª Edición
 data_load_fail: "No fue posible cargar los datos. Haga click <a href='javascript:window.location.reload(true)'>aquí</a> para recargar la página."
 login_required: Debes estar identificado para realizar esta operación
 
+userby: por %user%
 seemore:
   faction: Más de esta facción
 
@@ -30,6 +31,7 @@ forms:
   import: Importar
   upload: Subir
   reset: Limpiar
+  copy: Copiar
   clone: Clonar
   close: Cerrar
   print: Imprimir
@@ -251,9 +253,28 @@ decklist:
     warnings:
       published: "Este mazo <a href='%url%'>ya ha sido publicado</a> antes. Vas a crear un duplicado."
   view:
+    versions: Versiones
+    published: publicado
+    duplicate: Duplicado de %duplicate%
+    comments:
+      count: "{0} Sin comentarios | {1} %count% comentario | ]1,Inf] %count% comentarios"
+      hint: "Introduce tu comentario en formato Markdown. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo. Escribe @ para introducir el nombre de un usuario."
+      submit: Enviar comentario
+    social:
+      like: Me gusta
+      favorite: Favorito
+      comment: Comentar
+      version: Versión
+    derived:
+      title: Derivado de
+      none: Ninguno. Éste es un mazo hecho de cero.
+    inspire:
+      title: Inspiración para
+      none: Ninguno todavía.
+    toolbar:
+      edit: Editar nombre y descripción del mazo
     errors:
       notfound: Mazo no encontrado.
-
 
 search:
   label: Buscar

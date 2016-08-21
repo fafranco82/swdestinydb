@@ -25,14 +25,13 @@ class DecklistRepository extends TranslatableRepository
 	public function findDuplicate($decklist)
 	{
 		$qb = $this->createQueryBuilder('d')
-			->select('d, f, ds, c')
+			->select('d, f')
 			->join('d.faction', 'f')
-			->join('d.slots', 'ds')
-			->join('ds.card', 'c')
 			->andWhere('d.signature = ?1');
 
 		$qb->setParameter(1, $decklist->getSignature());
 		$qb->orderBy('d.dateCreation', 'ASC');
+		$qb->setMaxResults(1);
 
 		return $this->getOneOrNullResult($qb);
 	}
