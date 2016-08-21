@@ -426,3 +426,29 @@ icon:
   event: Evento
   agenda: Estrategia
   neutral: Neutral
+
+keyword:
+  renown:
+    name: Renombre
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes ganar 1 de Poder para este Personaje."
+  intimidate:
+    name: Intimidación
+    title: "Después de que ganes un Reto en el que participe este Personaje, puedes elegir y arrodillar un Personaje controlado por el adversario derrotado cuya FUE sea igual o inferior a la diferencia de FUE por la que has ganado el reto."
+  stealth:
+    name: Sigilo
+    title: "Cuando este Personaje sea declarado como atacante, puedes elegir un Personaje sin Sigilo controlado por el jugador defensor. Ese Personaje no puede ser declaro defensor para este reto."
+  insight:
+    name: Perspicacia
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes robar 1 carta."
+  limited:
+    name: Limitada
+    title: "Un jugador no puede reclutar ni jugar más de 1 carta Limitada en cada ronda, ni tampoco colocar más de 1 carta Limitada durante los preparativos de la partida."
+  pillage:
+    name: Pillaje
+    title: "Después de que ganes un reto en el que esté participando este Personaje, puedes descartar 1 carta de la parte superior del mazo del adversario derrotado."
+  terminal:
+    name: Terminal
+    title: "Si la carta vinculada abandona el juego, descarta este Accesorio."
+  ambush:
+    name: Emboscada
+    title: "Puedes pagar X de Oro para poner esta carta en juego desde tu mano durante la fase de Reto."

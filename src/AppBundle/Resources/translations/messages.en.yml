@@ -426,3 +426,29 @@ icon:
   event: Event
   agenda: Agenda
   neutral: Neutral
+
+keyword:
+  renown:
+    name: Renown
+    title: "After you win a challenge in which this character is participating, he may gain 1 power."
+  intimidate:
+    name: Intimidate
+    title: "After you win a challenge in which this character is participating, you may choose and kneel a character, controlled by the losing opponent, with equal or lower STR than the amount of STR by which the challenge was won."
+  stealth:
+    name: Stealth
+    title: "When you declare this character as an attacker, you may choose a character without stealth controlled by the defending opponent. That character cannot be declared as a defender for this challenge."
+  insight:
+    name: Insight
+    title: "After you win a challenge in which this character is participating, you may draw 1 card."
+  limited:
+    name: Limited
+    title: "No more than 1 card in total with the limited keyword can be marshaled (or played, if the card is an event) by each player each round. No more than 1 limited card can be placed by each player during setup."
+  pillage:
+    name: Pillage
+    title: "After you win a challenge in which this character is participating, you may discard 1 card from the top of the losing opponent's deck."
+  terminal:
+    name: Terminal
+    title: "If attached card leaves play, discard this attachment."
+  ambush:
+    name: Ambush
+    title: "You may pay X gold to put this card into play from your hand during the challenges phase."
