@@ -1,5 +1,5 @@
 parameters:
-    database_host:     mysql://<user>:<secret>@<host>:<port>/<db>
+    database_url:     ~
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
