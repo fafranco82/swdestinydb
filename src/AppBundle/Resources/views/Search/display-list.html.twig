@@ -33,7 +33,7 @@
 	{% if card.has_die %}
 	{% for side in card.sides %}
 	<td class="text-center die-face" data-th="Die" style="padding-left:1px; padding-right: 1px;">
-		{% if side.modifier %}{{side.modifier > 0 ? '+' : '-'}}{% endif %}{% if side.type.code not in ['-', 'Sp'] %}{{side.value}}{% endif %}<span class="icon icon-{{side.type.icon}}"></span>{% if side.cost %}/{{side.cost}}{% endif %}
+		{% if side.modifier %}+{% endif %}{% if side.type.code not in ['-', 'Sp'] %}{{side.value}}{% endif %}<span class="icon icon-{{side.type.icon}}"></span>{% if side.cost %}/{{side.cost}}{% endif %}
 	</td>
 	{% endfor %}
 	{% else %}
