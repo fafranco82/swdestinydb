@@ -253,8 +253,21 @@ card:
     illustrator: Illustrator
     die: Die
     quantity: Quantity
+    medium:
+      points_cost: P./C.
     short:
       points_cost: C.
       health: H.
       type: T.
       faction: F.
+
+keywords:
+  guardian:
+    name: Guardian
+    title: Before activate this character, you can deal it damage equal to the value of a die showing damage in your opponent's pool. Then remove that die.
+  ambush:
+    name: Ambush
+    title: After playing this card, you may immediately take one additional action.
+  redeploy:
+    name: Redeploy
+    title: After the attached character is defeated, you may immediately move this upgrade to any of your other characters. The upgrade die moves to the new character card, even if it was in your dice pool.

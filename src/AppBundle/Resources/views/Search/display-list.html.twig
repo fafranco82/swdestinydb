@@ -8,7 +8,8 @@
 <th>{{ 'card.info.name' | trans }}</th>
 <th>{{ 'card.info.affiliation' | trans }}</th>
 <th>{{ 'card.info.faction' | trans }}</th>
-<th>{{ 'card.info.points_cost' | trans }}</th>
+<th title="{{'card.info.points_cost' | trans}}">{{ 'card.info.medium.points_cost' | trans }}</th>
+<th>{{ 'card.info.health' | trans }}</th>
 <th>{{ 'card.info.type' | trans }}</th>
 <th>{{ 'card.info.rarity' | trans }}</th>
 <th colspan="6">{{ 'card.info.die' | trans}}</th>
@@ -28,6 +29,7 @@
 	<td data-th="Affiliation">{{ card.affiliation_name }}</td>
 	<td data-th="Faction">{{ card.faction_name }}</td>
 	<td data-th="Points/Cost">{{ card.type_code=='character' ? card.points : card.cost }}</td>
+	<td data-th="Health">{{ card.health }}</td>
 	<td data-th="Type" >{{ card.type_name }}</td>
 	<td data-th="Rarity">{{ card.rarity_name }}</td>
 	{% if card.has_die %}
