@@ -34,7 +34,8 @@
         "erusev/parsedown": "^1.6",
         "stof/doctrine-extensions-bundle": "^1.2",
         "willdurand/js-translation-bundle": "^2.5",
-        "jms/i18n-routing-bundle": "^2.0"
+        "jms/i18n-routing-bundle": "^2.0",
+        "lstrojny/functional-php": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
