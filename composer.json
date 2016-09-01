@@ -76,7 +76,8 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml",
             "env-map": {
-                "database_url": "DATABASE_URL"
+                "database_url": "DATABASE_URL",
+                "website_url": "WEBSITE_URL"
             }
         }
     }
