@@ -4,81 +4,83 @@ namespace AppBundle\Entity;
 
 class Card implements \Gedmo\Translatable\Translatable, \Serializable
 {
-	private function snakeToCamel($snake) {
-		$parts = explode('_', $snake);
-		return implode('', array_map('ucfirst', $parts));
-	}
-	
+    private function snakeToCamel($snake) {
+        $parts = explode('_', $snake);
+        return implode('', array_map('ucfirst', $parts));
+    }
+    
 	public function serialize() {
-		$serialized = [];
-		if(empty($this->code)) return $serialized;
-	
-		$mandatoryFields = [
-				'code',
-				'deck_limit',
-				'position',
-				'quantity',
-				'name',
-				'is_loyal',
-				'is_unique'
-		];
-	
-		$optionalFields = [
-				'illustrator',
-				'flavor',
-				'traits',
-				'text',
-				'cost',
-				'octgn_id'
-		];
-	
-		$externalFields = [
-				'faction',
-				'pack',
-				'type'
-		];
-	
-		switch($this->type->getCode()) {
-			case 'agenda':
-			case 'title':
-				break;
-			case 'attachment':
-			case 'event':
-			case 'location':
-				$mandatoryFields[] = 'cost';
-				break;
-			case 'character':
-				$mandatoryFields[] = 'cost';
-				$mandatoryFields[] = 'strength';
-				$mandatoryFields[] = 'is_military';
-				$mandatoryFields[] = 'is_intrigue';
-				$mandatoryFields[] = 'is_power';
-				break;
-			case 'plot':
-				$mandatoryFields[] = 'claim';
-				$mandatoryFields[] = 'income';
-				$mandatoryFields[] = 'initiative';
-				$mandatoryFields[] = 'reserve';
-				break;
-		}
-	
-		foreach($optionalFields as $optionalField) {
-			$getter = 'get' . $this->snakeToCamel($optionalField);
-			$serialized[$optionalField] = $this->$getter();
-			if(!isset($serialized[$optionalField]) || $serialized[$optionalField] === '') unset($serialized[$optionalField]);
-		}
-	
-		foreach($mandatoryFields as $mandatoryField) {
-			$getter = 'get' . $this->snakeToCamel($mandatoryField);
-			$serialized[$mandatoryField] = $this->$getter();
-		}
-	
-		foreach($externalFields as $externalField) {
-			$getter = 'get' . $this->snakeToCamel($externalField);
-			$serialized[$externalField.'_code'] = $this->$getter()->getCode();
-		}
-	
-		ksort($serialized);
+        $serialized = [];
+        if(empty($this->code)) return $serialized;
+
+        $mandatoryFields = [
+                'code',
+                'deck_limit',
+                'position',
+                'name',
+                'is_unique',
+                'has_die'
+        ];
+    
+        $optionalFields = [
+                'illustrator',
+                'flavor',
+                'text',
+                'cost',
+                'subtitle'
+        ];
+    
+        $externalFields = [
+                'faction',
+                'set',
+                'type',
+                'subtype',
+                'rarity',
+                'affiliation'
+        ];
+
+        switch($this->type->getCode())
+        {
+            case 'character':
+                $mandatoryFields[] = 'health';
+                $mandatoryFields[] = 'points';
+                break;
+            case 'support':
+            case 'upgrade':
+            case 'event':
+                $mandatoryFields[] = 'cost';
+                break;
+        }
+
+        foreach($optionalFields as $optionalField) {
+            $getter = 'get' . $this->snakeToCamel($optionalField);
+            $serialized[$optionalField] = $this->$getter();
+            if(!isset($serialized[$optionalField]) || $serialized[$optionalField] === '') unset($serialized[$optionalField]);
+        }
+    
+        foreach($mandatoryFields as $mandatoryField) {
+            $getter = 'get' . $this->snakeToCamel($mandatoryField);
+            $serialized[$mandatoryField] = $this->$getter();
+        }
+    
+        foreach($externalFields as $externalField) {
+            $getter = 'get' . $this->snakeToCamel($externalField);
+            $object = $this->$getter();
+            if($object)
+                $serialized[$externalField.'_code'] = $this->$getter()->getCode();
+        }
+
+        if($this->hasDie)
+        {
+            $serialized['sides'] = array();
+            foreach($this->sides as $side)
+            {
+                $serialized['sides'][] = $side->toString();
+            }
+        }
+    
+        ksort($serialized);
+
 		return $serialized;
 	}
 
@@ -90,7 +92,17 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
 		return $this->name;
 	}
 	
-	/**
+	/*
+    * I18N vars
+    */
+    private $locale = 'en';
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * @var integer
      */
     private $id;
@@ -121,6 +133,11 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     private $text;
 
     /**
+     * @var \AppBundle\Entity\Subtype
+     */
+    private $subtype;
+
+    /**
      * @var \DateTime
      */
     private $dateCreation;
@@ -133,42 +150,7 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     /**
      * @var integer
      */
-    private $quantity;
-
-    /**
-     * @var integer
-     */
-    private $income;
-
-    /**
-     * @var integer
-     */
-    private $initiative;
-
-    /**
-     * @var integer
-     */
-    private $claim;
-
-    /**
-     * @var integer
-     */
-    private $reserve;
-
-    /**
-     * @var integer
-     */
     private $deckLimit;
-
-    /**
-     * @var integer
-     */
-    private $strength;
-
-    /**
-     * @var string
-     */
-    private $traits;
 
     /**
      * @var string
@@ -186,39 +168,19 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     private $isUnique;
 
     /**
-     * @var boolean
-     */
-    private $isLoyal;
-
-    /**
-     * @var boolean
-     */
-    private $isMilitary;
-
-    /**
-     * @var boolean
-     */
-    private $isIntrigue;
-
-    /**
-     * @var boolean
-     */
-    private $isPower;
-
-    /**
-     * @var string
-     */
-    private $octgnId;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $reviews;
 
     /**
-     * @var \AppBundle\Entity\Pack
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $pack;
+    private $sides;
+
+    /**
+     * @var \AppBundle\Entity\Set
+     */
+    private $set;
 
     /**
      * @var \AppBundle\Entity\Type
@@ -231,15 +193,22 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     private $faction;
 
     /**
+     * @var \AppBundle\Entity\Affiliation
+     */
+    private $affiliation;
+
+    /**
+     * @var \AppBundle\Entity\Rarity
+     */
+    private $rarity;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-    	$this->isMilitary = false;
-    	$this->isIntrigue = false;
-    	$this->isPower = false;
-    	 
         $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sides = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -373,6 +342,30 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     }
 
     /**
+     * Set subtype
+     *
+     * @param \AppBundle\Entity\Subtype $subtype
+     *
+     * @return Card
+     */
+    public function setSubtype(\AppBundle\Entity\Subtype $subtype)
+    {
+        $this->subtype = $subtype;
+
+        return $this;
+    }
+
+    /**
+     * Get subtype
+     *
+     * @return \AppBundle\Entity\Subtype
+     */
+    public function getSubtype()
+    {
+        return $this->subtype;
+    }
+
+    /**
      * Set dateCreation
      *
      * @param \DateTime $dateCreation
@@ -421,126 +414,6 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     }
 
     /**
-     * Set quantity
-     *
-     * @param integer $quantity
-     *
-     * @return Card
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * Get quantity
-     *
-     * @return integer
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set income
-     *
-     * @param integer $income
-     *
-     * @return Card
-     */
-    public function setIncome($income)
-    {
-        $this->income = $income;
-
-        return $this;
-    }
-
-    /**
-     * Get income
-     *
-     * @return integer
-     */
-    public function getIncome()
-    {
-        return $this->income;
-    }
-
-    /**
-     * Set initiative
-     *
-     * @param integer $initiative
-     *
-     * @return Card
-     */
-    public function setInitiative($initiative)
-    {
-        $this->initiative = $initiative;
-
-        return $this;
-    }
-
-    /**
-     * Get initiative
-     *
-     * @return integer
-     */
-    public function getInitiative()
-    {
-        return $this->initiative;
-    }
-
-    /**
-     * Set claim
-     *
-     * @param integer $claim
-     *
-     * @return Card
-     */
-    public function setClaim($claim)
-    {
-        $this->claim = $claim;
-
-        return $this;
-    }
-
-    /**
-     * Get claim
-     *
-     * @return integer
-     */
-    public function getClaim()
-    {
-        return $this->claim;
-    }
-
-    /**
-     * Set reserve
-     *
-     * @param integer $reserve
-     *
-     * @return Card
-     */
-    public function setReserve($reserve)
-    {
-        $this->reserve = $reserve;
-
-        return $this;
-    }
-
-    /**
-     * Get reserve
-     *
-     * @return integer
-     */
-    public function getReserve()
-    {
-        return $this->reserve;
-    }
-
-    /**
      * Set deckLimit
      *
      * @param integer $deckLimit
@@ -562,54 +435,6 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     public function getDeckLimit()
     {
         return $this->deckLimit;
-    }
-
-    /**
-     * Set strength
-     *
-     * @param integer $strength
-     *
-     * @return Card
-     */
-    public function setStrength($strength)
-    {
-        $this->strength = $strength;
-
-        return $this;
-    }
-
-    /**
-     * Get strength
-     *
-     * @return integer
-     */
-    public function getStrength()
-    {
-        return $this->strength;
-    }
-
-    /**
-     * Set traits
-     *
-     * @param string $traits
-     *
-     * @return Card
-     */
-    public function setTraits($traits)
-    {
-        $this->traits = $traits;
-
-        return $this;
-    }
-
-    /**
-     * Get traits
-     *
-     * @return string
-     */
-    public function getTraits()
-    {
-        return $this->traits;
     }
 
     /**
@@ -685,126 +510,6 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     }
 
     /**
-     * Set isLoyal
-     *
-     * @param boolean $isLoyal
-     *
-     * @return Card
-     */
-    public function setIsLoyal($isLoyal)
-    {
-        $this->isLoyal = $isLoyal;
-
-        return $this;
-    }
-
-    /**
-     * Get isLoyal
-     *
-     * @return boolean
-     */
-    public function getIsLoyal()
-    {
-        return $this->isLoyal;
-    }
-
-    /**
-     * Set isMilitary
-     *
-     * @param boolean $isMilitary
-     *
-     * @return Card
-     */
-    public function setIsMilitary($isMilitary)
-    {
-        $this->isMilitary = $isMilitary;
-
-        return $this;
-    }
-
-    /**
-     * Get isMilitary
-     *
-     * @return boolean
-     */
-    public function getIsMilitary()
-    {
-        return $this->isMilitary;
-    }
-
-    /**
-     * Set isIntrigue
-     *
-     * @param boolean $isIntrigue
-     *
-     * @return Card
-     */
-    public function setIsIntrigue($isIntrigue)
-    {
-        $this->isIntrigue = $isIntrigue;
-
-        return $this;
-    }
-
-    /**
-     * Get isIntrigue
-     *
-     * @return boolean
-     */
-    public function getIsIntrigue()
-    {
-        return $this->isIntrigue;
-    }
-
-    /**
-     * Set isPower
-     *
-     * @param boolean $isPower
-     *
-     * @return Card
-     */
-    public function setIsPower($isPower)
-    {
-        $this->isPower = $isPower;
-
-        return $this;
-    }
-
-    /**
-     * Get isPower
-     *
-     * @return boolean
-     */
-    public function getIsPower()
-    {
-        return $this->isPower;
-    }
-
-    /**
-     * Set octgnId
-     *
-     * @param boolean $octgnId
-     *
-     * @return Card
-     */
-    public function setOctgnId($octgnId)
-    {
-        $this->octgnId = $octgnId;
-
-        return $this;
-    }
-
-    /**
-     * Get octgnId
-     *
-     * @return boolean
-     */
-    public function getOctgnId()
-    {
-        return $this->octgnId;
-    }
-
-    /**
      * Add review
      *
      * @param \AppBundle\Entity\Review $review
@@ -839,27 +544,61 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     }
 
     /**
-     * Set pack
+     * Add side
      *
-     * @param \AppBundle\Entity\Pack $pack
+     * @param \AppBundle\Entity\Side $side
      *
      * @return Card
      */
-    public function setPack(\AppBundle\Entity\Pack $pack = null)
+    public function addSide(\AppBundle\Entity\Side $side)
     {
-        $this->pack = $pack;
+        $this->sides[] = $side;
 
         return $this;
     }
 
     /**
-     * Get pack
+     * Remove side
      *
-     * @return \AppBundle\Entity\Pack
+     * @param \AppBundle\Entity\Side $side
      */
-    public function getPack()
+    public function removeSide(\AppBundle\Entity\Side $side)
     {
-        return $this->pack;
+        $this->sides->removeElement($side);
+    }
+
+    /**
+     * Get sides
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSides()
+    {
+        return $this->sides;
+    }
+
+    /**
+     * Set set
+     *
+     * @param \AppBundle\Entity\Set $set
+     *
+     * @return Card
+     */
+    public function setSet(\AppBundle\Entity\Set $set = null)
+    {
+        $this->set = $set;
+
+        return $this;
+    }
+
+    /**
+     * Get set
+     *
+     * @return \AppBundle\Entity\Set
+     */
+    public function getSet()
+    {
+        return $this->set;
     }
 
     /**
@@ -910,13 +649,206 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
         return $this->faction;
     }
 
-    /*
-    * I18N vars
-    */
-    private $locale = 'en';
-
-    public function setTranslatableLocale($locale)
+    /**
+     * Set affiliation
+     *
+     * @param \AppBundle\Entity\Affiliation $affiliation
+     *
+     * @return Card
+     */
+    public function setAffiliation(\AppBundle\Entity\Affiliation $affiliation = null)
     {
-        $this->locale = $locale;
+        $this->affiliation = $affiliation;
+
+        return $this;
+    }
+
+    /**
+     * Get affiliation
+     *
+     * @return \AppBundle\Entity\Affiliation
+     */
+    public function getAffiliation()
+    {
+        return $this->affiliation;
+    }
+
+    /**
+     * Set rarity
+     *
+     * @param \AppBundle\Entity\Rarity $rarity
+     *
+     * @return Card
+     */
+    public function setRarity(\AppBundle\Entity\Rarity $rarity = null)
+    {
+        $this->rarity = $rarity;
+
+        return $this;
+    }
+
+    /**
+     * Get rarity
+     *
+     * @return \AppBundle\Entity\Rarity
+     */
+    public function getRarity()
+    {
+        return $this->rarity;
+    }
+    /**
+     * @var boolean
+     */
+    private $hasDie;
+
+
+    /**
+     * Set hasDie
+     *
+     * @param boolean $hasDie
+     *
+     * @return Card
+     */
+    public function setHasDie($hasDie)
+    {
+        $this->hasDie = $hasDie;
+
+        return $this;
+    }
+
+    /**
+     * Get hasDie
+     *
+     * @return boolean
+     */
+    public function getHasDie()
+    {
+        return $this->hasDie;
+    }
+    /**
+     * @var string
+     */
+    private $subtitle;
+
+    /**
+     * @var integer
+     */
+    private $health;
+
+    /**
+     * @var string
+     */
+    private $points;
+
+
+    /**
+     * Set subtitle
+     *
+     * @param string $subtitle
+     *
+     * @return Card
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * Set health
+     *
+     * @param integer $health
+     *
+     * @return Card
+     */
+    public function setHealth($health)
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    /**
+     * Get health
+     *
+     * @return integer
+     */
+    public function getHealth()
+    {
+        return $this->health;
+    }
+
+    /**
+     * Set points
+     *
+     * @param string $points
+     *
+     * @return Card
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return string
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $owned;
+
+
+    /**
+     * Add owned
+     *
+     * @param \AppBundle\Entity\OwnedCard $owned
+     *
+     * @return Card
+     */
+    public function addOwned(\AppBundle\Entity\OwnedCard $owned)
+    {
+        $this->owned[] = $owned;
+
+        return $this;
+    }
+
+    /**
+     * Remove owned
+     *
+     * @param \AppBundle\Entity\OwnedCard $owned
+     */
+    public function removeOwned(\AppBundle\Entity\OwnedCard $owned)
+    {
+        $this->owned->removeElement($owned);
+    }
+
+    /**
+     * Get owned
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOwned()
+    {
+        return $this->owned;
     }
 }

@@ -14,3 +14,9 @@ This guide assumes you know how to use the command-line and that your machine ha
 - run `php app/console app:import:std ../thronesdb-json-data` or whatever the path to your ThronesDB JSON data repository is
 - run `php app/console app:import:trans ../thronesdb-json-data` if you want to import the translations
 - run `php app/console server:run`
+
+## Setup an admin account
+
+- register
+- make sure your account is enabled (or run `php app/console fos:user:activate <username>`)
+- run `php app/console fos:user:promote --super <username>`

@@ -30,10 +30,6 @@ AppBundle\Entity\Faction:
             type: boolean
             nullable: false
             column: is_primary
-        octgnId:
-            type: string
-            nullable: true
-            column: octgn_id
     uniqueConstraints:
         faction_code_idx:
             columns: [ code ]

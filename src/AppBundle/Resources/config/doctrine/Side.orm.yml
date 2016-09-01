@@ -1,0 +1,45 @@
+AppBundle\Entity\Side:
+    type: entity
+    table: side
+    manyToOne:
+        card:
+            targetEntity: Card
+            inversedBy: sides
+            joinColumn:
+                name: card_id
+                referencedColumnName: id
+        type:
+            targetEntity: SideType
+            inversedBy: sides
+            joinColumn:
+                name: type_id
+                referencedColumnName: id
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        value:
+            type: smallint
+            nullable: false
+        modifier:
+            type: smallint
+            nullable: true
+        cost:
+            type: smallint
+            nullable: true
+        dateCreation:
+            type: datetime
+            nullable: false
+            column: date_creation
+            gedmo:
+                timestampable:
+                    on: create
+        dateUpdate:
+            type: datetime
+            nullable: false
+            column: date_update
+            gedmo:
+                timestampable:
+                    on: update

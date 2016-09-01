@@ -1,2 +1,5 @@
 {% if card.is_unique == true %}<span class="icon-unique"></span> {% endif %}
-<span class="card-name{% if card.available == false %} card-preview{% endif %}">{{ card.name }}</span>
+<span class="card-name{% if card.available == false %} card-preview{% endif %}">
+	{{ card.name }}
+	{% if card.subtitle %}<span class="card-subtitle">- {{card.subtitle}}</span>{% endif %}
+</span>

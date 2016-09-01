@@ -11,21 +11,7 @@ class FactionRepository extends TranslatableRepository
 
 	public function findAllAndOrderByName()
 	{
-		$qb = $this->createQueryBuilder('f')->orderBy('f.name', 'ASC');
+		$qb = $this->createQueryBuilder('f')->orderBy('f.isPrimary', 'DESC')->addOrderBy('f.name', 'ASC');
 		return $this->getResult($qb);
-	}
-
-
-	public function findPrimaries()
-	{
-		$qb = $this->createQueryBuilder('f')->andWhere('f.isPrimary = 1');
-		return $this->getResult($qb);
-	}
-
-	public function findByCode($code)
-	{
-		$qb = $this->createQueryBuilder('f')->andWhere('f.code = ?1');
-		$qb->setParameter(1, $code);
-		return $this->getOneOrNullResult($qb);
 	}
 }

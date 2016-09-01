@@ -3,30 +3,25 @@
 	<div class="col-md-12 text-right" style="margin-bottom:10px">
         <button class="btn btn-default btn-xs" type="button" id="filter-text-button">{{'decks.edit.build.help' | trans}}</button>
         <div class="btn-group">
-			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{ 'decks.edit.build.sets.label' | trans}} <span class="caret"></span></button>
-			<ul class="dropdown-menu pull-right" data-filter="pack_code" title="{{ 'decks.edit.build.sets.hint' | trans }}"></ul>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+				{{ 'decks.edit.build.sets.label' | trans}} <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right" data-filter="set_code" title="{{ 'decks.edit.build.sets.hint' | trans }}"></ul>
 		</div>
 		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{ 'decks.edit.build.options.label' | trans}} <span class="caret"></span></button>
+			<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+				{{ 'decks.edit.build.options.label' | trans}} <span class="caret"></span>
+			</button>
 			<ul class="dropdown-menu pull-right" id="config-options">
 			    <li><a href="#"><label><input type="checkbox" name="show-unusable"> {{ 'decks.edit.build.options.show.unusable' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="checkbox" name="show-only-deck"> {{ 'decks.edit.build.options.show.onlyused' | trans }}</label></a></li>
+				<li><a href="#"><label><input type="checkbox" name="show-only-owned"> {{ 'decks.edit.build.options.show.onlyowned' | trans }}</label></a></li>
 				{% for i in 1..3 %}
 				<li>
 					<a href="#">
 						<label>
 							<input type="radio" name="display-column" value="{{i}}">
 							{% transchoice i with {'%cols%': i} %}decks.edit.build.options.display{% endtranschoice %}
-						</label>
-					</a>
-				</li>
-				{% endfor %}
-				{% for i in 1..3 %}
-				<li>
-					<a href="#">
-						<label>
-							<input type="radio" name="core-set" value="{{i}}">
-							{% transchoice i with {'%core%': i} %}decks.edit.build.options.usecore{% endtranschoice %}
 						</label>
 					</a>
 				</li>
@@ -41,8 +36,8 @@
 					</a>
 				</li>
 				{% endfor %}
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative"> {{ 'decks.edit.build.options.factype.cumulative' | trans }}</label></a></li>
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive"> {{ 'decks.edit.build.options.factype.exclusive' | trans }}</label></a></li>
+				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative"> {{ 'decks.edit.build.options.filter_button.cumulative' | trans({'%filter%': 'Filters'}) }}</label></a></li>
+				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive"> {{ 'decks.edit.build.options.filter_button.exclusive' | trans({'%filter%': 'Filters'}) }}</label></a></li>
 			</ul>
 		</div><!-- /.btn-group -->
 	</div><!-- /.col-sm-6 -->
@@ -54,12 +49,18 @@
 		<input type="text" class="form-control" id="filter-text" placeholder="{{ 'decks.edit.build.searchhint' | trans }}" tabindex="1">
 	</div>
 	<!-- Search Bar -->
-	<div class="col-sm-12" style="margin-bottom:10px">
+	<div class="col-sm-6" style="margin-bottom:10px">
+      <div class="btn-group btn-group-justified" data-filter="affiliation_code" data-toggle="buttons"></div>
+	</div>
+	<div class="col-sm-6" style="margin-bottom:10px">
       <div class="btn-group btn-group-justified" data-filter="faction_code" data-toggle="buttons"></div>
 	</div>
-	<div class="col-sm-12" style="margin-bottom:10px">
-			<div class="btn-group btn-group-justified" data-filter="type_code" data-toggle="buttons"></div>
-  </div>
+	<div class="col-sm-6" style="margin-bottom:10px">
+      <div class="btn-group btn-group-justified" data-filter="rarity_code" data-toggle="buttons"></div>
+	</div>
+	<div class="col-sm-6" style="margin-bottom:10px">
+		<div class="btn-group btn-group-justified" data-filter="type_code" data-toggle="buttons"></div>
+    </div>
 </div>
 
 <!-- Collection Table -->
@@ -70,8 +71,8 @@
 				<tr>
 					<th style="min-width:85px"><a href="#" data-sort="indeck">{{ 'card.info.quantity' | trans}}</a></th>
 					<th><a href="#" data-sort="name">{{ 'card.info.name' | trans}}</a></th>
-					<th class="cost"><a href="#" data-sort="cost|income" title="{{ 'card.info.costgold' | trans}}">{{ 'card.info.short.costgold' | trans}}</a></th>
-					<th class="strength"><a href="#" data-sort="strength|initiative" title="{{ 'card.info.strini' | trans}}">{{ 'card.info.short.strini' | trans}}</a></th>
+					<th class="cost"><a href="#" data-sort="points|cost" title="{{ 'card.info.points_cost' | trans}}">{{ 'card.info.short.points_cost' | trans}}</a></th>
+					<th class="health"><a href="#" data-sort="health" title="{{ 'card.info.health' | trans}}">{{ 'card.info.short.health' | trans}}</a></th>
 					<th class="type"><a href="#" data-sort="type_code" title="{{ 'card.info.type' | trans}}">{{ 'card.info.short.type' | trans}}</a></th>
 					<th class="faction"><a href="#" data-sort="faction_code" title="{{ 'card.info.faction' | trans}}">{{ 'card.info.short.faction' | trans}}</a></th>
 				</tr>

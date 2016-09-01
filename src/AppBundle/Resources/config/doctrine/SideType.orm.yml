@@ -1,0 +1,36 @@
+AppBundle\Entity\SideType:
+    type: entity
+    table: sidetype
+    repositoryClass: AppBundle\Repository\SideTypeRepository
+    gedmo:
+        translation:
+            locale: locale
+    oneToMany:
+        sides:
+            targetEntity: Side
+            orderBy: {'id':'ASC'}
+            mappedBy: type
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            length: 15
+            nullable: false
+        icon:
+            type: string
+            length: 15
+            nullable: false
+        name:
+            type: string
+            length: 1024
+            nullable: false
+            gedmo:
+                - translatable
+    uniqueConstraints:
+        type_code_idx:
+            columns: [ code ]
+            

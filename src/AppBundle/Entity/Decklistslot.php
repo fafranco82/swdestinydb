@@ -107,4 +107,33 @@ class Decklistslot implements \AppBundle\Model\SlotInterface
     {
         return $this->card;
     }
+    /**
+     * @var integer
+     */
+    private $dice;
+
+
+    /**
+     * Set dice
+     *
+     * @param integer $dice
+     *
+     * @return Decklistslot
+     */
+    public function setDice($dice)
+    {
+        $this->dice = $dice;
+
+        return $this;
+    }
+
+    /**
+     * Get dice
+     *
+     * @return integer
+     */
+    public function getDice()
+    {
+        return $this->dice;
+    }
 }

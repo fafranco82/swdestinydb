@@ -8,6 +8,7 @@
 	<script type="text/javascript">
 	app.deck && app.deck.init({{ deck|json_encode|raw }});
 	app.deck_history && app.deck_history.init({{ deck.history|json_encode|raw }});
+	app.collection && app.collection.init({{ collection|json_encode|raw }});
 	</script>
 {% endblock %}
 
@@ -35,7 +36,7 @@
 	<input type="hidden" id="deck-cancel-edits" name="cancel_edits" value="0">
 	<input type="hidden" name="content">
 	<input type="hidden" name="description">
-	<input type="hidden" name="faction_code" value="{{ deck.faction.code }}">
+	<input type="hidden" name="affiliation_code" value="{{ deck.affiliation.code }}">
 	<input type="hidden" name="tags">
 		<div class="form-group">
 			<label for="name">{{ 'decks.edit.form.name' | trans }}</label>
@@ -45,7 +46,6 @@
 {#	<button type="submit" id="btn-save-as-copy" class="btn btn-default">Save as Copy</button> #}
 	<button type="submit" id="btn-cancel-edits" class="btn btn-link">{{ 'decks.edit.form.cancel' | trans }}</button>
 </form>
-
 </div>
 <!-- Left-side Column -->
 

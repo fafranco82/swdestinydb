@@ -1,0 +1,27 @@
+AppBundle\Entity\OwnedCard:
+    type: entity
+    table: ownedcard
+    repositoryClass: AppBundle\Repository\OwnedCardRepository
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: owned
+            nullable: false
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        card:
+            targetEntity: Card
+            nullable: false
+            joinColumn:
+                name: card_id
+                referencedColumnName: id
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        quantity:
+            type: smallint
+            nullable: false

@@ -25,13 +25,11 @@ class BuilderController extends Controller
 		/* @var $em \Doctrine\ORM\EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$factions = $em->getRepository('AppBundle:Faction')->findPrimaries();
-		$agendas = $em->getRepository('AppBundle:Card')->findByType("agenda");
+		$affiliations = $em->getRepository('AppBundle:Affiliation')->findPrimaries();
 
 		return $this->render('AppBundle:Builder:initbuild.html.twig', [
 				'pagetitle' => $this->get('translator')->trans('decks.form.new'),
-				'factions' => $factions,
-				'agendas' => $agendas,
+				'affiliations' => $affiliations
 		], $response);
     }
 
@@ -42,60 +40,31 @@ class BuilderController extends Controller
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        $faction_code = $request->request->get('faction');
-        $agenda_code = $request->request->get('agenda');
+        $affiliation_code = $request->request->get('affiliation');
 
-        if(!$faction_code)
+        if(!$affiliation_code)
         {
-        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.nofaction"));
+        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.noaffiliation"));
         	return $this->redirect($this->generateUrl('deck_buildform'));
         }
 
-        $faction = $em->getRepository('AppBundle:Faction')->findByCode($faction_code);
-        if(!$faction)
+        $affiliation = $em->getRepository('AppBundle:Affiliation')->findByCode($affiliation_code);
+        if(!$affiliation)
         {
-        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.nofaction"));
+        	$this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.noaffiliation"));
         	return $this->redirect($this->generateUrl('deck_buildform'));
         }
-		$tags = [ $faction_code ];
+		$tags = [ $affiliation_code ];
 
-        if(!$agenda_code)
-        {
-        	$agenda = NULL;
-            $name = $translator->trans("decks.build.newname.noagenda", array(
-                "%faction%" => $faction->getName()
-            ));
-        	$pack = $em->getRepository('AppBundle:Pack')->findOneBy(array("code" => "Core"));
-        }
-        else
-        {
-        	$agenda = $em->getRepository('AppBundle:Card')->findByCode($agenda_code);
-            $name = $translator->trans("decks.build.newname.noagenda", array(
-                "%faction%" => $faction->getName(),
-                "%agenda%" => $agenda->getName()
-            ));
-        	$pack = $agenda->getPack();
-			$tags[] = $this->get('agenda_helper')->getMinorFactionCode($agenda);
-        }
-
+        $name = $translator->trans("decks.build.newname", array("%affiliation%" => $affiliation->getName()));
 
         $deck = new Deck();
         $deck->setDescriptionMd("");
-        $deck->setFaction($faction);
-        $deck->setLastPack($pack);
+        $deck->setAffiliation($affiliation);
         $deck->setName($name);
         $deck->setProblem('too_few_cards');
         $deck->setTags(join(' ', array_unique($tags)));
         $deck->setUser($this->getUser());
-
-        if($agenda)
-        {
-        	$slot = new Deckslot();
-        	$slot->setCard($agenda);
-        	$slot->setQuantity(1);
-        	$slot->setDeck($deck);
-        	$deck->addSlot($slot);
-        }
 
         $em->persist($deck);
         $em->flush();
@@ -366,13 +335,13 @@ class BuilderController extends Controller
             $source_deck = $deck;
         }
 
-		$faction_code = filter_var($request->get('faction_code'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(!$faction_code) {
-			return new Response('Cannot import deck without faction');
+		$affiliation_code = filter_var($request->get('affiliation_code'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(!$affiliation_code) {
+			return new Response('Cannot import deck without affiliation');
 		}
-		$faction = $em->getRepository('AppBundle:Faction')->findOneBy(['code' => $faction_code]);
-		if(!$faction) {
-			return new Response('Cannot import deck with unknown faction ' . $faction_code);
+		$affiliation = $em->getRepository('AppBundle:Affiliation')->findOneBy(['code' => $affiliation_code]);
+		if(!$affiliation) {
+			return new Response('Cannot import deck with unknown affiliation ' . $affiliation_code);
 		}
 
         $cancel_edits = (boolean) filter_var($request->get('cancel_edits'), FILTER_SANITIZE_NUMBER_INT);
@@ -386,7 +355,7 @@ class BuilderController extends Controller
             $deck = new Deck();
         }
 
-        $content = (array) json_decode($request->get('content'));
+        $content = (array) json_decode($request->get('content'), true);
         if (! count($content)) {
             return new Response('Cannot import empty deck');
         }
@@ -396,7 +365,7 @@ class BuilderController extends Controller
         $description = trim($request->get('description'));
         $tags = filter_var($request->get('tags'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-        $this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $faction, $description, $tags, $content, $source_deck ? $source_deck : null);
+        $this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $affiliation, $description, $tags, $content, $source_deck ? $source_deck : null);
         $em->flush();
         
         return $this->redirect($this->generateUrl('decks_list'));
@@ -478,6 +447,7 @@ class BuilderController extends Controller
         	array(
         		'pagetitle' => "Deckbuilder",
         		'deck' => $deck,
+                'collection' => $this->getDoctrine()->getRepository('AppBundle:OwnedCard')->getCollection($this->getUser()->getId())
         	)
         );
 
@@ -508,16 +478,13 @@ class BuilderController extends Controller
 			);
         }
 
-        $tournaments = $this->getDoctrine()->getManager()->getRepository('AppBundle:Tournament')->findAll();
-        
         return $this->render(
         	'AppBundle:Builder:deckview.html.twig',
         	array(
         		'pagetitle' => "Deckbuilder",
         		'deck' => $deck,
         		'deck_id' => $deck_id,
-        		'is_owner' => $is_owner,
-        		'tournaments' => $tournaments,
+        		'is_owner' => $is_owner
         	)
         );
     }
@@ -580,21 +547,28 @@ class BuilderController extends Controller
     {
         /* @var $user \AppBundle\Entity\User */
         $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
 
         $decks = $this->get('decks')->getByUser($user, FALSE);
-
-        $tournaments = $this->getDoctrine()->getConnection()->executeQuery(
-                "SELECT
-					t.id,
-					t.description
-                FROM tournament t
-                ORDER BY t.description desc")->fetchAll();
 
         if(count($decks))
         {
 			$tags = [];
-			foreach($decks as $deck) {
+			foreach($decks as &$deck) {
 				$tags[] = $deck['tags'];
+
+                /* @var $characterDeck \AppBundle\Entity\Deckslot[] */
+                $characterDeck = $em->getRepository('AppBundle:Deck')->find($deck['id'])->getSlots()->getCharacterDeck();
+                $characters = [];
+
+                foreach ($characterDeck as $character) {
+                    $info = $this->get('cards_data')->getCardInfo($character->getCard(), false);
+                    $info['qty'] = $character->getQuantity();
+                    $info['dice'] = $character->getDice();
+                    $characters[] = $info;
+                }
+
+                $deck['characters'] = $characters;
 			}
 			$tags = array_unique($tags);
         	return $this->render('AppBundle:Builder:decks.html.twig',
@@ -605,8 +579,7 @@ class BuilderController extends Controller
 							'tags' => $tags,
         					'nbmax' => $user->getMaxNbDecks(),
         					'nbdecks' => count($decks),
-        					'cannotcreate' => $user->getMaxNbDecks() <= count($decks),
-        					'tournaments' => $tournaments,
+        					'cannotcreate' => $user->getMaxNbDecks() <= count($decks)
         			));
 
         }
@@ -616,8 +589,7 @@ class BuilderController extends Controller
         			array(
         					'pagetitle' => $this->get("translator")->trans('nav.mydecks'),
         					'pagedescription' => "Create custom decks with the help of a powerful deckbuilder.",
-        					'nbmax' => $user->getMaxNbDecks(),
-        					'tournaments' => $tournaments,
+        					'nbmax' => $user->getMaxNbDecks()
         			));
         }
     }

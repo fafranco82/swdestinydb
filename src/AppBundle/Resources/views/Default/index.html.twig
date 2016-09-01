@@ -4,13 +4,13 @@
 {% block body %}
 
 <div class="main container">
-<h1 class="site-title hidden-xs">Thr<span style="position:relative">o<span class="icon icon-power" style="position:absolute;left: .65em;top: 1.2em;font-size: 30%;"></span></span>nesDB</h1>
+<h1 class="site-title hidden-xs">SWDestinyDB</h1>
 <div class="site-slogan">{{ 'slogan' | trans }}</div>
 </div> <!-- .container -->
 
 <div class="main container">
     <div class="row">
-    {% for data in decklists_by_faction %}
+    {#% for data in decklists_by_faction %}
     <div class="col-md-6" style="margin-bottom:30px">
         <div class="bg-faction bg-{{ data.faction.code }}" style="padding:10px 10px 5px 10px">
             <div class="media">
@@ -40,7 +40,7 @@
             <div style="clear:both"></div>
         </div>
     </div>
-    {% endfor %}
+    {% endfor %#}
     </div>
     <div class="row">
     	<div class="col-md-12">
@@ -51,7 +51,33 @@
 
 {% endblock %}
 
+
 {% block javascripts %}
+{% if app.environment == 'dev' %}
+<script>
+$(document).on('data.app', function() {
+  var target = 'div.main:eq(1)';
+  app.data.cards.distinct('type_code').forEach(function(type) {
+    var example = app.data.cards.find({
+      type_code: type,
+      imagesrc: {$exists: true}
+    })[0];
+    $('<h3>').text(example.type_name).appendTo(target);
+    var row = $('<div>').addClass('row').appendTo(target);
+    for(var i=1;i<=5;i++) {
+      var col = $('<div>').addClass('text-center').css({
+        'padding': '5px',
+        'border': '1px solid blue'
+      }).appendTo(row);
+      $('<div>').addClass(type+'-thumbnail card-thumbnail-'+i+'x card-thumbnail-'+type).css({
+        "background-image": "url('"+example.imagesrc+"')"
+      }).appendTo(col);
+      $('<span>').text('card-thumbnail-'+i+'x card-thumbnail-'+type).appendTo(col);
+    }
+  });
+});
+</script>
+{% endif %}
 <script type="application/ld+json">
 {
    "@context": "http://schema.org",

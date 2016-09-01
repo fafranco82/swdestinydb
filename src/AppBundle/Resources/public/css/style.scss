@@ -1,0 +1,500 @@
+
+/* fonts */
+
+body {
+}
+.card-content {
+	font: 16px/20px 'Amiri', serif
+}
+.card-content abbr[title] {
+	border-bottom: none;
+}
+.card-name {
+	font-family: 'Julius Sans One', sans-serif;
+	font-weight: 700;
+}
+.card-subtitle {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+
+.card-preview {
+    color: red;
+}
+.card-type {
+	font-weight: 700;
+}
+.card-subtype, .card-text i {
+	font-weight: 700;
+	font-style: italic;
+}
+.card-text {
+	border-left-width: 2px;
+	border-left-style: solid;
+	text-align: justify;
+}
+.card-text p {
+	margin: 6px;
+}
+.card-flavor {
+	font-style: italic;
+	text-align: justify;
+}
+.card-flavor cite {
+	white-space: nowrap;
+}
+.card-flavor cite::before {
+	/* en dash followed by non-breaking zero-width space */
+	content: "\2013\FEFF";
+}
+
+.card-die-face, .die-face {
+	font-family: "Open Sans";
+}
+
+td.die-face {
+	width: 50px;
+}
+
+.card-die-face {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  border: 2px solid black;
+  border-radius: 15px;
+  margin: 1px;
+  background-color: #f0f0f0;
+}
+
+.card-die-face-blank {
+  color: #e61e26;
+}
+
+.card-die-face-modified {
+  color: #076cdf;
+}
+
+.card-die-face-content {
+  position: absolute;
+  top: 3px;
+  left: 0px;
+  width: 41px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.card-die-face-nocost .card-die-face-content {
+  top: 11px;
+}
+
+.card-die-face-special .card-die-face-value, .card-die-face-blank .card-die-face-value {
+  display: none;
+}
+
+.card-die-face-cost {
+  position: absolute;
+  bottom: -4px;
+  left: 0px;
+  width: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: #daaa0b;
+}
+
+.table-expanded>thead>tr>th, .table-expanded>tbody>tr>th, .table-expanded>tfoot>tr>th, .table-expanded>thead>tr>td, .table-expanded>tbody>tr>td, .table-expanded>tfoot>tr>td {
+	padding: 16px 8px;
+}
+.navbar-static-top {
+	z-index: auto;
+}
+
+.display-spoiler-card {
+	margin-bottom: 1em;
+}
+.display-spoiler-card h4 {
+	border-bottom: 1px solid #ddd;
+}
+.deck-loading {
+	padding: 50px 0;
+	text-align: center;
+}
+.tab-content {
+	padding-top: 15px;
+}
+.dropdown-menu label {
+  margin: 0;
+}
+.dropdown-menu input[type=checkbox], .dropdown-menu input[type=radio] {
+  margin: -4px 8px 0 -6px;
+}
+
+html, body {
+	height: 100%;
+	min-height: 100%;
+}
+td.type, td.faction {
+	text-align:center;
+}
+.container.main {
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.container.main.white {
+	background-color: #fff;
+}
+.container.main.admin {
+	background-color: #fff;
+	border: 1px solid red;
+}
+#wrapper {
+	min-height: 100%;
+	border-bottom: 10px solid #c0392b;
+	padding-bottom: 100px;
+}
+footer {
+	padding-top: 20px;
+	background-color: #95a5a6;
+}
+.navbar-default {
+	font-size: 16px;
+}
+
+div.tags span.tag {
+	font-size: 75%;
+	color: darkgray;
+}
+div.tags span.tag:not(:first-child)::before {
+	content: " - ";
+}
+
+.decks-actions .btn{
+	margin-bottom: 3px;
+}
+
+.social-icons>*{margin-left:5px}
+.social-icon-like{color:red}
+.social-icon-favorite{color:orange}
+.social-icon-comment{color:green}
+.social-icon-version{color:blue}
+
+/*** generic ****/
+
+.smaller {
+    font-size: 70%;
+}
+
+/* for the sets list in card search */
+ol {
+    padding-left: 30px;
+}
+
+/********** icon-bg ***********/
+
+.icon-bg:before {
+	width: 100%;
+	height: 100%;
+	font-size: 5em;
+	text-align: center;
+	display: block;
+	position: absolute;
+	line-height:4em;
+	left: 0;
+	opacity: 0.1;
+    z-index: 0;
+}
+
+/********* ONE DECK *********/
+
+.deck-intro .media-left {
+	font-size: 96px;
+}
+.deck-intro .media-left span {
+	padding: 10px;
+}
+.deck-content {
+	margin-bottom: 15px;
+}
+.deck-content .invalid-card {
+	text-decoration: line-through;
+}
+
+/********** DECK EDITOR ************/
+
+#collection-grid .col-sm-6 .media, #collection-grid .col-sm-4 .media {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted lightgray;
+    overflow: hidden;
+}
+#collection-grid .col-sm-6 .media-object {
+    height: 100px;
+}
+#collection-grid .col-sm-4 .media-object {
+	height: 70px;
+}
+
+/********* LIST OF DECKS ************/
+
+.list-decks>tbody>tr>td {
+	vertical-align: middle;
+}
+.list-decks img {
+	height: 63px;
+	width: 45px;
+}
+#tag_toggles button {
+	margin-bottom: 4px;
+	margin-right: 4px;
+}
+
+/********** NEW DECK **********/
+
+.list-factions li label {
+}
+
+/************ DECK GALLERY **********/
+
+#deck-gallery table { width: 100%; table-layout: fixed; border-collapse: collapse; overflow: hidden }
+#deck-gallery table td { padding: 0 }
+#deck-gallery table td > div { height: 100px; overflow: visible; position: relative }
+#deck-gallery table td > div > img { height: 100% ; border: 1px solid white; border-radius: 10px;}
+#deck-gallery table td > div > div { background: rgba(0, 0, 0, 0.5); position: absolute; left: 1px; bottom: 1px; color: white; width: 24px; height: 24px; line-height: 24px; font-size: 16px; font-weight: bold; text-align: center; border-radius: 15px; font-family: monospace }
+
+/********* DRAW SIMULATOR ************/
+
+#table-draw-simulator-content img {width:98px;height:136px;float:left;margin:5px;box-shadow: black 0px 0px 5px;border-radius: 5px;}
+#table-draw-simulator-content img.trashed {opacity: 0.25;box-shadow: none;}
+#table-draw-simulator-content img.trashed:hover {opacity: 0.75;}
+#table-draw-simulator-content div.card-proxy {background:#888;color:white;width:99px;height:138px;float:left;margin:5px;box-shadow: black 0px 0px 5px;border-radius: 5px;}
+#table-draw-simulator-content img.card-proxy.trashed {opacity: 0.25;box-shadow: none;}
+#table-draw-simulator-content img.card-proxy.trashed:hover {opacity: 0.75;}
+#table-draw-simulator-content div.card-proxy div{position: relative;top: 50%; transform: translateY(-50%);text-align:center}
+#draw-simulator-special {display: none;}
+
+/*********** TYPEAHEAD **************/
+
+.twitter-typeahead{width:100%;background-color:#fff}
+.twitter-typeahead .tt-hint{color:#aaa;margin-left:11px;margin-top:4px;display:none}
+.twitter-typeahead .tt-query{margin-bottom:0}
+.tt-dropdown-menu{min-width:160px;margin-top:2px;padding:5px 0;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.2);*border-right-width:2px;*border-bottom-width:2px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);-moz-box-shadow:0 5px 10px rgba(0,0,0,.2);box-shadow:0 5px 10px rgba(0,0,0,.2);-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}
+.tt-suggestion{display:block;padding:3px 20px}
+.tt-suggestion.tt-cursor{color:#fff;background-color:#0081c2;background-image:-moz-linear-gradient(top,#08c,#0077b3);background-image:-webkit-gradient(linear,0 0,0 100%,from(#08c),to(#0077b3));background-image:-webkit-linear-gradient(top,#08c,#0077b3);background-image:-o-linear-gradient(top,#08c,#0077b3);background-image:linear-gradient(to bottom,#08c,#0077b3);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0077b3',GradientType=0)}
+.tt-suggestion.tt-cursor a{color:#fff}
+.tt-suggestion p{margin:0}
+
+/************** QTIP ****************/
+.qtip-swdestinydb{border-radius:2px; max-width:400px}
+.qtip-swdestinydb-text{font-size:15px}
+.qtip-swdestinydb-image{}
+
+/***************** THUMBNAIL CARD IMAGE **************/
+
+.card-thumbnail{background-attachment:scroll;background-origin:padding-box;background-clip:border-box;background-repeat:no-repeat;margin:0 0 5px 5px;position:relative;border:1px solid #000;float:right}
+.card-thumbnail-battlefield{margin-top:5px}
+.card-thumbnail-1x{width:200px;height:200px;background-size:300px 418px}
+.card-thumbnail-2x{width:100px;height:100px;background-size:200px 279px}
+.card-thumbnail-3x{width:67px;height:67px;background-size:134px 186px}
+.card-thumbnail-4x{width:50px;height:50px;background-size:95px 133px}
+.card-thumbnail-5x{width:40px;height:40px;background-size:60px 84px}
+.card-thumbnail-1x.card-thumbnail-character{background-position:-79px -21px}
+.card-thumbnail-2x.card-thumbnail-character{background-position:-41px -41px}
+.card-thumbnail-3x.card-thumbnail-character{background-position: -29px -26px}
+.card-thumbnail-4x.card-thumbnail-character{background-position:-20px -20px}
+.card-thumbnail-5x.card-thumbnail-character{background-position:-16px -4px}
+.card-thumbnail-1x.card-thumbnail-upgrade{background-position:-51px -31px}
+.card-thumbnail-2x.card-thumbnail-upgrade{background-position:-25.5px -15.5px}
+.card-thumbnail-3x.card-thumbnail-upgrade{background-position:-34px -9px}
+.card-thumbnail-4x.card-thumbnail-upgrade{background-position:-12.75px -7.75px}
+.card-thumbnail-5x.card-thumbnail-upgrade{background-position:-10.2px -6.2px}
+.card-thumbnail-1x.card-thumbnail-event{background-position:-50px -60px}
+.card-thumbnail-2x.card-thumbnail-event{background-position:-25px -30px}
+.card-thumbnail-3x.card-thumbnail-event{background-position:-30px -13px}
+.card-thumbnail-4x.card-thumbnail-event{background-position:-12.5px -15px}
+.card-thumbnail-5x.card-thumbnail-event{background-position:-10px -12px}
+.card-thumbnail-1x.card-thumbnail-support{background-position:-82px -26px}
+.card-thumbnail-2x.card-thumbnail-support{background-position:-41px -13px}
+.card-thumbnail-3x.card-thumbnail-support{background-position: -12px -35px}
+.card-thumbnail-4x.card-thumbnail-support{background-position:-20.5px -6.5px}
+.card-thumbnail-5x.card-thumbnail-support{background-position:-16.4px -5.2px}
+.card-thumbnail-1x.card-thumbnail-battlefield{width:395px;height:140px;background-size:428px 307px;background-position:0px -67px}
+.card-thumbnail-2x.card-thumbnail-battlefield{width:200px;height:70px;background-size:217px 156px;background-position:0px -35px}
+.card-thumbnail-3x.card-thumbnail-battlefield{width:133px;height:47px;background-size:145px 104px;background-position:0px -23px}
+.card-thumbnail-4x.card-thumbnail-battlefield{width:100px;height:35px;background-size:109px 78px;background-position: 0px -17px}
+.card-thumbnail-5x.card-thumbnail-battlefield{width:80px;height:28px;background-size:86px 61px;background-position: 0px -13px}
+
+/************** INDEX PAGE ***************/
+
+h1.site-title {
+	font-family: 'Julius Sans One', sans-serif;
+	position:relative;
+	font-size:116px;
+	text-align:center;
+	margin-top: 0;
+}
+div.site-slogan {
+	font-family: 'Open Sans Condensed', sans-serif;
+	position:relative;
+	font-size:40px;
+	text-align:center;
+}
+
+/************ LIST OF DECKLISTS **************/
+
+.decklist-character-image {
+	width: 175px;
+}
+
+.decklist-character {
+	position: relative;
+	text-align: center;
+	display: inline-block;
+	font-size: 12px;
+	color: white;
+
+	border-bottom: 7px solid black;
+}
+
+.decklist-character-unique {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	font-weight: bold;
+}
+
+.decklist-character-dice {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+}
+
+
+/************* DECKLIST *********************/
+
+.row.title {
+	padding-top:20px;
+	padding-bottom:10px
+}
+#deck-description h1 {
+	font-size: 171%;
+}
+#deck-description h2 {
+	font-size: 143%;
+}
+#deck-description h3 {
+	font-size: 121%;
+}
+#deck-description h4 {
+	font-size: 107%;
+}
+
+/************** COLORS **************/
+.bg-faction a, .bg-faction span {
+	color: inherit;
+}
+
+@mixin all-color($name, $color, $color2:inherit) {
+  .bg-#{$name} {
+    background-color: $color !important;
+    color: $color2 !important;
+  }
+
+  .border-#{$name} {
+    border-color: $color !important;
+  }
+
+  .border-light-#{$name} {
+    border-color: rgba($color, .3) !important;
+  }
+
+  .fg-#{$name} {
+    color: $color !important;
+  }
+}
+
+@include all-color(yellow, #dab032);
+@include all-color(gray, #979d9f);
+@include all-color(blue, #0b609e, #f0f0f0);
+@include all-color(red, #b22222, #f0f0f0);
+
+/************** RARITY COLORS **************/
+@include all-color(rarity-S, #bcbcbc);
+@include all-color(rarity-C, #6d9eeb);
+@include all-color(rarity-U, #fff56a);
+@include all-color(rarity-R, #aeca36);
+@include all-color(rarity-L, #a774b2);
+
+/**************** REVIEW ON CARD PAGE ******************/
+
+article.review {
+	margin-top: 2em;
+	padding-top: 2em;
+	border-top: 1px solid #ddd;
+}
+article.review:first-child {
+	margin-top: 0;
+}
+article.review .review-like { 
+	float:left; 
+	font-size: 120%; 
+	width:50px 
+}
+article.review .review-content { 
+	margin-left: 50px 
+}
+article.review .review-text :first-child { 
+	margin-top: 0px 
+}
+article.review .review-date { 
+	clear: both; 
+	text-align: right 
+}
+article.review .review-author { 
+	text-align: right 
+}
+article.review .review-comment { 
+	border-top: 1px solid #ddd; 
+	padding: 0.5em; 
+}
+
+/****************** BOOTSTRAP MARKDOWN *******************/
+
+.md-editor.md-fullscreen-mode {
+	z-index: 99;
+}
+
+/* PRINT STYLESHEETS */
+
+@media print {
+	h1 {
+		font-size: 24px;
+	}
+  a[href]:after {
+    content: none !important;
+  }
+  #wrapper {
+  	border: none;
+  	padding: 0;
+  	min-height: auto;
+  }
+  
+	.col-print-1 {width:8%;  float:left;}
+	.col-print-2 {width:16%; float:left;}
+	.col-print-3 {width:25%; float:left;}
+	.col-print-4 {width:33%; float:left;}
+	.col-print-5 {width:42%; float:left;}
+	.col-print-6 {width:50%; float:left;}
+	.col-print-7 {width:58%; float:left;}
+	.col-print-8 {width:66%; float:left;}
+	.col-print-9 {width:75%; float:left;}
+	.col-print-10{width:83%; float:left;}
+	.col-print-11{width:92%; float:left;}
+	.col-print-12{width:100%; float:left;}
+}
+
+/*************** DECK(LIST) COMPARE *****************/
+
+.diff {
+	background: rgba(255,0,0,.5);
+}

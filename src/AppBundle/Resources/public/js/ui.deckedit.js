@@ -15,11 +15,13 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		var stored = localStorage.getItem('ui.deck.config');
 		if(stored) {
 			Config = JSON.parse(stored);
+			Config['show-only-owned'] = true;
 		}
 	}
 	Config = _.extend({
 		'show-unusable': false,
 		'show-only-deck': false,
+		'show-only-owned': true,
 		'display-column': 1,
 		'core-set': 3,
 		'show-suggestions': 0,
@@ -47,19 +49,9 @@ ui.init_config_buttons = function init_config_buttons() {
 		$('input[name='+radio+'][value='+Config[radio]+']').prop('checked', true);
 	});
 	// checkbox
-	['show-unusable', 'show-only-deck'].forEach(function (checkbox) {
+	['show-unusable', 'show-only-deck', 'show-only-owned'].forEach(function (checkbox) {
 		if(Config[checkbox]) $('input[name='+checkbox+']').prop('checked', true);
 	})
-}
-
-/**
- * removes titles, which cannot be used in decks
- * @memberOf ui
- */
-ui.remove_melee_titles = function remove_melee_titles() {
-	app.data.cards.remove({
-		'type_code': 'title'
-	});
 }
 
 /**
@@ -68,13 +60,47 @@ ui.remove_melee_titles = function remove_melee_titles() {
  */
 ui.set_max_qty = function set_max_qty() {
 	app.data.cards.find().forEach(function(record) {
-		var max_qty = Math.min(3, record.deck_limit);
-		if (record.pack_code == 'Core')
-			max_qty = Math.min(max_qty, record.quantity * Config['core-set']);
+		var max_qty = Math.min(2, record.deck_limit);
+		if(record.type_code=='character' && !record.is_unique) {
+			max_qty = Math.min(parseInt(30 / parseInt(record.points, 10)));
+		}
+		if(Config['show-only-owned']) {
+			max_qty = Math.min(max_qty, app.collection.get_copies_owned(record.code));
+		}
 		app.data.cards.updateById(record.code, {
 			maxqty : max_qty
 		});
 	});
+}
+
+function get_examples(codes, key) {
+	return _.map(codes, function(code) {
+		var query={}; query[key] = code;
+		return {code: code, example: app.data.cards.find(query)[0] };
+	});	
+}
+
+/**
+ * builds the affiliation selector
+ * @memberOf ui
+ */
+ui.build_affiliation_selector = function build_affiliation_selector() {
+	$('[data-filter=affiliation_code]').empty();
+	var tpl = Handlebars.compile(
+		'{{#each codes}}' +
+		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.affiliation_name}}">' +
+		'	<input type="checkbox" name="{{code}}">' +
+		'	<strong>{{example.affiliation_name}}</strong>' +
+		'</label>' +
+		'{{/each}}'
+	);
+	var affiliation_codes = app.data.cards.distinct('affiliation_code').sort();
+	var neutral_index = affiliation_codes.indexOf('neutral');
+	affiliation_codes.splice(neutral_index, 1);
+	affiliation_codes.unshift('neutral');
+	$('[data-filter=affiliation_code]').html(
+		tpl({codes: get_examples(affiliation_codes, 'affiliation_code')})
+	).button().find('label').tooltip({container: 'body'});
 }
 
 /**
@@ -83,20 +109,22 @@ ui.set_max_qty = function set_max_qty() {
  */
 ui.build_faction_selector = function build_faction_selector() {
 	$('[data-filter=faction_code]').empty();
+	var tpl = Handlebars.compile(
+		'{{#each codes}}' +
+		'<label class="btn btn-default btn-sm fg-{{code}}" data-code="{{code}}" title="{{example.faction_name}}">' +
+		'	<input type="checkbox" name="{{code}}">' +
+		'	<span class="bg-{{code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
+		'</label>' +
+		'{{/each}}'
+	);
 	var faction_codes = app.data.cards.distinct('faction_code').sort();
-	var neutral_index = faction_codes.indexOf('neutral');
-	faction_codes.splice(neutral_index, 1);
-	faction_codes.unshift('neutral');
+	var gray_index = faction_codes.indexOf('gray');
+	faction_codes.splice(gray_index, 1);
+	faction_codes.unshift('gray');
 
-	faction_codes.forEach(function(faction_code) {
-		var example = app.data.cards.find({"faction_code": faction_code})[0];
-		var label = $('<label class="btn btn-default btn-sm" data-code="'
-				+ faction_code + '" title="'+example.faction_name+'"><input type="checkbox" name="' + faction_code
-				+ '"><span class="icon-' + faction_code + '"></span></label>');
-		label.tooltip({container: 'body'});
-		$('[data-filter=faction_code]').append(label);
-	});
-	$('[data-filter=faction_code]').button();
+	$('[data-filter=faction_code]').html(
+		tpl({codes: get_examples(faction_codes, 'faction_code')})
+	).button().find('label').tooltip({container: 'body'});
 }
 
 /**
@@ -105,49 +133,58 @@ ui.build_faction_selector = function build_faction_selector() {
  */
 ui.build_type_selector = function build_type_selector() {
 	$('[data-filter=type_code]').empty();
-	['agenda','plot','character','attachment','location','event'].forEach(function(type_code) {
-		var example = app.data.cards.find({"type_code": type_code})[0];
-		var label = $('<label class="btn btn-default btn-sm" data-code="'
-				+ type_code + '" title="'+example.type_name+'"><input type="checkbox" name="' + type_code
-				+ '"><span class="icon-' + type_code + '"></span></label>');
-		label.tooltip({container: 'body'});
-		$('[data-filter=type_code]').append(label);
-	});
-	$('[data-filter=type_code]').button();
+	var tpl = Handlebars.compile(
+		'{{#each codes}}' +
+		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.type_name}}">' +
+		'	<input type="checkbox" name="{{code}}">' +
+		'	<span class="icon-{{code}}"></span>' +
+		'</label>' +
+		'{{/each}}'
+	);
+
+	$('[data-filter=type_code]').html(
+		tpl({codes: get_examples(['battlefield','character','upgrade','support', 'event'], 'type_code')})
+	).button().find('label').tooltip({container: 'body'});
 }
 
 /**
- * builds the pack selector
+ * builds the rarity selector
  * @memberOf ui
  */
-ui.build_pack_selector = function build_pack_selector() {
-	$('[data-filter=pack_code]').empty();
-	app.data.packs.find({
+ui.build_rarity_selector = function build_rarity_selector() {
+	$('[data-filter=rarity_code]').empty();
+	var tpl = Handlebars.compile(
+		'{{#each codes}}' +
+		'<label class="btn btn-default btn-sm fg-rarity-{{code}}" data-code="{{code}}" title="{{example.rarity_name}}">' +
+		'	<input type="checkbox" name="{{code}}">' +
+		'	<span class="bg-rarity-{{code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
+		'</label>' +
+		'{{/each}}'
+	);
+	$('[data-filter=rarity_code]').html(
+		tpl({codes: get_examples(['S','C', 'U', 'R', 'L'], 'rarity_code')})
+	).button().find('label').tooltip({container: 'body'});
+}
+
+/**
+ * builds the set selector
+ * @memberOf ui
+ */
+ui.build_set_selector = function build_set_selector() {
+	$('[data-filter=set_code]').empty();
+	app.data.sets.find({
 		name: {
 			'$exists': true
-		}
+		},
+		available: true
 	}, {
 	    $orderBy: {
-	        cycle_position: 1,
 	        position: 1
 	    }
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
 		var checked = true;
-		// if not yet available, uncheck pack
-		if(record.available === "") checked = false;
-		// if user checked it previously, check pack
-		if(localStorage && localStorage.getItem('set_code_' + record.code) !== null) checked = true;
-		// if pack used by cards in deck, check pack
-		var cards = app.data.cards.find({
-			pack_code: record.code,
-			indeck: {
-				'$gt': 0
-			}
-		});
-		if(cards.length) checked = true;
-
-		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=pack_code]');
+		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
 
@@ -155,10 +192,9 @@ ui.build_pack_selector = function build_pack_selector() {
  * @memberOf ui
  */
 ui.init_selectors = function init_selectors() {
-	$('[data-filter=faction_code]').find('input[name=neutral]').prop("checked", true).parent().addClass('active');
-	$('[data-filter=faction_code]').find('input[name='+app.deck.get_faction_code()+']').prop("checked", true).parent().addClass('active');
-	var minor_faction_code = app.deck.get_minor_faction_code();
-	if(minor_faction_code) $('[data-filter=faction_code]').find('input[name='+minor_faction_code+']').prop("checked", true).parent().addClass('active');
+	$('[data-filter=affiliation_code]').find('input[name=neutral]').prop("checked", true).parent().addClass('active');
+	$('[data-filter=affiliation_code]').find('input[name='+app.deck.get_affiliation_code()+']').prop("checked", true).parent().addClass('active');
+	$('[data-filter=faction_code]').find('input').prop("checked", true).parent().addClass('active');
 
 	$('[data-filter=type_code]').find('input[name=character]').prop("checked", true).parent().addClass('active');
 }
@@ -250,7 +286,7 @@ ui.on_config_change = function on_config_change(event) {
 	switch(name) {
 		case 'buttons-behavior':
 		break;
-		case 'core-set':
+		case 'show-only-owned':
 		ui.set_max_qty();
 		ui.reset_list();
 		break;
@@ -309,6 +345,17 @@ ui.on_list_quantity_change = function on_list_quantity_change(event) {
  * @memberOf ui
  * @param event
  */
+ui.on_list_2nd_die_toggle = function on_list_2nd_die_toggle(event) {
+	var row = $(this).closest('.card-container');
+	var code = row.data('code');
+	var active = $(this).prop('checked');
+	ui.on_2nd_die_change(code, active);
+}
+
+/**
+ * @memberOf ui
+ * @param event
+ */
 ui.on_modal_quantity_change = function on_modal_quantity_change(event) {
 	var modal = $('#cardModal');
 	var code =  modal.data('code');
@@ -321,11 +368,15 @@ ui.on_modal_quantity_change = function on_modal_quantity_change(event) {
 	}, 100);
 }
 
-ui.refresh_row = function refresh_row(card_code, quantity) {
+ui.refresh_row = function refresh_row(card_code) {
 	// for each set of divs (1, 2, 3 columns)
 	CardDivs.forEach(function(rows) {
 		var row = rows[card_code];
 		if(!row) return;
+
+		var card = app.data.cards.findById(card_code);
+		var quantity = card.indeck;
+		var dice = card.dice;
 
 		// rows[card_code] is the card row of our card
 		// for each "quantity switch" on that row
@@ -333,6 +384,15 @@ ui.refresh_row = function refresh_row(card_code, quantity) {
 			// if that switch is NOT the one with the new quantity, uncheck it
 			// else, check it
 			if($(element).val() != quantity) {
+				$(element).prop('checked', false).closest('label').removeClass('active');
+			} else {
+				$(element).prop('checked', true).closest('label').addClass('active');
+			}
+		});
+		row.find('input[name="2nd-' + card_code + '"]').each(function(i, element) {
+			// if that switch is NOT the one with the new quantity, uncheck it
+			// else, check it
+			if($(element).val() != dice) {
 				$(element).prop('checked', false).closest('label').removeClass('active');
 			} else {
 				$(element).prop('checked', true).closest('label').addClass('active');
@@ -352,8 +412,16 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
 		ui.refresh_list();
 	}
 	else {
-		ui.refresh_row(card_code, quantity);
+		ui.refresh_row(card_code);
 	}
+}
+/**
+ * @memberOf ui
+ */
+ui.on_2nd_die_change = function on_2nd_die_change(card_code, active) {
+	var quantity = app.deck.set_card_2nd_die(card_code, active);
+	ui.refresh_deck();
+	ui.refresh_row(card_code);
 }
 
 /**
@@ -392,6 +460,7 @@ ui.setup_event_handlers = function setup_event_handlers() {
 
 	$('#config-options').on('change', 'input', ui.on_config_change);
 	$('#collection').on('change', 'input[type=radio]', ui.on_list_quantity_change);
+	$('#collection').on('change', 'input[type=checkbox]', ui.on_list_2nd_die_toggle);
 
 	$('#cardModal').on('keypress', function(event) {
 		var num = parseInt(event.which, 10) - 48;
@@ -435,15 +504,36 @@ ui.get_filters = function get_filters() {
 ui.update_list_template = function update_list_template() {
 	switch (Config['display-column']) {
 	case 1:
-		DisplayColumnsTpl = _.template(
-			'<tr>'
-				+ '<td><div class="btn-group" data-toggle="buttons"><%= radios %></div></td>'
-				+ '<td><a class="card card-tip" data-code="<%= card.code %>" href="<%= url %>" data-target="#cardModal" data-remote="false" data-toggle="modal"><%= card.label %></a></td>'
-				+ '<td class="cost"><%= card.cost %><%= card.income %></td>'
-				+ '<td class="cost"><%= card.strength %><%= card.initiative %></td>'
-				+ '<td class="type"><span class="icon-<%= card.type_code %>" title="<%= card.type_name %>"></span></td>'
-				+ '<td class="faction"><span class="icon-<%= card.faction_code %> fg-<%= card.faction_code %>" title="<%= card.faction_name %>"></span></td>'
-			+ '</tr>'
+		DisplayColumnsTpl = Handlebars.compile(
+			'<tr data-code="{{card.code}}"> ' +
+			'    <td>' +
+			'        <div class="btn-group" data-toggle="buttons">' +
+			'        {{{radios}}}' +
+			'        </div>' +
+			'        {{#if second_die}}' +
+			'        <div class="btn-group" data-toggle="buttons">' +
+			'        	<label class="btn btn-default btn-xs">' +
+			'        		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>' +
+			'        	</label>' +
+			'        </div>' +
+			'        {{/if}}' +
+			'    </td>' +
+			'    <td> ' +
+			'        <a class="card card-tip" data-code="{{ card.code }}" href="{{ url }}" data-target="#cardModal" data-remote="false" data-toggle="modal">{{ card.name }}</a> ' +
+			'    </td> ' +
+			'    <td>' +
+			'        {{#if card.cost}}{{card.cost}}{{/if}}{{#if card.points}}{{card.points}}{{/if}}' +
+			'    </td>' +
+			'    <td>' +
+			'        {{#if card.health}}{{card.health}}{{/if}}' +
+			'    </td>' +
+			'    <td>' +
+			'        <span class="icon-{{card.type_code}}"></span>' +
+			'    </td>' +
+			'    <td>' +
+			'        <span class="bg-{{card.faction_code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
+			'    </td>' +
+			'</tr> '
 		);
 		break;
 	case 2:
@@ -494,7 +584,8 @@ ui.build_row = function build_row(card) {
 	var html = DisplayColumnsTpl({
 		radios: radios,
 		url: Routing.generate('cards_zoom', {card_code:card.code}),
-		card: card
+		card: card,
+		second_die: card.type_code=='character' && card.is_unique && (!Config['show-only-owned'] || card.owned > 1)
 	});
 	return $(html);
 }
@@ -530,6 +621,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		if (Config['show-only-deck'] && !card.indeck) return;
 		var unusable = !app.deck.can_include_card(card);
 		if (!Config['show-unusable'] && unusable) return;
+		if (Config['show-only-owned'] && card.maxqty==0) return;
 
 		var row = divs[card.code];
 		if(!row) row = divs[card.code] = ui.build_row(card);
@@ -545,6 +637,15 @@ ui.refresh_list = _.debounce(function refresh_list() {
 				}
 			}
 		);
+		row.find('input[name="2nd-' + card.code + '"]').each(function(i, element) {
+			// if that switch is NOT the one with the new quantity, uncheck it
+			// else, check it
+			if($(element).val() != card.dice) {
+				$(element).prop('checked', false).closest('label').removeClass('active');
+			} else {
+				$(element).prop('checked', true).closest('label').addClass('active');
+			}
+		});
 
 		if (unusable) {
 			row.find('label').addClass("disabled").find('input[type=radio]').attr("disabled", true);
@@ -649,8 +750,13 @@ ui.on_dom_loaded = function on_dom_loaded() {
  * @memberOf ui
  */
 ui.on_data_loaded = function on_data_loaded() {
-	ui.remove_melee_titles();
-	ui.set_max_qty();
+	if(app.collection.isLoaded) {
+		ui.set_max_qty();
+	} else {
+		$(document).on('collection.app', function(e) {
+			ui.set_max_qty();
+		});
+	}
 	app.draw_simulator && app.draw_simulator.on_data_loaded();
 };
 
@@ -660,9 +766,11 @@ ui.on_data_loaded = function on_data_loaded() {
  */
 ui.on_all_loaded = function on_all_loaded() {
 	ui.update_list_template();
+	ui.build_affiliation_selector();
 	ui.build_faction_selector();
 	ui.build_type_selector();
-	ui.build_pack_selector();
+	ui.build_rarity_selector();
+	ui.build_set_selector();
 	ui.init_selectors();
 	ui.refresh_deck();
 	ui.refresh_list();

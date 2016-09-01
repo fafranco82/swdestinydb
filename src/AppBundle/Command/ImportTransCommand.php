@@ -23,7 +23,7 @@ class ImportTransCommand extends ContainerAwareCommand
 	{
 		$this
 		->setName('app:import:trans')
-		->setDescription('Import translation data in json format from a copy of https://github.com/Alsciende/thronesdb-json-data')
+		->setDescription('Import translation data in json format from a copy of https://github.com/fafranco82/swdestinydb-json-data')
 		->addOption(
 				'locale',
 				'l',
@@ -52,7 +52,7 @@ class ImportTransCommand extends ContainerAwareCommand
 			$path = substr($path, 0, strlen($path) - 1);
 		}
 		
-		$things = ['faction', 'type', 'cycle', 'pack'];
+		$things = ['affiliation', 'faction', 'type', 'rarity', 'set', 'sideType', 'subtype'];
 		
 		foreach($locales as $locale) 
 		{
@@ -60,8 +60,9 @@ class ImportTransCommand extends ContainerAwareCommand
 			$output->writeln("Importing translations for <info>${locale}</info>");
 			foreach($things as $thing) 
 			{
-				$output->writeln("Importing translations for <info>${thing}s</info> in <info>${locale}</info>");
-				$fileInfo = $this->getFileInfo("${path}/translations/${locale}", "${thing}s.json");
+				$plural = $thing === 'rarity' ? 'rarities' : "${thing}s";
+				$output->writeln("Importing translations for <info>${plural}</info> in <info>${locale}</info>");
+				$fileInfo = $this->getFileInfo("${path}/translations/${locale}", "${plural}.json");
 				$this->importThingsJsonFile($fileInfo, $locale, $thing);
 			}
 			$this->em->flush();
@@ -115,7 +116,7 @@ class ImportTransCommand extends ContainerAwareCommand
 					'name'
 			], [
 					'flavor',
-					'traits',
+					'subtitle',
 					'text'
 			]);
 		}
@@ -261,7 +262,7 @@ class ImportTransCommand extends ContainerAwareCommand
 			throw new \Exception("No repository found at [$path]");
 		}
 		
-		$directory = 'pack';
+		$directory = 'set';
 		
 		if(!$fs->exists("$path/$directory")) {
 			throw new \Exception("No '$directory' directory found at [$path]");

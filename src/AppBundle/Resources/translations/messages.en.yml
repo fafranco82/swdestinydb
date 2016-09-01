@@ -1,15 +1,160 @@
-slogan: Deckbuilder for A Game of Thrones LCG 2nd Edition
+slogan: Deckbuilder for Star Wars Destiny
 
 data_load_fail: "Unable to load the data. Click <a href='javascript:window.location.reload(true)'>here</a> to reload your page."
 login_required: You must be logged in for this operation.
-
-userby: by %user%
-seemore:
-  faction: More in this faction
 noimage: No image
+
+decks:
+  privatedecks: My private decks
+  slotcount: "(%current%/%max% slots)"
+  version: Version %version%
+  description: Description
+  defaultemptydesc: "*No description.*"
+  problems:
+    too_few_cards: Contains too few cards
+    too_many_character_points: Character points limit exceeded
+    too_many_copies: Contains too many copies of a card
+    invalid_cards: Contains forbidden cards
+    faction_not_included: Contains cards from one missing faction
+  build:
+    choose:
+      affiliation: Choose your affiliation
+    start: Create the deck and start building
+    newname: "New deck: %affiliation%"
+    errors:
+      noaffiliation: A affiliation is required.
+  edit:
+    unsaved: This deck has unsaved changes. Please save the deck or cancel the changes before making further edits.
+    refresh: Refresh all application data
+    tabs:
+      build: Build
+      notes: Notes
+      test: Test
+      charts: Charts
+      history: History
+    build:
+      help: Filter help
+      sets:
+        label: Sets
+        hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+      options:
+        label: Options
+        show:
+          unusable: Show unusabled cards
+          onlyused: Show only used cards
+          onlyowned: Show only owned cards
+        display: "{1} Display on 1 column | ]1, Inf] Display on %cols% columns"
+        suggestions: "{0} Show no suggestion | {1} Show %count% suggestion | ]1, Inf] Show %count% suggestions"
+        filter_button:
+          cumulative: %filter% cumulative
+          exclusive: %filter% exclusive
+      searchhint: Find a card or filter the list
+    notes:
+      tags:
+        label: Tags
+        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>melee</i>.
+      notes:
+        label: Notes
+        hint: "Type # to enter a card name. Type $ to enter a symbol."
+    form:
+      name: Name
+      cancel: Cancel edits
+    meta:
+      characters: Characters
+      points: "%points% point | %points% points"
+      drawdeck: Draw deck
+      cards: "%count% card | %count% cards"
+      dice: "%count% die | %count% dice"
+      sets: "Sets: %sets%"
+  form:
+    build: Build New Deck
+    uploadarchive: Upload archive
+    new: New Deck
+    import:
+      label: Import Deck
+      copypaste: Copy/paste
+      file: File
+    selection: 
+      label: With Selection
+      compare:
+        label: Compare
+        twodecks: Compare two decks
+      tags:
+        label: Tags
+        add: Add one or more tags
+        remove: Remove one or more tags
+        clear: Clear all tags
+      delete:
+        label: Delete
+        selected: Delete all decks selected
+    labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
+    download:
+      text: Text file
+  modals:
+    card:
+      go: Go to card page
+    fileimport:
+      title: Upload deck file
+      file:
+        label: File
+      type:
+        label: File type
+        options:
+          auto: Auto
+          text: Text
+    delete:
+      title: Delete deck
+      question: Are you sure you want to delete the deck %name%?
+      confirm: Yes, delete
+    deletelist:
+      title: Delete decks
+      question: Are you sure you want to delete all the decks selected?
+      confirm: Yes, delete
+    tags:
+      label: Please enter the list of tags, separated by spaces
+      hint: a-tag another
+      clear:
+        question: Are you sure you want to clear all tags from the selected decks?
+        confirm: Yes, clear
+  suggestions:
+    title: Card suggestions
+  published:
+    title: Published versions
+    none: None
+  simulator:
+    title: Card draw simulator
+    hint: Click to draw; Shift-click to reset and draw
+    draw: Draw
+    all: all
+    oddhint: "Odds to have at least 1 copy of a desired card, after having drawn that many cards from the deck, depending of the number of copies in the deck (1 - 2)"
+    odds: Odds
+    more: more
+  history:
+    timeremaining: Time Remaining
+    columns:
+      date: Date
+      version: Version
+      changes: Changes
+      action: Action
+    firstversion: First version
+    unsaved: unsaved
+    revert: Revert
+  smartfilter:
+    title: Smart filter syntax
+    example: "Example: <tt>m:1 s>3</tt> shows all characters with a <span class='icon-military'></span> icon and a STR greater than 3"
+    filters:
+      flavor: Flavor text
+      set_code: Set
+      faction_code: Faction
+      illustrator: Illustrator
+      cost: Cost
+      type_code: Type
+      is_unique: Uniqueness
+      text: Text
 
 nav:
   mydecks: My decks
+  mycollection: My collection
   decklists: Decklists
   cards: Cards
   rules: Rules
@@ -39,289 +184,6 @@ forms:
   download: Download
   search: Search
 
-decks:
-  privatedecks: My private decks
-  slotcount: "(%current%/%max% slots)"
-  version: Version %version%
-  description: Description
-  defaultemptydesc: "*No description.*"
-  problems:
-    too_many_plots: Contains too many Plots
-    too_few_plots: Contains too few Plots
-    too_many_different_plots: Contains more than one duplicated Plot
-    too_many_agendas: Contains more than one Agenda
-    too_few_cards: Contains too few cards
-    too_many_copies: Contains too many copies of a card (by title)
-    invalid_cards: Contains forbidden cards (cards no permitted by Faction or Agenda)
-    agenda: Doesn't comply with the Agenda conditions
-  build:
-    choose:
-      faction: Choose your faction
-      agenda: Choose an agenda
-      noagenda: No agenda
-    start: Create the deck and start building
-    newname:
-      noagenda: "New deck: %faction%"
-      agenda: "New deck: %faction%, %agenda%"
-    errors:
-      nofaction: A faction is required.
-  edit:
-    unsaved: This deck has unsaved changes. Please save the deck or cancel the changes before making further edits.
-    refresh: Refresh all application data
-    tabs:
-      build: Build
-      notes: Notes
-      test: Test
-      charts: Charts
-      history: History
-    build:
-      help: Filter help
-      sets:
-        label: Sets
-        hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
-      options:
-        label: Options
-        show:
-          unusable: Show unusabled cards
-          onlyused: Show only used cards
-        display: "{1} Display on 1 column | ]1, Inf] Display on %cols% columns"
-        usecore: "{1} Use 1 Core Set | ]1, Inf] Use %core% Core Sets"
-        suggestions: "{0} Show no suggestion | {1} Show %count% suggestion | ]1, Inf] Show %count% suggestions"
-        factype:
-          cumulative: Faction/Type cumulative
-          exclusive: Faction/Type exclusive
-      searchhint: Find a card or filter the list
-    notes:
-      tags:
-        label: Tags
-        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>melee</i>.
-      notes:
-        label: Notes
-        hint: "Type # to enter a card name. Type $ to enter a symbol."
-    form:
-      name: Name
-      cancel: Cancel edits
-    meta:
-      drawdeck: "{0} Draw deck: %count% cards | {1} Draw deck: %count% card | ]1,Inf] Draw deck: %count% cards"
-      plotdeck: "{0} Plot deck: %count% cards | {1} Plot deck: %count% card | ]1,Inf] Plot deck: %count% cards"
-      packs: "Packs: %packs%"
-  form:
-    build: Build New Deck
-    uploadarchive: Upload archive
-    new: New Deck
-    import:
-      label: Import Deck
-      copypaste: Copy/paste
-      file: File
-    selection: 
-      label: With Selection
-      compare:
-        label: Compare
-        twodecks: Compare two decks
-      tags:
-        label: Tags
-        add: Add one or more tags
-        remove: Remove one or more tags
-        clear: Clear all tags
-      delete:
-        label: Delete
-        selected: Delete all decks selected
-    labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
-    download:
-      text: Text file
-      octgn: Octgn file
-  modals:
-    card:
-      go: Go to card page
-    fileimport:
-      title: Upload deck file
-      file:
-        label: File
-      type:
-        label: File type
-        options:
-          auto: Auto
-          octgn: OCTGN
-          text: Text
-    delete:
-      title: Delete deck
-      question: Are you sure you want to delete the deck %name%?
-      confirm: Yes, delete
-    deletelist:
-      title: Delete decks
-      question: Are you sure you want to delete all the decks selected?
-      confirm: Yes, delete
-    tags:
-      label: Please enter the list of tags, separated by spaces
-      hint: a-tag another
-      clear:
-        question: Are you sure you want to clear all tags from the selected decks?
-        confirm: Yes, clear
-  suggestions:
-    title: Card suggestions
-  published:
-    title: Published versions
-    none: None
-  simulator:
-    title: Card draw simulator
-    hint: Click to draw; Shift-click to reset and draw
-    draw: Draw
-    all: all
-    oddhint: "Odds to have at least 1 copy of a desired card, after having drawn that many cards from the deck, depending of the number of copies in the deck (1 - 2 - 3)"
-    odds: Odds
-    more: more
-  smartfilter:
-    title: Smart filter syntax
-    example: "Example: <tt>m:1 s>3</tt> shows all characters with a <span class='icon-military'></span> icon and a STR greater than 3"
-    filters:
-      flavor: Flavor text
-      claim: Claim value
-      pack_code: Pack
-      faction_code: Faction
-      is_intrigue: Intrigue icon
-      reserve: Reserve value
-      illustrator: Illustrator
-      traits: Traits
-      is_loyal: Loyalty
-      is_military: Military icon
-      income: Gold value
-      cost: Cost
-      is_power: Power icon
-      strength: Strength
-      type_code: Type
-      is_unique: Uniqueness
-      initiative: Initiative value
-      text: Text
-      quantity: Quantity in pack
-  charts:
-    faction:
-      title: Card Factions
-      subtitle: Draw deck only
-      label: "# cards"
-    icon:
-      title: Character Icons
-      subtitle: Duplicates not counted
-      tooltip:
-        header: "%type% Icon"
-        label: "# characters"
-    strength:
-      title: Character Strength
-      subtitle: Duplicates not counted
-      tooltip:
-        header: "STR %str%"
-        label: "# characters"
-    cost:
-      title: Card Cost
-      subtitle: Cost X ignored
-      tooltip:
-        header: "Cost %cost%"
-        label: "# cards"
-  history:
-    timeremaining: Time Remaining
-    columns:
-      date: Date
-      version: Version
-      changes: Changes
-      action: Action
-    firstversion: First version
-    unsaved: unsaved
-    revert: Revert
-  compare:
-    decknumber: "Deck #%id%"
-    plotdecks: Plot Decks
-    drawdecks: Draw Decks
-
-decklist:
-  publish:
-    name: Name
-    placedhigh: Placed high in a tournament?
-    no: No
-    derived: Derived from (copy id or address of the decklist this one is inspired from)
-    description: Description
-    editor:
-      hint: "Press # to insert a card name, $ to insert a game symbol."
-      cardtolink: Turn a card name into a card link
-      entersymbol: Insert a game symbol
-      heading: Heading %number%
-    errors:
-      unauthorized: You don't have access to this decklist.
-      antispam:
-        newbie: To prevent spam, newly created accounts must wait 24 hours before being allowed to publish a decklist.
-        limit: To prevent spam, accounts cannot publish more decklists than their reputation per 24 hours.
-      unreleased: You cannot publish this deck yet, because it has unreleased cards.
-      invalid: This deck cannot be published because it is invalid.
-      pagetitle:
-        spam: Spam prevention
-    warnings:
-      published: "This deck <a href='%url%'>has already been published</a> before. You are going to create a duplicate."
-  view:
-    versions: Versions
-    published: published
-    duplicate: Duplicate of %duplicate%
-    comments: 
-      count: "{0} No comments | {1} %count% comment | ]1,Inf] %count% comments"
-      hint: "Enter your comment in Markdown format. Type # to enter a card name. Type $ to enter a symbol. Type @ to enter a user name."
-      submit: Submit comment
-    social:
-      like: Like
-      favorite: Favorite
-      comment: Comment
-      version: Version
-    derived:
-      title: Derived from
-      none: None. Self-made deck here.
-    inspire:
-      title: Inspiration for
-      none: None yet.
-    toolbar:
-      edit: Edit decklist name / description
-    errors:
-      notfound: Decklist not found.
-  list:
-    types:
-      popular: Popular
-      recent: Recent
-      tournaments: Tournaments
-      hottopics: Hot topics
-      hof: Hall of Fame
-      myfavorites: My favorites
-      mydecklists: My decklists
-    titles:
-      search: Decklist Search
-      find: Decklist search results
-      popular: Popular decklists
-      recent: Recent decklists
-      tournament: Tournaments
-      hottopics: Hot topics
-      halloffame: Hall of Fame
-      favorites: Favorite decklists
-      mine: My decklists
-    search:
-      faction:
-        label: Faction
-        any: any
-      author: 
-        label: Author name
-        hint: Enter author name
-      used:
-        label: Cards used
-        hint: Enter card name
-      decklist:
-        label: Decklist name
-        hint: Enter text to search in name
-      sort:
-        label: Sort
-        popularity: By Popularity
-        date: By Date
-        likes: By Number of Likes
-        reputation: By Reputation of Author
-      allowed:
-        label: Select allowed packs
-        onoff: "(%on% on, %off% off)"
-        core: "Core / Deluxe"
-        all: all
-        none: none
-
 search:
   label: Search
   setbrowse: Browse by set
@@ -336,6 +198,7 @@ search:
   yes: Yes
   no: No
   only: Only
+  noresult: Your query didn't match any card.
   sort:
     name: Sort by Name
     set: Sort by Set
@@ -373,82 +236,25 @@ card:
       minimum: Your review must at least %min% characters long.
   info:
     name: Name
+    subtitle: Subtitle
     unique: Unique
     text: Text
     flavor: Flavor text
+    affiliation: Affiliation
     faction: Faction
     set: Set
+    rarity: Rarity
+    points: Points
     cost: Cost
-    costgold: Cost/Gold
+    points_cost: Points/Cost
     type: Type
-    strength: Fuerza
-    str: STR
-    strini: Strength/Initiative
-    traits: Traits
-    set: Set
-    loyal: Loyal
-    nonloyal: Non-Loyal
-    income: Income
-    initiative: Initiative
-    claim: Claim
-    reserve: Reserve
-    plotlimit: Plot deck limit
-    quantity: Quantity
+    subtype: Subtype
+    health: Health
     illustrator: Illustrator
+    die: Die
+    quantity: Quantity
     short:
-      costgold: C.
-      strini: S.
+      points_cost: C.
+      health: H.
       type: T.
       faction: F.
-
-challenges:
-  military: Military
-  intrigue: Intrigue
-  power: Power
-
-icon:
-  baratheon: Baratheon
-  greyjoy: Greyjoy
-  intrigue: Intrigue
-  lannister: Lannister
-  martell: Martell
-  military: Military
-  thenightswatch: The Night's Watch
-  power: Power
-  stark: Stark
-  targaryen: Targaryen
-  tyrell: Tyrell
-  unique: Unique
-  plot: Plot
-  attachment: Attachment
-  location: Location
-  character: Character
-  event: Event
-  agenda: Agenda
-  neutral: Neutral
-
-keyword:
-  renown:
-    name: Renown
-    title: "After you win a challenge in which this character is participating, he may gain 1 power."
-  intimidate:
-    name: Intimidate
-    title: "After you win a challenge in which this character is participating, you may choose and kneel a character, controlled by the losing opponent, with equal or lower STR than the amount of STR by which the challenge was won."
-  stealth:
-    name: Stealth
-    title: "When you declare this character as an attacker, you may choose a character without stealth controlled by the defending opponent. That character cannot be declared as a defender for this challenge."
-  insight:
-    name: Insight
-    title: "After you win a challenge in which this character is participating, you may draw 1 card."
-  limited:
-    name: Limited
-    title: "No more than 1 card in total with the limited keyword can be marshaled (or played, if the card is an event) by each player each round. No more than 1 limited card can be placed by each player during setup."
-  pillage:
-    name: Pillage
-    title: "After you win a challenge in which this character is participating, you may discard 1 card from the top of the losing opponent's deck."
-  terminal:
-    name: Terminal
-    title: "If attached card leaves play, discard this attachment."
-  ambush:
-    name: Ambush
-    title: "You may pay X gold to put this card into play from your hand during the challenges phase."

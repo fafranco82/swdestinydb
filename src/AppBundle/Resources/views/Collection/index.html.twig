@@ -1,0 +1,63 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% import "AppBundle::macros.html.twig" as macros %}
+
+{% block javascripts %}
+	{% javascripts '@AppBundle/Resources/public/js/ui.collection.js' %}
+	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+	app.collection && app.collection.init({{ collection|json_encode|raw }});
+	</script>
+{% endblock %}
+
+{% block body %}
+<div class="main white container">
+
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-sm-6">
+    	<div class="btn-group btn-group-justified" data-filter="rarity_code" data-toggle="buttons"></div>
+	</div>
+	<div class="col-sm-6">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">{{ 'decks.edit.build.sets.label' | trans}} <span class="caret"></span></button>
+			<ul class="dropdown-menu pull-right" data-filter="set_code" title="{{ 'decks.edit.build.sets.hint' | trans }}"></ul>
+		</div>
+		<form action="{{ path('collection_save') }}" method="POST">
+			<input type="hidden" name="changes" id="changes"/>
+			<button id="btn-save" class="btn btn-sm btn-primary">{{ 'forms.save' | trans }}</button>
+		</form>
+	</div>
+</div>
+
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-sm-4">
+    	<div class="btn-group btn-group-justified" data-filter="affiliation_code" data-toggle="buttons"></div>
+	</div>
+	<div class="col-sm-4">
+    	<div class="btn-group btn-group-justified" data-filter="faction_code" data-toggle="buttons"></div>
+	</div>
+	<div class="col-sm-4">
+    	<div class="btn-group btn-group-justified" data-filter="type_code" data-toggle="buttons"></div>
+	</div>
+</div>
+
+<!-- Collection Table -->
+<div class="row" id="collection">
+	<div class="col-sm-12">
+		<table class="table table-condensed table-hover" style="margin-bottom:10px">
+			<thead>
+				<tr>
+					<th>{{ 'card.info.name' | trans }}</th>
+					<th colspan="6">{{ 'card.info.die' | trans}}</th>
+					<th>{{ 'card.info.set' | trans }}</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="collection-table" class="collection"></tbody>
+		</table>
+	</div><!-- /.col-sm-12 -->
+	<div id="collection-grid" class="col-sm-12"></div>
+</div><!-- /.row -->
+
+</div>
+{% endblock %}

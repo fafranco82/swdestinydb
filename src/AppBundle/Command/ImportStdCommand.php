@@ -10,9 +10,10 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Cycle;
-use AppBundle\Entity\Pack;
+use AppBundle\Entity\Type;
+use AppBundle\Entity\Set;
 use AppBundle\Entity\Card;
+use AppBundle\Entity\Side;
 
 class ImportStdCommand extends ContainerAwareCommand
 {
@@ -47,6 +48,21 @@ class ImportStdCommand extends ContainerAwareCommand
 		/* @var $helper \Symfony\Component\Console\Helper\QuestionHelper */
 		$helper = $this->getHelper('question');
 
+		// affiliations
+		
+		$output->writeln("Importing Affiliations...");
+		$affiliationsFileInfo = $this->getFileInfo($path, 'affiliations.json');
+		$imported = $this->importAffiliationsJsonFile($affiliationsFileInfo);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$this->loadCollection('Affiliation');
+		$output->writeln("Done.");
+
 		// factions
 		
 		$output->writeln("Importing Factions...");
@@ -77,11 +93,11 @@ class ImportStdCommand extends ContainerAwareCommand
 		$this->loadCollection('Type');
 		$output->writeln("Done.");
 		
-		// cycles
-
-		$output->writeln("Importing Cycles...");
-		$cyclesFileInfo = $this->getFileInfo($path, 'cycles.json');
-		$imported = $this->importCyclesJsonFile($cyclesFileInfo);
+		// subtypes
+		
+		$output->writeln("Importing Subtypes...");
+		$subtypesFileInfo = $this->getFileInfo($path, 'subtypes.json');
+		$imported = $this->importSubtypesJsonFile($subtypesFileInfo);
 		if(count($imported)) {
 			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
 			if(!$helper->ask($input, $output, $question)) {
@@ -89,14 +105,44 @@ class ImportStdCommand extends ContainerAwareCommand
 			}
 		}
 		$this->em->flush();
-		$this->loadCollection('Cycle');
+		$this->loadCollection('Subtype');
 		$output->writeln("Done.");
 		
-		// second, packs
+		// rarities
+		
+		$output->writeln("Importing Rarities...");
+		$raritiesFileInfo = $this->getFileInfo($path, 'rarities.json');
+		$imported = $this->importRaritiesJsonFile($raritiesFileInfo);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$this->loadCollection('Rarity');
+		$output->writeln("Done.");
 
-		$output->writeln("Importing Packs...");
-		$packsFileInfo = $this->getFileInfo($path, 'packs.json');
-		$imported = $this->importPacksJsonFile($packsFileInfo);
+		// side types
+		
+		$output->writeln("Importing SideTypes...");
+		$sideTypesFileInfo = $this->getFileInfo($path, 'sideTypes.json');
+		$imported = $this->importSideTypesJsonFile($sideTypesFileInfo);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$this->loadCollection('SideType');
+		$output->writeln("Done.");
+		
+		// second, sets
+
+		$output->writeln("Importing Sets...");
+		$setsFileInfo = $this->getFileInfo($path, 'sets.json');
+		$imported = $this->importSetsJsonFile($setsFileInfo);
 		$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
 		if(count($imported)) {
 			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
@@ -105,7 +151,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			}
 		}
 		$this->em->flush();
-		$this->loadCollection('Pack');
+		$this->loadCollection('Set');
 		$output->writeln("Done.");
 				
 		// third, cards
@@ -125,6 +171,27 @@ class ImportStdCommand extends ContainerAwareCommand
 		$this->em->flush();
 		$output->writeln("Done.");
 		
+	}
+
+	protected function importAffiliationsJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$list = $this->getDataFromFile($fileinfo);
+		foreach($list as $data)
+		{
+			$affiliation = $this->getEntityFromData('AppBundle\\Entity\\Affiliation', $data, [
+					'code',
+					'name',
+					'is_primary'
+			], [], []);
+			if($affiliation) {
+				$result[] = $affiliation;
+				$this->em->persist($affiliation);
+			}
+		}
+	
+		return $result;
 	}
 
 	protected function importFactionsJsonFile(\SplFileInfo $fileinfo)
@@ -167,47 +234,84 @@ class ImportStdCommand extends ContainerAwareCommand
 	
 		return $result;
 	}
-	
-	protected function importCyclesJsonFile(\SplFileInfo $fileinfo)
+
+	protected function importSubtypesJsonFile(\SplFileInfo $fileinfo)
 	{
 		$result = [];
 	
-		$cyclesData = $this->getDataFromFile($fileinfo);
-		foreach($cyclesData as $cycleData) {
-			$cycle = $this->getEntityFromData('AppBundle\Entity\Cycle', $cycleData, [
-					'code', 
-					'name', 
-					'position', 
-					'size'
+		$list = $this->getDataFromFile($fileinfo);
+		foreach($list as $data)
+		{
+			$type = $this->getEntityFromData('AppBundle\\Entity\\Subtype', $data, [
+					'code',
+					'name'
 			], [], []);
-			if($cycle) {
-				$result[] = $cycle;
-				$this->em->persist($cycle);
+			if($type) {
+				$result[] = $type;
+				$this->em->persist($type);
 			}
 		}
-		
+	
 		return $result;
 	}
 
-	protected function importPacksJsonFile(\SplFileInfo $fileinfo)
+	protected function importRaritiesJsonFile(\SplFileInfo $fileinfo)
 	{
 		$result = [];
 	
-		$packsData = $this->getDataFromFile($fileinfo);
-		foreach($packsData as $packData) {
-			$pack = $this->getEntityFromData('AppBundle\Entity\Pack', $packData, [
+		$list = $this->getDataFromFile($fileinfo);
+		foreach($list as $data)
+		{
+			$rarity = $this->getEntityFromData('AppBundle\\Entity\\Rarity', $data, [
+					'code',
+					'name'
+			], [], []);
+			if($rarity) {
+				$result[] = $rarity;
+				$this->em->persist($rarity);
+			}
+		}
+	
+		return $result;
+	}
+
+	protected function importSideTypesJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$list = $this->getDataFromFile($fileinfo);
+		foreach($list as $data)
+		{
+			$sideType = $this->getEntityFromData('AppBundle\\Entity\\SideType', $data, [
+					'code',
+					'icon',
+					'name'
+			], [], []);
+			if($sideType) {
+				$result[] = $sideType;
+				$this->em->persist($sideType);
+			}
+		}
+	
+		return $result;
+	}
+	
+	protected function importSetsJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$setsData = $this->getDataFromFile($fileinfo);
+		foreach($setsData as $setData) {
+			$set = $this->getEntityFromData('AppBundle\Entity\Set', $setData, [
 					'code', 
 					'name', 
 					'position', 
 					'size', 
-					'date_release',
-					'cgdb_id'
-			], [
-					'cycle_code'
-			], []);
-			if($pack) {
-				$result[] = $pack;
-				$this->em->persist($pack);
+					'date_release'
+			], [], []);
+			if($set) {
+				$result[] = $set;
+				$this->em->persist($set);
 			}
 		}
 		
@@ -220,8 +324,8 @@ class ImportStdCommand extends ContainerAwareCommand
 	
 		$code = $fileinfo->getBasename('.json');
 		
-		$pack = $this->em->getRepository('AppBundle:Pack')->findOneBy(['code' => $code]);
-		if(!$pack) throw new \Exception("Unable to find Pack [$code]");
+		$set = $this->em->getRepository('AppBundle:Set')->findOneBy(['code' => $code]);
+		if(!$set) throw new \Exception("Unable to find Pack [$code]");
 		
 		$cardsData = $this->getDataFromFile($fileinfo);
 		foreach($cardsData as $cardData) {
@@ -229,21 +333,22 @@ class ImportStdCommand extends ContainerAwareCommand
 					'code',
 					'deck_limit',
 					'position',
-					'quantity',
 					'name',
-					'is_loyal',
+					'has_die',
 					'is_unique'
 			], [
+					'affiliation_code',
 					'faction_code',
-					'pack_code',
-					'type_code'
+					'set_code',
+					'rarity_code',
+					'type_code',
+					'subtype_code'
 			], [
 					'illustrator',
 					'flavor',
-					'traits',
 					'text',
 					'cost',
-					'octgn_id'
+					'subtitle'
 			]);
 			if($card) {
 				$result[] = $card;
@@ -337,6 +442,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			$foreignEntityShortName = ucfirst(str_replace('_code', '', $key));
 	
 			if(!key_exists($key, $data)) {
+				if($key=='subtype_code') continue;
 				throw new \Exception("Missing key [$key] in ".json_encode($data));
 			}
 
@@ -362,12 +468,57 @@ class ImportStdCommand extends ContainerAwareCommand
 			// calling a function whose name depends on the type_code
 			$functionName = 'import' . $entity->getType()->getName() . 'Data';
 			$this->$functionName($entity, $data);
+
+			$this->importCardDieSides($entity, $data);
 		}
 	
 		if($entity->serialize() !== $orig) return $entity;
 	}
+
+	protected function importCardDieSides(Card $card, $data)
+	{
+		if($card->getHasDie())
+		{
+			if(!key_exists('sides', $data))
+				throw new \Exception('Card ['.$card->getName().'] has die but no key [sides]');
+
+			if(count($data['sides']) != 6)
+				throw new \Exception('Card ['.$card->getName().'] has die but there are not 6 elements in key [sides]');
+
+			foreach($data['sides'] as $index=>$sideData)
+			{
+				$side = NULL;
+				if($index >= count($card->getSides()))
+				{
+					$side = new Side();
+					$side->setCard($card);
+					$card->addSide($side);
+				}
+				else
+				{
+					$side = $card->getSides()[$index];
+				}
+				
+				$orig = $side->toString();
+
+				preg_match('/^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/', $sideData, $result);
+				list($all, $modifier, $value, $type, $cost) = $result;
+
+				if(!key_exists($type, $this->collections['SideType']))
+					throw new \Exception("There is no side type with code [$type]");
+				
+				$side->setModifier($modifier=='+' ? 1 : $modifier=='-' ? -1 : 0);
+				$side->setValue($value);
+				$side->setType($this->collections['SideType'][$type]);
+				$side->setCost($cost);
+
+				if($orig !== $side->toString())
+					$this->output->writeln("Changing the <info>side #".($index+1)."</info> of <info>".$card->toString()."</info> (".$orig." => ".$side->toString().")");
+			}
+		}
+	}
 	
-	protected function importAgendaData(Card $card, $data)
+	protected function importBattlefieldData(Card $card, $data)
 	{
 		$mandatoryKeys = [
 		];
@@ -377,7 +528,18 @@ class ImportStdCommand extends ContainerAwareCommand
 		}
 	}
 
-	protected function importAttachmentData(Card $card, $data)
+	protected function importSupportData(Card $card, $data)
+	{
+		$mandatoryKeys = [
+				'cost'
+		];
+
+		foreach($mandatoryKeys as $key) {
+			$this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, TRUE);
+		}
+	}
+
+	protected function importUpgradeData(Card $card, $data)
 	{
 		$mandatoryKeys = [
 				'cost'
@@ -391,11 +553,8 @@ class ImportStdCommand extends ContainerAwareCommand
 	protected function importCharacterData(Card $card, $data)
 	{
 		$mandatoryKeys = [
-				'cost',
-				'strength',
-				'is_military',
-				'is_intrigue',
-				'is_power'
+				'health',
+				'points'
 		];
 
 		foreach($mandatoryKeys as $key) {
@@ -407,41 +566,6 @@ class ImportStdCommand extends ContainerAwareCommand
 	{
 		$mandatoryKeys = [
 				'cost'
-		];
-
-		foreach($mandatoryKeys as $key) {
-			$this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, TRUE);
-		}
-	}
-
-	protected function importLocationData(Card $card, $data)
-	{
-		$mandatoryKeys = [
-				'cost'
-		];
-
-		foreach($mandatoryKeys as $key) {
-			$this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, TRUE);
-		}
-	}
-
-	protected function importPlotData(Card $card, $data)
-	{
-		$mandatoryKeys = [
-				'claim',
-				'income',
-				'initiative',
-				'reserve'
-		];
-
-		foreach($mandatoryKeys as $key) {
-			$this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, TRUE);
-		}
-	}
-
-	protected function importTitleData(Card $card, $data)
-	{
-		$mandatoryKeys = [
 		];
 
 		foreach($mandatoryKeys as $key) {
@@ -495,7 +619,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			throw new \Exception("No repository found at [$path]");
 		}
 		
-		$directory = 'pack';
+		$directory = 'set';
 		
 		if(!$fs->exists("$path/$directory")) {
 			throw new \Exception("No '$directory' directory found at [$path]");

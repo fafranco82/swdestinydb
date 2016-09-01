@@ -10,7 +10,7 @@
 		<td class="text-center" title="{{ 'decks.simulator.hint' | trans }}">
 		    <div class="btn-group">
 		    	<button class="btn btn-default btn-sm" disabled="disabled">{{ 'decks.simulator.draw' | trans }}:</button>
-		    	{% for i in [1,2,7] %}
+		    	{% for i in [1,2,5] %}
 		    	<button class="btn btn-default btn-sm" data-command="{{i}}">{{i}}</button>
 		    	{% endfor %}
 		    	<button class="btn btn-default btn-sm" data-command="all">{{ 'decks.simulator.all' | trans}}</button>
@@ -19,8 +19,7 @@
 		    <div title="{{ 'decks.simulator.oddhint' | trans }}">
 		    	<span class="small">{{ 'decks.simulator.odds' | trans}}: 
 		    		<span id="draw-simulator-odds-1">0</span>% &ndash; 
-		    		<span id="draw-simulator-odds-2">0</span>% &ndash; 
-		    		<span id="draw-simulator-odds-3">0</span>% 
+		    		<span id="draw-simulator-odds-2">0</span>%
 		    		<a href="#oddsModal" id="draw-simulator-more" data-toggle="modal" style="margin:0 10px">{{ 'decks.simulator.more' | trans }}</a>
 		    	</span>
 		    </div>

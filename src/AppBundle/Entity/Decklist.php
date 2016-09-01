@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
-class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
+use AppBundle\Model\SlotCollectionProviderInterface;
+
+class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializable, SlotCollectionProviderInterface
 {
 
 	public function jsonSerialize()
@@ -103,9 +105,9 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     private $faction;
 
     /**
-     * @var \AppBundle\Entity\Pack
+     * @var \AppBundle\Entity\Set
      */
-    private $lastPack;
+    private $lastSet;
 
     /**
      * @var \AppBundle\Entity\Deck
@@ -116,11 +118,6 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
      * @var \AppBundle\Entity\Decklist
      */
     private $precedent;
-
-    /**
-     * @var \AppBundle\Entity\Tournament
-     */
-    private $tournament;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -580,27 +577,27 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     }
 
     /**
-     * Set lastPack
+     * Set lastSet
      *
-     * @param \AppBundle\Entity\Pack $lastPack
+     * @param \AppBundle\Entity\Set $lastSet
      *
      * @return Decklist
      */
-    public function setLastPack(\AppBundle\Entity\Pack $lastPack = null)
+    public function setLastSet(\AppBundle\Entity\Set $lastSet = null)
     {
-        $this->lastPack = $lastPack;
+        $this->lastSet = $lastSet;
 
         return $this;
     }
 
     /**
-     * Get lastPack
+     * Get lastSet
      *
-     * @return \AppBundle\Entity\Pack
+     * @return \AppBundle\Entity\Set
      */
-    public function getLastPack()
+    public function getLastSet()
     {
-        return $this->lastPack;
+        return $this->lastSet;
     }
 
     /**
@@ -649,30 +646,6 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     public function getPrecedent()
     {
         return $this->precedent;
-    }
-
-    /**
-     * Set tournament
-     *
-     * @param \AppBundle\Entity\Tournament $tournament
-     *
-     * @return Decklist
-     */
-    public function setTournament(\AppBundle\Entity\Tournament $tournament = null)
-    {
-        $this->tournament = $tournament;
-
-        return $this;
-    }
-
-    /**
-     * Get tournament
-     *
-     * @return \AppBundle\Entity\Tournament
-     */
-    public function getTournament()
-    {
-        return $this->tournament;
     }
 
     /**

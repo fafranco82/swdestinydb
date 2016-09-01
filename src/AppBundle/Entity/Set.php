@@ -2,11 +2,12 @@
 
 namespace AppBundle\Entity;
 
-class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
+class Set implements \Gedmo\Translatable\Translatable, \Serializable
 {
 	public function serialize() {
 		return [
 				'code' => $this->code,
+				'date_release' => $this->dateRelease ? $this->dateRelease->format('Y-m-d') : null,
 				'name' => $this->name,
 				'position' => $this->position,
 				'size' => $this->size
@@ -17,7 +18,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
 		throw new \Exception("unserialize() method unsupported");
 	}
 	
-	public function toString() {
+    public function toString() {
 		return $this->name;
 	}
 	
@@ -57,16 +58,21 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
     private $dateUpdate;
 
     /**
+     * @var \DateTime
+     */
+    private $dateRelease;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $packs;
+    private $cards;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->packs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cards = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -84,7 +90,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param string $code
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setCode($code)
     {
@@ -108,7 +114,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param string $name
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setName($name)
     {
@@ -132,7 +138,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param integer $position
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setPosition($position)
     {
@@ -156,7 +162,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param integer $size
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setSize($size)
     {
@@ -180,7 +186,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param \DateTime $dateCreation
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setDateCreation($dateCreation)
     {
@@ -204,7 +210,7 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param \DateTime $dateUpdate
      *
-     * @return Cycle
+     * @return Pack
      */
     public function setDateUpdate($dateUpdate)
     {
@@ -224,37 +230,61 @@ class Cycle implements \Gedmo\Translatable\Translatable, \Serializable
     }
 
     /**
-     * Add pack
+     * Set dateRelease
      *
-     * @param \AppBundle\Entity\Pack $pack
+     * @param \DateTime $dateRelease
      *
-     * @return Cycle
+     * @return Pack
      */
-    public function addPack(\AppBundle\Entity\Pack $pack)
+    public function setDateRelease($dateRelease)
     {
-        $this->packs[] = $pack;
+        $this->dateRelease = $dateRelease;
 
         return $this;
     }
 
     /**
-     * Remove pack
+     * Get dateRelease
      *
-     * @param \AppBundle\Entity\Pack $pack
+     * @return \DateTime
      */
-    public function removePack(\AppBundle\Entity\Pack $pack)
+    public function getDateRelease()
     {
-        $this->packs->removeElement($pack);
+        return $this->dateRelease;
     }
 
     /**
-     * Get packs
+     * Add card
+     *
+     * @param \AppBundle\Entity\Card $card
+     *
+     * @return Pack
+     */
+    public function addCard(\AppBundle\Entity\Card $card)
+    {
+        $this->cards[] = $card;
+
+        return $this;
+    }
+
+    /**
+     * Remove card
+     *
+     * @param \AppBundle\Entity\Card $card
+     */
+    public function removeCard(\AppBundle\Entity\Card $card)
+    {
+        $this->cards->removeElement($card);
+    }
+
+    /**
+     * Get cards
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPacks()
+    public function getCards()
     {
-        return $this->packs;
+        return $this->cards;
     }
 
     /*

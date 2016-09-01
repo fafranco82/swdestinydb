@@ -14,10 +14,10 @@ class ExportableDeck
 				'date_update' => $this->getDateUpdate()->format('c'),
 				'description_md' => $this->getDescriptionMd(),
 				'user_id' => $this->getUser()->getId(),
-				'faction_code' => $this->getFaction()->getCode(),
-				'faction_name' => $this->getFaction()->getName(),
+				'affiliation_code' => $this->getAffiliation()->getCode(),
+				'affiliation_name' => $this->getAffiliation()->getName(),
 				'slots' => $slots->getContent(),
-				'agenda_code' => $slots->getAgenda() ? $slots->getAgenda()->getCode() : null,
+				'characters' => $slots->getCharacterDeck()->getContent(),
 				'version' => $this->getVersion(),
 		];
 	
@@ -29,7 +29,7 @@ class ExportableDeck
 		$slots = $this->getSlots();
 		return [
 				'name' => $this->getName(),
-				'faction' => $this->getFaction(),
+				'affiliation' => $this->getAffiliation(),
 				'agenda' => $slots->getAgenda(),
 				'draw_deck_size' => $slots->getDrawDeck()->countCards(),
 				'plot_deck_size' => $slots->getPlotDeck()->countCards(),

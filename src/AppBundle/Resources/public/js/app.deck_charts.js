@@ -59,7 +59,7 @@ deck_charts.chart_faction = function chart_faction() {
             text: Translator.trans("decks.charts.faction.subtitle")
         },
 		xAxis: {
-			categories: _.pluck(data, 'label'),
+			categories: _.map(data, 'label'),
 			labels: {
 				useHTML: true
 			},
@@ -130,7 +130,7 @@ deck_charts.chart_icon = function chart_icon() {
             text: Translator.trans("decks.charts.icon.subtitle")
         },
 		xAxis: {
-			categories: _.pluck(data, 'label'),
+			categories: _.map(data, 'label'),
 			labels: {
 				useHTML: true
 			},

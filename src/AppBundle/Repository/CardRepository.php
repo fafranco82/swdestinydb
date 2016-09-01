@@ -12,11 +12,11 @@ class CardRepository extends TranslatableRepository
 	public function findAll()
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, f, p, y')
+			->select('c, t, st, f, s')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
-			->join('c.pack', 'p')
-			->join('p.cycle', 'y')
+			->join('c.set', 's')
+			->leftJoin('c.subtype', 'st')
 			->orderBY('c.code', 'ASC');
 
 		return $this->getResult($qb);
@@ -25,8 +25,8 @@ class CardRepository extends TranslatableRepository
 	public function findByType($type)
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, p')
-			->join('c.pack', 'p')
+			->select('c, s')
+			->join('c.set', 's')
 			->join('c.type', 't')
 			->andWhere('t.code = ?1')
 			->orderBY('c.code', 'ASC');
@@ -50,11 +50,11 @@ class CardRepository extends TranslatableRepository
 	public function findAllByCodes($codes)
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, f, p, y')
+			->select('c, t, st, f, s')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
-			->join('c.pack', 'p')
-			->join('p.cycle', 'y')
+			->join('c.set', 's')
+			->leftJoin('c.subtype', 'st')
 			->andWhere('c.code in (?1)')
 			->orderBY('c.code', 'ASC');
 
@@ -67,11 +67,11 @@ class CardRepository extends TranslatableRepository
 	{
 		$qb = $this->createQueryBuilder('c')
 			->select('c')
-			->join('c.pack', 'p')
-			->andWhere('p.code = ?1')
+			->join('c.set', 's')
+			->andWhere('s.code = ?1')
 			->andWhere('c.position = ?2');
 
-		$qb->setParameter(1, $card->getPack()->getCode());
+		$qb->setParameter(1, $card->getSet()->getCode());
 		$qb->setParameter(2, $card->getPosition()+$position);
 
 		return $this->getOneOrNullResult($qb);
@@ -87,11 +87,11 @@ class CardRepository extends TranslatableRepository
 		return $this->findByRelativePosition($card, 1);
 	}
 
-	public function findTraits()
+	public function findSubtypes()
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('DISTINCT c.traits')
-			->andWhere("c.traits != ''");
+			->select('DISTINCT c.subtype')
+			->andWhere("c.subtype != ''");
 		return $this->getResult($qb);
 	}
 }

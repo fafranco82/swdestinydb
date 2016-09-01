@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
-class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
+use AppBundle\Model\SlotCollectionProviderInterface;
+
+class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable, SlotCollectionProviderInterface
 {
 	/**
 	 * @return array
@@ -56,12 +58,12 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
 				
 			// applying variation to create 'next' (older) preversion
 			foreach ( $variation[0] as $code => $qty ) {
-				$preversion[$code] = $preversion[$code] - $qty;
+				$preversion[$code]['quantity'] = $preversion[$code]['quantity'] - $qty;
 				if ($preversion[$code] == 0) unset ( $preversion[$code] );
 			}
-			foreach ( $variation[1] as $code => $qty ) {
+			foreach ( $variation[1] as $code => $qtys ) {
 				if (! isset ( $preversion[$code] )) $preversion[$code] = 0;
-				$preversion[$code] = $preversion[$code] + $qty;
+				$preversion[$code]['quantity'] = $preversion[$code]['quantity'] + $qty;
 			}
 			ksort ( $preversion );
 		}
@@ -90,10 +92,10 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
 			// applying variation to postversion
 			foreach ( $variation[0] as $code => $qty ) {
 				if (! isset ( $postversion[$code] )) $postversion[$code] = 0;
-				$postversion[$code] = $postversion[$code] + $qty;
+				$postversion[$code]['quantity'] = $postversion[$code]['quantity'] + $qty;
 			}
 			foreach ( $variation[1] as $code => $qty ) {
-				$postversion[$code] = $postversion[$code] - $qty;
+				$postversion[$code]['quantity'] = $postversion[$code]['quantity'] - $qty;
 				if ($postversion[$code] == 0) unset ( $postversion[$code] );
 			}
 			ksort ( $postversion );
@@ -194,14 +196,9 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
     private $user;
 
     /**
-     * @var \AppBundle\Entity\Faction
+     * @var \AppBundle\Entity\Set
      */
-    private $faction;
-
-    /**
-     * @var \AppBundle\Entity\Pack
-     */
-    private $lastPack;
+    private $lastSet;
 
     /**
      * @var \AppBundle\Entity\Decklist
@@ -501,51 +498,27 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
     }
 
     /**
-     * Set faction
+     * Set lastSet
      *
-     * @param \AppBundle\Entity\Faction $faction
+     * @param \AppBundle\Entity\Set $lastSet
      *
      * @return Deck
      */
-    public function setFaction(\AppBundle\Entity\Faction $faction = null)
+    public function setLastSet(\AppBundle\Entity\Set $lastSet = null)
     {
-        $this->faction = $faction;
+        $this->lastSet = $lastSet;
 
         return $this;
     }
 
     /**
-     * Get faction
+     * Get lastSet
      *
-     * @return \AppBundle\Entity\Faction
+     * @return \AppBundle\Entity\Set
      */
-    public function getFaction()
+    public function getLastSet()
     {
-        return $this->faction;
-    }
-
-    /**
-     * Set lastPack
-     *
-     * @param \AppBundle\Entity\Pack $lastPack
-     *
-     * @return Deck
-     */
-    public function setLastPack(\AppBundle\Entity\Pack $lastPack = null)
-    {
-        $this->lastPack = $lastPack;
-
-        return $this;
-    }
-
-    /**
-     * Get lastPack
-     *
-     * @return \AppBundle\Entity\Pack
-     */
-    public function getLastPack()
-    {
-        return $this->lastPack;
+        return $this->lastSet;
     }
 
     /**
@@ -623,5 +596,34 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable
     public function getVersion()
     {
     	return $this->majorVersion . "." . $this->minorVersion;
+    }
+    /**
+     * @var \AppBundle\Entity\Affiliation
+     */
+    private $affiliation;
+
+
+    /**
+     * Set affiliation
+     *
+     * @param \AppBundle\Entity\Affiliation $affiliation
+     *
+     * @return Deck
+     */
+    public function setAffiliation(\AppBundle\Entity\Affiliation $affiliation = null)
+    {
+        $this->affiliation = $affiliation;
+
+        return $this;
+    }
+
+    /**
+     * Get affiliation
+     *
+     * @return \AppBundle\Entity\Affiliation
+     */
+    public function getAffiliation()
+    {
+        return $this->affiliation;
     }
 }

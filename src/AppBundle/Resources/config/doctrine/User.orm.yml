@@ -18,6 +18,9 @@ AppBundle\Entity\User:
             targetEntity: Review
             orderBy: {'dateCreation':'DESC'}
             mappedBy: user
+        owned:
+            targetEntity: OwnedCard
+            mappedBy: user
     manyToMany:
         favorites:
             targetEntity: Decklist

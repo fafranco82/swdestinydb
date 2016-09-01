@@ -15,29 +15,35 @@ class DumpStdCardsCommand extends ContainerAwareCommand
 	{
 		$this
 		->setName('app:dump:std:cards')
-		->setDescription('Dump JSON Data of Cards from a Pack')
+		->setDescription('Dump JSON Data of Cards from a Set')
 		->addArgument(
-				'pack_code',
+				'set_code',
 				InputArgument::REQUIRED,
-				"Pack Code"
+				"Set Code"
 		)
 		;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$pack_code = $input->getArgument('pack_code');
+		$set_code = $input->getArgument('set_code');
 		
-		$pack = $this->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:Pack')->findOneBy(['code' => $pack_code]);
+		$set = $this->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:Set')->findOneBy(['code' => $set_code]);
 		
-		if(!$pack) {
-			throw new \Exception("Pack [$pack_code] cannot be found.");
+		if(!$set) {
+			throw new \Exception("Set [$set_code] cannot be found.");
 		}
 		
 		/* @var $repository \AppBundle\Repository\CardRepository */
 		$repository = $this->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:Card');
 		
-		$qb = $repository->createQueryBuilder('c')->where('c.pack = :pack')->setParameter('pack', $pack)->orderBy('c.code');
+		$qb = $repository->createQueryBuilder('c')
+			->select('c, s, st')
+			->leftJoin('c.sides', 's')
+			->leftJoin('s.type', 'st')
+			->where('c.set = :set')
+			->setParameter('set', $set)
+			->orderBy('c.code');
 		
 		$cards = $qb->getQuery()->getResult();
 		

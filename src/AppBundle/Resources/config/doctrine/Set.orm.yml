@@ -1,22 +1,15 @@
-AppBundle\Entity\Pack:
+AppBundle\Entity\Set:
     type: entity
-    table: pack
-    repositoryClass: AppBundle\Repository\PackRepository
+    table: cardset
+    repositoryClass: AppBundle\Repository\SetRepository
     gedmo:
         translation:
             locale: locale
-    manyToOne:
-        cycle:
-            targetEntity: Cycle
-            inversedBy: packs
-            joinColumn:
-                name: cycle_id
-                referencedColumnName: id
     oneToMany:
         cards:
             targetEntity: Card
             orderBy: {'position':'ASC'}
-            mappedBy: pack
+            mappedBy: set
     fields:
         id:
             type: integer
@@ -57,10 +50,6 @@ AppBundle\Entity\Pack:
             type: date
             nullable: true
             column: date_release
-        cgdbId:
-            type: integer
-            nullable: true
-            column: cgdb_id
     uniqueConstraints:
         pack_code_idx:
             columns: [ code ]

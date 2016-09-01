@@ -52,7 +52,7 @@ ui.on_dom_loaded = function on_dom_loaded() {
  * @memberOf ui
  */
 ui.on_data_loaded = function on_data_loaded() {
-	var characters = _.unique(_.pluck(app.data.cards.find(), 'name').join('').split('').sort()).join('');
+	var characters = _.unique(_.map(app.data.cards.find(), 'name').join('').split('').sort()).join('');
 	name_regexp = new RegExp('\\(?[\\d' + characters.replace(/[[\](){}?*+^$\\.|]/g, '\\$&') + ']+\\)?', 'g');
 };
 

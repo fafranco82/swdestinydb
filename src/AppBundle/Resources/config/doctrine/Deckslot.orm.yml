@@ -23,3 +23,5 @@ AppBundle\Entity\Deckslot:
                 strategy: AUTO
         quantity:
             type: smallint
+        dice:
+            type: smallint

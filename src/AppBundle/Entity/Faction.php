@@ -8,8 +8,7 @@ class Faction implements \Gedmo\Translatable\Translatable, \Serializable
 		return [
 				'code' => $this->code,
 				'name' => $this->name,
-				'is_primary' => $this->isPrimary,
-				'octgn_id' => $this->octgnId
+				'is_primary' => $this->isPrimary
 		];
 	}
 	
@@ -40,11 +39,6 @@ class Faction implements \Gedmo\Translatable\Translatable, \Serializable
      * @var boolean
      */
     private $isPrimary;
-
-    /**
-     * @var string
-     */
-    private $octgnId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -139,30 +133,6 @@ class Faction implements \Gedmo\Translatable\Translatable, \Serializable
     public function getIsPrimary()
     {
         return $this->isPrimary;
-    }
-
-    /**
-     * Set octgnId
-     *
-     * @param string $octgnId
-     *
-     * @return Faction
-     */
-    public function setOctgnId($octgnId)
-    {
-        $this->octgnId = $octgnId;
-
-        return $this;
-    }
-
-    /**
-     * Get octgnId
-     *
-     * @return string
-     */
-    public function getOctgnId()
-    {
-        return $this->octgnId;
     }
 
     /**

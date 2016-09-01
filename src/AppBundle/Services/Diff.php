@@ -109,7 +109,8 @@ class Diff
         $ensembles = [];
         foreach($decks as $deck) {
             $cards = [];
-            foreach($deck as $code => $qty) {
+            foreach($deck as $code => $qtys) {
+                $qty = $qtys['quantity'];
                 for($i=0; $i<$qty; $i++) $cards[] = $code;
             }
             $ensembles[] = $cards;

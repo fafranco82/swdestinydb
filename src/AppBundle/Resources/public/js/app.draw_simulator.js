@@ -57,7 +57,7 @@ draw_simulator.on_data_loaded = function on_data_loaded() {
  * @memberOf draw_simulator
  */
 draw_simulator.update_odds = function update_odds() {
-	for(var i=1; i<=3; i++) {
+	for(var i=1; i<=2; i++) {
 		var odd = app.hypergeometric.get_cumul(1, initial_size, i, draw_count);
 		$('#draw-simulator-odds-'+i).text(Math.round(100*odd));
 	}

@@ -19,7 +19,7 @@ class DumpStdBaseCommand extends ContainerAwareCommand
 		->addArgument(
 				'entityName',
 				InputArgument::REQUIRED,
-				"Entity (cycle, pack, faction, type)"
+				"Entity (affiliation, faction, rarity, set, type)"
 				)
 				;
 	}

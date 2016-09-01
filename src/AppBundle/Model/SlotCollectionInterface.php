@@ -15,46 +15,47 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function countCards();
 	
 	/**
-	 * Get included packs
-	 * @return \AppBundle\Entity\Pack[]
+	 * Get included sets
+	 * @return \AppBundle\Entity\Set[]
 	 */
-	public function getIncludedPacks();
+	public function getIncludedSets();
 	
 	/**
-	 * Get all slots sorted by type code (including plots)
+	 * Get all slots sorted by type code
 	 * @return array
 	 */
 	public function getSlotsByType();
 	
 	/**
-	 * Get all slot counts sorted by type code (excluding plots)
+	 * Get all slot counts sorted by type code
 	 * @return array
 	 */
 	public function getCountByType();
 	
 	/**
-	 * Get the plot deck
-	 * @return \AppBundle\Model\SlotCollectionInterface
-	 */
-	public function getPlotDeck();
-
-	/**
-	 * Get all the agendas
-	 * @return \AppBundle\Model\SlotCollectionInterface
-	 */
-	public function getAgendas();
-	
-	/**
-	 * Get one agenda
-	 * @return \AppBundle\Entity\Card
-	 */
-	public function getAgenda();
-
-	/**
 	 * Get the draw deck
 	 * @return \AppBundle\Model\SlotCollectionInterface
 	 */
 	public function getDrawDeck();
+
+	/**
+	 * Get the character deck
+	 * @return \AppBundle\Model\SlotCollectionInterface
+	 */
+	public function getCharacterDeck();
+
+	/**
+	 * Get character points
+	 * @return integer
+	 */
+	public function getCharacterPoints();
+
+	/**
+	 * Get factions in an array (colors)
+	 * @return array
+	 */
+	public function getFactions();
+
 	
 	/**
 	 * Get the content as an array card_code => qty

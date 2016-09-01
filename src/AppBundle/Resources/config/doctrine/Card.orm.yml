@@ -6,11 +6,11 @@ AppBundle\Entity\Card:
         translation:
             locale: locale
     manyToOne:
-        pack:
-            targetEntity: Pack
+        set:
+            targetEntity: Set
             inversedBy: cards
             joinColumn:
-                name: pack_id
+                name: set_id
                 referencedColumnName: id
         type:
             targetEntity: Type
@@ -18,17 +18,42 @@ AppBundle\Entity\Card:
             joinColumn:
                 name: type_id
                 referencedColumnName: id
+        subtype:
+            targetEntity: Subtype
+            inversedBy: cards
+            joinColumn:
+                name: subtype_id
+                referencedColumnName: id
         faction:
             targetEntity: Faction
             inversedBy: cards
             joinColumn:
                 name: faction_id
                 referencedColumnName: id
+        affiliation:
+            targetEntity: Affiliation
+            inversedBy: cards
+            joinColumn:
+                name: affiliation_id
+                referencedColumnName: id
+        rarity:
+            targetEntity: Rarity
+            inversedBy: cards
+            joinColumn:
+                name: rarity_id
+                referencedColumnName: id
     oneToMany:
         reviews:
             targetEntity: Review
             orderBy: {'dateCreation':'DESC'}
             mappedBy: card
+        sides:
+            targetEntity: Side
+            orderBy: {'id': 'ASC'}
+            mappedBy: card
+            cascade:
+                - persist
+                - remove
     fields:
         id:
             type: integer
@@ -48,8 +73,21 @@ AppBundle\Entity\Card:
             nullable: false
             gedmo:
                 - translatable
+        subtitle:
+            type: string
+            length: 50
+            nullable: true
+            gedmo:
+                - translatable
         cost:
             type: smallint
+            nullable: true
+        health:
+            type: smallint
+            nullable: true
+        points:
+            type: string
+            length: 20
             nullable: true
         text:
             type: text
@@ -70,34 +108,10 @@ AppBundle\Entity\Card:
             gedmo:
                 timestampable:
                     on: update
-        quantity:
-            type: smallint
-            nullable: false
-        income:
-            type: smallint
-            nullable: true
-        initiative:
-            type: smallint
-            nullable: true
-        claim:
-            type: smallint
-            nullable: true
-        reserve:
-            type: smallint
-            nullable: true
         deckLimit:
             type: smallint
             nullable: true
             column: deck_limit
-        strength:
-            type: smallint
-            nullable: true
-        traits:
-            type: string
-            length: 255
-            nullable: true
-            gedmo:
-                - translatable
         flavor:
             type: text
             nullable: true
@@ -111,26 +125,10 @@ AppBundle\Entity\Card:
             type: boolean
             nullable: false
             column: is_unique
-        isLoyal:
+        hasDie:
             type: boolean
             nullable: false
-            column: is_loyal
-        isMilitary:
-            type: boolean
-            nullable: false
-            column: is_military
-        isIntrigue:
-            type: boolean
-            nullable: false
-            column: is_intrigue
-        isPower:
-            type: boolean
-            nullable: false
-            column: is_power
-        octgnId:
-            type: string
-            nullable: true
-            column: octgn_id
+            column: has_die
     uniqueConstraints:
         card_code_idx:
             columns: [ code ]

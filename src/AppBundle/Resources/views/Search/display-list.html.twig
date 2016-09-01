@@ -6,11 +6,12 @@
 <thead>
 <tr>
 <th>{{ 'card.info.name' | trans }}</th>
+<th>{{ 'card.info.affiliation' | trans }}</th>
 <th>{{ 'card.info.faction' | trans }}</th>
-<th>{{ 'card.info.cost' | trans }}</th>
+<th>{{ 'card.info.points_cost' | trans }}</th>
 <th>{{ 'card.info.type' | trans }}</th>
-<th>{{ 'card.info.str' | trans }}</th>
-<th>{{ 'card.info.traits' | trans }}</th>
+<th>{{ 'card.info.rarity' | trans }}</th>
+<th colspan="6">{{ 'card.info.die' | trans}}</th>
 <th>{{ 'card.info.set' | trans }}</th>
 </tr>
 </thead>
@@ -18,15 +19,27 @@
 <tr class="{% if i%2==0 %}even{% else %}odd{% endif %}">
    {% set card = cards[i] %}
 	<td data-th="Name">
-        <span class="icon icon-{{ card.type_code}} fg-{{ card.faction_code }}"></span>
-		<a href="{{ card.url }}" class="card-tip{% if card.available == false %} card-preview{% endif %}" data-code="{{ card.code }}">{{ card.name }}</a>
+        <span class="icon icon-{{card.type_code}} fg-{{ card.faction_code }}"></span>
+		<a href="{{ card.url }}" class="card-tip{% if card.available == false %} card-preview{% endif %}" data-code="{{ card.code }}">
+			{{ card.name }}
+			{% if card.subtitle %}<span class="card-subtitle">- {{card.subtitle}}</span>{% endif %}
+		</a>
 	</td>
+	<td data-th="Affiliation">{{ card.affiliation_name }}</td>
 	<td data-th="Faction">{{ card.faction_name }}</td>
-	<td data-th="Cost">{{ card.cost }}</td>
+	<td data-th="Points/Cost">{{ card.type_code=='character' ? card.points : card.cost }}</td>
 	<td data-th="Type" >{{ card.type_name }}</td>
-	<td data-th="STR">{{ card.strength }}</td>
-	<td data-th="Traits">{{ card.traits }}</td>
-	<td data-th="Set">{{ card.pack_name }} {{ card.position }}</td>
+	<td data-th="Rarity">{{ card.rarity_name }}</td>
+	{% if card.has_die %}
+	{% for side in card.sides %}
+	<td class="text-center die-face" data-th="Die" style="padding-left:1px; padding-right: 1px;">
+		{% if side.modifier %}{{side.modifier > 0 ? '+' : '-'}}{% endif %}{% if side.type.code not in ['-', 'Sp'] %}{{side.value}}{% endif %}<span class="icon icon-{{side.type.icon}}"></span>{% if side.cost %}/{{side.cost}}{% endif %}
+	</td>
+	{% endfor %}
+	{% else %}
+	<td colspan="6" data-th="Die">&nbsp;</td>
+	{% endif %}
+	<td data-th="Set">{{ card.set_name }} {{ card.position }}</td>
 </tr>
 {% endfor %}
 </table>

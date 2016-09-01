@@ -12,23 +12,23 @@ data.load = function load() {
 	data.isLoaded = false;
 
 	var fdb = new ForerunnerDB();
-	data.db = fdb.db('thronesdb');
+	data.db = fdb.db('swdestinydb');
 
 	data.masters = {
-		packs: data.db.collection('master_pack', {primaryKey:'code', changeTimestamp: true}),
+		sets: data.db.collection('master_set', {primaryKey:'code', changeTimestamp: true}),
 		cards: data.db.collection('master_card', {primaryKey:'code', changeTimestamp: true})
 	};
 
 	data.dfd = {
-		packs: new $.Deferred(),
+		sets: new $.Deferred(),
 		cards: new $.Deferred()
 	};
 
-	$.when(data.dfd.packs, data.dfd.cards).done(data.update_done).fail(data.update_fail);
+	$.when(data.dfd.sets, data.dfd.cards).done(data.update_done).fail(data.update_fail);
 
-	data.masters.packs.load(function (err) {
+	data.masters.sets.load(function (err) {
 		if(err) {
-			console.log('error when loading packs', err);
+			console.log('error when loading sets', err);
 			force_update = true;
 		}
 		data.masters.cards.load(function (err) {
@@ -47,14 +47,14 @@ data.load = function load() {
 			var age_of_database = new Date() - new Date(data.masters.cards.metaData().lastChange);
 			if(age_of_database > 864000000) {
 				console.log('database is older than 10 days => refresh it');
-				data.masters.packs.setData([]);
+				data.masters.sets.setData([]);
 				data.masters.cards.setData([]);
 			}
 
 			/*
 			 * if database is empty, we will wait for the new data
 			 */
-			if(data.masters.packs.count() === 0 || data.masters.cards.count() === 0) {
+			if(data.masters.sets.count() === 0 || data.masters.cards.count() === 0) {
 				console.log('database is empty => load it');
 				force_update = true;
 			}
@@ -79,8 +79,8 @@ data.load = function load() {
  * @memberOf data
  */
 data.release = function release() {
-	data.packs = data.db.collection('pack', {primaryKey:'code', changeTimestamp: false});
-	data.packs.setData(data.masters.packs.find());
+	data.sets = data.db.collection('set', {primaryKey:'code', changeTimestamp: false});
+	data.sets.setData(data.masters.sets.find());
 
 	data.cards = data.db.collection('card', {primaryKey:'code', changeTimestamp: false});
 	data.cards.setData(data.masters.cards.find());
@@ -107,11 +107,11 @@ data.update = function update() {
  */
 data.query = function query() {
 	$.ajax({
-		url: Routing.generate('api_packs'),
-		success: data.parse_packs,
+		url: Routing.generate('api_sets'),
+		success: data.parse_sets,
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log('error when requesting packs', errorThrown);
-			data.dfd.packs.reject(false);
+			console.log('error when requesting sets', errorThrown);
+			data.dfd.sets.reject(false);
 		}
 	});
 
@@ -130,13 +130,13 @@ data.query = function query() {
  * deferred returns true if data has been updated
  * @memberOf data
  */
-data.update_done = function update_done(packs_updated, cards_updated) {
-	if(force_update || (packs_updated[1] === true && cards_updated[1] === true)) {
+data.update_done = function update_done(sets_updated, cards_updated) {
+	if(force_update || (sets_updated[1] === true && cards_updated[1] === true)) {
 		data.release();
 		return;
 	}
 
-	if(packs_updated[0] === true || cards_updated[0] === true) {
+	if(sets_updated[0] === true || cards_updated[0] === true) {
 		/*
 		 * we display a message informing the user that they can reload their page to use the updated data
 		 * except if we are on the front page, because data is not essential on the front page
@@ -153,8 +153,8 @@ data.update_done = function update_done(packs_updated, cards_updated) {
  * deferred returns true if data has been loaded
  * @memberOf data
  */
-data.update_fail = function update_fail(packs_loaded, cards_loaded) {
-	if(packs_loaded === false || cards_loaded === false) {
+data.update_fail = function update_fail(sets_loaded, cards_loaded) {
+	if(sets_loaded === false || cards_loaded === false) {
 		var message = Translator.trans('data_load_fail');
 		app.ui.insert_alert_message('danger', message);
 	} else {
@@ -201,13 +201,13 @@ data.update_collection = function update_collection(data, collection, lastModifi
 }
 
 /**
- * handles the response to the ajax query for packs data
+ * handles the response to the ajax query for sets data
  * @memberOf data
  */
-data.parse_packs = function parse_packs(response, textStatus, jqXHR) {
+data.parse_sets = function parse_sets(response, textStatus, jqXHR) {
 	var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
 	var locale = jqXHR.getResponseHeader('Content-Language');
-	data.update_collection(response, data.masters.packs, lastModified, locale, data.dfd.packs);
+	data.update_collection(response, data.masters.sets, lastModified, locale, data.dfd.sets);
 };
 
 /**

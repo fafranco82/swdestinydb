@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+use function Functional\map;
+
 /*
  *
  */
@@ -32,17 +34,14 @@ class CardsData
 	public function replaceSymbols($text)
 	{
 		static $displayTextReplacements = [
-			'[baratheon]' => '<span class="icon-baratheon"></span>',
-			'[intrigue]' => '<span class="icon-intrigue"></span>',
-			'[greyjoy]' => '<span class="icon-greyjoy"></span>',
-			'[lannister]' => '<span class="icon-lannister"></span>',
-			'[martell]' => '<span class="icon-martell"></span>',
-			'[military]' => '<span class="icon-military"></span>',
-			'[thenightswatch]' => '<span class="icon-thenightswatch"></span>',
-			'[power]' => '<span class="icon-power"></span>',
-			'[stark]' => '<span class="icon-stark"></span>',
-			'[targaryen]' => '<span class="icon-targaryen"></span>',
-			'[tyrell]' => '<span class="icon-tyrell"></span>',
+			'[blank]' => '<span class="icon-blank"></span>',
+			'[discard]' => '<span class="icon-discard"></span>',
+			'[disrupt]' => '<span class="icon-disrupt"></span>',
+			'[focus]' => '<span class="icon-focus"></span>',
+			'[melee]' => '<span class="icon-melee"></span>',
+			'[ranged]' => '<span class="icon-ranged"></span>',
+			'[shield]' => '<span class="icon-shield"></span>',
+			'[special]' => '<span class="icon-special"></span>',
 			'[unique]' => '<span class="icon-unique"></span>',
 		];
 		
@@ -82,82 +81,53 @@ class CardsData
 
 	public function allsetsdata()
 	{
-		$list_cycles = $this->doctrine->getRepository('AppBundle:Cycle')->findAll();
+		$list_sets = $this->doctrine->getRepository('AppBundle:Set')->findAll();
 		$lines = [];
 		/* @var $cycle \AppBundle\Entity\Cycle */
-		foreach($list_cycles as $cycle) {
-			$packs = $cycle->getPacks();
-			/* @var $pack \AppBundle\Entity\Pack */
-			foreach($packs as $pack) {
-				$known = count($pack->getCards());
-				$max = $pack->getSize();
+		foreach($list_sets as $set) {
+			$known = count($set->getCards());
+			$max = $set->getSize();
 
-				if($cycle->getSize() === 1) {
-					$label = $pack->getName();
-				} else {
-					$label = $pack->getPosition() . '. ' . $pack->getName();
-				}
-				if($known < $max) {
-					$label = sprintf("%s (%d/%d)", $label,$known, $max);
-				}
-
-				$lines[] = array(
-						"code" => $pack->getCode(),
-						"label" => $label,
-						"available" => $pack->getDateRelease() ? true : false,
-						"url" => $this->router->generate('cards_list', array('pack_code' => $pack->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
-				);
+			$label = $set->getPosition() . '. ' . $set->getName();
+			if($known < $max) {
+				$label = sprintf("%s (%d/%d)", $label, $known, $max);
 			}
+
+			$lines[] = array(
+					"code" => $set->getCode(),
+					"label" => $label,
+					"available" => $set->getDateRelease() ? true : false,
+					"url" => $this->router->generate('cards_list', array('set_code' => $set->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
+			);
 		}
 		return $lines;
 	}
 
 	public function allsetsdatathreaded()
 	{
-		$list_cycles = $this->doctrine->getRepository('AppBundle:Cycle')->findBy([], array("position" => "ASC"));
-		$cycles = [];
+		$list_sets = $this->doctrine->getRepository('AppBundle:Set')->findAll();
+		$sets = [];
 		
-		/* @var $cycle \AppBundle\Entity\Cycle */
-		foreach($list_cycles as $cycle) {
-			$list_packs = $cycle->getPacks();
-			$packs = [];
-
-			/* @var $pack \AppBundle\Entity\Pack */
-			foreach($list_packs as $pack) {
-				$known = count($pack->getCards());
-				$max = $pack->getSize();
-			
-				$label = $pack->getName();
-					
-				if($known < $max) {
-					$label = sprintf("%s (%d/%d)", $label,$known, $max);
-				}
-			
-				$packs[] = [
-						"code" => $pack->getCode(),
-						"label" => $label,
-						"available" => $pack->getDateRelease() ? true : false,
-						"url" => $this->router->generate('cards_list', array('pack_code' => $pack->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
-				];
+		/* @var $set \AppBundle\Entity\Cycle */
+		foreach($list_sets as $set) {
+			$known = count($set->getCards());
+			$max = $set->getSize();
+		
+			$label = $set->getName();
+				
+			if($known < $max) {
+				$label = sprintf("%s (%d/%d)", $label,$known, $max);
 			}
-				
-			if($cycle->getSize() === 1) {
-				
-				$cycles[] = $packs[0];
-				
-			} else {
-				
-				$cycles[] = [
-						"code" => $cycle->getCode(),
-						"label" => $cycle->getName(),
-						"packs" => $packs,
-						"url" => $this->router->generate('cards_cycle', array('cycle_code' => $cycle->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
-				];
-				
-			}
+		
+			$sets[] = [
+					"code" => $set->getCode(),
+					"label" => $label,
+					"available" => $set->getDateRelease() ? true : false,
+					"url" => $this->router->generate('cards_list', array('set_code' => $set->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
+			];
 		}
-		
-		return $cycles;
+			
+		return $sets;
 	}
 	
 	public function getPrimaryFactions()
@@ -173,11 +143,14 @@ class CardsData
 		// construction de la requete sql
 		$repo = $this->doctrine->getRepository('AppBundle:Card');
 		$qb = $repo->createQueryBuilder('c')
-		           ->select('c', 'p', 'y', 't', 'f')
-				   ->leftJoin('c.pack', 'p')
-				   ->leftJoin('p.cycle', 'y')
+		           ->select('c', 's', 't', 'f', 'a', 'r', 'd')
+				   ->leftJoin('c.set', 's')
 				   ->leftJoin('c.type', 't')
-				   ->leftJoin('c.faction', 'f');
+				   ->leftJoin('c.faction', 'f')
+				   ->leftJoin('c.affiliation', 'a')
+				   ->leftJoin('c.rarity', 'r')
+				   ->leftJoin('c.sides', 'd')
+				   ;
 		$qb2 = null;
 		$qb3 = null;
 
@@ -211,19 +184,6 @@ class CardsData
 				{
 					switch($searchCode)
 					{
-						case 'c': // cycle
-						{
-							$or = [];
-							foreach($condition as $arg) {
-								switch($operator) {
-									case ':': $or[] = "(y.position = ?$i)"; break;
-									case '!': $or[] = "(y.position != ?$i)"; break;
-								}
-								$qb->setParameter($i++, $arg);
-							}
-							$qb->andWhere(implode($operator == '!' ? " and " : " or ", $or));
-							break;
-						}
 						default:
 						{
 							$or = [];
@@ -246,23 +206,23 @@ class CardsData
 				{
 					switch($searchCode)
 					{
-						case 'e':
+						case 's':
 						{
 							$or = [];
 							foreach($condition as $arg) {
 								switch($operator) {
-									case ':': $or[] = "(p.code = ?$i)"; break;
-									case '!': $or[] = "(p.code != ?$i)"; break;
+									case ':': $or[] = "(s.code = ?$i)"; break;
+									case '!': $or[] = "(s.code != ?$i)"; break;
 									case '<':
 										if(!isset($qb2)) {
-											$qb2 = $this->doctrine->getRepository('AppBundle:Pack')->createQueryBuilder('p2');
-											$or[] = $qb->expr()->lt('p.dateRelease', '(' . $qb2->select('p2.dateRelease')->where("p2.code = ?$i")->getDql() . ')');
+											$qb2 = $this->doctrine->getRepository('AppBundle:Set')->createQueryBuilder('s2');
+											$or[] = $qb->expr()->lt('s.dateRelease', '(' . $qb2->select('s2.dateRelease')->where("s2.code = ?$i")->getDql() . ')');
 										}
 										break;
 									case '>':
 										if(!isset($qb3)) {
-											$qb3 = $this->doctrine->getRepository('AppBundle:Pack')->createQueryBuilder('p3');
-											$or[] = $qb->expr()->gt('p.dateRelease', '(' . $qb3->select('p3.dateRelease')->where("p3.code = ?$i")->getDql() . ')');
+											$qb3 = $this->doctrine->getRepository('AppBundle:Set')->createQueryBuilder('s3');
+											$or[] = $qb->expr()->gt('s.dateRelease', '(' . $qb3->select('s3.dateRelease')->where("s3.code = ?$i")->getDql() . ')');
 										}
 										break;
 								}
@@ -339,30 +299,6 @@ class CardsData
 							$qb->andWhere(implode($operator == '!' ? " and " : " or ", $or));
 							break;
 						}
-						case 'k': // subtype (traits)
-						{
-							$or = [];
-							foreach($condition as $arg) {
-								switch($operator) {
-									case ':':
-										$or[] = "((c.traits = ?$i) or (c.traits like ?".($i+1).") or (c.traits like ?".($i+2).") or (c.traits like ?".($i+3)."))";
-										$qb->setParameter($i++, "$arg.");
-										$qb->setParameter($i++, "$arg. %");
-										$qb->setParameter($i++, "%. $arg.");
-										$qb->setParameter($i++, "%. $arg. %");
-										break;
-									case '!':
-										$or[] = "(c.traits is null or ((c.traits != ?$i) and (c.traits not like ?".($i+1).") and (c.traits not like ?".($i+2).") and (c.traits not like ?".($i+3).")))";
-										$qb->setParameter($i++, "$arg.");
-										$qb->setParameter($i++, "$arg. %");
-										$qb->setParameter($i++, "%. $arg.");
-										$qb->setParameter($i++, "%. $arg. %");
-										break;
-								}
-							}
-							$qb->andWhere(implode($operator == '!' ? " and " : " or ", $or));
-							break;
-						}
 						case 'i': // illustrator
 						{
 							$or = [];
@@ -400,11 +336,10 @@ class CardsData
 			return;
 		}
 		switch($sortorder) {
-			case 'set': $qb->orderBy('y.position')->addOrderBy('p.position')->addOrderBy('c.position'); break;
+			case 'set': $qb->orderBy('s.position')->addOrderBy('c.position'); break;
 			case 'faction': $qb->orderBy('c.faction')->addOrderBy('c.type'); break;
 			case 'type': $qb->orderBy('c.type')->addOrderBy('c.faction'); break;
-			case 'cost': $qb->orderBy('c.type')->addOrderBy('c.cost')->addOrderBy('c.income'); break;
-			case 'strength': $qb->orderBy('c.type')->addOrderBy('c.strength')->addOrderBy('c.initiative'); break;
+			case 'cost': $qb->orderBy('c.type')->addOrderBy('c.cost'); break;
 		}
 		$qb->addOrderBy('c.name');
 		$qb->addOrderBy('c.code');
@@ -437,6 +372,11 @@ class CardsData
     			$cardinfo[$fieldName.'_code'] = $associationEntity->getCode();
     			$cardinfo[$fieldName.'_name'] = $associationEntity->getName();
 	    	}
+
+	    	if($fieldName=='sides')
+	    	{
+	    		$cardinfo['sides'] = $card->getSides();
+	    	}
 	    }
 
 	    foreach($fieldNames as $fieldName)
@@ -468,7 +408,7 @@ class CardsData
 		// look for another card with the same name to set the label
 		$homonyms = $this->doctrine->getRepository('AppBundle:Card')->findBy(['name' => $card->getName()]);
 		if(count($homonyms) > 1) {
-			$cardinfo['label'] = $card->getName() . ' (' . $card->getPack()->getCode() . ')';
+			$cardinfo['label'] = $card->getName() . ' (' . $card->getSet()->getCode() . ')';
 		} else {
 			$cardinfo['label'] = $card->getName();
 		}
@@ -476,6 +416,9 @@ class CardsData
 		if($api) {
 			unset($cardinfo['id']);
 			$cardinfo = array_filter($cardinfo, function ($var) { return isset($var); });
+			if(!$cardinfo['has_die']) unset($cardinfo['sides']);
+			else $cardinfo['sides'] = map($cardinfo['sides'], function($side) { return $side->toString(); });
+
 		} else {
 			$cardinfo['text'] = $this->replaceSymbols($cardinfo['text']);
 			$cardinfo['text'] = $this->addAbbrTags($cardinfo['text']);

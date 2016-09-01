@@ -1,0 +1,11 @@
+collection_list:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Collection:Index
+
+collection_save:
+    path: /save
+    methods: [POST]
+    defaults:
+        _controller: AppBundle:Collection:Save

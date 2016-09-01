@@ -16,11 +16,11 @@ AppBundle\Entity\Decklist:
             joinColumn:
                 name: faction_id
                 referencedColumnName: id
-        lastPack:
-            targetEntity: Pack
+        lastSet:
+            targetEntity: Set
             nullable: false
             joinColumn:
-                name: last_pack_id
+                name: last_set_id
                 referencedColumnName: id
         parent:
             targetEntity: Deck
@@ -36,13 +36,6 @@ AppBundle\Entity\Decklist:
             inversedBy: successors
             joinColumn:
                 name: precedent_decklist_id
-                referencedColumnName: id
-        tournament:
-            targetEntity: Tournament
-            nullable: true
-            inversedBy: decklists
-            joinColumn:
-                name: tournament_id
                 referencedColumnName: id
     oneToMany:
         slots:
