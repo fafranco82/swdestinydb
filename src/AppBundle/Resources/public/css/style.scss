@@ -1,4 +1,3 @@
-
 /* fonts */
 
 body {
@@ -290,39 +289,43 @@ ol {
 .qtip-swdestinydb-image{}
 
 /***************** THUMBNAIL CARD IMAGE **************/
+@mixin thumbnails($limit) {
+	$initial: 200px;
+	$initialh: (w: 395px, h: 140px);
+	$background: (w: 350px, h: 487px);
+	$backgroundh: (w: 428px, h: 307px);
+	
+	@for $i from 1 through $limit {
+		$size: round($initial/$i);
+
+		.card-thumbnail-#{$i}x {
+			width: $size;
+			height: $size;
+			background-size: round(map-get($background, w)/$i) round(map-get($background, h)/$i);
+
+			@each $elem in (
+				(name: character, x: -75px, y: -72px), 
+				(name: upgrade, x: -80px, y: -0px),
+				(name: event, x: -80px, y: -24px),
+				(name: support, x: -89px, y: -89px)) {
+				&.card-thumbnail-#{map-get($elem, name)} {
+					background-position: round(map-get($elem, x)/$i) round(map-get($elem, y)/$i);
+				}
+			}
+
+			&.card-thumbnail-battlefield {
+				width: round(map-get($initialh, w) / $i);
+				height: round(map-get($initialh, h) / $i);
+				background-size: round(map-get($backgroundh, w)/$i) round(map-get($backgroundh, h)/$i);
+				background-position: round(0px/$i) round(-67px/$i);
+			}
+		}
+	}
+}
 
 .card-thumbnail{background-attachment:scroll;background-origin:padding-box;background-clip:border-box;background-repeat:no-repeat;margin:0 0 5px 5px;position:relative;border:1px solid #000;float:right}
 .card-thumbnail-battlefield{margin-top:5px}
-.card-thumbnail-1x{width:200px;height:200px;background-size:300px 418px}
-.card-thumbnail-2x{width:100px;height:100px;background-size:200px 279px}
-.card-thumbnail-3x{width:67px;height:67px;background-size:134px 186px}
-.card-thumbnail-4x{width:50px;height:50px;background-size:95px 133px}
-.card-thumbnail-5x{width:40px;height:40px;background-size:60px 84px}
-.card-thumbnail-1x.card-thumbnail-character{background-position:-79px -21px}
-.card-thumbnail-2x.card-thumbnail-character{background-position:-41px -41px}
-.card-thumbnail-3x.card-thumbnail-character{background-position: -29px -26px}
-.card-thumbnail-4x.card-thumbnail-character{background-position:-20px -20px}
-.card-thumbnail-5x.card-thumbnail-character{background-position:-16px -4px}
-.card-thumbnail-1x.card-thumbnail-upgrade{background-position:-51px -31px}
-.card-thumbnail-2x.card-thumbnail-upgrade{background-position:-25.5px -15.5px}
-.card-thumbnail-3x.card-thumbnail-upgrade{background-position:-34px -9px}
-.card-thumbnail-4x.card-thumbnail-upgrade{background-position:-12.75px -7.75px}
-.card-thumbnail-5x.card-thumbnail-upgrade{background-position:-10.2px -6.2px}
-.card-thumbnail-1x.card-thumbnail-event{background-position:-50px -60px}
-.card-thumbnail-2x.card-thumbnail-event{background-position:-25px -30px}
-.card-thumbnail-3x.card-thumbnail-event{background-position:-30px -13px}
-.card-thumbnail-4x.card-thumbnail-event{background-position:-12.5px -15px}
-.card-thumbnail-5x.card-thumbnail-event{background-position:-10px -12px}
-.card-thumbnail-1x.card-thumbnail-support{background-position:-82px -26px}
-.card-thumbnail-2x.card-thumbnail-support{background-position:-41px -13px}
-.card-thumbnail-3x.card-thumbnail-support{background-position: -12px -35px}
-.card-thumbnail-4x.card-thumbnail-support{background-position:-20.5px -6.5px}
-.card-thumbnail-5x.card-thumbnail-support{background-position:-16.4px -5.2px}
-.card-thumbnail-1x.card-thumbnail-battlefield{width:395px;height:140px;background-size:428px 307px;background-position:0px -67px}
-.card-thumbnail-2x.card-thumbnail-battlefield{width:200px;height:70px;background-size:217px 156px;background-position:0px -35px}
-.card-thumbnail-3x.card-thumbnail-battlefield{width:133px;height:47px;background-size:145px 104px;background-position:0px -23px}
-.card-thumbnail-4x.card-thumbnail-battlefield{width:100px;height:35px;background-size:109px 78px;background-position: 0px -17px}
-.card-thumbnail-5x.card-thumbnail-battlefield{width:80px;height:28px;background-size:86px 61px;background-position: 0px -13px}
+@include thumbnails(5);
 
 /************** INDEX PAGE ***************/
 

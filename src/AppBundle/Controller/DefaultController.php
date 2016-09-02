@@ -116,4 +116,21 @@ class DefaultController extends Controller
     			"publisher_name" => $this->container->getParameter('publisher_name'),
     	), $response);
     }
+
+    public function thumbsAction()
+    {
+        $response = new Response();
+        $response->setPublic();
+        $response->setMaxAge($this->container->getParameter('cache_expiration'));
+
+        $cards = [];
+        foreach($this->getDoctrine()->getRepository('AppBundle:Card')->findAll() as $card)
+        {
+            $cards[] = $this->get('cards_data')->getCardInfo($card, false);
+        }
+
+        return $this->render('AppBundle:Default:thumbs.html.twig', array(
+            "cards" => $cards
+        ), $response);
+    }
 }

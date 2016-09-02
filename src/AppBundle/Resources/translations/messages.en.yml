@@ -261,7 +261,7 @@ card:
       type: T.
       faction: F.
 
-keywords:
+keyword:
   guardian:
     name: Guardian
     title: Before activate this character, you can deal it damage equal to the value of a die showing damage in your opponent's pool. Then remove that die.

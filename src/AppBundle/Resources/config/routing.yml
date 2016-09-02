@@ -90,3 +90,8 @@ ffg:
     path: /ffg
     defaults:
         _controller: AppBundle:Default:ffg
+
+thumbs:
+    path: /thumbs
+    defaults:
+        _controller: AppBundle:Default:thumbs

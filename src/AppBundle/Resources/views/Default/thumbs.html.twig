@@ -1,0 +1,33 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}Thumbs{% endblock %}
+
+{% block body %}
+<div class="main white container">
+
+<h1>{{ block('title') }}</h1>
+
+{% for card in cards %}
+{% if card.imagesrc %}
+<h3>{{card.type_name}}</h3>
+<div class="row" style="border: 1px solid black; margin: 5px; padding: 5px;">
+	<div class="col-xs-{{card.type_code=='battlefield' ? 6 : 4}}">
+		<img src="{{ card.imagesrc }}"/>
+	</div>
+	<div class="col-xs-{{card.type_code=='battlefield' ? 6 : 8}}">
+		<div class="row">
+		{% for i in 1..5 %}
+			<div>
+			<div class="card-thumbnail card-thumbnail-{{i}}x card-thumbnail-{{card.type_code}}" style="background-image:url('{{card.imagesrc}}'); float: none;">
+			</div>
+			{{i}}x {{card.type_code}}
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endfor %}
+
+</div>
+{% endblock %}

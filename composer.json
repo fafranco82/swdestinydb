@@ -77,8 +77,11 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml",
             "env-map": {
+                "website_name": "WEBSITE_NAME",
                 "database_url": "DATABASE_URL",
-                "website_url": "WEBSITE_URL"
+                "website_url": "WEBSITE_URL",
+                "game_name": "GAME_NAME",
+                "publisher_name": "PUBLISHER_NAME"
             }
         }
     }
