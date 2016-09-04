@@ -21,10 +21,12 @@ class StarterPack implements \JsonSerializable, \Serializable
     {
         $serialized = array(
             "code" => $this->code,
-            "set_code" => $this->set->getCode(),
             "name" => $this->name,
             "slots" => $this->getSlots()->getContent()
         );
+
+        if($this->getSet())
+            $serialized['set_code'] = $this->getSet()->getCode();
 
         ksort($serialized);
 
