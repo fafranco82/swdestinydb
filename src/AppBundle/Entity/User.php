@@ -725,42 +725,32 @@ class User extends BaseUser
         return $this->followers;
     }
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \AppBundle\Entity\Collection
      */
-    private $owned;
+    private $collection;
 
 
     /**
-     * Add owned
+     * Set collection
      *
-     * @param \AppBundle\Entity\OwnedCard $owned
+     * @param \AppBundle\Entity\Collection $collection
      *
      * @return User
      */
-    public function addOwned(\AppBundle\Entity\OwnedCard $owned)
+    public function setCollection(\AppBundle\Entity\Collection $collection = null)
     {
-        $this->owned[] = $owned;
+        $this->collection = $collection;
 
         return $this;
     }
 
     /**
-     * Remove owned
+     * Get collection
      *
-     * @param \AppBundle\Entity\OwnedCard $owned
+     * @return \AppBundle\Entity\Collection
      */
-    public function removeOwned(\AppBundle\Entity\OwnedCard $owned)
+    public function getCollection()
     {
-        $this->owned->removeElement($owned);
-    }
-
-    /**
-     * Get owned
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOwned()
-    {
-        return $this->owned;
+        return $this->collection;
     }
 }

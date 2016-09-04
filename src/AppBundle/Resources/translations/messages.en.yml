@@ -4,6 +4,20 @@ data_load_fail: "Unable to load the data. Click <a href='javascript:window.locat
 login_required: You must be logged in for this operation.
 noimage: No image
 
+collection:
+  owned: Owned
+  help: Filter help
+  sets:
+    label: Sets
+    hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+  options:
+    label: Options
+    filter_button:
+      cumulative: Filters cumulative
+      exclusive: Filters exclusive
+    link_cards_dice: Link cards with dice
+  searchhint: Find a card or filter the list
+  
 decks:
   privatedecks: My private decks
   slotcount: "(%current%/%max% slots)"
@@ -46,8 +60,8 @@ decks:
         display: "{1} Display on 1 column | ]1, Inf] Display on %cols% columns"
         suggestions: "{0} Show no suggestion | {1} Show %count% suggestion | ]1, Inf] Show %count% suggestions"
         filter_button:
-          cumulative: %filter% cumulative
-          exclusive: %filter% exclusive
+          cumulative: Filters cumulative
+          exclusive: Filters exclusive
       searchhint: Find a card or filter the list
     notes:
       tags:
@@ -168,6 +182,7 @@ nav:
 
 forms:
   save: Save
+  saved: Data saved
   edit: Edit
   publish: Publish
   delete: Delete

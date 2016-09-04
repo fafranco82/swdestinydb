@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Card;
-use AppBundle\Entity\OwnedCard;
+use AppBundle\Entity\CollectionSlot;
 
 /**
  * Collection controller.
@@ -21,37 +21,35 @@ class CollectionController extends Controller
      */
     public function indexAction()
     {
-        
-
         return $this->render('AppBundle:Collection:index.html.twig', array(
-            'collection' => $this->getDoctrine()->getRepository('AppBundle:OwnedCard')->getCollection($this->getUser()->getId())
+            'collection' => $this->getDoctrine()->getRepository('AppBundle:Collection')->getCollection($this->getUser()->getId())
         ));
     }
 
     public function saveAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository('AppBundle:OwnedCard');
-
+        $collection = $this->getDoctrine()->getRepository('AppBundle:Collection')->getCollection($this->getUser()->getId());
+        
         $changes = (array)json_decode($request->get('changes'));
         foreach($changes as $change)
         {
-            $owned = NULL;
-            if($change->actualOwned)
+            $slot = $collection->getSlots()->getSlotByCode($change->code);
+            if(!$slot)
             {
-                $owned = $repo->getByCardCode($change->code);
-            }
-            else
-            {
-                $owned = new OwnedCard();
+                $slot = new CollectionSlot();
                 $card = $this->getDoctrine()->getRepository('AppBundle:Card')->findByCode($change->code);
-                $owned->setCard($card)->setUser($this->getUser());
+                $slot->setCard($card)->setCollection($collection);
+                $collection->addSlot($slot);
             }
-            $owned->setQuantity($change->owned);
-            $em->persist($owned);
+            $slot->setQuantity($change->owned->cards);
+            $slot->setDice($change->owned->dice);
         }
 
+        $em->persist($collection);
         $em->flush();
+
+        $this->get('session')->getFlashBag()->set('notice', $this->get("translator")->trans("forms.saved"));
 
         return $this->redirect($this->generateUrl('collection_list'));
     }

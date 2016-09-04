@@ -79,6 +79,15 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		ksort($sets);
 		return array_values($sets);
 	}
+
+	public function getSlotByCode($code) {
+		foreach($this->slots as $slot) {
+			if($slot->getCard()->getCode() == $code) {
+				return $slot;
+			}
+		}
+		return NULL;
+	}
 	
 	public function getSlotsByType() {
 		$slotsByType = [ 'battlefield' => [], 'character' => [], 'upgrade' => [], 'support' => [], 'event' => [] ];

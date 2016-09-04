@@ -1,0 +1,23 @@
+AppBundle\Entity\Collection:
+    type: entity
+    table: collection
+    repositoryClass: AppBundle\Repository\CollectionRepository
+    oneToOne:
+        user:
+            targetEntity: User
+            nullable: false
+            inversedBy: collection
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    oneToMany:
+        slots:
+            targetEntity: CollectionSlot
+            mappedBy: collection
+            cascade: ["persist","remove"]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO

@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/css/bootstrap-markdown.min.css">
     {% stylesheets filter="cssrewrite,scssphp" output="css/app.css"
       'bundles/app/css/bootstrap.css'
-    	'bundles/app/css/bootstrap-touchspin.css'
     	'bundles/app/css/style.scss'
       'bundles/app/css/icons.css'
       'bundles/app/css/languages.css'
@@ -54,7 +53,11 @@
           <ul class="nav navbar-nav">
             {#
             <li><a href="{{ path('decks_list') }}">{{ 'nav.mydecks' | trans}}</a></li>
+            #}
+            {% if app.environment=='dev' %}
             <li><a href="{{ path('collection_list') }}">{{ 'nav.mycollection' | trans}}</a></li>
+            {% endif %}
+            {#
             <li><a href="{{ path('decklists_list') }}">{{ 'nav.decklists' | trans}}</a></li>
             #}
             <li class="dropdown">
@@ -181,7 +184,6 @@
 
 	{% javascripts filter="?jsqueeze" output="js/app.js"
     '@AppBundle/Resources/public/js/bootstrap.js'
-		'@AppBundle/Resources/public/js/bootstrap-touchspin.js'
 		'@AppBundle/Resources/public/js/fdb-all.min.js'
     '@AppBundle/Resources/public/js/jquery.toc.min.js'
     '@AppBundle/Resources/public/js/app.collection.js'
@@ -206,5 +208,6 @@
 	{% endjavascripts %}
 
 	{% block javascripts %}{% endblock %}
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/2.0.0/jquery.dirtyforms.min.js"></script>
     </body>
 </html>

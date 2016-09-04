@@ -1,14 +1,14 @@
-AppBundle\Entity\OwnedCard:
+AppBundle\Entity\CollectionSlot:
     type: entity
-    table: ownedcard
-    repositoryClass: AppBundle\Repository\OwnedCardRepository
+    table: collectionslot
+    repositoryClass: AppBundle\Repository\CollectionSlotRepository
     manyToOne:
-        user:
-            targetEntity: User
-            inversedBy: owned
+        collection:
+            targetEntity: Collection
             nullable: false
+            inversedBy: slots
             joinColumn:
-                name: user_id
+                name: collection_id
                 referencedColumnName: id
         card:
             targetEntity: Card
@@ -24,4 +24,5 @@ AppBundle\Entity\OwnedCard:
                 strategy: AUTO
         quantity:
             type: smallint
-            nullable: false
+        dice:
+            type: smallint

@@ -1,6 +1,10 @@
 AppBundle\Entity\User:
     type:  entity
     table: user
+    oneToOne:
+        collection:
+            targetEntity: Collection
+            mappedBy: user
     oneToMany:
         decks:
             targetEntity: Deck
@@ -17,9 +21,6 @@ AppBundle\Entity\User:
         reviews:
             targetEntity: Review
             orderBy: {'dateCreation':'DESC'}
-            mappedBy: user
-        owned:
-            targetEntity: OwnedCard
             mappedBy: user
     manyToMany:
         favorites:

@@ -23,7 +23,6 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		'show-only-deck': false,
 		'show-only-owned': true,
 		'display-column': 1,
-		'core-set': 3,
 		'show-suggestions': 0,
 		'buttons-behavior': 'cumulative'
 	}, Config || {});

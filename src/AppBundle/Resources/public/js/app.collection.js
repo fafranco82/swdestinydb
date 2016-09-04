@@ -15,15 +15,19 @@ collection.init = function init(data) {
 
 collection.set_owned = function set_owned(data) {
 	app.data.cards.update({}, {
-		actualOwned: null,
-		owned: 0
+		owned: {
+			cards: 0,
+			dice: 0
+		}
 	});
-	data.forEach(function(owned) {
-		app.data.cards.updateById(owned.card, {
-			actualOwned: owned.quantity,
-			owned: owned.quantity
+	$.each(data, function(code, owned) {
+		app.data.cards.updateById(code, {
+			owned: {
+				cards: owned.quantity,
+				dice: owned.dice
+			}
 		});
-	});
+	})
 	collection.isLoaded = true;
 	$(document).trigger('collection.app');
 }
@@ -32,7 +36,25 @@ collection.get_copies_owned = function get_copies_owned(code) {
 	var card = app.data.cards.findById(code);
 	if(!card)
 		return null;
-	return card.owned;
+	return card.owned.cards;
+}
+
+/**
+ * @memberOf collection
+ * @return boolean true if at least one other card quantity was updated
+ */
+collection.set_card_owns = function set_card_owns(card_code, coll, quantity) {
+	var card = app.data.cards.findById(card_code);
+	if(!card) return false;
+
+	var updated_other_card = false;
+
+	var change = {owned: {}};
+	change.owned[coll] = quantity;
+
+	app.data.cards.updateById(card_code, change);
+
+	return updated_other_card;
 }
 
 })(app.collection = {}, jQuery);

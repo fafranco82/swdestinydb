@@ -53,6 +53,8 @@ body {
 
 td.die-face {
 	width: 50px;
+	padding-left:1px;
+	padding-right: 1px;
 }
 
 .card-die-face {
@@ -232,6 +234,41 @@ ol {
 }
 #collection-grid .col-sm-4 .media-object {
 	height: 70px;
+}
+
+#collection .btn-spinner {
+	button {
+		padding: 0px 2px;
+
+		&.btn-spin {
+			width: 1.5em;
+		}
+
+		&.btn-value {
+			cursor: default;
+			&:hover {
+				background-color: inherit;
+			}
+		}
+	}
+}
+
+@mixin collection-config($type, $spin) {
+	&.collection-#{$type}-not-owned [data-spin=#{$spin}] .btn-value {
+		background-color: lighten(red, 40%);
+	}
+
+	&.collection-#{$type}-not-playset [data-spin=#{$spin}] .btn-value {
+		background-color: lighten(orange, 30%);
+	}
+
+	&.collection-#{$type}-playset [data-spin=#{$spin}] .btn-value {
+		font-weight: bold;
+	}
+}
+#collection .card-container {
+	@include collection-config(card, cards);
+	@include collection-config(die, dice);
 }
 
 /********* LIST OF DECKS ************/

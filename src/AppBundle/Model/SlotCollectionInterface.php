@@ -21,6 +21,12 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function getIncludedSets();
 	
 	/**
+	 * Get a slot by card code
+	 * @return array
+	 */
+	public function getSlotByCode($code);
+
+	/**
 	 * Get all slots sorted by type code
 	 * @return array
 	 */
