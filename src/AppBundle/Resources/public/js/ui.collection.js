@@ -3,7 +3,8 @@
 var SortKey = 'code',
 	SortOrder = 1,
 	CardDivs = [[],[],[]],
-	Config = null;
+	Config = null,
+	Starters = null;
 
 /**
  * reads ui configuration from localStorage
@@ -30,6 +31,10 @@ ui.write_config_to_storage = function write_config_to_storage() {
 	if (localStorage) {
 		localStorage.setItem('ui.collection.config', JSON.stringify(Config));
 	}
+}
+
+ui.set_starters_data = function set_starters_data(data) {
+	Starters = _.keyBy(data, 'code');
 }
 
 /**
@@ -326,6 +331,30 @@ ui.on_config_change = function on_config_change(event) {
 }
 
 /**
+ * @memberOf ui
+ * @param event
+ */
+ui.on_click_add_starter = function on_click_add_starter(event) {
+	event.preventDefault();
+	event.stopPropagation();
+
+	var starter = Starters[$(this).data('starter')];
+	if(confirm(Translator.trans('collection.addstarter.confirm', {pack: starter.name, set: starter.set_name}))) {
+		$.each(starter.slots, function(code, qtys) {
+			var card = app.data.cards.findById(code);
+			app.data.cards.updateById(code, {
+				owned: {
+					cards: card.owned.cards + qtys.quantity,
+					dice: card.owned.dice + qtys.dice
+				}
+			});
+		});
+		ui.reset_list();
+	}
+	$('#add-starter').blur();
+}
+
+/**
  * sets up event handlers ; dataloaded not fired yet
  * @memberOf ui
  */
@@ -342,6 +371,8 @@ ui.setup_event_handlers = function setup_event_handlers() {
 
 	$('#filter-text').on('input', ui.on_input_smartfilter);
 	$('#config-options').on('change', 'input', ui.on_config_change);
+
+	$('#add-starter').on('click', 'a[data-starter]', ui.on_click_add_starter);
 
 	$('#form').dirtyForms({
 	    helpers:
@@ -525,12 +556,12 @@ ui.set_card_collection_status = function set_card_collection_status(card, row) {
 	if(card.owned.cards==0) {
 		row.addClass('collection-card-not-owned');
 	} else if(card.owned.cards==1) {
-		if(card.type_code=='character' && card.is_unique)
+		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield')
 			row.addClass('collection-card-playset');
 		else
 			row.addClass('collection-card-not-playset');
 	} else if(card.owned.cards==2) {
-		if(card.type_code=='character' && card.is_unique)
+		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield')
 			row.addClass('collection-card-excess');
 		else
 			row.addClass('collection-card-playset');

@@ -7,6 +7,7 @@
 	{% endjavascripts %}
 	<script type="text/javascript">
 	app.collection && app.collection.init({{ collection|json_encode|raw }});
+	app.ui && app.ui.set_starters_data && app.ui.set_starters_data({{ starters|json_encode|raw }});
 	</script>
 {% endblock %}
 
@@ -34,6 +35,25 @@
 				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative">{{ 'collection.options.filter_button.cumulative' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive">{{ 'collection.options.filter_button.exclusive' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="checkbox" name="link-cards-dice">{{ 'collection.options.link_cards_dice' | trans }}</label></a></li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+				<span class="fa fa-plus"></span> {{ 'collection.addstarter.label' | trans}} <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right" id="add-starter">
+				{% set packset = "" %}
+				{% for starter in starters %}
+				{% if starter.set.code != packset %}
+				<li class="dropdown-header">{{starter.set.name}}</li>
+				{% endif %}
+				<li>
+					<a href="#" data-starter="{{starter.code}}">
+						{{starter.name}}
+					</a>
+				</li>
+				{% set packset = starter.set.code %}
+				{% endfor %}
 			</ul>
 		</div>
 	</div>

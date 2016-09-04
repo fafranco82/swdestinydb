@@ -296,4 +296,43 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     {
         $this->locale = $locale;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $starterPacks;
+
+
+    /**
+     * Add starterPack
+     *
+     * @param \AppBundle\Entity\StarterPack $starterPack
+     *
+     * @return Set
+     */
+    public function addStarterPack(\AppBundle\Entity\StarterPack $starterPack)
+    {
+        $this->starterPacks[] = $starterPack;
+
+        return $this;
+    }
+
+    /**
+     * Remove starterPack
+     *
+     * @param \AppBundle\Entity\StarterPack $starterPack
+     */
+    public function removeStarterPack(\AppBundle\Entity\StarterPack $starterPack)
+    {
+        $this->starterPacks->removeElement($starterPack);
+    }
+
+    /**
+     * Get starterPacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStarterPacks()
+    {
+        return $this->starterPacks;
+    }
 }

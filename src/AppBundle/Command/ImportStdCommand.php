@@ -14,6 +14,8 @@ use AppBundle\Entity\Type;
 use AppBundle\Entity\Set;
 use AppBundle\Entity\Card;
 use AppBundle\Entity\Side;
+use AppBundle\Entity\StarterPack;
+use AppBundle\Entity\StarterPackSlot;
 
 class ImportStdCommand extends ContainerAwareCommand
 {
@@ -169,8 +171,21 @@ class ImportStdCommand extends ContainerAwareCommand
 			}
 		}
 		$this->em->flush();
+		$this->loadCollection('Card');
 		$output->writeln("Done.");
 		
+		$output->writeln("Importing Starter Packs...");
+		$starterPacksFileInfo = $this->getFileInfo($path, 'starterPacks.json');
+		$imported = $this->importStarterPacksJsonFile($starterPacksFileInfo);
+		$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$output->writeln("Done.");
 	}
 
 	protected function importAffiliationsJsonFile(\SplFileInfo $fileinfo)
@@ -358,6 +373,26 @@ class ImportStdCommand extends ContainerAwareCommand
 		
 		return $result;
 	}
+
+	protected function importStarterPacksJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$list = $this->getDataFromFile($fileinfo);
+		foreach($list as $data)
+		{
+			$starterPack = $this->getEntityFromData('AppBundle\\Entity\\StarterPack', $data, [
+					'code',
+					'name'
+			], ['set_code'], []);
+			if($starterPack) {
+				$result[] = $starterPack;
+				$this->em->persist($starterPack);
+			}
+		}
+	
+		return $result;
+	}
 	
 	protected function copyFieldValueToEntity($entity, $entityName, $fieldName, $newJsonValue)
 	{
@@ -471,6 +506,11 @@ class ImportStdCommand extends ContainerAwareCommand
 
 			$this->importCardDieSides($entity, $data);
 		}
+
+		// special case for StarterPack
+		if($entityName === 'AppBundle\Entity\StarterPack') {
+			$this->importStarterPacksSlots($entity, $data);
+		}
 	
 		if($entity->serialize() !== $orig) return $entity;
 	}
@@ -518,6 +558,32 @@ class ImportStdCommand extends ContainerAwareCommand
 		}
 	}
 	
+	protected function importStarterPacksSlots(StarterPack $starter, $data)
+	{
+		$orig = $starter->getSlots()->getContent();
+
+		foreach($data['slots'] as $code => $qtys) {
+			if(!key_exists('Card', $this->collections)) {
+				throw new \Exception("No collection for ['Card'] in ".json_encode($data));
+			}
+			if(!key_exists($code, $this->collections['Card'])) {
+				throw new \Exception("Invalid code [$code] for key [slots] in ".json_encode($data));
+			}
+
+			$slot = $starter->getSlots()->getSlotByCode($code);
+			if($slot==NULL) {
+				$card = $this->collections['Card'][$code];
+				$slot = new StarterPackSlot();
+				$slot->setStarterPack($starter)->setCard($card);
+				$starter->addSlot($slot);
+			}
+			$slot->setQuantity($qtys['quantity'])->setDice($qtys['dice']);
+		}
+
+		if($starter->getSlots()->getContent() !== $orig)
+			$this->output->writeln("Changing <info>slots</info> of <info>".$starter->toString()."</info>");
+	}
+
 	protected function importBattlefieldData(Card $card, $data)
 	{
 		$mandatoryKeys = [

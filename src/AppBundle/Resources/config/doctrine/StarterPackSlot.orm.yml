@@ -1,0 +1,28 @@
+AppBundle\Entity\StarterPackSlot:
+    type: entity
+    table: starterpackslot
+    repositoryClass: AppBundle\Repository\StarterPackSlotRepository
+    manyToOne:
+        starterPack:
+            targetEntity: StarterPack
+            nullable: false
+            inversedBy: slots
+            joinColumn:
+                name: starterpack_id
+                referencedColumnName: id
+        card:
+            targetEntity: Card
+            nullable: false
+            joinColumn:
+                name: card_id
+                referencedColumnName: id
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        quantity:
+            type: smallint
+        dice:
+            type: smallint

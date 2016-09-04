@@ -39,7 +39,7 @@ class ExportStdCommand extends ContainerAwareCommand
 		
 		$output->writeln("Exporting data in <info>$path</info>");
 		
-		$things = ['affiliation', 'faction', 'rarity', 'set', 'type', 'subtype', 'sideType'];
+		$things = ['affiliation', 'faction', 'rarity', 'set', 'type', 'subtype', 'sideType', 'starterPack'];
 		
 		foreach($things as $thing) 
 		{

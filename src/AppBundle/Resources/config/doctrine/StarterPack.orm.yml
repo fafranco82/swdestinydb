@@ -1,19 +1,23 @@
-AppBundle\Entity\Set:
+AppBundle\Entity\StarterPack:
     type: entity
-    table: cardset
-    repositoryClass: AppBundle\Repository\SetRepository
+    table: starterpack
+    repositoryClass: AppBundle\Repository\StarterPackRepository
     gedmo:
         translation:
             locale: locale
+    manyToOne:
+        set:
+            targetEntity: Set
+            nullable: false
+            inversedBy: starterPacks
+            joinColumn:
+                name: set_id
+                referencedColumnName: id
     oneToMany:
-        cards:
-            targetEntity: Card
-            orderBy: {'position':'ASC'}
-            mappedBy: set
-        starterPacks:
-            targetEntity: StarterPack
-            orderBy: {'code': 'ASC'}
-            mappedBy: set
+        slots:
+            targetEntity: StarterPackSlot
+            mappedBy: starterPack
+            cascade: ["persist","remove"]
     fields:
         id:
             type: integer
@@ -26,16 +30,10 @@ AppBundle\Entity\Set:
             nullable: false
         name:
             type: string
-            length: 1024
+            length: 50
             nullable: false
             gedmo:
                 - translatable
-        position:
-            type: smallint
-            nullable: false
-        size:
-            type: smallint
-            nullable: false
         dateCreation:
             type: datetime
             nullable: false
@@ -50,10 +48,3 @@ AppBundle\Entity\Set:
             gedmo:
                 timestampable:
                     on: update
-        dateRelease:
-            type: date
-            nullable: true
-            column: date_release
-    uniqueConstraints:
-        pack_code_idx:
-            columns: [ code ]

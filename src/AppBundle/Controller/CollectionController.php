@@ -22,7 +22,8 @@ class CollectionController extends Controller
     public function indexAction()
     {
         return $this->render('AppBundle:Collection:index.html.twig', array(
-            'collection' => $this->getDoctrine()->getRepository('AppBundle:Collection')->getCollection($this->getUser()->getId())
+            'collection' => $this->getDoctrine()->getRepository('AppBundle:Collection')->getCollection($this->getUser()->getId()),
+            'starters' => $this->getDoctrine()->getRepository('AppBundle:StarterPack')->findAll()
         ));
     }
 
