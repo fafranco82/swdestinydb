@@ -115,6 +115,8 @@ class User extends BaseUser
 
 		$this->reputation = 1;
 		$this->donation = 0;
+        $this->collection = new Collection();
+        $this->collection->setUser($this);
 	}
 
     /**

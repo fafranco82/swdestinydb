@@ -326,18 +326,6 @@ ui.on_config_change = function on_config_change(event) {
 }
 
 /**
- * @memberOf ui
- * @param event
- */
-ui.on_before_unload = function on_before_unload(event) {
-	var changes = ui.get_collection_changes();
-	if(changes.length > 0) {
-		event.returnValue = 'Are you sure you want to quit?';
-		return event.returnValue;
-	}
-}
-
-/**
  * sets up event handlers ; dataloaded not fired yet
  * @memberOf ui
  */
@@ -355,7 +343,6 @@ ui.setup_event_handlers = function setup_event_handlers() {
 	$('#filter-text').on('input', ui.on_input_smartfilter);
 	$('#config-options').on('change', 'input', ui.on_config_change);
 
-	//window.onbeforeunload = ui.on_before_unload;
 	$('#form').dirtyForms({
 	    helpers:
 	        [

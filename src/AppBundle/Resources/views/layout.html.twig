@@ -51,15 +51,11 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            {#
-            <li><a href="{{ path('decks_list') }}">{{ 'nav.mydecks' | trans}}</a></li>
-            #}
             {% if app.environment=='dev' %}
+            <li><a href="{{ path('decks_list') }}">{{ 'nav.mydecks' | trans}}</a></li>
             <li><a href="{{ path('collection_list') }}">{{ 'nav.mycollection' | trans}}</a></li>
-            {% endif %}
-            {#
             <li><a href="{{ path('decklists_list') }}">{{ 'nav.decklists' | trans}}</a></li>
-            #}
+            {% endif %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'nav.cards' | trans}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -70,12 +66,11 @@
               {% endfor %}
               </ul>
             </li>
-            {#
-            <li class="hidden-sm"><a href="{{ path('card_reviews_list') }}">Reviews</a></li>
+            {% if app.environment=='dev' %}
             <li><a href="{{ path('rules') }}">{{ 'nav.rules' | trans}}</a></li>
-            #}
+            {% endif %}
           </ul>
-          {#
+          {% if app.environment=='dev' %}
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown hidden-xs hidden-lg">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-search"></span></a>
@@ -113,7 +108,7 @@
               <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
             </div>
           </form>
-          #}
+          {% endif %}
         </div><!--/.navbar-collapse -->
         {% endblock %}
       </div>

@@ -5,6 +5,7 @@ AppBundle\Entity\User:
         collection:
             targetEntity: Collection
             mappedBy: user
+            cascade: ["persist"]
     oneToMany:
         decks:
             targetEntity: Deck

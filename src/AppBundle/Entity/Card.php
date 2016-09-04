@@ -812,43 +812,4 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     {
         return $this->points;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $owned;
-
-
-    /**
-     * Add owned
-     *
-     * @param \AppBundle\Entity\OwnedCard $owned
-     *
-     * @return Card
-     */
-    public function addOwned(\AppBundle\Entity\OwnedCard $owned)
-    {
-        $this->owned[] = $owned;
-
-        return $this;
-    }
-
-    /**
-     * Remove owned
-     *
-     * @param \AppBundle\Entity\OwnedCard $owned
-     */
-    public function removeOwned(\AppBundle\Entity\OwnedCard $owned)
-    {
-        $this->owned->removeElement($owned);
-    }
-
-    /**
-     * Get owned
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOwned()
-    {
-        return $this->owned;
-    }
 }
