@@ -447,7 +447,7 @@ class BuilderController extends Controller
         	array(
         		'pagetitle' => "Deckbuilder",
         		'deck' => $deck,
-                'collection' => $this->getDoctrine()->getRepository('AppBundle:OwnedCard')->getCollection($this->getUser()->getId())
+                'collection' => $this->getDoctrine()->getRepository('AppBundle:Collection')->getCollection($this->getUser()->getId())
         	)
         );
 

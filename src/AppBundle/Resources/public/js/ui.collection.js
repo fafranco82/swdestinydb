@@ -52,6 +52,12 @@ ui.init_config_buttons = function init_config_buttons() {
 	});
 }
 
+ui.update_sort_caret = function update_sort_caret() {
+	var elt = $('[data-sort="'+SortKey+'"]');
+	$(elt).closest('tr').find('th').removeClass('dropup').find('span.caret').remove();
+	$(elt).after('<span class="caret"></span>').closest('th').addClass(SortOrder > 0 ? '' : 'dropup');
+}
+
 ui.init_filter_help = function init_filter_help() {
 	$('#filter-text-button').popover({
 		container: 'body',
@@ -335,7 +341,6 @@ ui.on_config_change = function on_config_change(event) {
  * @param event
  */
 ui.on_click_add_starter = function on_click_add_starter(event) {
-	event.preventDefault();
 	event.stopPropagation();
 
 	var starter = Starters[$(this).data('starter')];
@@ -352,6 +357,24 @@ ui.on_click_add_starter = function on_click_add_starter(event) {
 		ui.reset_list();
 	}
 	$('#add-starter').blur();
+}
+
+
+/**
+ * @memberOf ui
+ * @param event
+ */
+ui.on_table_sort_click = function on_table_sort_click(event) {
+	event.preventDefault();
+	var new_sort = $(this).data('sort');
+	if (SortKey == new_sort) {
+		SortOrder *= -1;
+	} else {
+		SortKey = new_sort;
+		SortOrder = 1;
+	}
+	ui.refresh_list();
+	ui.update_sort_caret();
 }
 
 /**
@@ -373,6 +396,8 @@ ui.setup_event_handlers = function setup_event_handlers() {
 	$('#config-options').on('change', 'input', ui.on_config_change);
 
 	$('#add-starter').on('click', 'a[data-starter]', ui.on_click_add_starter);
+
+	$('thead').on('click', 'a[data-sort]', ui.on_table_sort_click);
 
 	$('#form').dirtyForms({
 	    helpers:
@@ -433,7 +458,7 @@ var DisplayColumnsTpl = Handlebars.compile(
 '			{{#if card.subtitle}}<span class="card-subtitle hidden-xs">- {{card.subtitle}}</span>{{/if}}' +
 '		</a>' +
 '	</td>' +
-'	<td class="text-center">' +
+'	<td class="text-center td-spinner">' +
 '		<div class="btn-group btn-group-xs btn-spinner" data-spin="cards">' +
 '			<button class="btn btn-danger btn-spin">-</button>' +
 '			<button class="btn btn-default btn-value">' +
@@ -443,7 +468,7 @@ var DisplayColumnsTpl = Handlebars.compile(
 '			<button class="btn btn-success btn-spin">+</button>' +
 '		</div>' +
 '	</td>' +
-'	<td class="text-center">' +
+'	<td class="text-center td-spinner">' +
 '       {{#if card.has_die}} ' +
 '		<div class="btn-group btn-group-xs btn-spinner" data-spin="dice">' +
 '			<button class="btn btn-danger btn-spin">-</button>' +
@@ -470,7 +495,7 @@ var DisplayColumnsTpl = Handlebars.compile(
 '	{{/with}}' +
 '	{{/each}}' +
 '	{{else}}' +
-'	<td colspan="6" data-th="Die" class="hidden-md">&nbsp;</td>' +
+'	<td colspan="6" data-th="Die" class="visible-lg">&nbsp;</td>' +
 '	{{/if}}' +
 '	<td data-th="Set">' +
 '		<span class="hidden-xs">{{card.set_name}}</span>' +

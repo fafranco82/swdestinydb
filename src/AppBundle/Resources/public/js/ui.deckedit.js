@@ -59,13 +59,26 @@ ui.init_config_buttons = function init_config_buttons() {
  */
 ui.set_max_qty = function set_max_qty() {
 	app.data.cards.find().forEach(function(record) {
-		var max_qty = Math.min(2, record.deck_limit);
+		var max_value = Math.min(2, record.deck_limit);
 		if(record.type_code=='character' && !record.is_unique) {
-			max_qty = Math.min(parseInt(30 / parseInt(record.points, 10)));
+			max_value = Math.min(parseInt(30 / parseInt(record.points, 10)));
 		}
+
+		var max_qty = {
+			cards: max_value,
+			dice: record.has_die ? max_value : 0
+		}
+
+		if(record.type_code=='character' && record.is_unique) {
+			max_qty.dice = record.points.split('/').length;
+		}
+
 		if(Config['show-only-owned']) {
-			max_qty = Math.min(max_qty, app.collection.get_copies_owned(record.code));
+			var owned = app.collection.get_copies_owned(record.code);
+			max_qty.cards = Math.min(max_qty.cards, owned.cards);
+			max_qty.dice = Math.min(max_qty.dice, owned.dice);
 		}
+
 		app.data.cards.updateById(record.code, {
 			maxqty : max_qty
 		});
@@ -174,15 +187,14 @@ ui.build_set_selector = function build_set_selector() {
 	app.data.sets.find({
 		name: {
 			'$exists': true
-		},
-		available: true
+		}
 	}, {
 	    $orderBy: {
 	        position: 1
 	    }
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
-		var checked = true;
+		var checked = !!record.available;
 		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
@@ -284,21 +296,21 @@ ui.on_config_change = function on_config_change(event) {
 	ui.write_config_to_storage();
 	switch(name) {
 		case 'buttons-behavior':
-		break;
+			break;
 		case 'show-only-owned':
-		ui.set_max_qty();
-		ui.reset_list();
-		break;
+			ui.set_max_qty();
+			ui.reset_list();
+			break;
 		case 'display-column':
-		ui.update_list_template();
-		ui.refresh_list();
-		break;
+			ui.update_list_template();
+			ui.refresh_list();
+			break;
 		case 'show-suggestions':
-		ui.toggle_suggestions();
-		ui.refresh_list();
-		break;
+			ui.toggle_suggestions();
+			ui.refresh_list();
+			break;
 		default:
-		ui.refresh_list();
+			ui.refresh_list();
 	}
 }
 
@@ -572,7 +584,7 @@ ui.build_row = function build_row(card) {
 		'<label class="btn btn-xs btn-default <%= active %>"><input type="radio" name="qty-<%= card.code %>" value="<%= i %>"><%= i %></label>'
 	);
 
-	for (var i = 0; i <= card.maxqty; i++) {
+	for (var i = 0; i <= card.maxqty.cards; i++) {
 		radios += radioTpl({
 			i: i,
 			active: (i == card.indeck ? ' active' : ''),
@@ -584,7 +596,7 @@ ui.build_row = function build_row(card) {
 		radios: radios,
 		url: Routing.generate('cards_zoom', {card_code:card.code}),
 		card: card,
-		second_die: card.type_code=='character' && card.is_unique && (!Config['show-only-owned'] || card.owned > 1)
+		second_die: card.type_code=='character' && card.is_unique && card.maxqty.dice > 1
 	});
 	return $(html);
 }
@@ -620,7 +632,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		if (Config['show-only-deck'] && !card.indeck) return;
 		var unusable = !app.deck.can_include_card(card);
 		if (!Config['show-unusable'] && unusable) return;
-		if (Config['show-only-owned'] && card.maxqty==0) return;
+		if (Config['show-only-owned'] && card.maxqty.cards==0) return;
 
 		var row = divs[card.code];
 		if(!row) row = divs[card.code] = ui.build_row(card);

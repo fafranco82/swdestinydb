@@ -13,8 +13,9 @@
 			{% for affiliation in affiliations %}
 			<div class="col-md-3 col-sm-4">
 				<label class="thumbnail">
+					<img src="{{ asset('/bundles/app/images/affiliations/' ~ affiliation.code ~ '.png') }}" class="hidden-xs">
 					<div class="caption text-center" style="white-space:nowrap">
-						<input type="radio" name="affiliation" value="{{ affiliation.code }}">{{ affiliation.name }}
+							<input type="radio" name="affiliation" value="{{ affiliation.code }}"> <small>{{ affiliation.name }}</small>
 					</div>
 				</label>
 			</div>

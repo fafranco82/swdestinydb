@@ -20,41 +20,61 @@
 
 <div class="row" style="margin-bottom: 10px;">
 	<div class="col-sm-4">
-		<button id="btn-save" class="btn btn-sm btn-success">{{ 'forms.save' | trans }}</button>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-				{{ 'collection.sets.label' | trans}} <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu pull-right" data-filter="set_code" title="{{ 'collection.sets.hint' | trans }}"></ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-				{{ 'collection.options.label' | trans}} <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu pull-right" id="config-options">
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative">{{ 'collection.options.filter_button.cumulative' | trans }}</label></a></li>
-				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive">{{ 'collection.options.filter_button.exclusive' | trans }}</label></a></li>
-				<li><a href="#"><label><input type="checkbox" name="link-cards-dice">{{ 'collection.options.link_cards_dice' | trans }}</label></a></li>
-			</ul>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-				<span class="fa fa-plus"></span> {{ 'collection.addstarter.label' | trans}} <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu pull-right" id="add-starter">
-				{% set packset = "" %}
-				{% for starter in starters %}
-				{% if starter.set.code != packset %}
-				<li class="dropdown-header">{{starter.set.name}}</li>
-				{% endif %}
-				<li>
-					<a href="#" data-starter="{{starter.code}}">
-						{{starter.name}}
-					</a>
-				</li>
-				{% set packset = starter.set.code %}
-				{% endfor %}
-			</ul>
+		<div class="btn-toolbar">
+			<button id="btn-save" class="btn btn-sm btn-success">{{ 'forms.save' | trans }}</button>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					{{ 'collection.sets.label' | trans}} <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu pull-left" data-filter="set_code" title="{{ 'collection.sets.hint' | trans }}"></ul>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					{{ 'collection.options.label' | trans}} <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu pull-left" id="config-options">
+					<li>
+						<a href="#">
+							<label>
+								<input type="radio" name="buttons-behavior" value="cumulative">{{ 'collection.options.filter_button.cumulative' | trans }}
+							</label>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<label>
+								<input type="radio" name="buttons-behavior" value="exclusive">{{ 'collection.options.filter_button.exclusive' | trans }}
+							</label>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<label>
+								<input type="checkbox" name="link-cards-dice">{{ 'collection.options.link_cards_dice' | trans }}
+							</label>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					<span class="fa fa-plus hidden-xs"></span> {{ 'collection.addstarter.label' | trans}} <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu pull-left" id="add-starter">
+					{% set packset = "" %}
+					{% for starter in starters %}
+					{% if starter.set.code != packset %}
+					<li class="dropdown-header">{{starter.set.name}}</li>
+					{% endif %}
+					<li>
+						<a href="#" data-starter="{{starter.code}}">
+							{{starter.name}}
+						</a>
+					</li>
+					{% set packset = starter.set.code %}
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 	</div>
 	<div class="col-sm-4">
@@ -90,15 +110,33 @@
 		<table class="table table-condensed table-hover" style="margin-bottom:10px">
 			<thead>
 				<tr>
-					<th>{{ 'card.info.name' | trans }}</th>
-					<th colspan="2">{{ 'collection.owned' | trans}}</th>
-					<th class="hidden-sm hidden-xs">{{ 'card.info.affiliation' | trans }}</th>
-					<th class="hidden-sm hidden-xs" title="{{'card.info.points_cost' | trans}}">{{ 'card.info.medium.points_cost' | trans }}</th>
-					<th class="hidden-sm hidden-xs">{{ 'card.info.health' | trans }}</th>
-					<th class="hidden-sm hidden-xs">{{ 'card.info.type' | trans }}</th>
-					<th class="hidden-xs">{{ 'card.info.rarity' | trans }}</th>
-					<th colspan="6" class="visible-lg">{{ 'card.info.die' | trans}}</th>
-					<th>{{ 'card.info.set' | trans }}</th>
+					<th>
+						<a href="#" data-sort="name">{{ 'card.info.name' | trans }}</a>
+					</th>
+					<th colspan="2">
+						<a href="#">{{ 'collection.owned' | trans}}</a>
+					</th>
+					<th class="hidden-sm hidden-xs">
+						<a href="#" data-sort="affiliation_code">{{ 'card.info.affiliation' | trans }}</a>
+					</th>
+					<th class="hidden-sm hidden-xs" title="{{'card.info.points_cost' | trans}}">
+						<a href="#" data-sort="points|cost">{{ 'card.info.medium.points_cost' | trans }}</a>
+					</th>
+					<th class="hidden-sm hidden-xs">
+						<a href="#" data-sort="health">{{ 'card.info.health' | trans }}</a>
+					</th>
+					<th class="hidden-sm hidden-xs">
+						<a href="#" data-sort="type_code">{{ 'card.info.type' | trans }}</a>
+					</th>
+					<th class="hidden-xs">
+						<a href="#" data-sort="rarity_code">{{ 'card.info.rarity' | trans }}</a>
+					</th>
+					<th colspan="6" class="visible-lg">
+						<a href="#">{{ 'card.info.die' | trans}}</a>
+					</th>
+					<th>
+						<a href="#" data-sort="code">{{ 'card.info.set' | trans }}</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody id="collection-table" class="collection"></tbody>

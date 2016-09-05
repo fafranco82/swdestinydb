@@ -18,7 +18,7 @@ collection:
     link_cards_dice: Link cards with dice
   searchhint: Find a card or filter the list
   addstarter: 
-    label: Add from Starter Pack
+    label: Add Starter Pack
     confirm: Are you sure you want to add cards and dice from %pack% of %set%? You will need to save the changes after this.
   
 decks:

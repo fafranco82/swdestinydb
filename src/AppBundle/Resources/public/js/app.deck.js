@@ -47,14 +47,12 @@ var Template = Handlebars.compile(
 '		<div class="col-sm-6">		' +
 '			{{#with deck.get_battlefield}}' +
 '			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>' +
-'				<div class="row">' +
-'					<div class="col-lg-12 text-center">' +
-'						<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-'						<div>' +
-'							<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-'								{{name}}' +
-'							</a>' +
-'						</div>' +
+'				<div class="deck-battlefield">' +
+'					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
+'					<div>' +
+'						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
+'							{{name}}' +
+'						</a>' +
 '					</div>' +
 '				</div>' +
 '			{{/with}}' +
@@ -65,18 +63,21 @@ var Template = Handlebars.compile(
 '			<div>' +
 '				{{#with (deck.get_character_row_data)}}' +
 '				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
-'				<div class="row">' +
-'				{{#each this}}' +
-'					<div class="col-lg-3 col-sm-6 text-center">' +
+'				<div class="character-deck-list">' +
+'					{{#each this}}' +
+'					<div class="deck-character">' +
 '						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-'						<div>' +
-'							<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
+'						<div class="character-name">' +
+'							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>' +
+'							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
 '								{{name}}' +
 '							</a>' +
 '						</div>' +
-'						{{dice}} <span class="icon-die"></span>' +
+'						<div class="character-dice">' +
+'							{{dice}} <span class="icon-die"></span>' +
+'						</div>' +
 '					</div>' +
-'				{{/each}}' +
+'					{{/each}}' +
 '				</div>' +
 '				{{/with}}' +
 '			</div>' +

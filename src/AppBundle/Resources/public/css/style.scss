@@ -236,18 +236,24 @@ ol {
 	height: 70px;
 }
 
-#collection .btn-spinner {
-	button {
-		padding: 0px 2px;
+#collection {
+	.td-spinner {
+		min-width: 72px;
+	}
 
-		&.btn-spin {
-			width: 1.5em;
-		}
+	.btn-spinner {
+		button {
+			padding: 0px 2px;
 
-		&.btn-value {
-			cursor: default;
-			&:hover {
-				background-color: inherit;
+			&.btn-spin {
+				width: 1.5em;
+			}
+
+			&.btn-value {
+				cursor: default;
+				&:hover {
+					background-color: inherit;
+				}
 			}
 		}
 	}
@@ -360,9 +366,118 @@ ol {
 	}
 }
 
-.card-thumbnail{background-attachment:scroll;background-origin:padding-box;background-clip:border-box;background-repeat:no-repeat;margin:0 0 5px 5px;position:relative;border:1px solid #000;float:right}
-.card-thumbnail-battlefield{margin-top:5px}
+.character-thumbnail, .battlefield-thumbnail {
+  background-attachment: scroll;
+  background-origin: padding-box;
+  background-clip: border-box;
+  background-repeat: no-repeat;
+  position: relative;
+  border: 1px solid #000000;
+}
+
+.card-thumbnail{
+	background-attachment:scroll;
+	background-origin:padding-box;
+	background-clip:border-box;
+	background-repeat:no-repeat;
+	margin:0 0 5px 5px;
+	position:relative;
+	border:1px solid #000;
+	float:right
+}
+
+.card-thumbnail-battlefield {
+	margin-top:5px
+}
+
 @include thumbnails(5);
+
+.character-deck-list {
+  .deck-character {
+  	position: relative;
+    text-align: center;
+    float: left;
+    margin-right: 15px;
+    max-width: 100px;
+
+    .character-thumbnail {
+      margin: 5px auto 0 auto;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .character-dice {
+		position: absolute;
+		top: 6px;
+		right: 2px;
+		color: white;
+		text-shadow: 1px 1px black;
+	}
+  }
+}
+
+.small .deck-character {
+  max-width: 65px;
+
+  .icon {
+    display: none;
+  }
+}
+
+.deck-battlefield {
+	position: relative;
+	text-align: center;
+	float: left;
+	max-width: 198px;
+
+	.battlefield-thumbnail {
+	  margin: 5px auto 0 auto;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .small .deck-character {
+    text-align: left;
+    display: block;
+    float: none;
+    margin-right: 0;
+    max-width: none;
+
+    .character-thumbnail {
+      display: none;
+    }
+
+    .icon {
+      display: inline-block;
+    }
+
+    .character-dice {
+		position: block;
+		color: inherit;
+		text-shadow: inherit;
+	}
+  }
+}
+
+@media print {
+  .deck-character {
+    text-align: left !important;
+    display: block !important;
+    float: none !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+
+    .character-thumbnail {
+      display: none !important;
+    }
+
+    .icon {
+      display: inline-block !important;
+    }
+  }
+}
 
 /************** INDEX PAGE ***************/
 

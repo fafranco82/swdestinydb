@@ -35,6 +35,7 @@ class DeckValidationHelper
 	
 	public function findProblem(SlotCollectionProviderInterface $deck)
 	{
+		/*
 		if($deck->getSlots()->getDrawDeck()->countCards() < 30) {
 			return 'too_few_cards';
 		}
@@ -50,11 +51,11 @@ class DeckValidationHelper
 		$characterFactions = $deck->getSlots()->getCharacterDeck()->getFactions();
 		$drawDeckFactions = $deck->getSlots()->getDrawDeck()->getFactions();
 		$diff = array_diff($drawDeckFactions, $characterFactions);
-		if(!(count($diff) == 0 || (count($diff) == 1 && $diff[1]=='gray'))) return 'faction_not_included';
+		if(!(count($diff) == 0 || (count($diff) == 1 && $diff[0]=='gray'))) return 'faction_not_included';
 
 		if(!empty($this->getInvalidCards($deck))) {
 			return 'invalid_cards';
-		}
+		}*/
 
 		return null;
 	}	

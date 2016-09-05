@@ -36,7 +36,7 @@ collection.get_copies_owned = function get_copies_owned(code) {
 	var card = app.data.cards.findById(code);
 	if(!card)
 		return null;
-	return card.owned.cards;
+	return card.owned;
 }
 
 /**
