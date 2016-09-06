@@ -32,7 +32,7 @@ deck_history.autosave = function autosave() {
 	if(diff_json == '[{},{}]') return;
 
 	// send diff to autosave
-	$('#tab-header-history').html("Autosave...");
+	$('#tab-header-history').html(Translator.trans('decks.history.autosave'));
 	ajax_in_process = true;
 
 	$.ajax(Routing.generate('deck_autosave'), {
@@ -49,11 +49,10 @@ deck_history.autosave = function autosave() {
 			changed_since_last_autosave = true;
 		},
 		complete: function () {
-			$('#tab-header-history').html("History");
+			$('#tab-header-history').html(Translator.trans('decks.edit.tabs.history'));
 			ajax_in_process = false;
 		}
 	});
-
 }
 
 /**
@@ -77,31 +76,57 @@ deck_history.autosave_interval = function autosave_interval() {
 	timer--;
 }
 
+var Tpl = Handlebars.compile(
+'<tr{{#unless snapshot.is_saved}} class="warning"{{/unless}}>' +
+'	<td>' +
+'		{{date}}' +
+'		{{#unless snapshot.is_saved}}({{trans "decks.history.unsaved"}}){{/unless}}' +
+'	</td>' +
+'	<td>' +
+'		{{snapshot.version}}' +
+'	</td>' +
+'	<td>' +
+'		<ul class="list-unstyled">' +
+'		{{#with snapshot.variation}}' +
+'			{{#*inline "change"}}' +
+'				<li>' +
+'					{{#if quantity}}{{op}}{{quantity}}<span class="icon-cards"></span>{{/if}}' +
+'					{{#if dice}}{{op}}{{dice}}<span class="icon-die"></span>{{/if}}' +
+'					{{#with (card code)}}' +
+'					<a href="{{routing "cards_zoom" card_code=code}}" class="card-tip" data-code="{{code}}">{{name}}</a>' +
+'					{{/with}}' +
+'				</li>' +
+'			{{/inline}}' +
+'			{{#each this.[0]}}' +
+'				{{> change this op="+" code=@key}}' +
+'			{{/each}}' +
+'			{{#each this.[1]}}' +
+'				{{> change this op="-" code=@key}}' +
+'			{{/each}}' +
+'		{{else}}' +
+'			<li>{{trans "decks.history.firstversion"}}</li>' +
+'		{{/with}}' +
+'		</ul>' +
+'	</td>' +
+'	<td>' +
+'		<a role="button" href="#" data-index="{{revertTo}}">' +
+'			{{trans "decks.history.revert"}}' +
+'		</a>' +
+'	</td>' +
+'</tr>'
+);
 /**
  * @memberOf deck_history
  */
 deck_history.add_snapshot = function add_snapshot(snapshot) {
-
 	snapshot.date_creation = snapshot.date_creation ? moment(snapshot.date_creation) : moment();
 	snapshots.push(snapshot);
 
-	var list = [];
-	if(snapshot.variation) {
-		_.each(snapshot.variation[0], function (qty, code) {
-			var card = app.data.cards.findById(code);
-			if(!card) return;
-			list.push('+'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.label+'</a>');
-		});
-		_.each(snapshot.variation[1], function (qty, code) {
-			var card = app.data.cards.findById(code);
-			if(!card) return;
-			list.push('&minus;'+qty+' '+'<a href="'+Routing.generate('cards_zoom',{card_code:code})+'" class="card-tip" data-code="'+code+'">'+card.label+'</a>');
-		});
-	} else {
-		list.push(Translator.trans('decks.history.firstversion'));
-	}
-
-	tbody.prepend('<tr'+(snapshot.is_saved ? '' : ' class="warning"')+'><td>'+snapshot.date_creation.calendar()+(snapshot.is_saved ? '' : ' ('+Translator.trans('decks.history.unsaved')+')')+'</td><td>'+(snapshot.version || '')+'</td><td>'+list.join('<br>')+'</td><td><a role="button" href="#" data-index="'+(snapshots.length-1)+'"">'+Translator.trans('decks.history.revert')+'</a></td></tr>');
+	tbody.prepend(Tpl({
+		snapshot: snapshot, 
+		date: snapshot.date_creation.calendar(),
+		revertTo: snapshots.length-1
+	}));
 
 	timer = -1; // start autosave timer
 
@@ -117,9 +142,15 @@ deck_history.load_snapshot = function load_snapshot(event) {
 	if(!snapshot) return;
 
 	app.data.cards.find({}).forEach(function(card) {
-		var indeck = 0;
+		var indeck = {
+			cards: 0,
+			dice: 0
+		};
 		if (snapshot.content[card.code]) {
-			indeck = snapshot.content[card.code];
+			indeck = {
+				cards: snapshot.content[card.code].quantity,
+				dice: snapshot.content[card.code].dice
+			}
 		}
 		app.data.cards.updateById(card.code, {
 			indeck : indeck
@@ -174,5 +205,9 @@ deck_history.setup = function setup_history(container)
 	});
 
 }
+
+deck_history.get_snapshots = function get_snapshots() {
+	return snapshots;
+};
 
 })(app.deck_history = {}, jQuery);

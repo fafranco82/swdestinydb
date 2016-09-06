@@ -34,6 +34,17 @@
         return side;
     });
 
+    Handlebars.registerHelper('card', function(code) {
+        if(app.data && app.data.cards) {
+            return app.data.cards.findById(code);
+        }
+        return {};
+    });
+
+    Handlebars.registerHelper('routing', function(path, options) {
+        return Routing.generate(path, options.hash || {});
+    });
+
     Handlebars.registerHelper('concat', function() {
     	var str = '';
     	for(var i=0;i < arguments.length-1;i++) {
@@ -108,6 +119,18 @@
         } else {
             return result;
         }
+    });
+
+    Handlebars.registerHelper('range', function() {
+        var rangeArgs = Array.prototype.slice.call(arguments, 0, arguments.length-1);
+        var options = arguments[arguments.length-1];
+
+        if(options.hash && options.hash.inclusive)
+            rangeArgs[1] += 1;
+
+        return _.range.apply(null, rangeArgs).map(function(num) {
+            return options.fn(num);
+        }).join('');
     });
 
 })();

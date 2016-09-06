@@ -23,92 +23,93 @@ Handlebars.registerHelper('nb_cards', function(cards) {
 });
 
 var Template = Handlebars.compile(
-'<div class="deck-content">' +
-'	<div class="row">' +
-'		<div class="col-sm-6">' +
-'			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>' +
-'			<div>' +
-'				{{trans "decks.edit.meta.characters"}}: ' +
-'				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},' +
-'				{{transChoice "decks.edit.meta.dice" (deck.get_character_dice) count=(deck.get_character_dice)}}' +
-'			</div>' +
-'			<div>' +
-'				{{trans "decks.edit.meta.drawdeck"}}: ' +
-'				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},' +
-'				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}' +
-'			</div>' +
-'			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>' +
-'			{{#if deck.get_problem}}' +
-'			<div class="text-danger small">' +
-'				<span class="fa fa-exclamation-triangle"></span>{{trans (concat "decks.problems." (deck.get_problem))}}' +
-'			</div>' +
-'			{{/if}}' +
-'		</div>' +
-'		<div class="col-sm-6">		' +
-'			{{#with deck.get_battlefield}}' +
-'			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>' +
-'				<div class="deck-battlefield">' +
-'					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-'					<div>' +
-'						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-'							{{name}}' +
-'						</a>' +
-'					</div>' +
-'				</div>' +
-'			{{/with}}' +
-'		</div>' +
-'	</div>' +
-'	<div class="row">' +
-'		<div class="col-sm-12">' +
-'			<div>' +
-'				{{#with (deck.get_character_row_data)}}' +
-'				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
-'				<div class="character-deck-list">' +
-'					{{#each this}}' +
-'					<div class="deck-character">' +
-'						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-'						<div class="character-name">' +
-'							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>' +
-'							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-'								{{name}}' +
-'							</a>' +
-'						</div>' +
-'						<div class="character-dice">' +
-'							{{dice}} <span class="icon-die"></span>' +
-'						</div>' +
-'					</div>' +
-'					{{/each}}' +
-'				</div>' +
-'				{{/with}}' +
-'			</div>' +
-'		</div>' +
-'	</div>' +
-'	<div class="row">' +
-'		{{#*inline "section"}}' +
-'			<div>' +
-'				{{#with (cards key value)}}' +
-'				<h5><span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
-'				{{#each this}}' +
-'				<div>' +
-'					x{{indeck}}' +
-'					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>' +
-'					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-'						{{name}}' +
-'					</a>' +
-'				</div>' +
-'				{{/each}}' +
-'				{{/with}}' +
-'			</div>' +
-'		{{/inline}}' +
-'		<div class="col-sm-6 col-print-6">' +
-'			{{> section key="type_code" value="upgrade"}}' +
-'		</div>' +
-'		<div class="col-sm-6 col-print-6">' +
-'			{{> section key="type_code" value="support"}}' +
-'			{{> section key="type_code" value="event"}}' +
-'		</div>' +
-'	</div>' +
-'</div>'
+	'<div class="deck-content">' +
+	'	<div class="row">' +
+	'		<div class="col-sm-6">' +
+	'			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>' +
+	'			<div>' +
+	'				{{trans "decks.edit.meta.characters"}}: ' +
+	'				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},' +
+	'				{{transChoice "decks.edit.meta.dice" (deck.get_character_dice) count=(deck.get_character_dice)}}' +
+	'			</div>' +
+	'			<div>' +
+	'				{{trans "decks.edit.meta.drawdeck"}}: ' +
+	'				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},' +
+	'				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}' +
+	'			</div>' +
+	'			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>' +
+	'			{{#if deck.get_problem}}' +
+	'			<div class="text-danger small">' +
+	'				<span class="fa fa-exclamation-triangle"></span>{{trans (concat "decks.problems." (deck.get_problem))}}' +
+	'			</div>' +
+	'			{{/if}}' +
+	'		</div>' +
+	'		<div class="col-sm-6">		' +
+	'			{{#with deck.get_battlefield}}' +
+	'			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>' +
+	'				<div class="deck-battlefield">' +
+	'					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
+	'					<div>' +
+	'						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
+	'							{{name}}' +
+	'						</a>' +
+	'					</div>' +
+	'				</div>' +
+	'			{{/with}}' +
+	'		</div>' +
+	'	</div>' +
+	'	<div class="row">' +
+	'		<div class="col-sm-12">' +
+	'			<div>' +
+	'				{{#with (deck.get_character_row_data)}}' +
+	'				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
+	'				<div class="character-deck-list">' +
+	'					{{#each this}}' +
+	'					<div class="deck-character">' +
+	'						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
+	'						<div class="character-name">' +
+	'							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>' +
+	'							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
+	'								{{name}}' +
+	'							</a>' +
+	'						</div>' +
+	'						<div class="character-dice">' +
+	'							{{indeck.dice}} <span class="icon-die"></span>' +
+	'						</div>' +
+	'					</div>' +
+	'					{{/each}}' +
+	'				</div>' +
+	'				{{/with}}' +
+	'			</div>' +
+	'		</div>' +
+	'	</div>' +
+	'	<div class="row">' +
+	'		{{#*inline "section"}}' +
+	'			<div>' +
+	'				{{#with (cards key value)}}' +
+	'				<h5><span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
+	'				{{#each this}}' +
+	'				<div>' +
+	'					x{{indeck.cards}}' +
+	'					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>' +
+	'					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
+	'						{{name}}' +
+	'					</a>' +
+	'                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}' +
+	'				</div>' +
+	'				{{/each}}' +
+	'				{{/with}}' +
+	'			</div>' +
+	'		{{/inline}}' +
+	'		<div class="col-sm-6 col-print-6">' +
+	'			{{> section key="type_code" value="upgrade"}}' +
+	'		</div>' +
+	'		<div class="col-sm-6 col-print-6">' +
+	'			{{> section key="type_code" value="support"}}' +
+	'			{{> section key="type_code" value="event"}}' +
+	'		</div>' +
+	'	</div>' +
+	'</div>'
 );
 
 /*
@@ -148,14 +149,18 @@ deck.init = function init(data) {
  */
 deck.set_slots = function set_slots(slots) {
 	app.data.cards.update({}, {
-		indeck: 0,
-		dice: 0
+		indeck: {
+			cards: 0,
+			dice: 0
+		}
 	});
 	for(code in slots) {
 		if(slots.hasOwnProperty(code)) {
 			app.data.cards.updateById(code, {
-				indeck: slots[code].quantity,
-				dice: slots[code].dice
+				indeck: {
+					cards: slots[code].quantity,
+					dice: slots[code].dice
+				}
 			});
 		}
 	}
@@ -227,7 +232,7 @@ deck.get_cards = function get_cards(sort, query) {
 
 	query = query || {};
 	query.indeck = {
-		'$gt': 0
+		cards: {'$gt': 0 }
 	};
 
 	return app.data.cards.find(query, {
@@ -261,24 +266,9 @@ deck.get_character_deck = function get_draw_deck(sort) {
 deck.get_character_points = function get_character_points() {
 	var points = _.reduce(deck.get_character_deck(), function(points, character) {
 		if(character.is_unique) {
-			return points + parseInt(character.points.split('/')[character.dice-1], 10);
+			return points + parseInt(character.points.split('/')[character.indeck.dice-1], 10);
 		} else {
-			return points + parseInt(character.points, 10) * character.indeck;
-		}
-	}, 0);
-	return points;
-}
-
-
-/**
- * @memberOf deck
- */
-deck.get_character_factions = function get_character_points() {
-	var points = _.reduce(deck.get_character_deck(), function(points, character) {
-		if(character.is_unique) {
-			return points + parseInt(character.points.split('/')[character.dice-1], 10);
-		} else {
-			return points + parseInt(character.points, 10) * character.indeck;
+			return points + parseInt(character.points, 10) * character.indeck.dice;
 		}
 	}, 0);
 	return points;
@@ -300,9 +290,12 @@ deck.get_character_row_data = function get_character_row_data() {
 			return card;
 		} else {
 			var spread = [];
-			for(var i=0;i<card.indeck;i++) {
+			for(var i=0;i<card.indeck.cards;i++) {
 				var clone = _.clone(card);
-				clone.index = clone.dice = 1;
+				clone.indeck = {
+					cards: 1,
+					dice: 1
+				}
 				spread.push(clone);
 			}
 			return spread;
@@ -327,13 +320,13 @@ deck.get_draw_deck_dice = function get_draw_deck_dice(sort) {
 
 deck.get_nb_cards = function get_nb_cards(cards) {
 	if(!cards) cards = deck.get_cards();
-	var quantities = _.map(cards, 'indeck');
+	var quantities = _.map(cards, 'indeck.cards');
 	return _.reduce(quantities, function(memo, num) { return memo + num; }, 0);
 }
 
 deck.get_nb_dice = function get_nb_dice(cards) {
 	if(!cards) cards = deck.get_cards();
-	var dice = _.map(cards, 'dice');
+	var dice = _.map(cards, 'indeck.dice');
 	return _.reduce(dice, function(memo, num) { return memo + num; }, 0);
 }
 
@@ -347,10 +340,6 @@ deck.get_nongray_factions = function get_nongray_factions(cards) {
  */
 deck.get_included_sets = function get_included_sets() {
 	var cards = deck.get_cards();
-	var nb_sets = {};
-	cards.forEach(function (card) {
-		nb_sets[card.set_code] = Math.max(nb_sets[card.set_code] || 0, card.indeck);
-	});
 	var set_codes = _.uniq(_.map(cards, 'set_code'));
 	var sets = app.data.sets.find({
 		'code': {
@@ -358,12 +347,10 @@ deck.get_included_sets = function get_included_sets() {
 		}
 	}, {
 		'$orderBy': {
+			'position': 1,
 			'available': 1
 		}
 	});
-	sets.forEach(function (set) {
-		set.quantity = nb_sets[set.code] || 0;
-	})
 	return sets;
 }
 
@@ -378,7 +365,7 @@ deck.display = function display(container, options) {
 	//var deck_content = layouts[options.cols](layout_data);
 	var deck_content = Template({
 		deck: this,
-		sets: _.map(deck.get_included_sets(), function (set) { return set.name+(set.quantity > 1 ? ' ('+set.quantity+')' : ''); }).join(', ')
+		sets: _.map(deck.get_included_sets(), 'name').join(', ')
 	});
 
 	$(container)
@@ -448,6 +435,8 @@ deck.get_layout_data_one_section = function get_layout_data_one_section(sortKey,
 }
 
 /**
+ * Change the number of copies and dice together. One Copy = One die.
+ *
  * @memberOf deck
  * @return boolean true if at least one other card quantity was updated
  */
@@ -463,34 +452,60 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 			app.data.cards.update({
 				type_code: 'battlefield'
 			}, {
-				indeck: 0
+				indeck: {
+					cards: 0,
+					dice: 0
+				}
 			});
 			updated_other_card = true;
 			break;
 	}
 
+	// by default, a card with a die has an equal number of copies and dice,
+	// except for unique characters when you can only hava a copy, but one
+	// or more dice. Still then, the UI only allow you to select one copy,
+	// so if 1 copy is selected for a unique character, 1 die is selected also.
 	app.data.cards.updateById(card_code, {
-		indeck: nb_copies,
-		dice: card.has_die ? nb_copies : 0
+		indeck: {
+			cards: nb_copies,
+			dice: card.has_die ? nb_copies : 0
+		}
+	});
+	app.deck_history && app.deck_history.notify_change();
+
+	//list of cards which, by rules, deny or allow some cards
+	if(_.includes(['01045'], card_code))
+		updated_other_card = true; //force list refresh
+
+	return updated_other_card;
+}
+
+/**
+ * Change only the number of dice
+ *
+ * @memberOf deck
+ * @return boolean true if at least one other card quantity was updated
+ */
+deck.set_card_dice = function set_card_dice(card_code, nb_dice) {
+	var card = app.data.cards.findById(card_code);
+	if(!card) return false;
+
+	var updated_other_card = false;
+
+	// card-specific rules
+	switch(card.type_code) {
+		
+	}
+
+	// control if card has no die, no dice can be set in deck
+	app.data.cards.updateById(card_code, {
+		indeck: {
+			dice: card.has_die ? nb_dice : 0
+		}
 	});
 	app.deck_history && app.deck_history.notify_change();
 
 	return updated_other_card;
-}
-/**
- * @memberOf deck
- * @return boolean true if at least one other card quantity was updated
- */
-deck.set_card_2nd_die = function set_card_2nd_die(card_code, die_active) {
-	var card = app.data.cards.findById(card_code);
-	if(!card) return;
-
-	app.data.cards.updateById(card_code, {
-		dice: card.indeck==0 ? 0 : (die_active) ? card.indeck+1 : card.indeck
-	});
-	app.deck_history && app.deck_history.notify_change();
-
-	return card.indeck;
 }
 
 /**
@@ -501,8 +516,8 @@ deck.get_content = function get_content() {
 	var content = {};
 	cards.forEach(function (card) {
 		content[card.code] = {
-			quantity: card.indeck,
-			dice: card.dice
+			quantity: card.indeck.cards,
+			dice: card.indeck.dice
 		};
 	});
 	return content;
@@ -531,11 +546,11 @@ deck.get_copies_and_deck_limit = function get_copies_and_deck_limit() {
 		var value = copies_and_deck_limit[card.name];
 		if(!value) {
 			copies_and_deck_limit[card.name] = {
-					nb_copies: card.indeck,
+					nb_copies: card.indeck.cards,
 					deck_limit: card.deck_limit
 			};
 		} else {
-			value.nb_copies += card.indeck;
+			value.nb_copies += card.indeck.cards;
 			value.deck_limit = Math.min(card.deck_limit, value.deck_limit);
 		}
 	})
@@ -546,6 +561,7 @@ deck.get_copies_and_deck_limit = function get_copies_and_deck_limit() {
  * @memberOf deck
  */
 deck.get_problem = function get_problem() {
+	/*
 	// at least 30 others cards
 	if(deck.get_draw_deck_size() < 30) {
 		return 'too_few_cards';
@@ -567,6 +583,7 @@ deck.get_problem = function get_problem() {
 	if(deck.get_invalid_cards().length > 0) {
 		return 'invalid_cards';
 	}
+	*/
 }
 
 deck.get_invalid_cards = function get_invalid_cards() {
@@ -585,6 +602,12 @@ deck.can_include_card = function can_include_card(card) {
 
 	// affiliation card => yes
 	if(card.affiliation_code === affiliation_code) return true;
+
+	// Finn (AW #45) special case
+	if(deck.get_cards(null, {code: '01045'}).length > 0) {
+		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.includes(['vehicle','weapon'], card.subtype_code))
+			return true;
+	}
 
 	// if none above => no
 	return false;

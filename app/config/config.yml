@@ -72,6 +72,9 @@ assetic:
         scssphp:
             formatter: 'Leafo\ScssPhp\Formatter\Compressed'
         jsqueeze: ~
+        handlebars:
+            apply_to: "\.handlebars$"
+            bin: node_modules/handlebars/bin/handlebars
 
 # Doctrine Configuration
 doctrine:

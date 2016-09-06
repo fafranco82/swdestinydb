@@ -379,6 +379,23 @@ ui.on_modal_quantity_change = function on_modal_quantity_change(event) {
 	}, 100);
 }
 
+
+/**
+ * @memberOf ui
+ * @param event
+ */
+ui.on_modal_2nd_die_toggle = function on_modal_2nd_die_toggle(event) {
+	var modal = $('#cardModal');
+	var code =  modal.data('code');
+	var active = $(this).prop('checked');
+	modal.modal('hide');
+	ui.on_2nd_die_change(code, active);
+
+	setTimeout(function () {
+		$('#filter-text').typeahead('val', '').focus();
+	}, 100);
+}
+
 ui.refresh_row = function refresh_row(card_code) {
 	// for each set of divs (1, 2, 3 columns)
 	CardDivs.forEach(function(rows) {
@@ -386,8 +403,8 @@ ui.refresh_row = function refresh_row(card_code) {
 		if(!row) return;
 
 		var card = app.data.cards.findById(card_code);
-		var quantity = card.indeck;
-		var dice = card.dice;
+		var quantity = card.indeck.cards;
+		var dice = card.indeck.dice;
 
 		// rows[card_code] is the card row of our card
 		// for each "quantity switch" on that row
@@ -430,9 +447,15 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
  * @memberOf ui
  */
 ui.on_2nd_die_change = function on_2nd_die_change(card_code, active) {
-	var quantity = app.deck.set_card_2nd_die(card_code, active);
+	var update_all = app.deck.set_card_copies(card_code, 1) || app.deck.set_card_dice(card_code, active ? 2 : 1);
 	ui.refresh_deck();
-	ui.refresh_row(card_code);
+	
+	if(update_all) {
+		ui.refresh_list();
+	}
+	else {
+		ui.refresh_row(card_code);
+	}
 }
 
 /**
@@ -478,7 +501,7 @@ ui.setup_event_handlers = function setup_event_handlers() {
 		$('#cardModal input[type=radio][value=' + num + ']').trigger('change');
 	});
 	$('#cardModal').on('change', 'input[type=radio]', ui.on_modal_quantity_change);
-
+	$('#cardModal').on('change', 'input[type=checkbox]', ui.on_modal_2nd_die_toggle);
 	$('thead').on('click', 'a[data-sort]', ui.on_table_sort_click);
 
 }
@@ -519,7 +542,12 @@ ui.update_list_template = function update_list_template() {
 			'<tr data-code="{{card.code}}"> ' +
 			'    <td>' +
 			'        <div class="btn-group" data-toggle="buttons">' +
-			'        {{{radios}}}' +
+			'        	{{#range 0 card.maxqty.cards inclusive=true}}' +
+			'        	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">' +
+			'        		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>' +
+			'        		{{this}}' +
+			'        	</label>' +
+			'        	{{/range}}' +
 			'        </div>' +
 			'        {{#if second_die}}' +
 			'        <div class="btn-group" data-toggle="buttons">' +
@@ -531,6 +559,9 @@ ui.update_list_template = function update_list_template() {
 			'    </td>' +
 			'    <td> ' +
 			'        <a class="card card-tip" data-code="{{ card.code }}" href="{{ url }}" data-target="#cardModal" data-remote="false" data-toggle="modal">{{ card.name }}</a> ' +
+			'    </td> ' +
+			'    <td> ' +
+			'        {{#if card.has_die}}<span class="icon-die"></span>{{/if}} ' +
 			'    </td> ' +
 			'    <td>' +
 			'        {{#if card.cost}}{{card.cost}}{{/if}}{{#if card.points}}{{card.points}}{{/if}}' +
@@ -587,7 +618,7 @@ ui.build_row = function build_row(card) {
 	for (var i = 0; i <= card.maxqty.cards; i++) {
 		radios += radioTpl({
 			i: i,
-			active: (i == card.indeck ? ' active' : ''),
+			active: (i == card.indeck.cards ? ' active' : ''),
 			card: card
 		});
 	}
@@ -641,7 +672,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 
 		row.find('input[name="qty-' + card.code + '"]').each(
 			function(i, element) {
-				if($(element).val() == card.indeck) {
+				if($(element).val() == card.indeck.cards) {
 					$(element).prop('checked', true).closest('label').addClass('active');
 				} else {
 					$(element).prop('checked', false).closest('label').removeClass('active');
@@ -651,7 +682,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		row.find('input[name="2nd-' + card.code + '"]').each(function(i, element) {
 			// if that switch is NOT the one with the new quantity, uncheck it
 			// else, check it
-			if($(element).val() != card.dice) {
+			if($(element).val() != card.indeck.dice) {
 				$(element).prop('checked', false).closest('label').removeClass('active');
 			} else {
 				$(element).prop('checked', true).closest('label').addClass('active');

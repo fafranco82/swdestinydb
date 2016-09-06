@@ -57,13 +57,18 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable,
 			array_unshift ( $snapshots, $row );
 				
 			// applying variation to create 'next' (older) preversion
-			foreach ( $variation[0] as $code => $qty ) {
-				$preversion[$code]['quantity'] = $preversion[$code]['quantity'] - $qty;
-				if ($preversion[$code] == 0) unset ( $preversion[$code] );
+			foreach ( $variation[0] as $code => $qtys ) {
+                $preversion[$code]['quantity'] = $preversion[$code]['quantity'] - $qtys['quantity'];
+				$preversion[$code]['dice'] = $preversion[$code]['dice'] - $qtys['dice'];
+				if ($preversion[$code]['quantity'] == 0 && $preversion[$code]['dice'] == 0) unset ( $preversion[$code] );
 			}
 			foreach ( $variation[1] as $code => $qtys ) {
-				if (! isset ( $preversion[$code] )) $preversion[$code] = 0;
-				$preversion[$code]['quantity'] = $preversion[$code]['quantity'] + $qty;
+				if (! isset ( $preversion[$code] )) $preversion[$code] = array(
+                    "quantity" => 0,
+                    "dice" => 0
+                );
+                $preversion[$code]['quantity'] = $preversion[$code]['quantity'] + $qtys['quantity'];
+				$preversion[$code]['dice'] = $preversion[$code]['dice'] + $qtys['dice'];
 			}
 			ksort ( $preversion );
 		}
@@ -90,13 +95,18 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable,
 			];
 				
 			// applying variation to postversion
-			foreach ( $variation[0] as $code => $qty ) {
-				if (! isset ( $postversion[$code] )) $postversion[$code] = 0;
-				$postversion[$code]['quantity'] = $postversion[$code]['quantity'] + $qty;
+			foreach ( $variation[0] as $code => $qtys ) {
+				if (! isset ( $postversion[$code] )) $postversion[$code] = array(
+                    "quantity" => 0,
+                    "dice" => 0
+                );;
+                $postversion[$code]['quantity'] = $postversion[$code]['quantity'] + $qtys['quantity'];
+				$postversion[$code]['dice'] = $postversion[$code]['dice'] + $qtys['dice'];
 			}
-			foreach ( $variation[1] as $code => $qty ) {
-				$postversion[$code]['quantity'] = $postversion[$code]['quantity'] - $qty;
-				if ($postversion[$code] == 0) unset ( $postversion[$code] );
+			foreach ( $variation[1] as $code => $qtys ) {
+                $postversion[$code]['quantity'] = $postversion[$code]['quantity'] - $qtys['quantity'];
+				$postversion[$code]['dice'] = $postversion[$code]['dice'] - $qtys['dice'];
+				if ($postversion[$code]['quantity'] == 0 && $postversion[$code]['dice'] == 0) unset ( $postversion[$code] );
 			}
 			ksort ( $postversion );
 				

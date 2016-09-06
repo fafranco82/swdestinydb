@@ -9,6 +9,7 @@ use AppBundle\Model\SlotInterface;
 use AppBundle\Model\SlotCollectionDecorator;
 use AppBundle\Entity\Deckslot;
 use Doctrine\Common\Collections\ArrayCollection;
+use Functional as F;
 
 /**
  * 
@@ -101,8 +102,51 @@ class Diff
     	
     	return new SlotCollectionDecorator($intersection);
     }
+
+    public function t_diffContents($decks)
+    {
+        $intersect = array();
+        $restDecks = $decks;
+        $firstDeck = array_shift($restDecks);
+        
+        foreach($firstDeck as $code => $qtys)
+        {
+            if(F\every($restDecks, function($deck) use ($code) { return array_key_exists($code, $deck); })) {
+                $intersect[$code] = array(
+                    "quantity" => F\minimum(F\map($decks, function($deck) use($code) { return $deck[$code]["quantity"]; })),
+                    "dice" => F\minimum(F\map($decks, function($deck) use($code) { return $deck[$code]["dice"]; }))
+                );
+
+                forEach($decks as &$deck)
+                {
+                    $deck[$code] = array(
+                        "quantity" => $deck[$code]["quantity"] - $intersect[$code]["quantity"],
+                        "dice" => $deck[$code]["dice"] - $intersect[$code]["dice"]
+                    );
+                }
+            }
+        }
+
+        forEach($decks as &$deck)
+        {
+            forEach($deck as $code => $qtys)
+            {
+                if($qtys["quantity"]==0 && $qtys["dice"]==0)
+                    unset($deck[$code]);
+            }
+            ksort($deck);
+        }
+        forEach($intersect as $code => $qtys)
+        {
+            if($qtys["quantity"]==0 && $qtys["dice"]==0)
+                unset($intersect[$code]);
+        }
+        ksort($intersect);
+
+        return array($decks, $intersect);
+    }
     
-    public function diffContents($decks)
+    public function diffContentsProp($decks, $prop)
     {
 
         // n flat lists of the cards of each decklist
@@ -110,7 +154,7 @@ class Diff
         foreach($decks as $deck) {
             $cards = [];
             foreach($deck as $code => $qtys) {
-                $qty = $qtys['quantity'];
+                $qty = $qtys[$prop];
                 for($i=0; $i<$qty; $i++) $cards[] = $code;
             }
             $ensembles[] = $cards;
@@ -144,5 +188,10 @@ class Diff
         $intersect = array_count_values($conjunction);
         
         return array($listings, $intersect);
+    }
+
+    public function diffContents($decks)
+    {
+        return $this->t_diffContents($decks);
     }
 }

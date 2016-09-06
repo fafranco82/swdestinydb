@@ -156,6 +156,7 @@ decks:
     firstversion: First version
     unsaved: unsaved
     revert: Revert
+    autosave: Autosave...
   smartfilter:
     title: Smart filter syntax
     example: "Example: <tt>m:1 s>3</tt> shows all characters with a <span class='icon-military'></span> icon and a STR greater than 3"
@@ -270,6 +271,7 @@ card:
     health: Health
     illustrator: Illustrator
     die: Die
+    has_die: Has die
     quantity: Quantity
     medium:
       points_cost: P./C.

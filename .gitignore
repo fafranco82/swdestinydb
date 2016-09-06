@@ -11,8 +11,10 @@
 /vendor/
 /web/bundles/
 tags
+/web/assets
 /web/js/
 /web/css/
+/node_modules
 .externalToolBuilders/
 .settings/
 .buildpath

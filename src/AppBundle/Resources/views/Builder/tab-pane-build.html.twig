@@ -69,12 +69,41 @@
 		<table class="table table-condensed table-hover" style="margin-bottom:10px">
 			<thead>
 				<tr>
-					<th style="min-width:85px"><a href="#" data-sort="indeck">{{ 'card.info.quantity' | trans}}</a></th>
-					<th><a href="#" data-sort="name">{{ 'card.info.name' | trans}}</a></th>
-					<th class="cost"><a href="#" data-sort="points|cost" title="{{ 'card.info.points_cost' | trans}}">{{ 'card.info.short.points_cost' | trans}}</a></th>
-					<th class="health"><a href="#" data-sort="health" title="{{ 'card.info.health' | trans}}">{{ 'card.info.short.health' | trans}}</a></th>
-					<th class="type"><a href="#" data-sort="type_code" title="{{ 'card.info.type' | trans}}">{{ 'card.info.short.type' | trans}}</a></th>
-					<th class="faction"><a href="#" data-sort="faction_code" title="{{ 'card.info.faction' | trans}}">{{ 'card.info.short.faction' | trans}}</a></th>
+					<th style="min-width:85px">
+						<a href="#" data-sort="indeck">
+							{{ 'card.info.quantity' | trans}}
+						</a>
+					</th>
+					<th>
+						<a href="#" data-sort="name">
+							{{ 'card.info.name' | trans}}
+						</a>
+					</th>
+					<th>
+						<a href="#" data-sort="has_die" title="{{ 'card.info.has_die' | trans }}">
+							<span class="icon-die"></span>
+						</a>
+					</th>
+					<th class="cost">
+						<a href="#" data-sort="points|cost" title="{{ 'card.info.points_cost' | trans}}">
+							{{ 'card.info.short.points_cost' | trans}}
+						</a>
+					</th>
+					<th class="health">
+						<a href="#" data-sort="health" title="{{ 'card.info.health' | trans}}">
+							{{ 'card.info.short.health' | trans}}
+						</a>
+					</th>
+					<th class="type">
+						<a href="#" data-sort="type_code" title="{{ 'card.info.type' | trans}}">
+							{{ 'card.info.short.type' | trans}}
+						</a>
+					</th>
+					<th class="faction">
+						<a href="#" data-sort="faction_code" title="{{ 'card.info.faction' | trans}}">
+							{{ 'card.info.short.faction' | trans}}
+						</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody id="collection-table" class="collection"></tbody>

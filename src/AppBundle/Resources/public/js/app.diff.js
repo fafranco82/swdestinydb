@@ -1,37 +1,11 @@
 (function app_diff(diff, $) {
 
-// takes an array of strings and returns an object where each string of the array
-// is a key of the object and the value is the number of occurences of the string in the array
-function array_count(list) {
-	var obj = {};
-	var list = list.sort();
-	for(var i=0; i<list.length; ) {
-		for(var j=i+1; j<list.length; j++) {
-			if(list[i] !== list[j]) break;
-		}
-		obj[list[i]] = (j-i);
-		i=j;
-	}
-	return obj;
-}
-
-/**
- * contents is an array of content
- * content is a hash of pairs code-qty
- * @memberOf diff
- */
-diff.compute_simple = function compute_simple(contents) {
-	
-	var ensembles = [];
-	for(var decknum=0; decknum<contents.length; decknum++) {
-		var cards = [];
-		$.each(contents[decknum], function (code, qty) {
-			for(var copynum=0; copynum<qty; copynum++) {
-				cards.push(code);
-			}
-		});
-		ensembles.push(cards);
-	}
+diff.compute_property = function compute_property(contents, prop) {
+	var ensembles = _.map(contents, function(deck) {
+		return _(deck).map(function(qtys, code) {
+			return _.times(qtys[prop], _.constant(code));
+		}).flatten().value();
+	});
 	
 	var conjunction = [];
 	for(var i=0; i<ensembles[0].length; i++) {
@@ -51,13 +25,44 @@ diff.compute_simple = function compute_simple(contents) {
 		}
 	}
 	
-	var listings = [];
-	for(var i=0; i<ensembles.length; i++) {
-		listings[i] = array_count(ensembles[i]);
-	}
-	var intersect = array_count(conjunction);
+	var listings = _(ensembles).map(function(e) {
+		return _(e).countBy().mapValues(function(v) { 
+			var result = {};
+			result[prop] = v;
+			return result;
+		}).value();
+	}).value();
+	var intersect = _(conjunction).countBy().mapValues(function(v) { 
+			var result = {};
+			result[prop] = v;
+			return result;
+		}).value();
 	
 	return [ listings, intersect ];
+};
+
+var merge_results = function merge_results(cards, dice) {
+	return _(cards).mapValues(_.partial(_.set, _, 'dice', 0)).merge(dice).value();
+}
+/**
+ * contents is an array of content
+ * content is a hash of pairs code-qtys
+ * qtys is a object with cards and dice quantities
+ * @memberOf diff
+ */
+diff.compute_simple = function compute_simple(contents) {
+	var diff_cards = diff.compute_property(contents, 'quantity');
+	var diff_dice = diff.compute_property(contents, 'dice');
+
+	return _.map(_.zip(diff_cards, diff_dice), function(elem, i) {
+		if(i==0) {
+			return _.map(_.zip(elem[0], elem[1]), function(elem2) {
+				return merge_results(elem2[0], elem2[1]);
+			});
+		} else {
+			return merge_results(elem[0], elem[1]);
+		}
+	});
 };
 
 })(app.diff = {}, jQuery);

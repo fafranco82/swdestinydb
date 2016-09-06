@@ -1,0 +1,22 @@
+{
+  "name": "swdestinydb",
+  "version": "1.0.0",
+  "description": "SWDestinyDB =======",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fafranco82/swdestinydb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fafranco82/swdestinydb/issues"
+  },
+  "homepage": "https://github.com/fafranco82/swdestinydb#readme",
+  "dependencies": {
+    "handlebars": "^4.0.5"
+  }
+}
