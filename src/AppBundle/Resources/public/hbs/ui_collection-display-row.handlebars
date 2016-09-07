@@ -1,0 +1,53 @@
+<tr>
+	<td data-th="Name">
+	    <span class="icon icon-{{card.type_code}} fg-{{card.faction_code}}"></span>
+		<a href="{{card.url}}" class="card-tip" data-code="{{card.code}}">
+			{{card.name}}
+			{{#if card.subtitle}}<span class="card-subtitle hidden-xs">- {{card.subtitle}}</span>{{/if}}
+		</a>
+	</td>
+	<td class="text-center td-spinner">
+		<div class="btn-group btn-group-xs btn-spinner" data-spin="cards">
+			<button class="btn btn-danger btn-spin">-</button>
+			<button class="btn btn-default btn-value">
+				<span class="value">{{card.owned.cards}}</span>
+				<span class="icon-cards"></span>
+			</button>
+			<button class="btn btn-success btn-spin">+</button>
+		</div>
+	</td>
+	<td class="text-center td-spinner">
+       {{#if card.has_die}} 
+		<div class="btn-group btn-group-xs btn-spinner" data-spin="dice">
+			<button class="btn btn-danger btn-spin">-</button>
+			<button class="btn btn-default btn-value">
+				<span class="value">{{card.owned.dice}}</span>
+				<span class="icon-die"></span>
+			</button>
+			<button class="btn btn-success btn-spin">+</button>
+		</div>
+       {{else}} &nbsp; 
+       {{/if}} 
+	</td>
+	<td class="hidden-sm hidden-xs" data-th="Affiliation">{{card.affiliation_name}}</td>
+	<td class="hidden-sm hidden-xs" data-th="Points/Cost">{{ternary (compare card.type_code "character") card.points card.cost}}</td>
+	<td class="hidden-sm hidden-xs" data-th="Health">{{card.health}}</td>
+	<td class="hidden-sm hidden-xs" data-th="Type">{{card.type_name}}</td>
+	<td class="hidden-xs" data-th="Rarity">{{card.rarity_name}}</td>
+	{{#if card.has_die}}
+	{{#each card.sides}}
+	{{#with (dieside this)}}
+	<td class="text-center die-face visible-lg" data-th="Die">
+		{{#if modifier}}+{{/if}}{{#in code "-" "Sp"}}{{else}}{{value}}{{/in}}<span class="icon icon-{{icon}}"></span>{{#if cost}}/{{cost}}{{/if}}
+	</td>
+	{{/with}}
+	{{/each}}
+	{{else}}
+	<td colspan="6" data-th="Die" class="visible-lg">&nbsp;</td>
+	{{/if}}
+	<td data-th="Set">
+		<span class="hidden-xs">{{card.set_name}}</span>
+		<span class="visible-xs-inline" title="{{card.set_name}}" data-toggle="tooltip">{{card.set_code}}</span>
+		{{card.position}}
+	</td>
+</tr>

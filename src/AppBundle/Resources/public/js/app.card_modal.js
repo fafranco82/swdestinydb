@@ -19,73 +19,9 @@ card_modal.typeahead = function typeahead(event, card) {
 	$('#cardModal').modal('show');
 };
 
-var NameTemplate = Handlebars.compile(
-	'{{#if card.is_unique}}<span class="icon-unique"></span>{{/if}}' +
-	'{{card.name}}' +
-	'{{#if card.subtitle}}' +
-	' - <span class="card-subtitle">{{card.subtitle}}</span>' +
-	'{{/if}}'
-);
-
-var InfoTemplate = Handlebars.compile(
-	'<div class="card-faction">' +
-	'	<span class="card-affiliation">{{card.affiliation_name}}</span>.' +
-	'	<span class="card-faction">{{card.faction_name}}</span>.' +
-	'	<span class="card-rarity">{{card.rarity_name}}</span>.' +
-	'</div>' +
-	'<div class="card-info">' +
-	'	<span class="card-type">{{ card.type_name }}{{#if card.subtype_code }} - {{card.subtype_name}}{{/if}}.</span>' +
-	'	<span class="card-props">' +
-	'		{{#compare card.type_code "character"}}' +
-	'			{{trans "card.info.points"}}: {{card.points}}.' +
-	'		{{/compare}}' +
-	'		{{#in card.type_code "upgrade" "support" "event"}}' +
-	'			{{trans "card.info.cost"}}: {{int_or_x card.cost}}.' +
-	'		{{/in}}' +
-	'		{{#compare card.type_code "character"}}' +
-	'			{{trans "card.info.health"}}: {{int_or_x card.health}}.' +
-	'		{{/compare}}' +
-	'	</span>' +
-	'</div>' +
-	'{{#if card.has_die}}' +
-	'<div class="card-die">' +
-	'  {{#each card.sides}}' +
-	'  {{#with (dieside this)}}' +
-	'  <div class="card-die-face border-{{@root.card.faction_code}} card-die-face-{{icon}}{{#unless cost}} card-die-face-nocost{{/unless}}{{#if modifier}} card-die-face-modifier{{/if}}">' +
-	'    <div class="card-die-face-content">' +
-	'      <span class="card-die-face-value">{{#if modifier}}+{{/if}}{{value}}</span><span class="icon-{{icon}}"></span>' +
-	'    </div>' +
-	'    {{#if cost}}' +
-	'    <div class="card-die-face-cost">' +
-	'      {{cost}}<span class="icon-resource"></span>' +
-	'    </div>' +
-	'    {{/if}}' +
-	'  </div>' +
-	'  {{/with}}' +
-	'  {{/each}}' +
-	'</div>' +
-	'{{/if}}' +
-	'<div class="card-text border-{{card.faction_code}}">{{text card.text}}</div>' +
-	'<div class="card-set">{{card.set_name}} #{{card.position}}.</div>'
-);
-
-var OptionsTemplate = Handlebars.compile(
-	'<div class="btn-group" data-toggle="buttons">' +
-	'	{{#range 0 card.maxqty.cards inclusive=true}}' +
-	'	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">' +
-	'		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>' +
-	'		{{this}}' +
-	'	</label>' +
-	'	{{/range}}' +
-	'</div>' +
-	'{{#if second_die}} ' +
-	'<div class="btn-group" data-toggle="buttons">' +
-	'	<label class="btn btn-default btn-xs">' +
-	'		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>' +
-	'	</label>' +
-	'</div>' +
-	'{{/if}}'
-);
+var NameTemplate = Handlebars.templates['card_modal-name'];
+var InfoTemplate = Handlebars.templates['card_modal-info'];
+var OptionsTemplate = Handlebars.templates['card_modal-options'];
 
 function fill_modal (code) {
 	var card = app.data.cards.findById(code),

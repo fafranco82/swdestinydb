@@ -98,14 +98,7 @@ function get_examples(codes, key) {
  */
 ui.build_affiliation_selector = function build_affiliation_selector() {
 	$('[data-filter=affiliation_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.affiliation_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<strong>{{example.affiliation_name}}</strong>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_deckedit-affiliations'];
 	var affiliation_codes = app.data.cards.distinct('affiliation_code').sort();
 	var neutral_index = affiliation_codes.indexOf('neutral');
 	affiliation_codes.splice(neutral_index, 1);
@@ -121,14 +114,7 @@ ui.build_affiliation_selector = function build_affiliation_selector() {
  */
 ui.build_faction_selector = function build_faction_selector() {
 	$('[data-filter=faction_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm fg-{{code}}" data-code="{{code}}" title="{{example.faction_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<span class="bg-{{code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_deckedit-factions'];
 	var faction_codes = app.data.cards.distinct('faction_code').sort();
 	var gray_index = faction_codes.indexOf('gray');
 	faction_codes.splice(gray_index, 1);
@@ -145,14 +131,7 @@ ui.build_faction_selector = function build_faction_selector() {
  */
 ui.build_type_selector = function build_type_selector() {
 	$('[data-filter=type_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.type_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<span class="icon-{{code}}"></span>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_deckedit-types'];
 
 	$('[data-filter=type_code]').html(
 		tpl({codes: get_examples(['battlefield','character','upgrade','support', 'event'], 'type_code')})
@@ -165,14 +144,7 @@ ui.build_type_selector = function build_type_selector() {
  */
 ui.build_rarity_selector = function build_rarity_selector() {
 	$('[data-filter=rarity_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm fg-rarity-{{code}}" data-code="{{code}}" title="{{example.rarity_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<span class="bg-rarity-{{code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_deckedit-rarities'];
 	$('[data-filter=rarity_code]').html(
 		tpl({codes: get_examples(['S','C', 'U', 'R', 'L'], 'rarity_code')})
 	).button().find('label').tooltip({container: 'body'});
@@ -536,74 +508,7 @@ ui.get_filters = function get_filters() {
  * @memberOf ui
  */
 ui.update_list_template = function update_list_template() {
-	switch (Config['display-column']) {
-	case 1:
-		DisplayColumnsTpl = Handlebars.compile(
-			'<tr data-code="{{card.code}}"> ' +
-			'    <td>' +
-			'        <div class="btn-group" data-toggle="buttons">' +
-			'        	{{#range 0 card.maxqty.cards inclusive=true}}' +
-			'        	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">' +
-			'        		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>' +
-			'        		{{this}}' +
-			'        	</label>' +
-			'        	{{/range}}' +
-			'        </div>' +
-			'        {{#if second_die}}' +
-			'        <div class="btn-group" data-toggle="buttons">' +
-			'        	<label class="btn btn-default btn-xs">' +
-			'        		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>' +
-			'        	</label>' +
-			'        </div>' +
-			'        {{/if}}' +
-			'    </td>' +
-			'    <td> ' +
-			'        <a class="card card-tip" data-code="{{ card.code }}" href="{{ url }}" data-target="#cardModal" data-remote="false" data-toggle="modal">{{ card.name }}</a> ' +
-			'    </td> ' +
-			'    <td> ' +
-			'        {{#if card.has_die}}<span class="icon-die"></span>{{/if}} ' +
-			'    </td> ' +
-			'    <td>' +
-			'        {{#if card.cost}}{{card.cost}}{{/if}}{{#if card.points}}{{card.points}}{{/if}}' +
-			'    </td>' +
-			'    <td>' +
-			'        {{#if card.health}}{{card.health}}{{/if}}' +
-			'    </td>' +
-			'    <td>' +
-			'        <span class="icon-{{card.type_code}}"></span>' +
-			'    </td>' +
-			'    <td>' +
-			'        <span class="bg-{{card.faction_code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
-			'    </td>' +
-			'</tr> '
-		);
-		break;
-	case 2:
-		DisplayColumnsTpl = _.template(
-			'<div class="col-sm-6">'
-				+ '<div class="media">'
-					+ '<div class="media-left"><img class="media-object" src="/bundles/cards/<%= card.code %>.png" alt="<%= card.name %>"></div>'
-					+ '<div class="media-body">'
-						+ '<h4 class="media-heading"><a class="card card-tip" data-code="<%= card.code %>" href="<%= url %>" data-target="#cardModal" data-remote="false" data-toggle="modal"><%= card.name %></a></h4>'
-						+ '<div class="btn-group" data-toggle="buttons"><%= radios %></div>'
-					+ '</div>'
-				+ '</div>'
-			+ '</div>'
-		);
-		break;
-	case 3:
-		DisplayColumnsTpl = _.template(
-			'<div class="col-sm-4">'
-				+ '<div class="media">'
-					+ '<div class="media-left"><img class="media-object" src="/bundles/cards/<%= card.code %>.png" alt="<%= card.name %>"></div>'
-					+ '<div class="media-body">'
-						+ '<h5 class="media-heading"><a class="card card-tip" data-code="<%= card.code %>" href="<%= url %>" data-target="#cardModal" data-remote="false" data-toggle="modal"><%= card.name %></a></h5>'
-						+ '<div class="btn-group" data-toggle="buttons"><%= radios %></div>'
-					+ '</div>'
-				+ '</div>'
-			+ '</div>'
-		);
-	}
+	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-'+Config['display-column']+'columns'];
 }
 
 /**

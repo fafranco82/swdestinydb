@@ -93,14 +93,7 @@ function get_examples(codes, key) {
  */
 ui.build_affiliation_selector = function build_affiliation_selector() {
 	$('[data-filter=affiliation_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.affiliation_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<strong>{{example.affiliation_name}}</strong>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_collection-affiliations'];
 	var affiliation_codes = app.data.cards.distinct('affiliation_code').sort();
 	var neutral_index = affiliation_codes.indexOf('neutral');
 	affiliation_codes.splice(neutral_index, 1);
@@ -116,14 +109,7 @@ ui.build_affiliation_selector = function build_affiliation_selector() {
  */
 ui.build_faction_selector = function build_faction_selector() {
 	$('[data-filter=faction_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm fg-{{code}}" data-code="{{code}}" title="{{example.faction_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<strong>{{example.faction_name}}</strong>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_collection-factions'];
 	var faction_codes = app.data.cards.distinct('faction_code').sort();
 	var gray_index = faction_codes.indexOf('gray');
 	faction_codes.splice(gray_index, 1);
@@ -140,14 +126,7 @@ ui.build_faction_selector = function build_faction_selector() {
  */
 ui.build_type_selector = function build_type_selector() {
 	$('[data-filter=type_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm" data-code="{{code}}" title="{{example.type_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<span class="icon-{{code}}"></span>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_collection-types'];
 
 	$('[data-filter=type_code]').html(
 		tpl({codes: get_examples(['battlefield','character','upgrade','support', 'event'], 'type_code')})
@@ -160,14 +139,7 @@ ui.build_type_selector = function build_type_selector() {
  */
 ui.build_rarity_selector = function build_rarity_selector() {
 	$('[data-filter=rarity_code]').empty();
-	var tpl = Handlebars.compile(
-		'{{#each codes}}' +
-		'<label class="btn btn-default btn-sm fg-rarity-{{code}}" data-code="{{code}}" title="{{example.rarity_name}}">' +
-		'	<input type="checkbox" name="{{code}}">' +
-		'	<span class="icon-collectors"></span>' +
-		'</label>' +
-		'{{/each}}'
-	);
+	var tpl = Handlebars.templates['ui_collection-rarities'];
 	$('[data-filter=rarity_code]').html(
 		tpl({codes: get_examples(['S','C', 'U', 'R', 'L'], 'rarity_code')})
 	).button().find('label').tooltip({container: 'body'});
@@ -449,61 +421,7 @@ ui.get_collection_changes = function get_collection_changes() {
  * builds a row for the list of available cards
  * @memberOf ui
  */
-var DisplayColumnsTpl = Handlebars.compile(
-'<tr>' +
-'	<td data-th="Name">' +
-'	    <span class="icon icon-{{card.type_code}} fg-{{card.faction_code}}"></span>' +
-'		<a href="{{card.url}}" class="card-tip" data-code="{{card.code}}">' +
-'			{{card.name}}' +
-'			{{#if card.subtitle}}<span class="card-subtitle hidden-xs">- {{card.subtitle}}</span>{{/if}}' +
-'		</a>' +
-'	</td>' +
-'	<td class="text-center td-spinner">' +
-'		<div class="btn-group btn-group-xs btn-spinner" data-spin="cards">' +
-'			<button class="btn btn-danger btn-spin">-</button>' +
-'			<button class="btn btn-default btn-value">' +
-'				<span class="value">{{card.owned.cards}}</span>' +
-'				<span class="icon-cards"></span>' +
-'			</button>' +
-'			<button class="btn btn-success btn-spin">+</button>' +
-'		</div>' +
-'	</td>' +
-'	<td class="text-center td-spinner">' +
-'       {{#if card.has_die}} ' +
-'		<div class="btn-group btn-group-xs btn-spinner" data-spin="dice">' +
-'			<button class="btn btn-danger btn-spin">-</button>' +
-'			<button class="btn btn-default btn-value">' +
-'				<span class="value">{{card.owned.dice}}</span>' +
-'				<span class="icon-die"></span>' +
-'			</button>' +
-'			<button class="btn btn-success btn-spin">+</button>' +
-'		</div>' +
-'       {{else}} &nbsp; ' +
-'       {{/if}} ' +
-'	</td>' +
-'	<td class="hidden-sm hidden-xs" data-th="Affiliation">{{card.affiliation_name}}</td>' +
-'	<td class="hidden-sm hidden-xs" data-th="Points/Cost">{{ternary (compare card.type_code "character") card.points card.cost}}</td>' +
-'	<td class="hidden-sm hidden-xs" data-th="Health">{{card.health}}</td>' +
-'	<td class="hidden-sm hidden-xs" data-th="Type">{{card.type_name}}</td>' +
-'	<td class="hidden-xs" data-th="Rarity">{{card.rarity_name}}</td>' +
-'	{{#if card.has_die}}' +
-'	{{#each card.sides}}' +
-'	{{#with (dieside this)}}' +
-'	<td class="text-center die-face visible-lg" data-th="Die">' +
-'		{{#if modifier}}+{{/if}}{{#in code "-" "Sp"}}{{else}}{{value}}{{/in}}<span class="icon icon-{{icon}}"></span>{{#if cost}}/{{cost}}{{/if}}' +
-'	</td>' +
-'	{{/with}}' +
-'	{{/each}}' +
-'	{{else}}' +
-'	<td colspan="6" data-th="Die" class="visible-lg">&nbsp;</td>' +
-'	{{/if}}' +
-'	<td data-th="Set">' +
-'		<span class="hidden-xs">{{card.set_name}}</span>' +
-'		<span class="visible-xs-inline" title="{{card.set_name}}" data-toggle="tooltip">{{card.set_code}}</span>' +
-'		{{card.position}}' +
-'	</td>' +
-'</tr>'
-);
+var DisplayColumnsTpl = Handlebars.templates['ui_collection-display-row'];
 ui.build_row = function build_row(card) {
 	var html = $(DisplayColumnsTpl({
 		url: Routing.generate('cards_zoom', {card_code:card.code}),

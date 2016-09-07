@@ -1,0 +1,87 @@
+<div class="deck-content">
+	<div class="row">
+		<div class="col-sm-6">
+			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>
+			<div>
+				{{trans "decks.edit.meta.characters"}}: 
+				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},
+				{{transChoice "decks.edit.meta.dice" (deck.get_character_dice) count=(deck.get_character_dice)}}
+			</div>
+			<div>
+				{{trans "decks.edit.meta.drawdeck"}}: 
+				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},
+				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}
+			</div>
+			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>
+			{{#if deck.get_problem}}
+			<div class="text-danger small">
+				<span class="fa fa-exclamation-triangle"></span>{{trans (concat "decks.problems." (deck.get_problem))}}
+			</div>
+			{{/if}}
+		</div>
+		<div class="col-sm-6">		
+			{{#with deck.get_battlefield}}
+			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>
+				<div class="deck-battlefield">
+					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+					<div>
+						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+							{{name}}
+						</a>
+					</div>
+				</div>
+			{{/with}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div>
+				{{#with (deck.get_character_row_data)}}
+				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				<div class="character-deck-list">
+					{{#each this}}
+					<div class="deck-character">
+						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+						<div class="character-name">
+							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+								{{name}}
+							</a>
+						</div>
+						<div class="character-dice">
+							{{indeck.dice}} <span class="icon-die"></span>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				{{/with}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		{{#*inline "section"}}
+			<div>
+				{{#with (cards key value)}}
+				<h5><span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				{{#each this}}
+				<div>
+					x{{indeck.cards}}
+					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>
+					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+						{{name}}
+					</a>
+                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+				</div>
+				{{/each}}
+				{{/with}}
+			</div>
+		{{/inline}}
+		<div class="col-sm-6 col-print-6">
+			{{> section key="type_code" value="upgrade"}}
+		</div>
+		<div class="col-sm-6 col-print-6">
+			{{> section key="type_code" value="support"}}
+			{{> section key="type_code" value="event"}}
+		</div>
+	</div>
+</div>

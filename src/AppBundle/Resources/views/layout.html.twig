@@ -147,7 +147,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.7/highcharts.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/js/bootstrap-markdown.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
     {% javascripts 
       '@AppBundle/Resources/public/js/bootstrap-markdown.es.js'
       '@AppBundle/Resources/public/js/handlebars-helpers.js' %}
@@ -176,17 +176,17 @@
 		{% include 'AppBundle:Default:google-analytics.html.twig' %}
 	{% endif %}
   #}
-
-  {% javascripts output='assets/my-handlebars-templates.js'
-    '@AppBundle/Resources/public/hbs/*.handlebars'
-     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>  
+{#
+  {% javascripts output="js/templates.js"
+    
+    %}
+    <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
-  <script>
-  console.log(Handlebars.templates.test({nombre: 'Paco'}));
-  </script>
+  #}
 
-	{% javascripts filter="?jsqueeze" output="js/app.js"
+  {% javascripts filter="?jsqueeze" output="js/app.js"
+    '@AppBundle/Resources/public/hbs/*.handlebars'
+    '@AppBundle/Resources/public/js/register-partials.js'
     '@AppBundle/Resources/public/js/bootstrap.js'
 		'@AppBundle/Resources/public/js/fdb-all.min.js'
     '@AppBundle/Resources/public/js/jquery.toc.min.js'

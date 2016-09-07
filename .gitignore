@@ -11,7 +11,7 @@
 /vendor/
 /web/bundles/
 tags
-/web/assets
+/wen/assets/
 /web/js/
 /web/css/
 /node_modules

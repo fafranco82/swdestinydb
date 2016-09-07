@@ -9,9 +9,7 @@ var date_creation,
 	affiliation_code,
 	affiliation_name,
 	unsaved,
-	user_id,
-	layouts = {},
-	layout_data = {};
+	user_id;
 
 Handlebars.registerHelper('cards', function(key, value, opt) {
     var query=[]; query[key] = value;
@@ -22,103 +20,12 @@ Handlebars.registerHelper('nb_cards', function(cards) {
     return app.deck.get_nb_cards(cards);
 });
 
-var Template = Handlebars.compile(
-	'<div class="deck-content">' +
-	'	<div class="row">' +
-	'		<div class="col-sm-6">' +
-	'			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>' +
-	'			<div>' +
-	'				{{trans "decks.edit.meta.characters"}}: ' +
-	'				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},' +
-	'				{{transChoice "decks.edit.meta.dice" (deck.get_character_dice) count=(deck.get_character_dice)}}' +
-	'			</div>' +
-	'			<div>' +
-	'				{{trans "decks.edit.meta.drawdeck"}}: ' +
-	'				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},' +
-	'				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}' +
-	'			</div>' +
-	'			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>' +
-	'			{{#if deck.get_problem}}' +
-	'			<div class="text-danger small">' +
-	'				<span class="fa fa-exclamation-triangle"></span>{{trans (concat "decks.problems." (deck.get_problem))}}' +
-	'			</div>' +
-	'			{{/if}}' +
-	'		</div>' +
-	'		<div class="col-sm-6">		' +
-	'			{{#with deck.get_battlefield}}' +
-	'			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>' +
-	'				<div class="deck-battlefield">' +
-	'					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-	'					<div>' +
-	'						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-	'							{{name}}' +
-	'						</a>' +
-	'					</div>' +
-	'				</div>' +
-	'			{{/with}}' +
-	'		</div>' +
-	'	</div>' +
-	'	<div class="row">' +
-	'		<div class="col-sm-12">' +
-	'			<div>' +
-	'				{{#with (deck.get_character_row_data)}}' +
-	'				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
-	'				<div class="character-deck-list">' +
-	'					{{#each this}}' +
-	'					<div class="deck-character">' +
-	'						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url(\'{{imagesrc}}\')"></div>' +
-	'						<div class="character-name">' +
-	'							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>' +
-	'							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-	'								{{name}}' +
-	'							</a>' +
-	'						</div>' +
-	'						<div class="character-dice">' +
-	'							{{indeck.dice}} <span class="icon-die"></span>' +
-	'						</div>' +
-	'					</div>' +
-	'					{{/each}}' +
-	'				</div>' +
-	'				{{/with}}' +
-	'			</div>' +
-	'		</div>' +
-	'	</div>' +
-	'	<div class="row">' +
-	'		{{#*inline "section"}}' +
-	'			<div>' +
-	'				{{#with (cards key value)}}' +
-	'				<h5><span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>' +
-	'				{{#each this}}' +
-	'				<div>' +
-	'					x{{indeck.cards}}' +
-	'					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>' +
-	'					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">' +
-	'						{{name}}' +
-	'					</a>' +
-	'                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}' +
-	'				</div>' +
-	'				{{/each}}' +
-	'				{{/with}}' +
-	'			</div>' +
-	'		{{/inline}}' +
-	'		<div class="col-sm-6 col-print-6">' +
-	'			{{> section key="type_code" value="upgrade"}}' +
-	'		</div>' +
-	'		<div class="col-sm-6 col-print-6">' +
-	'			{{> section key="type_code" value="support"}}' +
-	'			{{> section key="type_code" value="event"}}' +
-	'		</div>' +
-	'	</div>' +
-	'</div>'
-);
+
 
 /*
- * Templates for the different deck layouts, see deck.get_layout_data
+ * Templates for the deck layout
  */
-layouts[1] = _.template('<div class="deck-content"><%= meta %><%= plots %><%= characters %><%= attachments %><%= locations %><%= events %></div>');
-//layouts[2] = _.template('<div class="deck-content"><div class="row"><div class="col-sm-6 col-print-6"><%= meta %></div><div class="col-sm-6 col-print-6"><%= plots %></div></div><div class="row"><div class="col-sm-6 col-print-6"><%= characters %></div><div class="col-sm-6 col-print-6"><%= attachments %><%= locations %><%= events %></div></div></div>');
-layouts[2] = _.template('<div class="deck-content"><div class="row"><div class="col-sm-6 col-print-6"><%= meta %></div><div class="col-sm-6 col-print-6"></div></div><div class="row"><div class="col-sm-6 col-print-6"></div><div class="col-sm-6 col-print-6"></div></div></div>');
-//layouts[3] = _.template('<div class="deck-content"><div class="row"><div class="col-sm-4"><%= meta %><%= plots %></div><div class="col-sm-4"><%= characters %></div><div class="col-sm-4"><%= attachments %><%= locations %><%= events %></div></div></div>');
+var LayoutTemplate = Handlebars.templates['deck-layout-standard'];
 
 /**
  * @memberOf deck
@@ -361,9 +268,7 @@ deck.display = function display(container, options) {
 	
 	options = _.extend({sort: 'type', cols: 2}, options);
 
-	//var layout_data = deck.get_layout_data(options);
-	//var deck_content = layouts[options.cols](layout_data);
-	var deck_content = Template({
+	var deck_content = LayoutTemplate({
 		deck: this,
 		sets: _.map(deck.get_included_sets(), 'name').join(', ')
 	});
@@ -373,65 +278,6 @@ deck.display = function display(container, options) {
 		.empty();
 
 	$(container).append(deck_content);
-}
-
-deck.get_layout_data = function get_layout_data(options) {
-	
-	var data = {
-			images: '',
-			meta: '',
-			characters: '',
-			upgrades: '',
-			supports: '',
-			events: ''
-	};
-	
-	var problem = deck.get_problem();
-
-	//deck.update_layout_section(data, 'images', $('<div style="margin-bottom:10px"><img src="/bundles/app/images/factions/'+deck.get_faction_code()+'.png" class="img-responsive">'));
-
-	deck.update_layout_section(data, 'meta', $('<h4 style="font-weight:bold">'+affiliation_name+'</h4>'));
-	deck.update_layout_section(data, 'meta', $(Handlebars.compile('<div>{{drawdeck}}: {{cards}}, {{dice}}</div>')({
-		drawdeck: Translator.trans('decks.edit.meta.drawdeck'),
-		cards: Translator.transChoice('decks.edit.meta.cards', deck.get_draw_deck_size(), {count: deck.get_draw_deck_size()}),
-		dice: Translator.transChoice('decks.edit.meta.dice', deck.get_draw_deck_dice(), {count: deck.get_draw_deck_dice()})
-	})).addClass(deck.get_draw_deck_size() < 30 ? 'text-danger': ''));
-	var sets = _.map(deck.get_included_sets(), function (set) { return set.name+(set.quantity > 1 ? ' ('+set.quantity+')' : ''); }).join(', ');
-	deck.update_layout_section(data, 'meta', $('<div>'+Translator.trans('decks.edit.meta.sets', {"sets": sets})+'</div>'));
-	if(problem) {
-		deck.update_layout_section(data, 'meta', $('<div class="text-danger small"><span class="fa fa-exclamation-triangle"></span> '+problem_labels[problem]+'</div>'));
-	}
-
-	/*
-	deck.update_layout_section(data, 'plots', deck.get_layout_data_one_section('type_code', 'plot', 'type_name'));
-	deck.update_layout_section(data, 'characters', deck.get_layout_data_one_section('type_code', 'character', 'type_name'));
-	deck.update_layout_section(data, 'attachments', deck.get_layout_data_one_section('type_code', 'attachment', 'type_name'));
-	deck.update_layout_section(data, 'locations', deck.get_layout_data_one_section('type_code', 'location', 'type_name'));
-	deck.update_layout_section(data, 'events', deck.get_layout_data_one_section('type_code', 'event', 'type_name'));
-	*/
-	
-	return data;
-}
-
-deck.update_layout_section = function update_layout_section(data, section, element) {
-	data[section] = data[section] + element[0].outerHTML;
-}
-
-deck.get_layout_data_one_section = function get_layout_data_one_section(sortKey, sortValue, displayLabel) {
-	var section = $('<div>');
-	var query = {};
-	query[sortKey] = sortValue;
-	var cards = deck.get_cards({ name: 1 }, query);
-	if(cards.length) {
-		$(header_tpl({code: sortValue, name:cards[0][displayLabel], quantity: deck.get_nb_cards(cards)})).appendTo(section);
-		cards.forEach(function (card) {
-			var $div = $('<div>').addClass(deck.can_include_card(card) ? '' : 'invalid-card');
-			$div.append($(card_line_tpl({card:card})));
-			$div.prepend(card.indeck+'x ');
-			$div.appendTo(section);
-		});
-	}
-	return section;
 }
 
 /**

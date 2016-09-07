@@ -1,0 +1,37 @@
+<tr data-code="{{card.code}}"> 
+    <td>
+        <div class="btn-group" data-toggle="buttons">
+        	{{#range 0 card.maxqty.cards inclusive=true}}
+        	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">
+        		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>
+        		{{this}}
+        	</label>
+        	{{/range}}
+        </div>
+        {{#if second_die}}
+        <div class="btn-group" data-toggle="buttons">
+        	<label class="btn btn-default btn-xs">
+        		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>
+        	</label>
+        </div>
+        {{/if}}
+    </td>
+    <td> 
+        <a class="card card-tip" data-code="{{ card.code }}" href="{{ url }}" data-target="#cardModal" data-remote="false" data-toggle="modal">{{ card.name }}</a> 
+    </td> 
+    <td> 
+        {{#if card.has_die}}<span class="icon-die"></span>{{/if}} 
+    </td> 
+    <td>
+        {{#if card.cost}}{{card.cost}}{{/if}}{{#if card.points}}{{card.points}}{{/if}}
+    </td>
+    <td>
+        {{#if card.health}}{{card.health}}{{/if}}
+    </td>
+    <td>
+        <span class="icon-{{card.type_code}}"></span>
+    </td>
+    <td>
+        <span class="bg-{{card.faction_code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </td>
+</tr> 

@@ -76,45 +76,7 @@ deck_history.autosave_interval = function autosave_interval() {
 	timer--;
 }
 
-var Tpl = Handlebars.compile(
-'<tr{{#unless snapshot.is_saved}} class="warning"{{/unless}}>' +
-'	<td>' +
-'		{{date}}' +
-'		{{#unless snapshot.is_saved}}({{trans "decks.history.unsaved"}}){{/unless}}' +
-'	</td>' +
-'	<td>' +
-'		{{snapshot.version}}' +
-'	</td>' +
-'	<td>' +
-'		<ul class="list-unstyled">' +
-'		{{#with snapshot.variation}}' +
-'			{{#*inline "change"}}' +
-'				<li>' +
-'					{{#if quantity}}{{op}}{{quantity}}<span class="icon-cards"></span>{{/if}}' +
-'					{{#if dice}}{{op}}{{dice}}<span class="icon-die"></span>{{/if}}' +
-'					{{#with (card code)}}' +
-'					<a href="{{routing "cards_zoom" card_code=code}}" class="card-tip" data-code="{{code}}">{{name}}</a>' +
-'					{{/with}}' +
-'				</li>' +
-'			{{/inline}}' +
-'			{{#each this.[0]}}' +
-'				{{> change this op="+" code=@key}}' +
-'			{{/each}}' +
-'			{{#each this.[1]}}' +
-'				{{> change this op="-" code=@key}}' +
-'			{{/each}}' +
-'		{{else}}' +
-'			<li>{{trans "decks.history.firstversion"}}</li>' +
-'		{{/with}}' +
-'		</ul>' +
-'	</td>' +
-'	<td>' +
-'		<a role="button" href="#" data-index="{{revertTo}}">' +
-'			{{trans "decks.history.revert"}}' +
-'		</a>' +
-'	</td>' +
-'</tr>'
-);
+var SnapshotTemplate = Handlebars.templates['deck_history-snapshot'];
 /**
  * @memberOf deck_history
  */
@@ -122,7 +84,7 @@ deck_history.add_snapshot = function add_snapshot(snapshot) {
 	snapshot.date_creation = snapshot.date_creation ? moment(snapshot.date_creation) : moment();
 	snapshots.push(snapshot);
 
-	tbody.prepend(Tpl({
+	tbody.prepend(SnapshotTemplate({
 		snapshot: snapshot, 
 		date: snapshot.date_creation.calendar(),
 		revertTo: snapshots.length-1
