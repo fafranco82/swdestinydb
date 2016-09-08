@@ -320,7 +320,6 @@ ui.on_list_quantity_change = function on_list_quantity_change(event) {
 	var row = $(this).closest('.card-container');
 	var code = row.data('code');
 	var quantity = parseInt($(this).val(), 10);
-//	row[quantity ? "addClass" : "removeClass"]('in-deck');
 	ui.on_quantity_change(code, quantity);
 }
 
@@ -595,7 +594,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		});
 
 		if (unusable) {
-			row.find('label').addClass("disabled").find('input[type=radio]').attr("disabled", true);
+			row.find('label').addClass("disabled").find('input[type=radio]').prop("disabled", true);
 		}
 
 		if (Config['display-column'] > 1 && (counter % Config['display-column'] === 0)) {

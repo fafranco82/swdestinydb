@@ -62,9 +62,12 @@
 		{{#*inline "section"}}
 			<div>
 				{{#with (cards key value)}}
-				<h5><span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				<h5>
+					<span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}}
+					({{nb_cards this}} <span class="icon-cards"></span>{{#if (nb_dice this)}} {{nb_dice this}} <span class="icon-die"></span>{{/if}})
+				</h5>
 				{{#each this}}
-				<div>
+				<div{{#unless (can_include this)}} class="invalid-card"{{/unless}}>
 					x{{indeck.cards}}
 					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>
 					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">

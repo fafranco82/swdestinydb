@@ -21,7 +21,7 @@
 <div class="card-die">
   {{#each card.sides}}
   {{#with (dieside this)}}
-'  <div class="card-die-face border-{{@root.card.faction_code}} card-die-face-{{icon}}{{#unless cost}} card-die-face-nocost{{/unless}}{{#if modifier}} ard-die-face-modifier{{/if}}">
+  <div class="card-die-face border-{{@root.card.faction_code}} card-die-face-{{icon}}{{#unless cost}} card-die-face-nocost{{/unless}}{{#if modifier}} ard-die-face-modifier{{/if}}">
     <div class="card-die-face-content">
       <span class="card-die-face-value">{{#if modifier}}+{{/if}}{{value}}</span><span class="icon-{{icon}}"></span>
     </div>

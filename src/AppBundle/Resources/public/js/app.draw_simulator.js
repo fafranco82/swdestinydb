@@ -46,7 +46,7 @@ draw_simulator.on_data_loaded = function on_data_loaded() {
 
 	var cards = app.deck.get_draw_deck();
 	cards.forEach(function (card) {
-		for(var ex = 0; ex < card.indeck; ex++) {
+		for(var ex = 0; ex < card.indeck.cards; ex++) {
 			deck.push(card);
 		}
 	});

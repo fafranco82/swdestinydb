@@ -1,6 +1,6 @@
 (function app_textcomplete(textcomplete, $) {
 
-var icons = 'baratheon greyjoy intrigue lannister martell military thenightswatch power stark targaryen tyrell unique plot attachment location character event agenda neutral'.split(' ');
+var icons = 'unique battlefield character upgrade support event cards die melee ranged disrupt discard focus resource shield special blank'.split(' ');
 
 /**
  * options: cards, icons, users

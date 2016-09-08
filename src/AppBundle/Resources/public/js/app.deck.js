@@ -19,6 +19,12 @@ Handlebars.registerHelper('cards', function(key, value, opt) {
 Handlebars.registerHelper('nb_cards', function(cards) {
     return app.deck.get_nb_cards(cards);
 });
+Handlebars.registerHelper('nb_dice', function(cards) {
+    return app.deck.get_nb_dice(cards);
+});
+Handlebars.registerHelper('can_include', function(card, options) {
+    return app.deck.can_include_card(card);
+});
 
 
 
@@ -407,10 +413,10 @@ deck.get_copies_and_deck_limit = function get_copies_and_deck_limit() {
  * @memberOf deck
  */
 deck.get_problem = function get_problem() {
-	/*
+	
 	// at least 30 others cards
-	if(deck.get_draw_deck_size() < 30) {
-		return 'too_few_cards';
+	if(deck.get_draw_deck_size() != 30) {
+		return 'incorrect_size';
 	}
 
 	if(deck.get_character_points() > 30) {
@@ -422,14 +428,13 @@ deck.get_problem = function get_problem() {
 	    return value.nb_copies > value.deck_limit;
 	}) != null) return 'too_many_copies';
 
-	//faction_not_included
-	if(_.difference(deck.get_nongray_factions(deck.get_draw_deck()), deck.get_nongray_factions(deck.get_character_deck())).length > 0) return 'faction_not_included';
-
 	// no invalid card
 	if(deck.get_invalid_cards().length > 0) {
 		return 'invalid_cards';
 	}
-	*/
+
+	//faction_not_included
+	//if(_.difference(deck.get_nongray_factions(deck.get_draw_deck()), deck.get_nongray_factions(deck.get_character_deck())).length > 0) return 'faction_not_included';
 }
 
 deck.get_invalid_cards = function get_invalid_cards() {

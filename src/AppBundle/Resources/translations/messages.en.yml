@@ -28,7 +28,7 @@ decks:
   description: Description
   defaultemptydesc: "*No description.*"
   problems:
-    too_few_cards: Contains too few cards
+    incorrect_size: Draw deck must be 30 cards
     too_many_character_points: Character points limit exceeded
     too_many_copies: Contains too many copies of a card
     invalid_cards: Contains forbidden cards
@@ -280,6 +280,26 @@ card:
       health: H.
       type: T.
       faction: F.
+
+icon:
+  unique: Unique
+  battlefield: Battlefield
+  character: Character
+  upgrade: Upgrade
+  support: Support
+  event: Event
+  cards: Cards
+  die: Die
+  melee: Melee Damage
+  ranged: Ranged Damage
+  disrupt: Disrupt
+  discard: Discard
+  focus: Focus
+  resource: Resource
+  shield: Shield
+  special: Special
+  blank: Blank
+
 
 keyword:
   guardian:

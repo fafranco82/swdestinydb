@@ -81,7 +81,12 @@
                 "database_url": "DATABASE_URL",
                 "website_url": "WEBSITE_URL",
                 "game_name": "GAME_NAME",
-                "publisher_name": "PUBLISHER_NAME"
+                "publisher_name": "PUBLISHER_NAME",
+                "mailer_transport": "MAILER_TRANSPORT",
+                "mailer_host": "MAILER_HOST",
+                "mailer_port": "MAILER_PORT",
+                "mailer_user": "MAILER_USER",
+                "mailer_password": "MAILER_PASSWORD"
             }
         }
     }
