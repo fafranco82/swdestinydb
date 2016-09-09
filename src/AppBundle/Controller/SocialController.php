@@ -59,8 +59,8 @@ class SocialController extends Controller
             return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
         }
 
-        $lastPack = $deck->getLastPack();
-        if(!$lastPack->getDateRelease() || $lastPack->getDateRelease() > new \DateTime()) {
+        $lastSet = $deck->getLastSet();
+        if(!$lastSet->getDateRelease() || $lastSet->getDateRelease() > new \DateTime()) {
         	$this->get('session')->getFlashBag()->set('error', $translator->trans('decklist.publish.errors.unreleased'));
         	return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
         }
@@ -89,13 +89,10 @@ class SocialController extends Controller
     	// decklist for the form ; won't be persisted
     	$decklist = $this->get('decklist_factory')->createDecklistFromDeck($deck, $deck->getName(), $deck->getDescriptionMd());
     	    	
-    	$tournaments = $this->getDoctrine()->getManager()->getRepository('AppBundle:Tournament')->findAll();
-    
     	return $this->render('AppBundle:Decklist:decklist_edit.html.twig', [
     			'url' => $this->generateUrl('decklist_create'),
     			'deck' => $deck,
-    			'decklist' => $decklist,
-    			'tournaments' => $tournaments,
+    			'decklist' => $decklist
     	]);
     }
     
@@ -142,9 +139,6 @@ class SocialController extends Controller
         $name = filter_var($request->request->get('name'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
         $descriptionMd = trim($request->request->get('descriptionMd'));
 
-        $tournament_id = filter_var($request->request->get('tournament'), FILTER_SANITIZE_NUMBER_INT);
-        $tournament = $em->getRepository('AppBundle:Tournament')->find($tournament_id);
-
         $precedent_id = trim($request->request->get('precedent'));
         if(!preg_match('/^\d+$/', $precedent_id)) 
         {
@@ -172,7 +166,6 @@ class SocialController extends Controller
         	]);
         }
         
-        $decklist->setTournament($tournament);
         $decklist->setPrecedent($precedent);
         $em->persist($decklist);
         $em->flush();
@@ -206,13 +199,10 @@ class SocialController extends Controller
     		throw $this->createAccessDeniedException("Access denied");
     	}
     
-    	$tournaments = $this->getDoctrine()->getManager()->getRepository('AppBundle:Tournament')->findAll();
-    
     	return $this->render('AppBundle:Decklist:decklist_edit.html.twig', [
     			'url' => $this->generateUrl('decklist_save', [ 'decklist_id' => $decklist->getId() ]),
     			'deck' => null,
-    			'decklist' => $decklist,
-    			'tournaments' => $tournaments,
+    			'decklist' => $decklist
     	]);
     }
     
@@ -244,9 +234,6 @@ class SocialController extends Controller
     	$descriptionMd = trim($request->request->get('descriptionMd'));
     	$descriptionHtml = $this->get('texts')->markdown($descriptionMd);
     
-    	$tournament_id = intval(filter_var($request->request->get('tournament'), FILTER_SANITIZE_NUMBER_INT));
-    	$tournament = $em->getRepository('AppBundle:Tournament')->find($tournament_id);
-    
     	$precedent_id = trim($request->request->get('precedent'));
         if(!preg_match('/^\d+$/', $precedent_id)) 
         {
@@ -267,7 +254,6 @@ class SocialController extends Controller
     	$decklist->setDescriptionMd($descriptionMd);
     	$decklist->setDescriptionHtml($descriptionHtml);
     	$decklist->setPrecedent($precedent);
-    	$decklist->setTournament($tournament);
     	$decklist->setDateUpdate(new \DateTime());
     	$em->flush();
     
@@ -342,7 +328,7 @@ class SocialController extends Controller
         $categories[] = array("label" => $this->get("translator")->trans('decklist.list.search.allowed.core'), "packs" => []);
         $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
         foreach($list_cycles as $cycle) {
-            $size = count($cycle->getPacks());
+            $size = count($cycle->getSets());
             if($cycle->getPosition() == 0 || $size == 0) continue;
             $first_pack = $cycle->getPacks()[0];
             if($cycle->getCode() == 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {

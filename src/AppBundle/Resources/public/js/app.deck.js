@@ -433,13 +433,24 @@ deck.get_problem = function get_problem() {
 		return 'invalid_cards';
 	}
 
-	//faction_not_included
-	//if(_.difference(deck.get_nongray_factions(deck.get_draw_deck()), deck.get_nongray_factions(deck.get_character_deck())).length > 0) return 'faction_not_included';
+	// cards included from different faction of characters
+	if(deck.get_notmatching_cards().length > 0) {
+		return 'faction_not_included';
+	}
+	
+	return null;
 }
 
 deck.get_invalid_cards = function get_invalid_cards() {
 	return _.filter(deck.get_cards(), function (card) {
 		return ! deck.can_include_card(card);
+	});
+}
+
+deck.get_notmatching_cards = function get_notmatching_cards() {
+	var character_factions = deck.get_nongray_factions(deck.get_character_deck());
+	return _.filter(deck.get_draw_deck(), function (card) {
+		return ! deck.card_spot_faction(card, character_factions);
 	});
 }
 
@@ -461,6 +472,25 @@ deck.can_include_card = function can_include_card(card) {
 	}
 
 	// if none above => no
+	return false;
+}
+
+/**
+ * returns true if the card has a matching character faction
+ * @memberOf deck
+ */
+deck.card_spot_faction = function card_spot_faction(card, character_factions) {
+	character_factions = character_factions || deck.get_nongray_factions(deck.get_character_deck());
+
+	if(card.faction_code == 'gray' || _.includes(character_factions, card.faction_code))
+		return true;
+
+	// Finn (AW #45) special case
+	if(deck.get_cards(null, {code: '01045'}).length > 0) {
+		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.includes(['vehicle','weapon'], card.subtype_code))
+			return true;
+	}
+
 	return false;
 }
 

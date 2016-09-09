@@ -22,6 +22,17 @@ class DeckValidationHelper
 		}
 		return $invalidCards;
 	}
+
+	public function getNotMatchingCards($deck)
+	{
+		$notMatchingCards = [];
+		foreach ( $deck->getSlots() as $slot ) {
+			if(! $this->spotCharacterFaction($deck, $slot->getCard())) {
+				$notMatchingCards[] = $slot->getCard();
+			}
+		}
+		return $notMatchingCards;
+	}
 	
 	public function canIncludeCard(SlotCollectionProviderInterface $deck, $card) {
 		if($card->getAffiliation()->getCode() === 'neutral') {
@@ -29,6 +40,26 @@ class DeckValidationHelper
 		}
 
 		if($card->getAffiliation()->getCode() === $deck->getAffiliation()->getCode()) {
+			return true;
+		}
+
+		// Finn (AW #45) special case
+		if($deck->getSlots()->getSlotByCode('01045') != NULL) {
+			if(    $card->getAffiliation()->getCode()==='villain' 
+				&& $card->getFaction()->getCode()==='red' 
+				&& in_array($card->getSubtype()->getCode(), array('vehicle', 'weapon')))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function spotCharacterFaction(SlotCollectionProviderInterface $deck, $card) {
+		$factions = $deck->getSlots()->getCharacterDeck()->getFactions();
+
+		if($card->getFaction()->getCode() === 'gray' || in_array($card->getFaction()->getCode(), $factions)) {
 			return true;
 		}
 
@@ -63,12 +94,9 @@ class DeckValidationHelper
 			return 'invalid_cards';
 		}
 		
-		/*
-		$characterFactions = $deck->getSlots()->getCharacterDeck()->getFactions();
-		$drawDeckFactions = $deck->getSlots()->getDrawDeck()->getFactions();
-		$diff = array_diff($drawDeckFactions, $characterFactions);
-		if(!(count($diff) == 0 || (count($diff) == 1 && $diff[0]=='gray'))) return 'faction_not_included';
-		*/		
+		if(!empty($this->getNotMatchingCards($deck))) {
+			return 'faction_not_included';
+		}
 
 		return null;
 	}	

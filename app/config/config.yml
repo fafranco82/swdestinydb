@@ -20,7 +20,6 @@ parameters:
         zh: 中文
     supported_locales:
         - en
-        - es
     default_locale: en
 
 framework:

@@ -51,11 +51,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            {% if app.environment=='dev' %}
             <li><a href="{{ path('decks_list') }}">{{ 'nav.mydecks' | trans}}</a></li>
             <li><a href="{{ path('collection_list') }}">{{ 'nav.mycollection' | trans}}</a></li>
             <li><a href="{{ path('decklists_list') }}">{{ 'nav.decklists' | trans}}</a></li>
-            {% endif %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'nav.cards' | trans}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -66,11 +64,8 @@
               {% endfor %}
               </ul>
             </li>
-            {% if app.environment=='dev' %}
-            <li><a href="{{ path('rules') }}">{{ 'nav.rules' | trans}}</a></li>
-            {% endif %}
+            {#<li><a href="{{ path('rules') }}">{{ 'nav.rules' | trans}}</a></li>#}
           </ul>
-          {% if app.environment=='dev' %}
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown hidden-xs hidden-lg">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-search"></span></a>
@@ -108,7 +103,6 @@
               <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
             </div>
           </form>
-          {% endif %}
         </div><!--/.navbar-collapse -->
         {% endblock %}
       </div>
@@ -155,7 +149,9 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-	  var app = {};
+	  var app = {
+      locale: '{{ app.request.locale }}'
+    };
     moment.locale('{{ app.request.locale }}');
     $(function() {
     {% for flashMessage in app.session.flashbag.get('notice') %}

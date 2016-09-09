@@ -10,7 +10,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Pack;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use AppBundle\Entity\Faction;
+use AppBundle\Entity\Affiliation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class DecklistManager
 {
-	protected $faction;
+	protected $affiliation;
 	protected $page = 1;
 	protected $start = 0;
 	protected $limit = 30;
@@ -35,9 +35,9 @@ class DecklistManager
 		$this->logger = $logger;
 	}
 
-	public function setFaction(Faction $faction = null)
+	public function setAffiliation(Affiliation $affiliation = null)
 	{
-		$this->faction = $faction;
+		$this->affiliation = $affiliation;
 	}
 
 	public function setLimit($limit)
@@ -64,9 +64,9 @@ class DecklistManager
 		$qb = $this->doctrine->createQueryBuilder();
 		$qb->select('d');
 		$qb->from('AppBundle:Decklist', 'd');
-		if($this->faction) {
-			$qb->where('d.faction = :faction');
-			$qb->setParameter('faction', $this->faction);
+		if($this->affiliation) {
+			$qb->where('d.affiliation = :affiliation');
+			$qb->setParameter('affiliation', $this->affiliation);
 		}
 		$qb->setFirstResult($this->start);
 		$qb->setMaxResults($this->limit);
@@ -159,9 +159,9 @@ class DecklistManager
 			$cards_code = [];
 		}
 
-		$faction_code = filter_var($request->query->get('faction'), FILTER_SANITIZE_STRING);
-		if($faction_code) {
-			$faction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(['code' => $faction_code]);
+		$affiliation_code = filter_var($request->query->get('affiliation'), FILTER_SANITIZE_STRING);
+		if($affiliation_code) {
+			$affiliation = $this->doctrine->getRepository('AppBundle:Affiliation')->findOneBy(['code' => $affiliation_code]);
 		}
 
 		$author_name = filter_var($request->query->get('author'), FILTER_SANITIZE_STRING);
@@ -175,9 +175,9 @@ class DecklistManager
 		$qb = $this->getQueryBuilder();
 		$joinTables = [];
 		
-		if(!empty($faction)) {
-			$qb->andWhere('d.faction = :faction');
-			$qb->setParameter('faction', $faction);
+		if(!empty($affiliation)) {
+			$qb->andWhere('d.affiliation = :affiliation');
+			$qb->setParameter('affiliation', $affiliation);
 		}
 		if(!empty($author_name)) {
 			$qb->innerJoin('d.user', 'u');

@@ -12,8 +12,8 @@ class DecklistRepository extends TranslatableRepository
 	public function find($id)
 	{
 		$qb = $this->createQueryBuilder('d')
-			->select('d, f, ds, c')
-			->join('d.faction', 'f')
+			->select('d, a, ds, c')
+			->join('d.affiliation', 'a')
 			->join('d.slots', 'ds')
 			->join('ds.card', 'c')
 			->andWhere('d.id = ?1');
@@ -25,8 +25,8 @@ class DecklistRepository extends TranslatableRepository
 	public function findDuplicate($decklist)
 	{
 		$qb = $this->createQueryBuilder('d')
-			->select('d, f')
-			->join('d.faction', 'f')
+			->select('d, a')
+			->join('d.affiliation', 'a')
 			->andWhere('d.signature = ?1');
 
 		$qb->setParameter(1, $decklist->getSignature());
@@ -40,8 +40,8 @@ class DecklistRepository extends TranslatableRepository
 	public function findVersions($decklist)
 	{
 		$qb = $this->createQueryBuilder('d')
-			->select('d, f, ds, c')
-			->join('d.faction', 'f')
+			->select('d, a, ds, c')
+			->join('d.affiliation', 'a')
 			->join('d.slots', 'ds')
 			->join('ds.card', 'c')
 			->andWhere('d.parent = ?1');

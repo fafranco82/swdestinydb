@@ -170,6 +170,89 @@ decks:
       is_unique: Uniqueness
       text: Text
 
+decklist:
+  publish:
+    name: Name
+    no: No
+    derived: Derived from (copy id or address of the decklist this one is inspired from)
+    description: Description
+    editor:
+      hint: "Press # to insert a card name, $ to insert a game symbol."
+      cardtolink: Turn a card name into a card link
+      entersymbol: Insert a game symbol
+      heading: Heading %number%
+    errors:
+      unauthorized: You don't have access to this decklist.
+      antispam:
+        newbie: To prevent spam, newly created accounts must wait 24 hours before being allowed to publish a decklist.
+        limit: To prevent spam, accounts cannot publish more decklists than their reputation per 24 hours.
+      unreleased: You cannot publish this deck yet, because it has unreleased cards.
+      invalid: This deck cannot be published because it is invalid.
+      pagetitle:
+        spam: Spam prevention
+    warnings:
+      published: "This deck <a href='%url%'>has already been published</a> before. You are going to create a duplicate."
+  view:
+    versions: Versions
+    published: published
+    duplicate: Duplicate of %duplicate%
+    comments: 
+      count: "{0} No comments | {1} %count% comment | ]1,Inf] %count% comments"
+      hint: "Enter your comment in Markdown format. Type # to enter a card name. Type $ to enter a symbol. Type @ to enter a user name."
+      submit: Submit comment
+    social:
+      like: Like
+      favorite: Favorite
+      comment: Comment
+      version: Version
+    derived:
+      title: Derived from
+      none: None. Self-made deck here.
+    inspire:
+      title: Inspiration for
+      none: None yet.
+    toolbar:
+      edit: Edit decklist name / description
+    errors:
+      notfound: Decklist not found.
+  list:
+    types:
+      popular: Popular
+      recent: Recent
+      tournaments: Tournaments
+      hottopics: Hot topics
+      hof: Hall of Fame
+      myfavorites: My favorites
+      mydecklists: My decklists
+    titles:
+      search: Decklist Search
+      find: Decklist search results
+      popular: Popular decklists
+      recent: Recent decklists
+      hottopics: Hot topics
+      halloffame: Hall of Fame
+      favorites: Favorite decklists
+      mine: My decklists
+    search:
+      faction:
+        label: Faction
+        any: any
+      author: 
+        label: Author name
+        hint: Enter author name
+      used:
+        label: Cards used
+        hint: Enter card name
+      decklist:
+        label: Decklist name
+        hint: Enter text to search in name
+      sort:
+        label: Sort
+        popularity: By Popularity
+        date: By Date
+        likes: By Number of Likes
+        reputation: By Reputation of Author
+
 nav:
   mydecks: My decks
   mycollection: My collection

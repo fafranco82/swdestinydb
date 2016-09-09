@@ -100,10 +100,28 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	}
 	
 	public function getCountByType() {
-		$countByType = [ 'location' => 0, 'attachment' => 0, 'event' => 0 ];
+		$countByType = [ 
+			'character' => array(
+				"cards" => 0,
+				"dice" => 0),
+
+			'location' => array(
+				"cards" => 0,
+				"dice" => 0),
+
+			'attachment' => array(
+				"cards" => 0,
+				"dice" => 0),
+
+			'event' => array(
+				"cards" => 0,
+				"dice" => 0)];
+
 		foreach($this->slots as $slot) {
-			if(array_key_exists($slot->getCard()->getType()->getCode(), $countByType)) {
-				$countByType[$slot->getCard()->getType()->getCode()] += $slot->getQuantity();
+			$code = $slot->getCard()->getType()->getCode();
+			if(array_key_exists($code, $countByType)) {
+				$countByType[$code]["cards"] += $slot->getQuantity();
+				$countByType[$code]["dice"] += $slot->getDice();
 			}
 		}
 		return $countByType;

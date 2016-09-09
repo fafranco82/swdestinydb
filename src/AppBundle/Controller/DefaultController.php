@@ -27,15 +27,15 @@ class DefaultController extends Controller
         	$typeNames[$type->getCode()] = $type->getName();
         }
         
-        $decklists_by_faction = [];
-        $factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findBy(['isPrimary' => true], ['code' => 'ASC']);
+        $decklists_by_affiliation = [];
+        $affiliations = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findBy(['isPrimary' => true], ['code' => 'ASC']);
         
-        foreach($factions as $faction) 
+        foreach($affiliations as $affiliation) 
         {
             $array = [];
-            $array['faction'] = $faction;
+            $array['affiliation'] = $affiliation;
 
-        	$decklist_manager->setFaction($faction);
+        	$decklist_manager->setAffiliation($affiliation);
         	$paginator = $decklist_manager->findDecklistsByPopularity();
         	/**
         	 * @var $decklist Decklist
@@ -46,27 +46,11 @@ class DefaultController extends Controller
             {
                 $array['decklist'] = $decklist;
 
-                $countByType = $decklist->getSlots()->getCountByType();
-                $counts = [];
-                foreach($countByType as $code => $qty) {
-                    $typeName = $typeNames[$code];
-                    $counts[] = $qty . " " . $typeName . "s";
-                }
-                $array['count_by_type'] = join(' &bull; ', $counts);
+                $array['count_by_type'] = $decklist->getSlots()->getCountByType();
 
-                $factions = [ $faction->getName() ];
-                $agenda = $decklist->getSlots()->getAgenda();
-                if($agenda) {
-                    $minor_faction = $this->get('agenda_helper')->getMinorFaction($agenda);
-                    if($minor_faction) {
-                    	$factions[] = $minor_faction->getName();
-                    } else {
-                        $factions[] = $agenda->getName();
-                    }
-                }
-                $array['factions'] = join(' / ', $factions);
+                $array['affiliation'] = $affiliation;
 
-                $decklists_by_faction[] = $array;
+                $decklists_by_affiliation[] = $array;
             }
         }
 
@@ -76,7 +60,7 @@ class DefaultController extends Controller
         return $this->render('AppBundle:Default:index.html.twig', [
             'pagetitle' =>  "$game_name Deckbuilder",
             'pagedescription' => "Build your deck for $game_name by $publisher_name. Browse the cards and the thousand of decklists submitted by the community. Publish your own decks and get feedback.",
-            'decklists_by_faction' => $decklists_by_faction
+            'decklists_by_affiliation' => $decklists_by_affiliation
         ], $response);
     }
 

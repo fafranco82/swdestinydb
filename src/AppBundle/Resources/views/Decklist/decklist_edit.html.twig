@@ -13,21 +13,12 @@
 {% block body %}
 <div class="main white container">
 	<div class="row">
-		<div class="col-sm-9">
+		<div class="col-sm-8">
 			<form action="{{ url|raw }}" method="post" enctype="application/x-www-form-urlencoded">
 				<input type="hidden" name="deck_id" value="{% if deck is not null %}{{ deck.id }}{% endif %}">
 				<div class="form-group">
 					<label for="name">{{ 'decklist.publish.name' | trans}}</label>
 					<input type="text" class="form-control" name="name" id="name" value="{{ decklist.name }}">
-				</div>
-				<div class="form-group">
-					<label for="tournament">{{ 'decklist.publish.placedhigh' | trans}}</label>
-					<select class="form-control" name="tournament" id="tournament">
-						<option value="">{{ 'decklist.publish.no' | trans }}</option>
-						{% for tournament in tournaments %}
-						<option value="{{ tournament.id }}"{% if decklist.tournament and tournament.id == decklist.tournament.id %} selected{% endif %}>{{ tournament.description }}</option>
-						{% endfor %}
-					</select>
 				</div>
 				<div class="form-group">
 					<label for="precedent">{{ 'decklist.publish.derived' | trans }}</label>
@@ -40,8 +31,8 @@
 				<button type="submit" class="btn btn-success btn-block">{{ 'forms.save' | trans }}</button>
 			</form>
 		</div>
-		<div class="col-sm-3">
-			<div id="decklist" class="small"></div>
+		<div class="col-sm-4">
+			<div id="decklist"></div>
 		</div>
 	</div>
 </div>

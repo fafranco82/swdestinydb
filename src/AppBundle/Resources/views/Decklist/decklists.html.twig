@@ -41,7 +41,6 @@ $(function () {
 <ul class="nav nav-pills nav-stacked" style="margin-bottom:2em">
 {% set linkurl = path('decklists_list', {type:'popular'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.popular' | trans }}</a></li>
 {% set linkurl = path('decklists_list', {type:'recent'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.recent' | trans }}</a></li>
-{% set linkurl = path('decklists_list', {type:'tournament'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.tournaments' | trans }}</a></li>
 {% set linkurl = path('decklists_list', {type:'hottopics'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.hottopics' | trans }}</a></li>
 {% set linkurl = path('decklists_list', {type:'halloffame'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.hof' | trans }}</a></li>
 {% set linkurl = path('decklists_list', {type:'favorites'}) %}<li class="{% if url == linkurl %}active{% endif %}"><a href="{{ linkurl }}">{{ 'decklist.list.types.myfavorites' | trans }}</a></li>
@@ -66,9 +65,25 @@ $(function () {
 {% for decklist in decklists %}
 
 <tr>
-<td class="decklist-faction-image hidden-xs">
-	<img src="/bundles/app/images/factions/{{ decklist.faction.code }}.png">
-	{% if decklist.slots.agenda %}<img src="/bundles/cards/{{ decklist.slots.agenda.code }}.png">{% endif %}
+<td class="decklist-character-images hidden-xs">
+	{% for character in decklist.getSlots().getCharacterDeck() %}
+		{% set card = cards_data.getCardInfo(character.getCard()) %}
+		{% set total_characters = (card.is_unique ? 1 : character.getQuantity()) %}
+		{% for c in 1..total_characters %}
+		<div class="decklist-character border-light-{{card.faction_code}}">
+			<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{card.imagesrc}}')" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false"></div>
+			{% if card.is_unique %}
+            <div class="decklist-character-unique"><span class="icon-unique"></span></div>
+            {% endif %}
+            <div class="decklist-character-dice">
+            	{% set total_dice = (card.is_unique ? character.getDice() : 1) %}
+                {% for i in 1..total_dice %}
+                <span class="icon-die"></span>
+            	{% endfor %}
+            </div>
+		</div>
+		{% endfor %}
+	{% endfor %}
 </td>
 <td>
     <article>
@@ -82,14 +97,9 @@ $(function () {
 		<time class="pull-right" datetime="{{ decklist.dateCreation|date('c') }}">{{ decklist.dateCreation|date('M d') }}</time>
 		<span class="username">
     		<a href="{{ path('user_profile_public', {user_id:decklist.user.id,user_name:decklist.user.username|e('url')}) }}" class="{{ decklist.user.color }}">{{ decklist.user.username }}</a>
-    		{% if decklist.user.donation > 0 %}<span class="fa fa-gift donator" title="ThronesDB Gracious Donator"></span>{% endif %}
+    		{% if decklist.user.donation > 0 %}<span class="fa fa-gift donator" title="SWDestinyDB Gracious Donator"></span>{% endif %}
     		<small class="reputation">{{ decklist.user.reputation }}</small>
 		</span>
-        {% if decklist.tournament %}
-		<span class="text-success" style="margin-left:1em">
-            <span class="fa fa-certificate"></span> {{ decklist.tournament.description }}
-        </span>
-	    {% endif %}
 	</h5>
 	</article>
 </td>

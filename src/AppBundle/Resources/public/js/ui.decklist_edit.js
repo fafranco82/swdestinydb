@@ -10,7 +10,7 @@ ui.on_dom_loaded = function on_dom_loaded() {
 		iconlibrary: 'fa',
 		hiddenButtons: ['cmdHeading', 'cmdImage', 'cmdCode'],
 		footer: Translator.trans('decklist.publish.editor.hint'),
-		language: "es",
+		language: app.locale,
 		additionalButtons: 
 			[[{
 				name: "groupCard",
@@ -25,7 +25,7 @@ ui.on_dom_loaded = function on_dom_loaded() {
 				data: [{
 					name: "cmdSymbol",
 					title: Translator.trans('decklist.publish.editor.entersymbol'),
-					icon: "icon-power",
+					icon: "icon-die",
 					callback: ui.on_button_symbol
 				}]
 			},{
@@ -94,7 +94,7 @@ ui.on_button_symbol = function ui_on_button_symbol(e)
 		$(button).off('click');
 	});
 	
-	var icons = 'baratheon greyjoy intrigue lannister martell military thenightswatch power stark targaryen tyrell unique plot attachment location character event agenda neutral'.split(' ');
+	var icons = 'unique battlefield character upgrade support event cards die melee ranged disrupt discard focus resource shield special blank'.split(' ');
 	icons.forEach(function (icon) {
 		menu.append('<li data-icon="'+icon+'"><a href="#"><span style="display:inline-block;width:2em;text-align:center" class="icon-'+icon+'"></span> '+Translator.trans('icon.'+icon)+'</a></li>');
 	});
@@ -120,7 +120,7 @@ ui.on_button_card = function ui_on_button_card(e)
 		cards = cards.slice(0, 10);
 	}
 	cards.forEach(function (card) {
-		menu.append('<li data-code="'+card.code+'" data-name="'+card.name+'"><a href="#">' + card.label + ' <small><i>' + card.pack_name + '</i></small></a></li>');
+		menu.append('<li data-code="'+card.code+'" data-name="'+card.name+'"><a href="#">' + card.label + ' <small><i>' + card.set_name + '</i></small></a></li>');
 	})
 	$(button).dropdown();
 }

@@ -10,12 +10,16 @@
 
 <div class="main container">
     <div class="row">
-    {#% for data in decklists_by_faction %}
+      <div class="jumbotron">
+        <h3 class="text-warning"><span class="fa fa-exclamation-triangle"></span>Web site in BETA status!!</h3>
+        <p>Until more info is revealed, this website is subject to change, and the DB and user info, decks and decklists deleted. Please, consider using this site only for testing purposes. Any feedback is welcomed.</p>
+      </div>
+    {#% for data in decklists_by_affiliation %}
     <div class="col-md-6" style="margin-bottom:30px">
-        <div class="bg-faction bg-{{ data.faction.code }}" style="padding:10px 10px 5px 10px">
+        <div class="bg-affiliation bg-{{ data.affiliation.code }}" style="padding:10px 10px 5px 10px">
             <div class="media">
               <div class="media-left" style="font-size:30px">
-                  <span class="icon icon-{{ data.faction.code }}"></span>
+                  <span class="icon icon-{{ data.affiliation.code }}"></span>
               </div>
               <div class="media-body">
                   <h4 class="media-heading" style="white-space:nowrap"><a href="{{ path('decklist_detail',{decklist_id:data.decklist.id,decklist_name:data.decklist.nameCanonical}) }}">{{ data.decklist.name }}</a></h4>
@@ -34,9 +38,9 @@
             <div class="small pull-right">
                 {{ macros.decklist_social_icons(data.decklist ) }}
             </div>
-            <div>{{ data.factions }}</div>
+            <div>{{ data.affiliations }}</div>
             <p>{{ data.count_by_type|raw }}</p>
-            <div class="text-center small"><a href="{{ path('decklists_list',{type:'find',faction:data.faction.code}) }}">{{ 'seemore.faction' | trans }}</a></div>
+            <div class="text-center small"><a href="{{ path('decklists_list',{type:'find',affiliation:data.affiliation.code}) }}">{{ 'seemore.affiliation' | trans }}</a></div>
             <div style="clear:both"></div>
         </div>
     </div>

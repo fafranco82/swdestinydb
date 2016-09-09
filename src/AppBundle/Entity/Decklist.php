@@ -100,9 +100,9 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     private $user;
 
     /**
-     * @var \AppBundle\Entity\Faction
+     * @var \AppBundle\Entity\Affiliation
      */
-    private $faction;
+    private $affiliation;
 
     /**
      * @var \AppBundle\Entity\Set
@@ -553,27 +553,27 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     }
 
     /**
-     * Set faction
+     * Set affiliation
      *
-     * @param \AppBundle\Entity\Faction $faction
+     * @param \AppBundle\Entity\Affiliation $affiliation
      *
      * @return Decklist
      */
-    public function setFaction(\AppBundle\Entity\Faction $faction = null)
+    public function setAffiliation(\AppBundle\Entity\Affiliation $affiliation = null)
     {
-        $this->faction = $faction;
+        $this->affiliation = $affiliation;
 
         return $this;
     }
 
     /**
-     * Get faction
+     * Get affiliation
      *
-     * @return \AppBundle\Entity\Faction
+     * @return \AppBundle\Entity\Affiliation
      */
-    public function getFaction()
+    public function getAffiliation()
     {
-        return $this->faction;
+        return $this->affiliation;
     }
 
     /**
