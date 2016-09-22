@@ -66,23 +66,20 @@ $(function () {
 
 <tr>
 <td class="decklist-character-images hidden-xs">
-	{% for character in decklist.getSlots().getCharacterDeck() %}
+	{% for character in decklist.getSlots().getCharacterRow() %}
 		{% set card = cards_data.getCardInfo(character.getCard()) %}
-		{% set total_characters = (card.is_unique ? 1 : character.getQuantity()) %}
-		{% for c in 1..total_characters %}
 		<div class="decklist-character border-light-{{card.faction_code}}">
-			<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{card.imagesrc}}')" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false"></div>
-			{% if card.is_unique %}
-            <div class="decklist-character-unique"><span class="icon-unique"></span></div>
-            {% endif %}
-            <div class="decklist-character-dice">
-            	{% set total_dice = (card.is_unique ? character.getDice() : 1) %}
-                {% for i in 1..total_dice %}
-                <span class="icon-die"></span>
-            	{% endfor %}
+			<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{card.imagesrc}}')" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+				{% if card.is_unique %}
+	            <div class="character-unique"><span class="icon-unique"></span></div>
+	            {% endif %}
+	            <div class="character-dice">
+	                {% for i in 1..character.getDice() %}
+	                <span class="icon-die"></span>
+	            	{% endfor %}
+	            </div>
             </div>
 		</div>
-		{% endfor %}
 	{% endfor %}
 </td>
 <td>

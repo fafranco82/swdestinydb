@@ -73,21 +73,18 @@
 		<td><input type="checkbox"></td>
 		<td class="decklist-character-images hidden-xs">
 			{% for character in deck.characters %}
-				{% set total_characters = (character.is_unique ? 1 : character.qty) %}
-				{% for c in 1..total_characters %}
-				<div class="decklist-character border-light-{{character.faction_code}}">
-					<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{character.imagesrc}}')" data-code="{{character.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false"></div>
+			<div class="decklist-character border-light-{{character.faction_code}}">
+				<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{character.imagesrc}}')" data-code="{{character.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
 					{% if character.is_unique %}
-                    <div class="decklist-character-unique"><span class="icon-unique"></span></div>
+                    <div class="character-unique"><span class="icon-unique"></span></div>
                     {% endif %}
-                    <div class="decklist-character-dice">
-                    	{% set total_dice = (character.is_unique ? character.dice : 1) %}
-                        {% for i in 1..total_dice %}
+                    <div class="character-dice">
+                        {% for i in 1..character.dice %}
                         <span class="icon-die"></span>
                     	{% endfor %}
                     </div>
-				</div>
-				{% endfor %}
+                </div>
+			</div>
 			{% endfor %}
 		</td>
 		<td>

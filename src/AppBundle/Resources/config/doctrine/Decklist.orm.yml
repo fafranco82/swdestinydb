@@ -37,6 +37,11 @@ AppBundle\Entity\Decklist:
             joinColumn:
                 name: precedent_decklist_id
                 referencedColumnName: id
+        predominantFaction:
+            targetEntity: Faction
+            joinColumn:
+                name: predominant_faction_id
+                referencedColumnName: id
     oneToMany:
         slots:
             targetEntity: Decklistslot

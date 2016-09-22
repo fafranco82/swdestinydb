@@ -48,6 +48,10 @@ class DecklistFactory
 
 		$new_content = json_encode($deck->getSlots()->getContent());
 		$new_signature = md5($new_content);
+
+		$countByFaction = $deck->getSlots()->getCountByFaction();
+        $predominantFaction = array_keys($countByFaction, max($countByFaction))[0];
+        $predominantFaction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(["code" => $predominantFaction]);
 		
 		$decklist = new Decklist();
 		$decklist->setName($name);

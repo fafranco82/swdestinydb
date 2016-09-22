@@ -78,12 +78,12 @@ class BuilderController extends Controller
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
-        $factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAll();
+        $affiliations = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findAll();
         
         return $this->render('AppBundle:Builder:directimport.html.twig',
                 array(
                         'pagetitle' => "Import a deck",
-                		'factions' => array_map(function ($faction) { return [ 'code' => $faction->getCode(), 'name' => $faction->getName() ]; }, $factions)
+                		'affiliations' => array_map(function ($affiliation) { return [ 'code' => $affiliation->getCode(), 'name' => $affiliation->getName() ]; }, $affiliations)
                 ), $response);
 
     }
@@ -117,7 +117,7 @@ class BuilderController extends Controller
 
 		$properties = array(
 				'name' => str_replace(".$origext", '', $origname),
-				'faction_code' => $parse['faction_code'],
+				'affiliation_code' => $parse['affiliation_code'],
 				'content' => json_encode($parse['content']),
 				'description' => $parse['description']
 		);
@@ -185,7 +185,7 @@ class BuilderController extends Controller
         }
 
         $content = [];
-		$faction = null;
+		$affiliation = null;
         foreach ($octgnIds as $octgnId => $qty) {
 			$card = $em->getRepository('AppBundle:Card')->findOneBy(array(
                     'octgnId' => $octgnId
@@ -194,7 +194,7 @@ class BuilderController extends Controller
                 $content[$card->getCode()] = $qty;
             }
 			else {
-				$faction = $faction ?: $em->getRepository('AppBundle:Faction')->findOneBy(array(
+				$affiliation = $affiliation ?: $em->getRepository('AppBundle:Affiliation')->findOneBy(array(
 	                    'octgnId' => $octgnId
 	            ));
 			}
@@ -203,7 +203,7 @@ class BuilderController extends Controller
 		$description = implode("\n", $descriptions);
 
         return array(
-				"faction_code" => $faction ? $faction->getCode() : '',
+				"affiliation_code" => $affiliation ? $affiliation->getCode() : '',
                 "content" => $content,
                 "description" => $description
         );
@@ -307,7 +307,7 @@ class BuilderController extends Controller
         return $this->forward('AppBundle:Builder:save',
             array(
                 'name' => $deck->getName().' (clone)',
-                'faction_code' => $deck->getFaction()->getCode(),
+                'affiliation_code' => $deck->getAffiliation()->getCode(),
                 'content' => json_encode($content),
                 'deck_id' => $deck->getParent() ? $deck->getParent()->getId() : null
             ));
@@ -558,7 +558,7 @@ class BuilderController extends Controller
 				$tags[] = $deck['tags'];
 
                 /* @var $characterDeck \AppBundle\Entity\Deckslot[] */
-                $characterDeck = $em->getRepository('AppBundle:Deck')->find($deck['id'])->getSlots()->getCharacterDeck();
+                $characterDeck = $em->getRepository('AppBundle:Deck')->find($deck['id'])->getSlots()->getCharacterRow();
                 $characters = [];
 
                 foreach ($characterDeck as $character) {
@@ -609,7 +609,7 @@ class BuilderController extends Controller
         return $this->forward('AppBundle:Builder:save',
                 array(
                         'name' => $decklist->getName(),
-                		'faction_code' => $decklist->getFaction()->getCode(),
+                		'affiliation_code' => $decklist->getAffiliation()->getCode(),
                         'content' => json_encode($content),
                         'decklist_id' => $decklist_id
                 ));

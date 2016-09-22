@@ -39,10 +39,22 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function getCountByType();
 	
 	/**
+	 * Get all slot counts sorted by faction code
+	 * @return array
+	 */
+	public function getCountByFaction();
+	
+	/**
 	 * Get the draw deck
 	 * @return \AppBundle\Model\SlotCollectionInterface
 	 */
 	public function getDrawDeck();
+
+	/**
+	 * Get character row info (with non-unique character repeated)
+	 * @return \AppBundle\Model\SlotCollectionInterface
+	 */
+	public function getCharacterRow();
 
 	/**
 	 * Get the character deck

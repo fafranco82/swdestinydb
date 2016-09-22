@@ -1,5 +1,7 @@
 <p class="bg-faction bg-{{ faction_code }}"
 	style="padding: 3px 5px; border-radius: 3px; border: 1px solid silver">
 	<button type="button" class="close" aria-hidden="true" onclick="$(this).parent('p').remove()">&times;</button>
-	<input type="hidden" name="cards[]" value="{{ code }}">{{ label }}
+	<input type="hidden" name="cards[]" value="{{ code }}">
+	{{ name }}
+	{% if subtitle %}<small> - {{subtitle}}</small>{% endif %}
 </p>

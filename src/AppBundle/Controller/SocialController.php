@@ -313,51 +313,18 @@ class SocialController extends Controller
         $em = $doctrine->getEntityManager();
 
         $cards_code = $request->query->get('cards');
-        $faction_code = filter_var($request->query->get('faction'), FILTER_SANITIZE_STRING);
+        $affiliation_code = filter_var($request->query->get('affiliation'), FILTER_SANITIZE_STRING);
         $author_name = filter_var($request->query->get('author'), FILTER_SANITIZE_STRING);
         $decklist_name = filter_var($request->query->get('name'), FILTER_SANITIZE_STRING);
         $sort = $request->query->get('sort');
-        $packs = $request->query->get('packs');
-
-        if(!is_array($packs)) {
-            $packs = $dbh->executeQuery("select id from pack")->fetchAll(\PDO::FETCH_COLUMN);
-        }
-
-        $categories = [];
-        $on = 0; $off = 0;
-        $categories[] = array("label" => $this->get("translator")->trans('decklist.list.search.allowed.core'), "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
-        foreach($list_cycles as $cycle) {
-            $size = count($cycle->getSets());
-            if($cycle->getPosition() == 0 || $size == 0) continue;
-            $first_pack = $cycle->getPacks()[0];
-            if($cycle->getCode() == 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
-                $checked = count($packs) ? in_array($first_pack->getId(), $packs) : true;
-                if($checked) $on++;
-                else $off++;
-                $categories[0]["packs"][] = array("id" => $first_pack->getId(), "label" => $first_pack->getName(), "checked" => $checked, "future" => $first_pack->getDateRelease() === NULL);
-            } else {
-                $category = array("label" => $cycle->getName(), "packs" => []);
-                foreach($cycle->getPacks() as $pack) {
-                    $checked = count($packs) ? in_array($pack->getId(), $packs) : true;
-                    if($checked) $on++;
-                    else $off++;
-                    $category['packs'][] = array("id" => $pack->getId(), "label" => $pack->getName(), "checked" => $checked, "future" => $pack->getDateRelease() === NULL);
-                }
-                $categories[] = $category;
-            }
-        }
 
         $params = array(
-                'allowed' => $categories,
-                'on' => $on,
-                'off' => $off,
                 'author' => $author_name,
                 'name' => $decklist_name
         );
         $params['sort_'.$sort] = ' selected="selected"';
-        $params['factions'] = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
-        $params['faction_selected'] = $faction_code;
+        $params['affiliations'] = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findAllAndOrderByName();
+        $params['affiliation_selected'] = $affiliation_code;
 
         if (! empty($cards_code) && is_array($cards_code)) {
             $cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAllByCodes($cards_code);
@@ -375,7 +342,7 @@ class SocialController extends Controller
     /*
 	 * displays the lists of decklists
 	 */
-    public function listAction ($type, $faction = null, $page = 1, Request $request)
+    public function listAction ($type, $affiliation = null, $page = 1, Request $request)
     {
         $translator = $this->get('translator');
 
@@ -1005,38 +972,11 @@ class SocialController extends Controller
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
-        $factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
+        $affiliations = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findPrimaries();
 
-        $categories = []; $on = 0; $off = 0;
-        $categories[] = array("label" => $translator->trans("decklist.list.search.allowed.core"), "packs" => []);
-        $list_cycles = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findAll();
-        foreach($list_cycles as $cycle) {
-            $size = count($cycle->getPacks());
-            if($cycle->getPosition() == 0 || $size == 0) continue;
-            $first_pack = $cycle->getPacks()[0];
-            if($cycle->getCode() === 'core' || ($size === 1 && $first_pack->getName() == $cycle->getName()) ) {
-                $checked = $first_pack->getDateRelease() !== NULL;
-                if($checked) $on++;
-                else $off++;
-                $categories[0]["packs"][] = array("id" => $first_pack->getId(), "label" => $first_pack->getName(), "checked" => $checked, "future" => $first_pack->getDateRelease() === NULL);
-            } else {
-                $category = array("label" => $cycle->getName(), "packs" => []);
-                foreach($cycle->getPacks() as $pack) {
-                    $checked = $pack->getDateRelease() !== NULL;
-                    if($checked) $on++;
-                    else $off++;
-                    $category['packs'][] = array("id" => $pack->getId(), "label" => $pack->getName(), "checked" => $checked, "future" => $pack->getDateRelease() === NULL);
-                }
-                $categories[] = $category;
-            }
-        }
-        
         $searchForm = $this->renderView('AppBundle:Search:form.html.twig',
                             array(
-                                'factions' => $factions,
-                                'allowed' => $categories,
-                                'on' => $on,
-                                'off' => $off,
+                                'affiliations' => $affiliations,
                                 'author' => '',
                                 'name' => '',
                             )

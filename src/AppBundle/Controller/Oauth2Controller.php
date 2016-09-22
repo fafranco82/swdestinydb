@@ -111,7 +111,7 @@ class Oauth2Controller extends Controller
 	 *      {"name"="name", "dataType"="string", "required"=true, "description"="Name of the Deck"},
 	 *      {"name"="decklist_id", "dataType"="integer", "required"=false, "description"="Identifier of the Decklist from which the Deck is copied"},
 	 *      {"name"="description_md", "dataType"="string", "required"=false, "description"="Description of the Decklist in Markdown"},
-	 *      {"name"="faction_code", "dataType"="string", "required"=false, "description"="Code of the faction of the Deck"},
+	 *      {"name"="affiliation_code", "dataType"="string", "required"=false, "description"="Code of the affiliation of the Deck"},
 	 *      {"name"="tags", "dataType"="string", "required"=false, "description"="Space-separated list of tags"},
 	 *      {"name"="slots", "dataType"="string", "required"=true, "description"="Content of the Decklist as a JSON object"},
 	 *  },
@@ -136,18 +136,18 @@ class Oauth2Controller extends Controller
 			}
 		}
 		
-		$faction_code = filter_var($request->get('faction_code'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(!$faction_code) {
+		$affiliation_code = filter_var($request->get('affiliation_code'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(!$affiliation_code) {
 			return new JsonResponse([
 					'success' => FALSE,
-					'msg' => "Faction code missing"
+					'msg' => "Affiliation code missing"
 			]);
 		}
-		$faction = $this->getDoctrine()->getManager()->getRepository('AppBundle:Faction')->findOneBy(['code' => $faction_code]);
-		if(!$faction) {
+		$affiliation = $this->getDoctrine()->getManager()->getRepository('AppBundle:Affiliation')->findOneBy(['code' => $affiliation_code]);
+		if(!$affiliation) {
 			return new JsonResponse([
 					'success' => FALSE,
-					'msg' => "Faction code invalid"
+					'msg' => "Affiliation code invalid"
 			]);
 		}
 		
@@ -181,7 +181,7 @@ class Oauth2Controller extends Controller
 		$description = trim($request->get('description'));
 		$tags = filter_var($request->get('tags'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		
-		$this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $faction, $description, $tags, $slots, null);
+		$this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $affiliation, $description, $tags, $slots, null);
 		
 		$this->getDoctrine()->getManager()->flush();
 		

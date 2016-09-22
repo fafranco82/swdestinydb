@@ -1,7 +1,9 @@
 /* fonts */
-
 body {
+	//background-image: url('background.png');
+	background-color: #ECF0F1;
 }
+
 .card-content {
 	font: 16px/20px 'Amiri', serif
 }
@@ -345,6 +347,7 @@ ol {
 			width: $size;
 			height: $size;
 			background-size: round(map-get($background, w)/$i) round(map-get($background, h)/$i);
+			font-size: 20px - ($i*2);
 
 			@each $elem in (
 				(name: character, x: -75px, y: -72px), 
@@ -367,12 +370,28 @@ ol {
 }
 
 .character-thumbnail, .battlefield-thumbnail {
-  background-attachment: scroll;
-  background-origin: padding-box;
-  background-clip: border-box;
-  background-repeat: no-repeat;
-  position: relative;
-  border: 1px solid #000000;
+	background-attachment: scroll;
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-repeat: no-repeat;
+	position: relative;
+	border: 1px solid #000000;
+	color: white;
+	text-shadow: 1px 1px black;
+	background-color: #ecf0f1;
+
+	.character-unique {
+		position: absolute;
+		bottom: 1px;
+		font-size: 110%;
+		left: 2px;
+	}
+
+	.character-dice {
+		position: absolute;
+		bottom: 1px;
+		right: 2px;
+	}
 }
 
 .card-thumbnail{
@@ -487,44 +506,54 @@ h1.site-title {
 	font-size:116px;
 	text-align:center;
 	margin-top: 0;
+	//color: white;
 }
 div.site-slogan {
 	font-family: 'Open Sans Condensed', sans-serif;
 	position:relative;
 	font-size:40px;
 	text-align:center;
+	//color: white;
+}
+
+.index-decklist {
+	th, td {
+		padding: 2px;
+	}
+}
+
+.character-card-list {
+	margin-bottom: 10px;
+}
+
+
+.index-character {
+	vertical-align: top;
+	max-width: 120px;
+	font-size: 12px;
+
+	text-align: center;
+	display: inline-block;
+
+	.character-thumbnail {
+		margin: 10px auto 0 auto;
+		background-color: #ecf0f1;
+	}
 }
 
 /************ LIST OF DECKLISTS **************/
 
-.decklist-character-image {
-	width: 175px;
+.decklist-character-images {
+	width: 232px;
 }
 
 .decklist-character {
-	position: relative;
 	text-align: center;
 	display: inline-block;
-	font-size: 12px;
-	color: white;
+	background-color: #ecf0f1;
 
 	border-bottom: 7px solid black;
 }
-
-.decklist-character-unique {
-	position: absolute;
-	top: 2px;
-	left: 2px;
-	font-weight: bold;
-}
-
-.decklist-character-dice {
-	position: absolute;
-	top: 2px;
-	right: 2px;
-	text-shadow: 1px 1px black;
-}
-
 
 /************* DECKLIST *********************/
 
@@ -550,6 +579,10 @@ div.site-slogan {
 	color: inherit;
 }
 
+.bg-affiliation a, .bg-affiliation span {
+	color: inherit;
+}
+
 @mixin all-color($name, $color, $color2:inherit) {
   .bg-#{$name} {
     background-color: $color !important;
@@ -569,6 +602,12 @@ div.site-slogan {
   }
 }
 
+/************** AFFILIATION COLORS **************/
+@include all-color(villain, #000000, #f0f0f0);
+@include all-color(hero, #f0f0f0, #000000);
+@include all-color(neutral, #979d9f);
+
+/************** FACTION COLORS **************/
 @include all-color(yellow, #dab032);
 @include all-color(gray, #979d9f);
 @include all-color(blue, #0b609e, #f0f0f0);

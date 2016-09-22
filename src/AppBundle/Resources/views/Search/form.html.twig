@@ -1,12 +1,12 @@
 <form method="GET" action="{{ path('decklists_list', {type:'find'}) }}"
 	role="form">
 	<div class="row" style="margin-bottom:1em">
-		<div class="col-sm-4">
+		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="">{{ 'decklist.list.search.faction.label' | trans }}</label> <select class="form-control" id="faction" name="faction">
-					<option value="">{{ 'decklist.list.search.faction.any' | trans}}</option>
-					{% for faction in factions %}
-					<option value="{{ faction.code }}"{% if faction_selected is defined  and faction_selected == faction.code %} selected="selected"{% endif %}>{{ faction.name }}</option>
+				<label for="">{{ 'decklist.list.search.affiliation.label' | trans }}</label> <select class="form-control" id="affiliation" name="affiliation">
+					<option value="">{{ 'decklist.list.search.affiliation.any' | trans}}</option>
+					{% for affiliation in affiliations %}
+					<option value="{{ affiliation.code }}"{% if affiliation_selected is defined  and affiliation_selected == affiliation.code %} selected="selected"{% endif %}>{{ affiliation.name }}</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -16,7 +16,7 @@
 				<input type="text" class="form-control" id="card" placeholder="{{ 'decklist.list.search.used.hint' | trans }}">
 			</div>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="">{{ 'decklist.list.search.author.label' | trans }}</label> <input type="text"
 					class="form-control" id="author" name="author"
@@ -38,25 +38,5 @@
 			</div>
 			<button type="submit" class="btn btn-primary btn-block">{{ 'forms.search' | trans }}</button>
 		</div>
-		<div class="col-sm-4">
-		<p>
-			<a data-toggle="collapse" data-target="#allowed_packs" href="#allowed_packs">
-				{{ 'decklist.list.search.allowed.label' | trans}}
-			</a>
-			{% set packson %}<span id="packs-on">{{ on }}</span>{% endset %}
-			{% set packsoff %}<span id="packs-off">{{ off }}</span>{% endset %}
-			{{ 'decklist.list.search.allowed.onoff' | trans({'%on%': packson, '%off%': packsoff}) | raw }}
-		</p>
-		<div id="allowed_packs" class="collapse">
-		{% for category in allowed %}
-		  <p><small>{{ category.label }}</small></p>
-		  {% for pack in category.packs %}
-    		<div class="checkbox"><label class="{% if pack.future %}pack-future{% endif %}"><input type="checkbox" name="packs[]" value="{{ pack.id }}" {% if pack.checked %}checked="checked" {% endif %}>{{ pack.label }}</label></div>
-    	  {% endfor %}
-		{% endfor %}
-		<a href="#" id="select_all"><span class="fa fa-check"></span> {{ 'decklist.list.search.allowed.all' | trans }}</a>
-		/ <a href="#" id="select_none"><span class="fa fa-times"></span> {{ 'decklist.list.search.allowed.none' | trans }}</a>
-		</div>
-    	</div>
 	</div>
 </form>

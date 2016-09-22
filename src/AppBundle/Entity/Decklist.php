@@ -739,4 +739,33 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     {
         return $this->version;
     }
+    /**
+     * @var \AppBundle\Entity\Faction
+     */
+    private $predominantFaction;
+
+
+    /**
+     * Set predominantFaction
+     *
+     * @param \AppBundle\Entity\Faction $predominantFaction
+     *
+     * @return Decklist
+     */
+    public function setPredominantFaction(\AppBundle\Entity\Faction $predominantFaction = null)
+    {
+        $this->predominantFaction = $predominantFaction;
+
+        return $this;
+    }
+
+    /**
+     * Get predominantFaction
+     *
+     * @return \AppBundle\Entity\Faction
+     */
+    public function getPredominantFaction()
+    {
+        return $this->predominantFaction;
+    }
 }

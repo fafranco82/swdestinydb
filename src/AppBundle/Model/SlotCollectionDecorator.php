@@ -101,15 +101,11 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	
 	public function getCountByType() {
 		$countByType = [ 
-			'character' => array(
+			'upgrade' => array(
 				"cards" => 0,
 				"dice" => 0),
 
-			'location' => array(
-				"cards" => 0,
-				"dice" => 0),
-
-			'attachment' => array(
+			'support' => array(
 				"cards" => 0,
 				"dice" => 0),
 
@@ -125,6 +121,18 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 		}
 		return $countByType;
+	}
+
+	public function getCountByFaction() {
+		$countByFaction = ['red' => 0, 'yellow' => 0, 'blue' => 0];
+
+		foreach($this->slots as $slot) {
+			$code = $slot->getCard()->getFaction()->getCode();
+			if(array_key_exists($code, $countByFaction)) {
+				$countByFaction[$code] += max($slot->getQuantity(), $slot->getDice());
+			}
+		}
+		return $countByFaction;
 	}
 
 	public function getDrawDeck()
@@ -149,6 +157,26 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 		}
 		return new SlotCollectionDecorator(new ArrayCollection($characterDeck));
+	}
+
+	public function getCharacterRow()
+	{
+		$characterRow = [];
+		foreach($this->slots as $slot) {
+			if($slot->getCard()->getType()->getCode() === 'character') {
+				if($slot->getCard()->getIsUnique()) {
+					$characterRow[] = $slot;
+				} else {
+					$totalDice = $slot->getDice();
+					$slot->setDice(1);
+					$slot->setQuantity(1);
+					for($i = 0; $i < $totalDice; $i++) {
+						$characterRow[] = $slot;
+					}
+				}
+			}
+		}
+		return new SlotCollectionDecorator(new ArrayCollection($characterRow));
 	}
 
 	public function getCharacterPoints()

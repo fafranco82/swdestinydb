@@ -11,6 +11,7 @@ use AppBundle\Entity\Pack;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use AppBundle\Entity\Affiliation;
+use AppBundle\Entity\Faction;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -22,6 +23,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class DecklistManager
 {
 	protected $affiliation;
+	protected $predominantFaction;
 	protected $page = 1;
 	protected $start = 0;
 	protected $limit = 30;
@@ -38,6 +40,11 @@ class DecklistManager
 	public function setAffiliation(Affiliation $affiliation = null)
 	{
 		$this->affiliation = $affiliation;
+	}
+
+	public function setPredominantFaction(Faction $predominantFaction = null)
+	{
+		$this->predominantFaction = $predominantFaction;
 	}
 
 	public function setLimit($limit)
@@ -66,7 +73,9 @@ class DecklistManager
 		$qb->from('AppBundle:Decklist', 'd');
 		if($this->affiliation) {
 			$qb->where('d.affiliation = :affiliation');
+			$qb->andWhere('d.predominantFaction = :predominantFaction');
 			$qb->setParameter('affiliation', $this->affiliation);
+			$qb->setParameter('predominantFaction', $this->predominantFaction);
 		}
 		$qb->setFirstResult($this->start);
 		$qb->setMaxResults($this->limit);
@@ -170,8 +179,6 @@ class DecklistManager
 
 		$sort = $request->query->get('sort');
 
-		$packs = $request->query->get('packs');
-
 		$qb = $this->getQueryBuilder();
 		$joinTables = [];
 		
@@ -189,7 +196,7 @@ class DecklistManager
 			$qb->andWhere('d.name like :deckname');
 			$qb->setParameter('deckname', "%$decklist_name%");
 		}
-		if(!empty($cards_code) || !empty($packs)) {
+		if(!empty($cards_code)) {
 			if (!empty($cards_code) ) {
 				foreach ($cards_code as $i => $card_code) {
 					/* @var $card \AppBundle\Entity\Card */
@@ -199,19 +206,7 @@ class DecklistManager
 					$qb->innerJoin('d.slots', "s$i");
 					$qb->andWhere("s$i.card = :card$i");
 					$qb->setParameter("card$i", $card);
-
-					$packs[] = $card->getPack()->getId();
 				}
-			}
-			if (!empty($packs)) {
-				$sub = $this->doctrine->createQueryBuilder();
-				$sub->select("c");
-				$sub->from("AppBundle:Card","c");
-				$sub->innerJoin('AppBundle:Decklistslot', 's', 'WITH', 's.card = c');
-				$sub->where('s.decklist = d');
-				$sub->andWhere($sub->expr()->notIn('c.pack', $packs));
-
-				$qb->andWhere($qb->expr()->not($qb->expr()->exists($sub->getDQL())));
 			}
 		}
 

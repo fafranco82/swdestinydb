@@ -1,67 +1,58 @@
 (function app_deck_charts(deck_charts, $) {
 
-deck_charts.chart_types = function chart_types() {
+deck_charts.chart_cost = function chart_cost() {
 
-	var data = _.map(['upgrade', 'support', 'event'], function(type_code) {
-		var cards = app.deck.get_cards(null, {type_code: type_code});
-		return {
-			name: cards[0].type_name,
-			label: '<span class="icon icon-'+type_code+'"></span>',
-			y: app.deck.get_nb_cards(cards)
-		}
-	});
+		var data = [];
 
-	$("#deck-chart-types").highcharts({
-		chart: {
-			type: 'column'
-		},
-		title: {
-            text: "Cards by Type"
-        },
-		subtitle: {
-            text: "nanoniaaaaaaaa"
-        },
-		xAxis: {
-			categories: _.map(data, 'label'),
-			labels: {
-				useHTML: true
+		var draw_deck = app.deck.get_draw_deck();
+		draw_deck.forEach(function (card) {
+			if(typeof card.cost === 'number') {
+				data[card.cost] = data[card.cost] || 0;
+				data[card.cost] += card.indeck.cards;
+			}
+		})
+		data = _.flatten(data).map(function (value) { return value || 0; });
+
+		$("#deck-chart-cost").highcharts({
+			chart: {
+				type: 'line'
 			},
 			title: {
-				text: null
-			}
-		},
-		yAxis: {
-			min: 0,
-			allowDecimals: false,
-			tickInterval: 2,
-			title: null,
-			labels: {
-				overflow: 'justify'
-			}
-		},
-		tooltip: {
-			//headerFormat: '<span style="font-size: 10px">{point.key} Icon</span><br/>'
-			headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
-		},
-		series: [{
-			type: "column",
-			animation: false,
-			name: 'Hola',
-			showInLegend: false,
-			data: data
-		}],
-		plotOptions: {
-			column: {
-				borderWidth: 0,
-				groupPadding: 0,
-				shadow: false
-			}
-		}
-	});
+	            text: Translator.trans("decks.charts.cost.title")
+	        },
+			subtitle: {
+	            text: Translator.trans("decks.charts.cost.subtitle")
+	        },
+			xAxis: {
+				allowDecimals: false,
+				tickInterval: 1,
+				title: {
+					text: null
+				}
+			},
+			yAxis: {
+				min: 0,
+				allowDecimals: false,
+				tickInterval: 1,
+				title: null,
+				labels: {
+					overflow: 'justify'
+				}
+			},
+			tooltip: {
+				headerFormat: '<span style="font-size: 10px">'+Translator.trans('decks.charts.cost.tooltip.header', {cost: '{point.key}'})+'</span><br/>'
+			},
+			series: [{
+				animation: false,
+				name: Translator.trans('decks.charts.cost.tooltip.label'),
+				showInLegend: false,
+				data: data
+			}]
+		});
 }
 
 deck_charts.setup = function setup(options) {
-	deck_charts.chart_types();
+	deck_charts.chart_cost();
 }
 
 $(document).on('shown.bs.tab', 'a[data-toggle=tab]', function (e) {
