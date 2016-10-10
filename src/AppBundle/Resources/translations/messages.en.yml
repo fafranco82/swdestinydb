@@ -169,15 +169,20 @@ decks:
     autosave: Autosave...
   smartfilter:
     title: Smart filter syntax
-    example: "Example: <tt>m:1 s>3</tt> shows all characters with a <span class='icon-military'></span> icon and a STR greater than 3"
+    example: "Example: <tt>f:red o<3 d:1</tt> shows all Red cards with a die and cost fewer than 3."
     filters:
-      flavor: Flavor text
-      set_code: Set
+      affiliation: Affiliation
+      subtype_code: Subtype
+      has_die: With die
       faction_code: Faction
+      health: Health
       illustrator: Illustrator
+      subtitle: Subtitle
       cost: Cost
+      set_code: Set
       type_code: Type
       is_unique: Uniqueness
+      flavor: Flavor text
       text: Text
 
 decklist:

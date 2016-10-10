@@ -1,7 +1,3 @@
-app_admin_tournament:
-    resource: "@AppBundle/Resources/config/routing/admin/routing_admin_tournament.yml"
-    prefix:   /tournament
-
 AppBundle_admin_cycle:
     resource: "@AppBundle/Resources/config/routing/admin/routing_admin_cycle.yml"
     prefix:   /cycle
@@ -13,6 +9,10 @@ AppBundle_admin_pack:
 AppBundle_admin_type:
     resource: "@AppBundle/Resources/config/routing/admin/routing_admin_type.yml"
     prefix:   /type
+
+AppBundle_admin_subtype:
+    resource: "@AppBundle/Resources/config/routing/admin/routing_admin_subtype.yml"
+    prefix:   /subtype
 
 AppBundle_admin_faction:
     resource: "@AppBundle/Resources/config/routing/admin/routing_admin_faction.yml"

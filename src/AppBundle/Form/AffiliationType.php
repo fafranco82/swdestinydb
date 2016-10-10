@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FactionType extends AbstractType
+class AffiliationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +17,7 @@ class FactionType extends AbstractType
         $builder
             ->add('code')
             ->add('name')
-            ->add('is_primary')
+            ->add('isPrimary')
         ;
     }
     
@@ -27,7 +27,7 @@ class FactionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Faction'
+            'data_class' => 'AppBundle\Entity\Affiliation'
         ));
     }
 
@@ -36,6 +36,6 @@ class FactionType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_faction';
+        return 'appbundle_affiliation';
     }
 }

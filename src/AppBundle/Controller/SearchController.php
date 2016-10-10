@@ -33,7 +33,7 @@ class SearchController extends Controller
 			't' => 'code',
 			'f' => 'code',
 			's' => 'code',
-			'y' => 'rarity',
+			'y' => 'code',
 			''  => 'string',
 			'b' => 'string',
 			'i' => 'string',
