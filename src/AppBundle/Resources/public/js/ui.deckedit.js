@@ -418,9 +418,9 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
  * @memberOf ui
  */
 ui.on_2nd_die_change = function on_2nd_die_change(card_code, active) {
-	var update_all = app.deck.set_card_copies(card_code, 1) || app.deck.set_card_dice(card_code, active ? 2 : 1);
+	var update_all = !!(app.deck.set_card_copies(card_code, 1) + app.deck.set_card_dice(card_code, active ? 2 : 1));
 	ui.refresh_deck();
-	
+
 	if(update_all) {
 		ui.refresh_list();
 	}
