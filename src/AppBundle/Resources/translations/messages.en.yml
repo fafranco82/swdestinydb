@@ -35,7 +35,7 @@ decks:
     too_many_character_points: Character points limit exceeded
     too_many_copies: Contains too many copies of a card
     invalid_cards: Contains forbidden cards
-    faction_not_included: Contains cards from one missing faction
+    faction_not_included: Contains cards from one missing color
   build:
     choose:
       affiliation: Choose your affiliation
@@ -72,7 +72,7 @@ decks:
     notes:
       tags:
         label: Tags
-        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>melee</i>.
+        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>fun</i>.
       notes:
         label: Notes
         hint: "Type # to enter a card name. Type $ to enter a symbol."
@@ -174,7 +174,7 @@ decks:
       affiliation: Affiliation
       subtype_code: Subtype
       has_die: With die
-      faction_code: Faction
+      faction_code: Color
       health: Health
       illustrator: Illustrator
       subtitle: Subtitle
@@ -358,7 +358,7 @@ card:
     text: Text
     flavor: Flavor text
     affiliation: Affiliation
-    faction: Faction
+    faction: Color
     set: Set
     rarity: Rarity
     points: Points
@@ -377,7 +377,7 @@ card:
       points_cost: C.
       health: H.
       type: T.
-      faction: F.
+      faction: C.
 
 icon:
   unique: Unique

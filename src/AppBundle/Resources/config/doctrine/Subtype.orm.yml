@@ -27,6 +27,6 @@ AppBundle\Entity\Subtype:
             gedmo:
                 - translatable
     uniqueConstraints:
-        type_code_idx:
+        subtype_code_idx:
             columns: [ code ]
             

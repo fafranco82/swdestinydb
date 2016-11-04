@@ -31,6 +31,6 @@ AppBundle\Entity\SideType:
             gedmo:
                 - translatable
     uniqueConstraints:
-        type_code_idx:
+        sidetype_code_idx:
             columns: [ code ]
             

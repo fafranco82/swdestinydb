@@ -194,7 +194,7 @@ class ImportTransCommand extends ContainerAwareCommand
 		
 		$entity = $this->em->getRepository($entityName)->findOneBy(['code' => $data['code']]);
 		if(!$entity) {
-			throw new \Exception("Cannot find entity [code]");
+			throw new \Exception("Cannot find entity [${data['code']}]");
 		}
 		$entity->setTranslatableLocale($locale);
 		$this->em->refresh($entity);

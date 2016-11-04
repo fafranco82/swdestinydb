@@ -79,8 +79,6 @@
                 <a href="#" class="disabled"><span class="fa fa-user"></span></a>
             </li>
             <!-- locale selection -->
-            
-            {#
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">
                 <span class="lang-sm" lang="{{ app.request.locale | default(default_locale) }}"></span>
@@ -99,7 +97,6 @@
                 {% endfor %}
               </ul>
             </li>
-            #}
           </ul>
           <form class="navbar-form navbar-right visible-lg-block visible-xs-block external" action="{{ path('cards_find') }}" target="_blank">
             <div class="form-group">
@@ -167,8 +164,6 @@
     	app.ui.insert_alert_message('danger', {{ flashMessage|json_encode|raw }});
     {% endfor %}
 
-    //BETA Warning
-    app.ui.insert_alert_message('warning', 'Site in BETA status. Data can be lost.');
 	});
     </script>
 

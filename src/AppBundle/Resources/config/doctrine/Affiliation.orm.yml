@@ -31,6 +31,6 @@ AppBundle\Entity\Affiliation:
             nullable: false
             column: is_primary
     uniqueConstraints:
-        faction_code_idx:
+        affiliation_code_idx:
             columns: [ code ]
             

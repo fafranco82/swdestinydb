@@ -83,6 +83,7 @@ class DecklistFactory
 				$decklist->setPrecedent($deck->getParent());
 			}
 		}
+		$decklist->setPredominantFaction($predominantFaction);
 		$decklist->setParent($deck);
 
 		$deck->setMinorVersion(1);

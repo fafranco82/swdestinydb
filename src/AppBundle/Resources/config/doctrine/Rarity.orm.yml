@@ -27,6 +27,6 @@ AppBundle\Entity\Rarity:
             gedmo:
                 - translatable
     uniqueConstraints:
-        faction_code_idx:
+        rarity_code_idx:
             columns: [ code ]
             

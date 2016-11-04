@@ -1,0 +1,412 @@
+slogan: Constructor de mazos para Star Wars Destiny
+
+data_load_fail: "No fue posible cargar los datos. Haga click <a href='javascript:window.location.reload(true)'>aquí</a> para recargar la página."
+login_required: Debes estar identificado para realizar esta operación
+userby: por %user%
+seemore:
+  affiliation: Más de esta afiliación
+noimage: Sin imagen
+
+collection:
+  owned: Owned
+  help: Filter help
+  sets:
+    label: Sets
+    hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+  options:
+    label: Opciones
+    filter_button:
+      cumulative: Filtros acumulativos
+      exclusive: Filtros exclusivos
+    link_cards_dice: Unir cartas con sus dados
+  searchhint: Encuentra una carta o filtra la lista
+  addstarter: 
+    label: Añadir un pack de inicio
+    confirm: ¿Estás seguro de añadir las cartas y dados de %pack% de %set%? Debes guardar los cambios después de hacerlo.
+  
+decks:
+  privatedecks: Mis mazos privados
+  slotcount: "(%current%/%max% mazos)"
+  version: Versión %version%
+  description: Descripción
+  defaultemptydesc: "*Sin descripción*"
+  problems:
+    incorrect_size: El mazo de robo tiene que tener 30 cartas exactas
+    too_many_character_points: Límite de puntos de personaje excedido
+    too_many_copies: Contiene demasiadas copias de la misma carta (por título)
+    invalid_cards: Contiene cartas prohibidas (por ser de otra afiliación)
+    faction_not_included: Contiene cartas de un color no presente en los personajes
+  build:
+    choose:
+      affiliation: Elige tu afiliación
+    start: Crear el mazo y empezar a construirlo
+    newname: "Nuevo mazo: %affiliation%"
+    errors:
+      noaffiliation: Se requiere una afiliación.
+  edit:
+    unsaved: Este mazo tiene cambios sin guardar. Por favor, guarda el mazo o cancela los cambios antes de seguir modificándolo.
+    refresh: Recargar los datos de la aplicación
+    tabs:
+      build: Construir
+      notes: Notas
+      test: Pruebas
+      charts: Gráficas
+      history: Historia
+    build:
+      help: Ayuda de filtros
+      sets:
+        label: Sets
+        hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+      options:
+        label: Opciones
+        show:
+          unusable: Mostrar cartas que no se pueden usar
+          onlyused: Sólo mostrar cartas usadas
+          onlyowned: Sólo mostrar cartas en mi colección
+        display: "{1} Mostrar en 1 columna | ]1, Inf] Mostrar en %cols% columnas"
+        suggestions: "{0} No mostrar sugerencias | {1} Mostrar %count% sugerencia | ]1, Inf] Mostrar %count% sugerencias"
+        filter_button:
+          cumulative: Filtros acumulativos
+          exclusive: Filtros exclusivos
+      searchhint: Encuentra una carta o filtra la lista
+    notes:
+      tags:
+        label: Etiquetas
+        hint: Las etiquetas son útiles para filtrar tu lista de mazos, p. ej., <i>competitivo</i> or <i>divertido</i>.
+      notes:
+        label: Notas
+        hint: "Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo."
+    form:
+      name: Nombre
+      cancel: Cancelar cambios
+    meta:
+      characters: Personajes
+      points: "%points% punto | %points% puntos"
+      drawdeck: Mazo de robo
+      cards: "%count% carta | %count% cartas"
+      dice: "%count% dado | %count% dados"
+      sets: "Sets: %sets%"
+  form:
+    build: Construir nuevo mazo
+    uploadarchive: Subir archivo
+    new: Nuevo mazo
+    import:
+      label: Importar mazo
+      copypaste: Copiar/pegar
+      file: Fichero
+    selection: 
+      label: Con los seleccionados
+      compare:
+        label: Comparar
+        twodecks: Comparar dos mazos
+      tags:
+        label: Etiquetas
+        add: Añadir una o más etiquetas
+        remove: Eliminar una o más etiquetas
+        clear: Quitar todas las etiquetas
+      delete:
+        label: Borrar
+        selected: Borrar todos los mazos seleccionados
+    labelswitch: Click para cambiar a esta etiqueta. Mayús+Click para alternar esta etiqueta.
+    download:
+      text: Fichero de texto
+  modals:
+    card:
+      go: Ir a la página de la carta
+    fileimport:
+      title: Subir fichero de mazo
+      file:
+        label: Fichero
+      type:
+        label: Tipo de fichero
+        options:
+          auto: Automático
+          text: Texto
+    delete:
+      title: Borrar mazo
+      question: ¿Estás seguro de que deseas borrar el mazo %name%?
+      confirm: Sí, bórralo
+    deletelist:
+      title: Borrar mazos
+      question: ¿Estás seguro de que deseas borrar todos los mazos seleccionados?
+      confirm: Sí, bórralos
+    tags:
+      label: Por favor, introduzca la lista de etiquetas, separadas por espacios
+      hint: una-etiqueta otra
+      clear:
+        question: ¿Estás seguro de que deseas quitar todas las etiquetas de los mazos seleccionados?
+        confirm: Sí, quítalas
+  charts:
+    cost:
+      title: Coste de las cartas
+      subtitle: Se ignoran los costes X
+      tooltip:
+        header: "Coste %cost%"
+        label: "# cartas"
+  suggestions:
+    title: Sugerencias de cartas
+  published:
+    title: Versiones publicadas
+    none: Ninguna
+  simulator:
+    title: Simulador de robo
+    hint: Click para robar; Mayús-click para robar desde el principio
+    draw: Robar
+    all: todo
+    oddhint: "Probabilidades de robar al menos una copia de las cartas deseadas, después de robar tantas del mazo, dependiendo del número de copias incluidas (1 - 2 - 3)"
+    odds: Probabilidades
+    more: más
+  history:
+    timeremaining: Tiempo restante
+    columns:
+      date: Fecha
+      version: Versión
+      changes: Cambios
+      action: Acción
+    firstversion: Primera versión
+    unsaved: sin guardar
+    revert: Deshacer
+    autosave: Guardando automáticamente...
+  smartfilter:
+    title: Sintaxis del filtro inteligente
+    example: "Ejemplo: <tt>f:rojo o<3 d:1</tt> muestra todas las cartas rojas con dado y coste menor que 3."
+    filters:
+      affiliation: Afiliación
+      subtype_code: Subtipo
+      has_die: Con dado
+      faction_code: Color
+      health: Vida
+      illustrator: Ilustrador
+      subtitle: Subtítulo
+      cost: Coste
+      set_code: Set
+      type_code: Tipo
+      is_unique: Único
+      flavor: Texto de ambientación
+      text: Texto
+  compare:
+    decknumber: "Mazo #%id%"
+
+decklist:
+  publish:
+    name: Nombre
+    no: No
+    derived: Derivado de (copia el id o la dirección del mazo del cual se ha inspirado éste)
+    description: Descripción
+    editor:
+      hint: "Presiona # para insertar el nombre de una carta, $ para inserta un símbolo del juego."
+      cardtolink: Convertir el nombre de una carta en un enlace a ésta
+      entersymbol: Insertar un símbolo del juego
+      heading: Cabecera %number%
+    errors:
+      unauthorized: No tienes acceso a este mazo.
+      antispam:
+        newbie: Para prevenir el spam, las cuentas recién creadas deben esperar 24 horas antes de que puedan publicar un mazo.
+        limit: Para prevenir el spam, las cuentas no pueden publicar durante 24 horas más mazos que su reputación.
+      unreleased: Aún no puedes publicar este mazo porque tiene cartas que no han sido publicadas oficialmente.
+      invalid: No se puede publicar este mazo porque es inválido.
+      pagetitle:
+        spam: Prevención de spam
+    warnings:
+      published: "Este mazo <a href='%url%'>ya ha sido publicado</a> antes. Vas a crear un duplicado."
+  view:
+    versions: Versiones
+    published: publicado
+    duplicate: Duplicado de %duplicate%
+    comments:
+      count: "{0} Sin comentarios | {1} %count% comentario | ]1,Inf] %count% comentarios"
+      hint: "Introduce tu comentario en formato Markdown. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo. Escribe @ para introducir el nombre de un usuario."
+      submit: Enviar comentario
+    social:
+      like: Me gusta
+      favorite: Favorito
+      comment: Comentario
+      version: Versión
+    derived:
+      title: Derivado de
+      none: Ninguno. Éste es un mazo hecho de cero.
+    inspire:
+      title: Inspiración para
+      none: Ninguno todavía.
+    toolbar:
+      edit: Editar nombre y descripción del mazo
+    errors:
+      notfound: Mazo no encontrado.
+  list:
+    types:
+      popular: Populares
+      recent: Recientes
+      hottopics: Mazos de moda
+      hof: Salón de la Fama
+      myfavorites: Mis favoritos
+      mydecklists: Mis mazos
+    titles:
+      search: Búsqueda de mazos
+      find: Resultado de la búsqueda de mazos
+      popular: Mazos populares
+      recent: Mazos recientes
+      hottopics: Mazos de moda
+      halloffame: Salón de la Fama
+      favorites: Mazos favoritos
+      mine: Mis mazos
+    search:
+      affiliation:
+        label: Afiliación
+        any: cualquiera
+      author: 
+        label: Nombre del autor
+        hint: Introduce el nombre del autor
+      used:
+        label: Cartas usadas
+        hint: Introduce nombre de carta
+      decklist:
+        label: Nombre del mazo
+        hint: Introduce nombre del mazo
+      sort:
+        label: Ordenar
+        popularity: por Popularidad
+        date: por Fecha
+        likes: por Número de \"me gusta\"
+        reputation: por Reputación del autor
+
+nav:
+  mydecks: Mis mazos
+  mycollection: Mi colección
+  decklists: Mazos
+  cards: Cartas
+  rules: Reglas
+  advancedsearch: Búsqueda avanzada
+  cardsearch: Buscar carta
+  user:
+    loginregister: Identificarse o registrarse
+    editaccount: Editar cuenta
+    profile: Perfil público
+    logout: Salir    
+
+forms:
+  save: Guardar
+  edit: Editar
+  publish: Publicar
+  delete: Borrar
+  cancel: Cancelar
+  add: Añadir
+  remove: Eliminar
+  import: Importar
+  upload: Subir
+  reset: Limpiar
+  copy: Copiar
+  clone: Clonar
+  close: Cerrar
+  print: Imprimir
+  download: Descargar
+  search: Buscar
+
+
+search:
+  label: Search
+  setbrowse: Browse by set
+  title: Card Search
+  nametexts: Name and texts
+  attributes: Attributes
+  numerics: Numerics
+  other: Other
+  previews: Previews
+  submit: Submit
+  any: any
+  yes: Yes
+  no: No
+  only: Only
+  noresult: Your query didn't match any card.
+  sort:
+    name: Sort by Name
+    set: Sort by Set
+    faction: Sort by Faction
+    type: Sort by Type
+    costgold: Sort by Cost/Gold
+    strini: Sort by Strength/Initiative
+  view:
+    list: View as a Checklist
+    spoiler: View as a Spoiler
+    card: View as Full Cards
+    scan: View as Scans Only
+    short: View as Simple List
+
+pag:
+  cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
+
+card:
+  reviews:
+    title: Reviews
+    none: No review yet for this card.
+    unreleased: Reviews will be enabled for this card when it is officially released.
+    like: Like that review
+    edit: Edit review
+    write: Write a review
+    hint: "Write your analysis of the card, in at least %min% characters. You can write a number of card reviews equal to your reputation. This is not a place for questions or comments. Type # to enter a card name. Type $ to enter a symbol."
+    submit: Submit preview
+    posted: Your review has been posted. It will appear on the site in a few minutes.
+    comments:
+      add: Add a comment
+      hint: Your comment
+      post: Post
+      posted: Your comment has been posted. It will appear on the site in a few minutes.
+    alerts:
+      minimum: Your review must at least %min% characters long.
+  info:
+    name: Nombre
+    subtitle: Subtítulo
+    unique: Único
+    text: Texto
+    flavor: Texto de ambientación
+    affiliation: Afiliación
+    faction: Color
+    set: Set
+    rarity: Rareza
+    points: Puntos
+    cost: Coste
+    points_cost: Puntos/Coste
+    type: Tipo
+    subtype: Subtipo
+    health: Vida
+    illustrator: Ilustrador
+    die: Dado
+    has_die: Tiene dado
+    quantity: Cantidad
+    medium:
+      points_cost: P./C.
+    short:
+      points_cost: C.
+      health: S.
+      type: T.
+      faction: C.
+
+icon:
+  unique: Único
+  battlefield: Campo de batalla
+  character: Personaje
+  upgrade: Mejora
+  support: Apoyo
+  event: Evento
+  cards: Cartas
+  die: Dado
+  melee: Daño cuerpo a cuerpo
+  ranged: Daño a distancia
+  disrupt: Interferir
+  discard: Descartar
+  focus: Concentración
+  resource: Recurso
+  shield: Escudo
+  special: Especial
+  blank: Cara vacía
+
+
+keyword:
+  guardian:
+    name: Guardian
+    title: Before activate this character, you can deal it damage equal to the value of a die showing damage in your opponent's pool. Then remove that die.
+  ambush:
+    name: Ambush
+    title: After playing this card, you may immediately take one additional action.
+  redeploy:
+    name: Redeploy
+    title: After the attached character is defeated, you may immediately move this upgrade to any of your other characters. The upgrade die moves to the new character card, even if it was in your dice pool.
