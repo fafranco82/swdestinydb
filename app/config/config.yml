@@ -144,17 +144,12 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+    from_email:
+        address: "%email_sender_address%"
+        sender_name: "%email_sender_name%"
     registration:
         confirmation:
             enabled: true
-            from_email:
-                address: "%email_sender_address%"
-                sender_name: "%email_sender_name%"
-    resetting:
-        email:
-            from_email:
-                address: "%email_sender_address%"
-                sender_name: "%email_sender_name%"
 
 # FOSJsRoutingBundle Configuration
 fos_js_routing:
