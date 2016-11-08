@@ -147,6 +147,14 @@ fos_user:
     registration:
         confirmation:
             enabled: true
+            from_email:
+                address: "%email_sender_address%"
+                sender_name: "%email_sender_name%"
+    resetting:
+        email:
+            from_email:
+                address: "%email_sender_address%"
+                sender_name: "%email_sender_name%"
 
 # FOSJsRoutingBundle Configuration
 fos_js_routing:
