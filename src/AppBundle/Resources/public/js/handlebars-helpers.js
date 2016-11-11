@@ -14,6 +14,13 @@
             return value;
     });
 
+    Handlebars.registerHelper('nonzero_or_x', function(value, opt) {
+        if(!value || value==null || value=="0")
+            return 'X';
+        else
+            return value;
+    });
+
     Handlebars.registerHelper('text', function(text, opt) {
         var str = text || '';
         str = str.replace(/\[(\w+)\]/g, '<span class="icon-$1"></span>')

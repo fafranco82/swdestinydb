@@ -34,7 +34,7 @@
   {{#with (dieside this)}}
   <div class="card-die-face border-{{@root.card.faction_code}} card-die-face-{{icon}}{{#unless cost}} card-die-face-nocost{{/unless}}{{#if modifier}} card-die-face-modifier{{/if}}">
     <div class="card-die-face-content">
-      <span class="card-die-face-value">{{#if modifier}}+{{/if}}{{value}}</span><span class="icon-{{icon}}"></span>
+      <span class="card-die-face-value">{{#if modifier}}+{{/if}}{{nonzero_or_x value}}</span><span class="icon-{{icon}}"></span>
     </div>
     {{#if cost}}
     <div class="card-die-face-cost">

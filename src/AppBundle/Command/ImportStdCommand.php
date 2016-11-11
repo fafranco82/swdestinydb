@@ -547,7 +547,7 @@ class ImportStdCommand extends ContainerAwareCommand
 				if(!key_exists($type, $this->collections['SideType']))
 					throw new \Exception("There is no side type with code [$type]");
 				
-				$side->setModifier($modifier=='+' ? 1 : $modifier=='-' ? -1 : 0);
+				$side->setModifier($modifier=='+' ? 1 : 0);
 				$side->setValue($value);
 				$side->setType($this->collections['SideType'][$type]);
 				$side->setCost($cost);

@@ -38,7 +38,7 @@
 	{{#each card.sides}}
 	{{#with (dieside this)}}
 	<td class="text-center die-face visible-lg" data-th="Die">
-		{{#if modifier}}+{{/if}}{{#in code "-" "Sp"}}{{else}}{{value}}{{/in}}<span class="icon icon-{{icon}}"></span>{{#if cost}}/{{cost}}{{/if}}
+		{{#if modifier}}+{{/if}}{{#in code "-" "Sp"}}{{else}}{{nonzero_or_x value}}{{/in}}<span class="icon icon-{{icon}}"></span>{{#if cost}}/{{cost}}{{/if}}
 	</td>
 	{{/with}}
 	{{/each}}
