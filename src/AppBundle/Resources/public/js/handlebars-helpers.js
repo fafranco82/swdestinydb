@@ -114,7 +114,7 @@
             throw new Error("Handlerbars Helper 'in' needs at least 2 parameters");
 
         var haystack = Array.prototype.slice.call(arguments, 1, arguments.length-1);
-        var result = needle in haystack;
+        var result = haystack.indexOf(needle) >= 0;
         var options = arguments[arguments.length-1];
 
         if(typeof options.fn === 'function') {
