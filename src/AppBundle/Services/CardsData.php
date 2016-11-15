@@ -44,6 +44,7 @@ class CardsData
 			'[melee]' => '<span class="icon-melee"></span>',
 			'[ranged]' => '<span class="icon-ranged"></span>',
 			'[shield]' => '<span class="icon-shield"></span>',
+			'[resource]' => '<span class="icon-resource"></span>',
 			'[special]' => '<span class="icon-special"></span>',
 			'[unique]' => '<span class="icon-unique"></span>',
 		];
