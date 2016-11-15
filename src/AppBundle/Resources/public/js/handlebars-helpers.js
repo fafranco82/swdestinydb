@@ -15,7 +15,7 @@
     });
 
     Handlebars.registerHelper('nonzero_or_x', function(value, opt) {
-        if(!_.isNumber(value) || value==0)
+        if(value==0)
             return 'X';
         else
             return value;
