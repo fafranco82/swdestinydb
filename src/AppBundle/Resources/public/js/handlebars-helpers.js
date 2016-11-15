@@ -8,14 +8,14 @@
     });
 
     Handlebars.registerHelper('int_or_x', function(value, opt) {
-        if(!value || value==null || value=="")
+        if(!_.isNumber(value))
             return 'X';
         else
             return value;
     });
 
     Handlebars.registerHelper('nonzero_or_x', function(value, opt) {
-        if(!value || value==null || value=="0")
+        if(!_.isNumber(value) || value==0)
             return 'X';
         else
             return value;
