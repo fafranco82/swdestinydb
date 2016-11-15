@@ -1,5 +1,5 @@
 <div class="card-faction">
 	<span class="card-affiliation">{{ card.affiliation_name }}</span>.
-	<span class="card-faction">{{ card.faction_name }}</span>.
+	{% if card.type_code != "battlefield" %}<span class="card-faction">{{ card.faction_name }}</span>.{% endif %}
 	<span class="card-rarity">{{ card.rarity_name }}</span>.
 </div>

@@ -11,7 +11,7 @@
 </h4>
 <div class="card-faction">
 	<span class="card-affiliation">{{card.affiliation_name}}</span>.
-	<span class="card-faction">{{card.faction_name}}</span>.
+	{{#compare card.type_code "battlefield"}}{{else}}<span class="card-faction">{{card.faction_name}}</span>.{{/compare}}
 	<span class="card-rarity">{{card.rarity_name}}</span>.
 </div>
 <div class="card-info">
