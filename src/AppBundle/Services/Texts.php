@@ -99,7 +99,7 @@ class Texts
      */
     public function slugify($filename)
     {
-    	$filename = mb_ereg_replace('[^\w\-]', '-', $filename);
+    	$filename = preg_replace('[^\w\-]', '-', $filename);
     	$filename = iconv('utf-8', 'us-ascii//TRANSLIT', $filename);
     	$filename = preg_replace('/[^\w\-]/', '', $filename);
     	$filename = preg_replace('/\-+/', '-', $filename);
