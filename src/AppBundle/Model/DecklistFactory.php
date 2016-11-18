@@ -44,7 +44,7 @@ class DecklistFactory
 		if(empty($descriptionMd)) {
 			$descriptionMd = $deck->getDescriptionMd();
 		}
-		$description = $this->texts->markdown($descriptionMd);
+		//$description = $this->texts->markdown($descriptionMd);
 
 		$new_content = json_encode($deck->getSlots()->getContent());
 		$new_signature = md5($new_content);
