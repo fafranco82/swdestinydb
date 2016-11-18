@@ -72,8 +72,11 @@ class SocialController extends Controller
     	}
     	
     	$new_content = json_encode($deck->getSlots()->getContent());
-    	$new_signature = md5($new_content);
-    	$old_decklists = $this->getDoctrine()->getRepository('AppBundle:Decklist')->findBy([ 'signature' => $new_signature ]);
+        $new_signature = md5($new_content);
+        $this->get('session')->getFlashBag()->set('error', 'Testing when page broke: MD5 calculated');
+        $old_decklists = $this->getDoctrine()->getRepository('AppBundle:Decklist')->findBy([ 'signature' => $new_signature ]);
+
+        return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
     	
     	/* @var $decklist \AppBundle\Entity\Decklist */
     	foreach ($old_decklists as $decklist) {
