@@ -7,11 +7,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png" />
+    {#
     {% if app.request.locale != "en" and app.request.attributes.get('_route') != "" %}
       {% set _route_params = app.request.attributes.get('_route_params')|default({}) %}
       {% set _get_params = app.request.query.all()|default({}) %}
       <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), _route_params|merge(_get_params)|merge({'_locale': 'en'})) }}"/>
     {% endif %}
+    #}
     {% if pagedescription is defined %}<meta name="description" content="{{ pagedescription }}">{% endif %}
 
     <link href='https://fonts.googleapis.com/css?family=Amiri:400,400italic,700,700italic|Julius+Sans+One|Open+Sans:400,400italic,700,700italic|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
@@ -79,6 +81,7 @@
                 <a href="#" class="disabled"><span class="fa fa-user"></span></a>
             </li>
             <!-- locale selection -->
+            {#
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">
                 <span class="lang-sm" lang="{{ app.request.locale | default(default_locale) }}"></span>
@@ -97,6 +100,7 @@
                 {% endfor %}
               </ul>
             </li>
+            #}
           </ul>
           <form class="navbar-form navbar-right visible-lg-block visible-xs-block external" action="{{ path('cards_find') }}" target="_blank">
             <div class="form-group">
