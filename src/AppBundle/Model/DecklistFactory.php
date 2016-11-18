@@ -46,12 +46,12 @@ class DecklistFactory
 		}
 		$description = $this->texts->markdown($descriptionMd);
 
-		$new_content = json_encode($deck->getSlots()->getContent());
-		$new_signature = md5($new_content);
+		//$new_content = json_encode($deck->getSlots()->getContent());
+		//$new_signature = md5($new_content);
 
 		$countByFaction = $deck->getSlots()->getCountByFaction();
-        /*$predominantFaction = array_keys($countByFaction, max($countByFaction))[0];
-        $predominantFaction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(["code" => $predominantFaction]);*/
+        $predominantFaction = array_keys($countByFaction, max($countByFaction))[0];
+        $predominantFaction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(["code" => $predominantFaction]);
 		
 		$decklist = new Decklist();
 		$decklist->setName($name);
@@ -61,7 +61,7 @@ class DecklistFactory
 		$decklist->setDescriptionHtml($description);
 		$decklist->setDateCreation(new \DateTime());
 		$decklist->setDateUpdate(new \DateTime());
-		$decklist->setSignature($new_signature);
+		//$decklist->setSignature($new_signature);
 		$decklist->setAffiliation($deck->getAffiliation());
 		$decklist->setLastSet($deck->getLastSet());
 		$decklist->setNbVotes(0);
@@ -83,7 +83,7 @@ class DecklistFactory
 				$decklist->setPrecedent($deck->getParent());
 			}
 		}
-		//$decklist->setPredominantFaction($predominantFaction);
+		$decklist->setPredominantFaction($predominantFaction);
 		$decklist->setParent($deck);
 
 		$deck->setMinorVersion(1);
