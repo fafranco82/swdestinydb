@@ -90,9 +90,6 @@ class SocialController extends Controller
         // decklist for the form ; won't be persisted
         $decklist = $this->get('decklist_factory')->createDecklistFromDeck($deck, $deck->getName(), $deck->getDescriptionMd());
                 
-        $this->get('session')->getFlashBag()->set('error', 'Make a new decklist for the form');
-        return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
-
         return $this->render('AppBundle:Decklist:decklist_edit.html.twig', [
                 'url' => $this->generateUrl('decklist_create'),
                 'deck' => $deck,

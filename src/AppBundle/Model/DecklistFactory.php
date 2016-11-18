@@ -44,14 +44,14 @@ class DecklistFactory
 		if(empty($descriptionMd)) {
 			$descriptionMd = $deck->getDescriptionMd();
 		}
-		//$description = $this->texts->markdown($descriptionMd);
+		$description = $this->texts->markdown($descriptionMd);
 
 		$new_content = json_encode($deck->getSlots()->getContent());
 		$new_signature = md5($new_content);
 
 		$countByFaction = $deck->getSlots()->getCountByFaction();
-        $predominantFaction = array_keys($countByFaction, max($countByFaction))[0];
-        $predominantFaction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(["code" => $predominantFaction]);
+        /*$predominantFaction = array_keys($countByFaction, max($countByFaction))[0];
+        $predominantFaction = $this->doctrine->getRepository('AppBundle:Faction')->findOneBy(["code" => $predominantFaction]);*/
 		
 		$decklist = new Decklist();
 		$decklist->setName($name);
@@ -83,7 +83,7 @@ class DecklistFactory
 				$decklist->setPrecedent($deck->getParent());
 			}
 		}
-		$decklist->setPredominantFaction($predominantFaction);
+		//$decklist->setPredominantFaction($predominantFaction);
 		$decklist->setParent($deck);
 
 		$deck->setMinorVersion(1);
