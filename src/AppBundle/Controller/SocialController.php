@@ -73,35 +73,36 @@ class SocialController extends Controller
     	
     	$new_content = json_encode($deck->getSlots()->getContent());
         $new_signature = md5($new_content);
-        $this->get('session')->getFlashBag()->set('error', 'Testing when page broke: MD5 calculated');
         $old_decklists = $this->getDoctrine()->getRepository('AppBundle:Decklist')->findBy([ 'signature' => $new_signature ]);
 
+        
+        /* @var $decklist \AppBundle\Entity\Decklist */
+        foreach ($old_decklists as $decklist) {
+            if (json_encode($decklist->getSlots()->getContent()) == $new_content) {
+                $url = $this->generateUrl('decklist_detail', array(
+                        'decklist_id' => $decklist->getId(),
+                        'decklist_name' => $decklist->getNameCanonical()
+                ));
+                $this->get('session')->getFlashBag()->set('warning', $translator->trans('decklist.publish.warnings.published', array("%url%" => $url)));
+            }
+        }
+        
+        // decklist for the form ; won't be persisted
+        $decklist = $this->get('decklist_factory')->createDecklistFromDeck($deck, $deck->getName(), $deck->getDescriptionMd());
+                
+        $this->get('session')->getFlashBag()->set('error', 'Make a new decklist for the form');
         return $this->redirect($this->generateUrl('deck_view', [ 'deck_id' => $deck->getId() ]));
-    	
-    	/* @var $decklist \AppBundle\Entity\Decklist */
-    	foreach ($old_decklists as $decklist) {
-    		if (json_encode($decklist->getSlots()->getContent()) == $new_content) {
-    			$url = $this->generateUrl('decklist_detail', array(
-    					'decklist_id' => $decklist->getId(),
-    					'decklist_name' => $decklist->getNameCanonical()
-    			));
-    			$this->get('session')->getFlashBag()->set('warning', $translator->trans('decklist.publish.warnings.published', array("%url%" => $url)));
-    		}
-    	}
-    	
-    	// decklist for the form ; won't be persisted
-    	$decklist = $this->get('decklist_factory')->createDecklistFromDeck($deck, $deck->getName(), $deck->getDescriptionMd());
-    	    	
-    	return $this->render('AppBundle:Decklist:decklist_edit.html.twig', [
-    			'url' => $this->generateUrl('decklist_create'),
-    			'deck' => $deck,
-    			'decklist' => $decklist
-    	]);
+
+        return $this->render('AppBundle:Decklist:decklist_edit.html.twig', [
+                'url' => $this->generateUrl('decklist_create'),
+                'deck' => $deck,
+                'decklist' => $decklist
+        ]);
     }
     
     /**
-	 * creates a new decklist from a deck (publish action)
-	 */
+     * creates a new decklist from a deck (publish action)
+     */
     public function createAction (Request $request)
     {
         $translator = $this->get("translator");
