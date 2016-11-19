@@ -18,6 +18,7 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		}
 	}
 	Config = _.extend({
+		'only-show-owned': 0,
 		'link-cards-dice': 0,
 		'buttons-behavior': 'cumulative'
 	}, Config || {});
@@ -47,7 +48,7 @@ ui.init_config_buttons = function init_config_buttons() {
 		$('input[name='+radio+'][value='+Config[radio]+']').prop('checked', true);
 	});
 	// checkbox
-	['link-cards-dice'].forEach(function (checkbox) {
+	['only-show-owned', 'link-cards-dice'].forEach(function (checkbox) {
 		if(Config[checkbox]) $('input[name='+checkbox+']').prop('checked', true);
 	});
 }
@@ -460,6 +461,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 	var divs = CardDivs[ 0 ];
 
 	cards.forEach(function (card) {
+		if (Config['only-show-owned'] && card.owned.cards==0) return;
 		var row = divs[card.code];
 		if(!row) row = divs[card.code] = ui.build_row(card);
 

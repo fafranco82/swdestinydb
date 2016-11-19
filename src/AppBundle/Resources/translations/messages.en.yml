@@ -15,6 +15,7 @@ collection:
     hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
   options:
     label: Options
+    only_show_owned: Show only owned cards
     filter_button:
       cumulative: Filters cumulative
       exclusive: Filters exclusive

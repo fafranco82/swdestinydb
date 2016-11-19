@@ -15,6 +15,7 @@ collection:
     hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
   options:
     label: Opciones
+    only_show_owned: Sólo mostrar cartas en mi colección
     filter_button:
       cumulative: Filtros acumulativos
       exclusive: Filtros exclusivos
