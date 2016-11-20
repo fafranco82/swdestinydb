@@ -300,10 +300,7 @@ class BuilderController extends Controller
             );
         }
 
-        $content = [];
-        foreach ($deck->getSlots() as $slot) {
-            $content[$slot->getCard()->getCode()] = $slot->getQuantity();
-        }
+        $content = $deck->getSlots()->getContent();
         return $this->forward('AppBundle:Builder:save',
             array(
                 'name' => $deck->getName().' (clone)',
@@ -602,10 +599,7 @@ class BuilderController extends Controller
         /* @var $decklist \AppBundle\Entity\Decklist */
         $decklist = $em->getRepository('AppBundle:Decklist')->find($decklist_id);
 
-        $content = [];
-        foreach ($decklist->getSlots() as $slot) {
-            $content[$slot->getCard()->getCode()] = $slot->getQuantity();
-        }
+        $content = $decklist->getSlots()->getContent();
         return $this->forward('AppBundle:Builder:save',
                 array(
                         'name' => $decklist->getName(),
