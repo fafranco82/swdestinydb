@@ -1,0 +1,412 @@
+slogan: Deckbuilder for Star Wars Destiny
+
+data_load_fail: "Unable to load the data. Click <a href='javascript:window.location.reload(true)'>here</a> to reload your page."
+login_required: You must be logged in for this operation.
+userby: by %user%
+seemore:
+  affiliation: More in this affiliation
+noimage: No image
+
+collection:
+  owned: Owned
+  help: Filter help
+  sets:
+    label: Sets
+    hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+  options:
+    label: Options
+    only_show_owned: Show only owned cards
+    filter_button:
+      cumulative: Filters cumulative
+      exclusive: Filters exclusive
+    link_cards_dice: Link cards with dice
+  searchhint: Find a card or filter the list
+  addstarter: 
+    label: Add Starter Pack
+    confirm: Are you sure you want to add cards and dice from %pack% of %set%? You will need to save the changes after this.
+  
+decks:
+  privatedecks: My private decks
+  slotcount: "(%current%/%max% slots)"
+  version: Version %version%
+  description: Description
+  defaultemptydesc: "*No description.*"
+  problems:
+    incorrect_size: Draw deck must be 30 cards
+    too_many_character_points: Character points limit exceeded
+    too_many_copies: Contains too many copies of a card
+    invalid_cards: Contains forbidden cards
+    faction_not_included: Contains cards from one missing color
+  build:
+    choose:
+      affiliation: Choose your affiliation
+    start: Create the deck and start building
+    newname: "New deck: %affiliation%"
+    errors:
+      noaffiliation: A affiliation is required.
+  edit:
+    unsaved: This deck has unsaved changes. Please save the deck or cancel the changes before making further edits.
+    refresh: Refresh all application data
+    tabs:
+      build: Build
+      notes: Notes
+      test: Test
+      charts: Charts
+      history: History
+    build:
+      help: Filter help
+      sets:
+        label: Sets
+        hint: Shift+Click to select only one option ; Alt+Shift+Click to select all other options
+      options:
+        label: Options
+        show:
+          unusable: Show unusabled cards
+          onlyused: Show only used cards
+          onlyowned: Show only owned cards
+        display: "{1} Display on 1 column | ]1, Inf] Display on %cols% columns"
+        suggestions: "{0} Show no suggestion | {1} Show %count% suggestion | ]1, Inf] Show %count% suggestions"
+        filter_button:
+          cumulative: Filters cumulative
+          exclusive: Filters exclusive
+      searchhint: Find a card or filter the list
+    notes:
+      tags:
+        label: Tags
+        hint: Tags are for easy filtering in your list of decks, e.g. <i>competitive</i> or <i>fun</i>.
+      notes:
+        label: Notes
+        hint: "Type # to enter a card name. Type $ to enter a symbol."
+    form:
+      name: Name
+      cancel: Cancel edits
+    meta:
+      characters: Characters
+      points: "%points% point | %points% points"
+      drawdeck: Draw deck
+      cards: "%count% card | %count% cards"
+      dice: "%count% die | %count% dice"
+      sets: "Sets: %sets%"
+  form:
+    build: Build New Deck
+    uploadarchive: Upload archive
+    new: New Deck
+    import:
+      label: Import Deck
+      copypaste: Copy/paste
+      file: File
+    selection: 
+      label: With Selection
+      compare:
+        label: Compare
+        twodecks: Compare two decks
+      tags:
+        label: Tags
+        add: Add one or more tags
+        remove: Remove one or more tags
+        clear: Clear all tags
+      delete:
+        label: Delete
+        selected: Delete all decks selected
+    labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
+    download:
+      text: Text file
+  modals:
+    card:
+      go: Go to card page
+    fileimport:
+      title: Upload deck file
+      file:
+        label: File
+      type:
+        label: File type
+        options:
+          auto: Auto
+          text: Text
+    delete:
+      title: Delete deck
+      question: Are you sure you want to delete the deck %name%?
+      confirm: Yes, delete
+    deletelist:
+      title: Delete decks
+      question: Are you sure you want to delete all the decks selected?
+      confirm: Yes, delete
+    tags:
+      label: Please enter the list of tags, separated by spaces
+      hint: a-tag another
+      clear:
+        question: Are you sure you want to clear all tags from the selected decks?
+        confirm: Yes, clear
+  charts:
+    cost:
+      title: Card Cost
+      subtitle: Cost X ignored
+      tooltip:
+        header: "Cost %cost%"
+        label: "# cards"
+  suggestions:
+    title: Card suggestions
+  published:
+    title: Published versions
+    none: None
+  simulator:
+    title: Card draw simulator
+    hint: Click to draw; Shift-click to reset and draw
+    draw: Draw
+    all: all
+    oddhint: "Odds to have at least 1 copy of a desired card, after having drawn that many cards from the deck, depending of the number of copies in the deck (1 - 2)"
+    odds: Odds
+    more: more
+  history:
+    timeremaining: Time Remaining
+    columns:
+      date: Date
+      version: Version
+      changes: Changes
+      action: Action
+    firstversion: First version
+    unsaved: unsaved
+    revert: Revert
+    autosave: Autosave...
+  smartfilter:
+    title: Smart filter syntax
+    example: "Example: <tt>f:red o<3 d:1</tt> shows all Red cards with a die and cost fewer than 3."
+    filters:
+      affiliation: Affiliation
+      subtype_code: Subtype
+      has_die: With die
+      faction_code: Color
+      health: Health
+      illustrator: Illustrator
+      subtitle: Subtitle
+      cost: Cost
+      set_code: Set
+      type_code: Type
+      is_unique: Uniqueness
+      flavor: Flavor text
+      text: Text
+
+decklist:
+  publish:
+    name: Name
+    no: No
+    derived: Derived from (copy id or address of the decklist this one is inspired from)
+    description: Description
+    editor:
+      hint: "Press # to insert a card name, $ to insert a game symbol."
+      cardtolink: Turn a card name into a card link
+      entersymbol: Insert a game symbol
+      heading: Heading %number%
+    errors:
+      unauthorized: You don't have access to this decklist.
+      antispam:
+        newbie: To prevent spam, newly created accounts must wait 24 hours before being allowed to publish a decklist.
+        limit: To prevent spam, accounts cannot publish more decklists than their reputation per 24 hours.
+      unreleased: You cannot publish this deck yet, because it has unreleased cards.
+      invalid: This deck cannot be published because it is invalid.
+      pagetitle:
+        spam: Spam prevention
+    warnings:
+      published: "This deck <a href='%url%'>has already been published</a> before. You are going to create a duplicate."
+  view:
+    versions: Versions
+    published: published
+    duplicate: Duplicate of %duplicate%
+    comments: 
+      count: "{0} No comments | {1} %count% comment | ]1,Inf] %count% comments"
+      hint: "Enter your comment in Markdown format. Type # to enter a card name. Type $ to enter a symbol. Type @ to enter a user name."
+      submit: Submit comment
+    social:
+      like: Like
+      favorite: Favorite
+      comment: Comment
+      version: Version
+    derived:
+      title: Derived from
+      none: None. Self-made deck here.
+    inspire:
+      title: Inspiration for
+      none: None yet.
+    toolbar:
+      edit: Edit decklist name / description
+    errors:
+      notfound: Decklist not found.
+  list:
+    types:
+      popular: Popular
+      recent: Recent
+      tournaments: Tournaments
+      hottopics: Hot topics
+      hof: Hall of Fame
+      myfavorites: My favorites
+      mydecklists: My decklists
+    titles:
+      search: Decklist Search
+      find: Decklist search results
+      popular: Popular decklists
+      recent: Recent decklists
+      hottopics: Hot topics
+      halloffame: Hall of Fame
+      favorites: Favorite decklists
+      mine: My decklists
+    search:
+      affiliation:
+        label: Affiliation
+        any: any
+      author: 
+        label: Author name
+        hint: Enter author name
+      used:
+        label: Cards used
+        hint: Enter card name
+      decklist:
+        label: Decklist name
+        hint: Enter text to search in name
+      sort:
+        label: Sort
+        popularity: By Popularity
+        date: By Date
+        likes: By Number of Likes
+        reputation: By Reputation of Author
+
+nav:
+  mydecks: My decks
+  mycollection: My collection
+  decklists: Decklists
+  cards: Cards
+  rules: Rules
+  advancedsearch: Advanced Search
+  cardsearch: Card Search
+  user:
+    loginregister: Login or register
+    editaccount: Edit account
+    profile: Public profile
+    logout: Logout
+
+forms:
+  save: Save
+  saved: Data saved
+  edit: Edit
+  publish: Publish
+  delete: Delete
+  cancel: Cancel
+  add: Add
+  remove: Remove
+  import: Import
+  upload: Upload
+  reset: Reset
+  copy: Copy
+  clone: Clone
+  close: Close
+  print: Print
+  download: Download
+  search: Search
+
+search:
+  label: Search
+  setbrowse: Browse by set
+  title: Card Search
+  nametexts: Name and texts
+  attributes: Attributes
+  numerics: Numerics
+  other: Other
+  previews: Previews
+  submit: Submit
+  any: any
+  yes: Yes
+  no: No
+  only: Only
+  noresult: Your query didn't match any card.
+  sort:
+    name: Sort by Name
+    set: Sort by Set
+    faction: Sort by Faction
+    type: Sort by Type
+    costgold: Sort by Cost/Gold
+    strini: Sort by Strength/Initiative
+  view:
+    list: View as a Checklist
+    spoiler: View as a Spoiler
+    card: View as Full Cards
+    scan: View as Scans Only
+    short: View as Simple List
+
+pag:
+  cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
+
+card:
+  reviews:
+    title: Reviews
+    none: No review yet for this card.
+    unreleased: Reviews will be enabled for this card when it is officially released.
+    like: Like that review
+    edit: Edit review
+    write: Write a review
+    hint: "Write your analysis of the card, in at least %min% characters. You can write a number of card reviews equal to your reputation. This is not a place for questions or comments. Type # to enter a card name. Type $ to enter a symbol."
+    submit: Submit preview
+    posted: Your review has been posted. It will appear on the site in a few minutes.
+    comments:
+      add: Add a comment
+      hint: Your comment
+      post: Post
+      posted: Your comment has been posted. It will appear on the site in a few minutes.
+    alerts:
+      minimum: Your review must at least %min% characters long.
+  info:
+    name: Name
+    subtitle: Subtitle
+    unique: Unique
+    text: Text
+    flavor: Flavor text
+    affiliation: Affiliation
+    faction: Color
+    set: Set
+    rarity: Rarity
+    points: Points
+    cost: Cost
+    points_cost: Points/Cost
+    type: Type
+    subtype: Subtype
+    health: Health
+    illustrator: Illustrator
+    die: Die
+    has_die: Has die
+    quantity: Quantity
+    medium:
+      points_cost: P./C.
+    short:
+      points_cost: C.
+      health: H.
+      type: T.
+      faction: C.
+
+icon:
+  unique: Unique
+  battlefield: Battlefield
+  character: Character
+  upgrade: Upgrade
+  support: Support
+  event: Event
+  cards: Cards
+  die: Die
+  melee: Melee Damage
+  ranged: Ranged Damage
+  disrupt: Disrupt
+  discard: Discard
+  focus: Focus
+  resource: Resource
+  shield: Shield
+  special: Special
+  blank: Blank
+
+
+keyword:
+  guardian:
+    name: Guardian
+    title: Before activate this character, you can deal it damage equal to the value of a die showing damage in your opponent's pool. Then remove that die.
+  ambush:
+    name: Ambush
+    title: After playing this card, you may immediately take one additional action.
+  redeploy:
+    name: Redeploy
+    title: After the attached character is defeated, you may immediately move this upgrade to any of your other characters. The upgrade die moves to the new character card, even if it was in your dice pool.
