@@ -22,6 +22,7 @@ parameters:
         - en
         - es
         - fr
+        - pl
     default_locale: en
 
 framework:
@@ -129,6 +130,7 @@ jms_i18n_routing:
         en: "%website_url%"
         es: "es.%website_url%" 
         fr: "fr.%website_url%"
+        pl: "pl.%website_url%"
     redirect_to_host: true
 
 # Swiftmailer Configuration
