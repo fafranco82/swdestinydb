@@ -90,7 +90,10 @@
                 "mailer_password": "MAILER_PASSWORD",
                 "aws_access_key_id": "AWS_ACCESS_KEY_ID",
                 "aws_secret_access_key": "AWS_SECRET_ACCESS_KEY",
-                "s3_bucket": "S3_BUCKET"
+                "s3_bucket": "S3_BUCKET",
+                "google_analytics_tracking_code": "GOOGLE_ANALYTICS_TRACKING_CODE",
+                "google_adsense_client": "GOOGLE_ADSENSE_CLIENT",
+                "google_adsense_slot": "GOOGLE_ADSENSE_SLOT"
             }
         }
     }
