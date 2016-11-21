@@ -55,7 +55,7 @@
                       {% endfor %}
                       </div>
                     </div>
-                    <a href="#" class="fg-{{card.faction_code}} card card-tip" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+                    <a href="{{ path('cards_zoom', {card_code: card.code}) }}" class="fg-{{card.faction_code}} card card-tip" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
                       <strong>{{card.name}}</strong>
                       {% if card.subtitle %}
                         <br/> <small>{{card.subtitle}}</small>
@@ -64,15 +64,6 @@
                   </div>
                 {% endfor %}
               </div>
-              {#
-              <p class="text-center">
-                {% for type, count in data.count_by_type %}
-                  {{typeNames[type]}}: {{count.cards}} <span class="icon-cards"></span>
-                  {% if count.dice %}{{count.dice}} <span class="icon-die"></span>{% endif %}
-                  {% if not loop.last %} &middot; {% endif %}
-                {% endfor %}
-              </p>
-              #}
               <table class="table small" style="width:50%; margin: 0 auto;">
                 <thead>
                   <tr>
@@ -114,10 +105,10 @@
 {
    "@context": "http://schema.org",
    "@type": "WebSite",
-   "url": "https://thronesdb.com/",
+   "url": "https://swdestinydb.com/",
    "potentialAction": {
      "@type": "SearchAction",
-     "target": "http://thronesdb.com/find/?q={search_term_string}",
+     "target": "http://swdestinydb.com/find/?q={search_term_string}",
      "query-input": "required name=search_term_string"
    }
 }
