@@ -1,0 +1,7 @@
+widgets_decklist_overview:
+    path: /decklist_overview/{decklist_id}
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Widgets:decklistOverview
+    requirements:
+        decklist_id: \d+

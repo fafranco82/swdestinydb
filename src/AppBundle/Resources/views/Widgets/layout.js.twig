@@ -1,0 +1,30 @@
+(function(global) {
+	// Globals
+	if(!global.swdestinydb) { global.swdestinydb = {}; }
+	var swdestinydb = global.swdestinydb;
+
+	//To keep track of which widgets we have already processed
+	if(!swdestinydb.widgets) { swdestinydb.widgets = {}; }
+	var widgets = swdestinydb.widgets;
+	if(!widgets.decklist_overviews) { widgets.decklist_overviews = []; }
+	var decklist_overviews = widgets.decklist_overviews;
+
+	var scriptTags = document.getElementsByTagName('script');
+	var re = /.*\/widgets\/decklist_overview\/\d+/;
+
+	for(var i=0;i < scriptTags.length; i++) {
+		var scriptTag = scriptTags[i];
+
+		if(scriptTag.src.match(re) && decklist_overviews.indexOf(scriptTag) < 0) {
+			decklist_overviews.push(scriptTag);
+			
+			var div = document.createElement('div');
+			div.id = 'test';
+			div.className = 'jojojoj';
+
+			scriptTag.parentNode.insertBefore(div, scriptTag);
+
+			div.innerHTML = '{{content}}';
+		}
+	}
+})(this);
