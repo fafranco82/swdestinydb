@@ -9,6 +9,22 @@
 	if(!widgets.decklist_overviews) { widgets.decklist_overviews = []; }
 	var decklist_overviews = widgets.decklist_overviews;
 
+	//To keep track of loaded stylesheets
+	if(!swdestinydb.styleTags) { swdestinydb.styleTags = []; }
+	var styleTags = swdestinydb.styleTags;
+
+	function addStyle(href) {
+		if(styleTags.indexOf(href) < 0) {
+			var styleTag = document.createElement("link");
+			styleTag.rel = "stylesheet";
+			styleTag.type = "text/css";
+			styleTag.href =  href;
+			styleTag.media = "all";
+			document.getElementsByTagName('head')[0].appendChild(styleTag);
+			styleTags[href] = styleTag;
+		}
+	}
+
 	var scriptTags = document.getElementsByTagName('script');
 	var re = /.*\/widgets\/decklist_overview\/\d+/;
 
@@ -17,10 +33,21 @@
 
 		if(scriptTag.src.match(re) && decklist_overviews.indexOf(scriptTag) < 0) {
 			decklist_overviews.push(scriptTag);
+
+			//add styleTags (only once)
+			addStyle('https://i.icomoon.io/public/temp/b3e25b4bd9/SWDestiny/style.css');
+			addStyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css');
+			{% set stylesCount = 0 %}
+			{% stylesheets filter="cssrewrite,scssphp" output="css/widgets.css"
+				'bundles/app/css/widgets.scss'
+			%}
+				{% set stylesCount = stylesCount + 1 %}
+				addStyle('{{absolute_url(asset_url) | raw}}');
+    		{% endstylesheets %}
 			
 			var div = document.createElement('div');
-			div.id = 'test';
-			div.className = 'jojojoj';
+			div.id = 'swdestiny_widget_{{type}}_{{id}}';
+			div.className = 'swdestiny-widget widget-{{type}}';
 
 			scriptTag.parentNode.insertBefore(div, scriptTag);
 

@@ -20,23 +20,18 @@ class WidgetsController extends Controller
 
 		$decklistRepo = $this->getDoctrine()->getManager()->getRepository('AppBundle:Decklist');
         $decklist = $decklistRepo->find($decklist_id);
-        $array = [];
-	    $array['decklist'] = $decklist;
-
-        $characterDeck = $decklist->getSlots()->getCharacterRow();
-        $array['character_deck'] = $characterDeck;
-
-        $array['count_by_type'] = $decklist->getSlots()->getCountByType();
-
         $decklist_factions = $decklist->getSlots()->getCountByFaction();
         arsort($decklist_factions);
-        $array['factions'] = array_keys(array_filter($decklist_factions, function($v) {
+        $decklist_factions = array_keys(array_filter($decklist_factions, function($v) {
             return $v > 0;
         }));
 
 		return $this->render('AppBundle:Widgets:layout.js.twig', array(
+            'type' => 'decklist',
+            'id' => $decklist_id,
 			'content' => $this->renderView('AppBundle:Widgets:decklist_overview.html.twig', array(
-				'data' => $array,
+                'decklist' => $decklist,
+                'factions' => $decklist_factions,
 				'typeNames' => $typeNames,
             	'factionNames' => $factionNames
 			))

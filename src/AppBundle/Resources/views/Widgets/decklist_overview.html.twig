@@ -1,48 +1,50 @@
 {% import "AppBundle::macros.html.twig" as macros %}
-<div class="col-md-6 index-decklist" style="margin-bottom:30px;">
-  <div class="bg-faction bg-{{ data.decklist.predominantFaction.code }}" style="padding:10px 10px 5px 10px; border: 1px solid black;">
+<div class="index-decklist">
+  <div class="bg-faction bg-{{ decklist.predominantFaction.code }}" style="padding:10px 10px 5px 10px; border: 1px solid black;">
       <div class="media">
         <div class="media-left">
-            <img src="{{ asset('/bundles/app/images/affiliations/' ~ data.decklist.affiliation.code ~ '.png') }}" height="30" width="30"/>
+            <img src="{{ absolute_url(asset('/bundles/app/images/affiliations/' ~ decklist.affiliation.code ~ '.png')) }}" height="30" width="30"/>
         </div>
         <div class="media-body">
-            <h4 class="media-heading" style="white-space:nowrap"><a href="{{ path('decklist_detail',{decklist_id:data.decklist.id,decklist_name:data.decklist.nameCanonical}) }}">{{ data.decklist.name }}</a></h4>
+            <h4 class="media-heading" style="white-space:nowrap">
+              <a href="{{ absolute_url(path('decklist_detail',{decklist_id:decklist.id,decklist_name:decklist.nameCanonical})) }}" target="_blank">{{ decklist.name }}</a>
+            </h4>
             <div class="small">
               {% set username %}
-                <span class="username">{{ macros.username_colorless(data.decklist.user) }}</span>
+                <span class="username">{{ macros.username_external(decklist.user) }}</span>
               {% endset %}
               {{ 'userby' | trans({'%user%': username}) | raw }}
               &middot;
-              <time datetime="{{ data.decklist.dateCreation|date('c') }}">{{ data.decklist.dateCreation|date('M d, Y') }}</time>
+              <time datetime="{{ decklist.dateCreation|date('c') }}">{{ decklist.dateCreation|date('M d, Y') }}</time>
             </div>
         </div>
       </div>
   </div>
   <div style="background-color: white; padding: 10px 20px 20px 20px; border: 1px solid black; border-top: 0;">
       <div class="small pull-right">
-          {{ macros.decklist_social_icons(data.decklist ) }}
+          {{ macros.decklist_social_icons(decklist) }}
       </div>
       <div>
-        {% for faction in data.factions %}
+        {% for faction in factions %}
           <span class="fg-{{faction}}">{{ factionNames[faction] }}</span>
           {% if not loop.last %} / {% endif %}
         {% endfor %}
       </div>
       <div class="text-center character-card-list">
-        {% for character in data.character_deck %}
-          {% set card = cards_data.getCardInfo(character.getCard()) %}
+        {% for character in decklist.slots.characterDeck.slots %}
+          {% set card = cards_data.getCardInfo(character.card) %}
           <div class="index-character">
             <div class="character-thumbnail card-thumbnail-2x card-thumbnail-character" style="background-image:url('{{card.imagesrc}}')">
               {% if card.is_unique %}
               <div class="character-unique"><span class="icon-unique"></span></div>
               {% endif %}
               <div class="character-dice">
-              {% for i in 1..character.getDice() %}
+              {% for i in 1..character.dice %}
               <span class="icon-die"></span>
               {% endfor %}
               </div>
             </div>
-            <a href="{{ path('cards_zoom', {card_code: card.code}) }}" class="fg-{{card.faction_code}} card card-tip" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+            <a href="{{absolute_url(path('cards_zoom', {card_code: card.code}))}}" class="fg-{{card.faction_code}} card" data-code="{{card.code}}" target="_blank">
               <strong>{{card.name}}</strong>
               {% if card.subtitle %}
                 <br/> <small>{{card.subtitle}}</small>
@@ -54,14 +56,14 @@
       <table class="table small" style="width:50%; margin: 0 auto;">
         <thead>
           <tr>
-            {% for type in data.count_by_type|keys %}
+            {% for type in decklist.slots.countByType|keys %}
             <th class="text-center">{{typeNames[type]}}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           <tr>
-            {% for count in data.count_by_type %}
+            {% for count in decklist.slots.countByType %}
             <td class="text-center">
               {{count.cards}} <span class="icon-cards"></span>
               {% if count.dice %} {{count.dice}} <span class="icon-die"></span> {% endif %}
@@ -70,7 +72,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="text-center small"><a href="{{ path('decklists_list',{type:'find',affiliation:data.affiliation.code}) }}">{{ 'seemore.affiliation' | trans }}</a></div>
       <div style="clear:both"></div>
   </div>
 </div>
