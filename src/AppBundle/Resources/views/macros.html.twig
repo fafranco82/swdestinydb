@@ -32,6 +32,11 @@
 <small title="User Reputation">{{ user.reputation }}</small>
 {% endmacro %}
 
+{% macro username_external(user) %}
+<a href="{{ absolute_url(path('user_profile_public', {user_id:user.id,user_name:user.username|e('url')})) }}" class="username">{{ user.username }}</a>
+{% if user.donation > 0 %}<span class="fa fa-gift donator" title="SWDestinyDB Gracious Donator"></span>{% endif %}
+{% endmacro %}
+
 {% macro decklist_social_icons(decklist) %}
 <span class="social-icons">
 	<a id="social-icon-like" href="#" class="social-icon-like" data-toggle="tooltip" data-placement="bottom" title="{{ 'decklist.view.social.like' | trans }}">
