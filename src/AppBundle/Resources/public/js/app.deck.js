@@ -423,6 +423,10 @@ deck.get_problem = function get_problem() {
 		return 'too_many_character_points';
 	}
 
+	if(!deck.get_battlefields() || deck.get_battlefields().length == 0) {
+		return 'no_battlefield';
+	}
+
 	// too many copies of one card
 	if(_.findKey(deck.get_copies_and_deck_limit(), function(value) {
 	    return value.nb_copies > value.deck_limit;

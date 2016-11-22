@@ -33,6 +33,7 @@ decks:
   defaultemptydesc: "*No description.*"
   problems:
     incorrect_size: Draw deck must be 30 cards
+    no_battlefield: Deck must include one battlefield
     too_many_character_points: Character points limit exceeded
     too_many_copies: Contains too many copies of a card
     invalid_cards: Contains forbidden cards
@@ -185,6 +186,11 @@ decks:
       is_unique: Uniqueness
       flavor: Flavor text
       text: Text
+  compare:
+    decknumber: "Deck #%id%"
+    characters: Characters
+    battlefield: Battlefields
+    drawdecks: Draw Decks
 
 decklist:
   publish:

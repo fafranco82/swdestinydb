@@ -50,5 +50,10 @@
 {% endmacro %}
 
 {% macro slot_with_icons(slot) %}
-{{ slot.quantity }}x <span class="icon icon-{{ slot.card.type.code }} fg-{{ slot.card.faction.code }}"></span> <a href="{{ path('cards_zoom', {card_code: slot.card.code }) }}" class="card card-tip" data-code="{{ slot.card.code }}">{{ slot.card.name }}</a>
+<span class="card-count">{{slot.quantity}}x</span>
+<span class="icon icon-{{slot.card.type.code}} fg-{{slot.card.faction.code}}"></span>
+<a href="{{ path('cards_zoom', {card_code: slot.card.code }) }}" class="card card-tip" data-toggle="{{ slot.card.code }}">
+	{{slot.card.name}}
+</a>
+{% if slot.card.hasDie %} ({{slot.dice}} <span class="icon icon-die"></span>){% endif %}
 {% endmacro %}

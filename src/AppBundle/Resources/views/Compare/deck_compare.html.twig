@@ -11,35 +11,73 @@
 
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<h4>{{ 'decks.compare.plotdecks' | trans }}</h4>
+			<h4>{{ 'decks.compare.characters' | trans }}</h4>
 		</div>
 	</div>
-	
-	<!--  plot decks intersection -->
+
+	<!--  chararacters intersection -->
 	<div class="row">
 		<div class="col-xs-6">
-			{% for slot in plot_deck.slots %}
+			{% for slot in character_deck.slots %}
 			<div>{{ macros.slot_with_icons(slot) }}</div>
 			{% endfor %}
 		</div>
 	    <div class="col-xs-6">
-	    	{% for slot in plot_deck.slots %}
+	    	{% for slot in character_deck.slots %}
 			<div>{{ macros.slot_with_icons(slot) }}</div>
 			{% endfor %}
 	    </div>
 	</div><!-- .row -->
 	
-	<!--  plot decks differences -->
+	<!--  char decks differences -->
 	<div class="row">
 		<div class="col-xs-6">
-			{% for slot in deck1.slots.plotDeck.slots %}
+			{% for slot in deck1.slots.characterDeck.slots %}
 			{% if slot.quantity > 0 %}
 			<div class="diff">{{ macros.slot_with_icons(slot) }}</div>
 			{% endif %}
 			{% endfor %}
 		</div>
 	    <div class="col-xs-6">
-	    	{% for slot in deck2.slots.plotDeck.slots %}
+	    	{% for slot in deck2.slots.characterDeck.slots %}
+	    	{% if slot.quantity > 0 %}
+			<div class="diff">{{ macros.slot_with_icons(slot) }}</div>
+			{% endif %}
+			{% endfor %}
+	    </div>
+	</div><!-- .row -->
+
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h4>{{ 'decks.compare.battlefield' | trans }}</h4>
+		</div>
+	</div>
+	
+	<!--  battlefield intersection -->
+	<div class="row">
+		<div class="col-xs-6">
+			{% for slot in battlefield_deck.slots %}
+			<div>{{ macros.slot_with_icons(slot) }}</div>
+			{% endfor %}
+		</div>
+	    <div class="col-xs-6">
+	    	{% for slot in battlefield_deck.slots %}
+			<div>{{ macros.slot_with_icons(slot) }}</div>
+			{% endfor %}
+	    </div>
+	</div><!-- .row -->
+	
+	<!--  battlefield differences -->
+	<div class="row">
+		<div class="col-xs-6">
+			{% for slot in deck1.slots.battlefieldDeck.slots %}
+			{% if slot.quantity > 0 %}
+			<div class="diff">{{ macros.slot_with_icons(slot) }}</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+	    <div class="col-xs-6">
+	    	{% for slot in deck2.slots.battlefieldDeck.slots %}
 	    	{% if slot.quantity > 0 %}
 			<div class="diff">{{ macros.slot_with_icons(slot) }}</div>
 			{% endif %}
@@ -52,7 +90,7 @@
 			<h4>{{ 'decks.compare.drawdecks' | trans }}</h4>
 		</div>
 	</div>
-	
+
 	<!--  draw decks intersection -->
 	<div class="row">
 		<div class="col-xs-6">
@@ -84,7 +122,6 @@
 			{% endfor %}
 	    </div>
 	</div><!-- .row -->
-	
 	
 </div><!-- .container -->
 

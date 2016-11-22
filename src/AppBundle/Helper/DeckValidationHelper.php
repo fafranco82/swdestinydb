@@ -86,6 +86,10 @@ class DeckValidationHelper
 			return 'too_many_character_points';
 		}
 
+		if(count($deck->getSlots()->getBattlefieldDeck()) == 0) {
+			return 'no_battlefield';
+		}
+
 		foreach($deck->getSlots()->getCopiesAndDeckLimit() as $cardName => $value) {
 			if($value['deck_limit'] && $value['copies'] > $value['deck_limit']) return 'too_many_copies';
 		}

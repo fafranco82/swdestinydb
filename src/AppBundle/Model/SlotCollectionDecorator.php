@@ -135,6 +135,17 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		return $countByFaction;
 	}
 
+	public function getBattlefieldDeck()
+	{
+		$battlefieldDeck = [];
+		foreach($this->slots as $slot) {
+			if($slot->getCard()->getType()->getCode() === 'battlefield') {
+				$battlefieldDeck[] = $slot;
+			}
+		}
+		return new SlotCollectionDecorator(new ArrayCollection($battlefieldDeck));
+	}
+
 	public function getDrawDeck()
 	{
 		$drawDeck = [];

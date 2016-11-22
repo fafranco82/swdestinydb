@@ -43,6 +43,12 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	 * @return array
 	 */
 	public function getCountByFaction();
+
+	/**
+	 * Get battlefield(s) as slots
+	 * @return \AppBundle\Model\SlotCollectionInterface
+	 */
+	public function getBattlefieldDeck();
 	
 	/**
 	 * Get the draw deck

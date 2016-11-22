@@ -66,6 +66,9 @@ class Diff
     		
     		// this is the list of the quantities we found in each flatList
     		$quantities = [];
+
+            // this is the list of the dice we found in each flatList
+            $dice = [];
     		
     		// searching all slots for that code
     		foreach($list_slots as $j => $slots)
@@ -76,6 +79,7 @@ class Diff
     					$card = $slot->getCard();
     					$indexes[$j] = $k;
     					$quantities[$j] = $slot->getQuantity();
+                        $dice[$j] = $slot->getDice();
     					break;
     				}
     			}
@@ -83,11 +87,13 @@ class Diff
     
     		// we need to find the minimum quantity among all SlotCollections
     		$minimum = min($quantities);
+            $minimumDice = min($dice);
     		 
     		// we create a slot for this
     		$slot = new Deckslot();
     		$slot->setCard($card);
     		$slot->setQuantity($minimum);
+            $slot->setDice($minimumDice);
     		 
     		// we add this slot to the list of common slots
     		$intersection->add($slot);
@@ -97,6 +103,15 @@ class Diff
     		{
     			$slot = $list_slots[$j][$index];
     			$slot->setQuantity($slot->getQuantity() - $minimum);
+                $slot->setDice($slot->getDice() - $minimumDice);
+
+                // if the card is a unique character
+                if($card->getType()->getCode()==='character' && $card->getIsUnique()) {
+                    // and there is more dice
+                    if($slot->getDice() > 0) {
+                        $slot->setQuantity(1); //set again cards qty to 1
+                    }
+                }
     		}
     	}
     	
