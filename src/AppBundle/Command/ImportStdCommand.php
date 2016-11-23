@@ -548,9 +548,9 @@ class ImportStdCommand extends ContainerAwareCommand
 					throw new \Exception("There is no side type with code [$type]");
 				
 				$side->setModifier($modifier=='+' ? 1 : 0);
-				$side->setValue($value);
+				$side->setValue((int) $value);
 				$side->setType($this->collections['SideType'][$type]);
-				$side->setCost($cost);
+				$side->setCost((int) $cost);
 
 				if($orig !== $side->toString())
 					$this->output->writeln("Changing the <info>side #".($index+1)."</info> of <info>".$card->toString()."</info> (".$orig." => ".$side->toString().")");

@@ -812,4 +812,39 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     {
         return $this->points;
     }
+
+    /**
+     * Converts cost and points into a comparable value-representation, and then returns the higher value of the both.
+     * The higher value of the both is returned.
+     * @link https://github.com/fafranco82/swdestinydb/issues/7
+     * @return int
+     */
+    public function getHighestCostPointsValue()
+    {
+        $cost = $this->getCost();
+        $points = $this->getPoints();
+        $value = -1;
+        if (is_null($cost) && is_null($points)) {
+            return $value;
+        }
+
+        $cost = is_null($cost) ? 0 : $cost;
+        $cost = $cost * 100;
+
+        if (is_null($points)) {
+            $points = 0;
+        } else {
+            $pos = strpos($points, '/');
+            if (false === $pos) {
+                $points = (int) $points;
+                $points = $points * 100;
+            } else {
+                $oneDiePoints = (int) substr($points, 0, $pos);
+                $twoDicePoints = (int) substr($points, $pos + 1);
+                $points = $oneDiePoints * 100 + $twoDicePoints;
+            }
+        }
+
+        return max($cost, $points);
+    }
 }
