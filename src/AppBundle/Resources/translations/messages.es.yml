@@ -33,6 +33,7 @@ decks:
   defaultemptydesc: "*Sin descripción*"
   problems:
     incorrect_size: El mazo de robo tiene que tener 30 cartas exactas
+    no_battlefield: Debe existir un único campo de batalla
     too_many_character_points: Límite de puntos de personaje excedido
     too_many_copies: Contiene demasiadas copias de la misma carta (por título)
     invalid_cards: Contiene cartas prohibidas (por ser de otra afiliación)
@@ -187,6 +188,9 @@ decks:
       text: Texto
   compare:
     decknumber: "Mazo #%id%"
+    characters: Personajes
+    battlefield: Campos de batalla
+    drawdecks: Mazos de robo
 
 decklist:
   publish:

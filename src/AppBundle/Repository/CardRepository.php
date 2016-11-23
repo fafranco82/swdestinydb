@@ -12,9 +12,11 @@ class CardRepository extends TranslatableRepository
 	public function findAll()
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, st, f, s')
+			->select('c, t, st, f, s, a, r')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
+			->join('c.affiliation', 'a')
+		    ->join('c.rarity', 'r')
 			->join('c.set', 's')
 			->leftJoin('c.subtype', 'st')
 			->orderBY('c.code', 'ASC');
