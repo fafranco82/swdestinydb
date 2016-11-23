@@ -28,7 +28,7 @@ class DefaultController extends Controller
         }
 
         $factionNames = [];
-        foreach($this->getDoctrine()->getRepository('AppBundle:Faction')->findAll() as $faction) {
+        foreach($this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName() as $faction) {
             $factionNames[$faction->getCode()] = $faction->getName();
         }
         
