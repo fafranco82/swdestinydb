@@ -1,17 +1,23 @@
 (function(global) {
-	// Globals
-	if(!global.swdestinydb) { global.swdestinydb = {}; }
-	var swdestinydb = global.swdestinydb;
+	function guidGenerator() {
+		var S4 = function() {
+			return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+		};
+		return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+	}
+
+	function checkObject(container, property, defaultValue) {
+		if(!container['property']) { container['property'] = defaultValue; }
+		return container['property'];
+	}
+
+	var loader = checkObject(global, 'SWDestinyDBWidgetsLoader', {});
 
 	//To keep track of which widgets we have already processed
-	if(!swdestinydb.widgets) { swdestinydb.widgets = {}; }
-	var widgets = swdestinydb.widgets;
-	if(!widgets.decklist_overviews) { widgets.decklist_overviews = []; }
-	var decklist_overviews = widgets.decklist_overviews;
-
+	var widgets = checkObject(loader, 'widgets', []);
+	
 	//To keep track of loaded stylesheets
-	if(!swdestinydb.styleTags) { swdestinydb.styleTags = []; }
-	var styleTags = swdestinydb.styleTags;
+	var styleTags = checkObject(loader, 'styleTags', {});
 
 	function addStyle(href) {
 		if(styleTags.indexOf(href) < 0) {
@@ -24,18 +30,20 @@
 			styleTags[href] = styleTag;
 		}
 	}
+	window.styleTags = styleTags;
 
 	var scriptTags = document.getElementsByTagName('script');
-	var re = /.*\/widgets\/{{type}}\/{{id}}/;
+	var url = '{{ absolute_url(path(app.request.attributes.get("_route"), app.request.attributes.get("_route_params"))) | raw }}';
 
 	for(var i=0;i < scriptTags.length; i++) {
 		var scriptTag = scriptTags[i];
 
-		if(scriptTag.src.match(re) && decklist_overviews.indexOf(scriptTag) < 0) {
-			decklist_overviews.push(scriptTag);
+		if(scriptTag.src === url && widgets.indexOf(scriptTag) < 0) {
+			widgets.push(scriptTag);
 
 			//add styleTags (only once)
 			addStyle('https://i.icomoon.io/public/temp/b3e25b4bd9/SWDestiny/style.css');
+			addStyle('https://fonts.googleapis.com/css?family=Amiri:400,400italic,700,700italic|Julius+Sans+One|Open+Sans:400,400italic,700,700italic|Open+Sans+Condensed:300');
 			addStyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css');
 			{% set stylesCount = 0 %}
 			{% stylesheets filter="cssrewrite,scssphp" output="css/widgets.css"
@@ -44,10 +52,11 @@
 				{% set stylesCount = stylesCount + 1 %}
 				addStyle('{{absolute_url(asset_url) | raw}}');
     		{% endstylesheets %}
-			
-			var div = document.createElement('div');
-			div.id = 'swdestiny_widget_{{type}}_{{id}}';
+
+    		var div = document.createElement('div');
+			div.id = 'swdestiny_widget_{{type}}_'+guidGenerator();
 			div.className = 'swdestiny-widget widget-{{type}}';
+			div.dataset.url = url;
 
 			scriptTag.parentNode.insertBefore(div, scriptTag);
 
