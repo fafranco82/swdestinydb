@@ -422,7 +422,7 @@ class CardsData
 
 		if($api) {
 			unset($cardinfo['id']);
-            $cardinfo['cp'] = $this->calculateCostPoints($cardinfo['cost'], $cardinfo['points']);
+            $cardinfo['cp'] = $card->getHighestCostPointsValue();
 			$cardinfo = array_filter($cardinfo, function ($var) { return isset($var); });
 			if(!$cardinfo['has_die']) unset($cardinfo['sides']);
 			else $cardinfo['sides'] = map($cardinfo['sides'], function($side) { return $side->toString(); });
@@ -574,39 +574,5 @@ class CardsData
     		}
     	}
     	 
-    }
-
-    /**
-     * Calculates and returns a common value-representation of card cost and points
-     * than can be used for sorting purposes.
-     * @link https://github.com/fafranco82/swdestinydb/issues/7
-     * @param int|null $cost
-     * @param string|null $points
-     * @return int
-     */
-    protected function calculateCostPoints($cost, $points)
-    {
-        $value = -1;
-        if (is_null($cost) && is_null($points)) {
-            return $value;
-        }
-
-        $cost = is_null($cost) ? 0 : $cost;
-
-        if (is_null($points)) {
-            $points = 0;
-        } else {
-            $pos = strpos($points, '/');
-            if (-1 === $pos) {
-                $points = (int) $points;
-                $points = $points * 100;
-            } else {
-                $oneDiePoints = (int) substr($points, 0, $pos);
-                $twoDicePoints = (int) substr($points, $pos + 1);
-                $points = $oneDiePoints * 100 + $twoDicePoints;
-            }
-        }
-
-        return max($cost, $points);
     }
 }
