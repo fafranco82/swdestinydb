@@ -422,6 +422,7 @@ class CardsData
 
 		if($api) {
 			unset($cardinfo['id']);
+            $cardinfo['cp'] = $card->getHighestCostPointsValue();
 			$cardinfo = array_filter($cardinfo, function ($var) { return isset($var); });
 			if(!$cardinfo['has_die']) unset($cardinfo['sides']);
 			else $cardinfo['sides'] = map($cardinfo['sides'], function($side) { return $side->toString(); });
