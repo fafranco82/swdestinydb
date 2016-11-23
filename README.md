@@ -6,8 +6,10 @@ SWDestinyDB
 This guide assumes you know how to use the command-line and that your machine has php and mysql installed.
 
 - install composer: https://getcomposer.org/download/
+- install npm: https://www.npmjs.com/
 - clone the repo somewhere
 - cd to it
+- run `npm install`
 - run `composer install` (at the end it will ask for the database configuration parameters)
 - run `php app/console doctrine:database:create`
 - run `php app/console doctrine:schema:create`
