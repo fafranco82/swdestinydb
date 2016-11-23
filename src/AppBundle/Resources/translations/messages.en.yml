@@ -327,8 +327,7 @@ search:
     set: Sort by Set
     faction: Sort by Faction
     type: Sort by Type
-    costgold: Sort by Cost/Gold
-    strini: Sort by Strength/Initiative
+    pointscost: Sort by Points/Cost
   view:
     list: View as a Checklist
     spoiler: View as a Spoiler

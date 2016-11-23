@@ -308,55 +308,54 @@ forms:
 
 
 search:
-  label: Search
-  setbrowse: Browse by set
-  title: Card Search
-  nametexts: Name and texts
-  attributes: Attributes
-  numerics: Numerics
-  other: Other
-  previews: Previews
-  submit: Submit
-  any: any
-  yes: Yes
+  label: Buscar
+  setbrowse: Explorar capítulos
+  title: Búsqueda de cartas
+  nametexts: Nombre y textos
+  attributes: Atributos
+  numerics: Numéricos
+  other: Otros
+  previews: Adelantos
+  submit: Búsqueda
+  any: cualquiera
+  yes: Sí
   no: No
-  only: Only
-  noresult: Your query didn't match any card.
+  only: Sólo
+  noresult: Tu búsqueda no coincide con ninguna carta
   sort:
-    name: Sort by Name
-    set: Sort by Set
-    faction: Sort by Faction
-    type: Sort by Type
-    costgold: Sort by Cost/Gold
-    strini: Sort by Strength/Initiative
+    name: Ordenar por nombre
+    set: Ordenar por set
+    faction: Ordenar por facción
+    type: Ordenar por tipo
+    pointscost: Ordenar por puntos/coste
   view:
-    list: View as a Checklist
-    spoiler: View as a Spoiler
-    card: View as Full Cards
-    scan: View as Scans Only
-    short: View as Simple List
+    list: Ver como listado
+    spoiler: Ver como spoilers
+    card: Ver carta completa
+    scan: Ver solo imágenes
+    short: Ver como lista simple
 
 pag:
-  cardscount: "{0} There is no cards | {1} One card | ]1,Inf] %count% cards"
+  cardscount: "{0} No hay cartas | {1} Una carta | ]1,Inf] %count% cartas"
 
 card:
-  reviews:
-    title: Reviews
-    none: No review yet for this card.
-    unreleased: Reviews will be enabled for this card when it is officially released.
-    like: Like that review
-    edit: Edit review
-    write: Write a review
-    hint: "Write your analysis of the card, in at least %min% characters. You can write a number of card reviews equal to your reputation. This is not a place for questions or comments. Type # to enter a card name. Type $ to enter a symbol."
-    submit: Submit preview
-    posted: Your review has been posted. It will appear on the site in a few minutes.
+  reviews: 
+    title: Reseñas
+    none: Aún no hay reseñas para esta carta.
+    unreleased: Las reseñas para esta carta se habilitarán cuando ésta sea publicada oficialmente.
+    like: Me gusta esta reseña
+    edit: Editar reseña
+    write: Escribir una reseña
+    hint: "Escribe tu análisis de esta carta en al menos %min% caracteres. Puedes escribir tantas reseñas como tu reputación. Éste no es lugar para preguntas o comentarios. Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo."
+    submit: Enviar reseña
+    posted: Tu reseña ha sido enviada. Aparacerá dentro de unos minutos.
     comments:
-      add: Add a comment
-      hint: Your comment
-      post: Post
-      posted: Your comment has been posted. It will appear on the site in a few minutes.
+      add: Añadir un comentario
+      hint: Tu comentario
+      post: Enviar
+      posted: Tu comentario se ha enviado. Aparecerá en unos pocos minutos.
     alerts:
-      minimum: Your review must at least %min% characters long.
+      minimum: Tu reseña debe tener al menos %min% caracteres.
   info:
     name: Nombre
     subtitle: Subtítulo

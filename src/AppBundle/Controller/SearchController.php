@@ -338,7 +338,7 @@ class SearchController extends Controller
 					'name' => 'name',
 					'faction' => 'faction_name',
 					'type' => 'type_name',
-					'cost' => 'cost'
+					'cost' => 'cp'
 				);
 
 				$brokenlist = [];
