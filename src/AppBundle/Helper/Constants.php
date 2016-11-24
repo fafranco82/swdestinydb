@@ -29,4 +29,12 @@ class Constants
 		'special',
 		'blank'
 	];
+
+	const PROBLEMS = [
+		'incorrect_size',
+    	'too_many_character_points',
+    	'too_many_copies',
+    	'invalid_cards',
+    	'faction_not_included'
+	];
 }

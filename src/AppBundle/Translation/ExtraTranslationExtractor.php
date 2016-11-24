@@ -30,6 +30,13 @@ class ExtraTranslationExtractor implements ExtractorInterface
     		$catalogue->add($message);
     	}
 
+        foreach(\AppBundle\Helper\Constants::PROBLEMS as $problem)
+        {
+            $message = new Message("decks.problems.$problem", "messages");
+            $message->setDesc("Description of this deck problem");
+            $catalogue->add($message);
+        }
+
     	return $catalogue;
     }
 }

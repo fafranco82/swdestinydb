@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-11-24T21:37:32Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+  <file date="2016-11-24T22:34:19Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -1027,6 +1027,26 @@
         <source>decks.privatedecks</source>
         <target>Mis mazos privados</target>
         <jms:reference-file line="63">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\decks.html.twig\</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="022d8545323aa0ddd1c2c32f1f8f51cf42a2c343" resname="decks.problems.faction_not_included">
+        <source>Description of this deck problem</source>
+        <target>Contiene cartas de un color no presente en los personajes</target>
+      </trans-unit>
+      <trans-unit id="8855ae8f0c8436da8553f4710caf804e6501afab" resname="decks.problems.incorrect_size">
+        <source>Description of this deck problem</source>
+        <target>El mazo de robo tiene que tener 30 cartas exactas</target>
+      </trans-unit>
+      <trans-unit id="a818ed331774db2c20abeee88054370cdec66241" resname="decks.problems.invalid_cards">
+        <source>Description of this deck problem</source>
+        <target>Contiene cartas prohibidas (por ser de otra afiliación)</target>
+      </trans-unit>
+      <trans-unit id="75daa158f303d7962dd8f8b918e708f7e317345d" resname="decks.problems.too_many_character_points">
+        <source>Description of this deck problem</source>
+        <target>Límite de puntos de personaje excedido</target>
+      </trans-unit>
+      <trans-unit id="6ff4d23970ae695f538bffad64471310b84157c8" resname="decks.problems.too_many_copies">
+        <source>Description of this deck problem</source>
+        <target>Contiene demasiadas copias de la misma carta (por título)</target>
       </trans-unit>
       <trans-unit id="ad0cdc3df2339a06512e2086ac626d6ebb3b7f0b" resname="decks.published.none">
         <source>decks.published.none</source>
