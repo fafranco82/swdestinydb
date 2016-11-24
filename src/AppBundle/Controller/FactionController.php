@@ -145,7 +145,7 @@ class FactionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'forms.update'));
 
         return $form;
     }

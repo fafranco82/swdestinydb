@@ -170,6 +170,17 @@ fos_oauth_server:
     service:
         user_provider: fos_user.user_manager
 
+jms_translation:
+    configs:
+        AppBundle:
+            dirs: ["%kernel.root_dir%/../src/AppBundle"]
+            output_dir: "%kernel.root_dir%/../src/AppBundle/Resources/translations"
+            ignored_domains: [routes]
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs]
+            output_format: xliff
+            extractors: [extra_translation_extractor]
+
 services:
     fos_user.doctrine_registry:
         alias: doctrine

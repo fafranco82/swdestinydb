@@ -362,10 +362,13 @@ class SocialController extends Controller
         
         $header = '';
 
+        $pagetitle = $translator->trans('decklist.list.titles.popular');
+
         switch ($type) {
             case 'find':
                 $header = $this->searchForm($request);
                 $paginator = $decklist_manager->findDecklistsWithComplexSearch();
+                $pagetitle = $translator->trans('decklist.list.titles.find');
                 break;
             case 'favorites':
                 $response->setPrivate();
@@ -378,6 +381,7 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
+                $pagetitle = $translator->trans('decklist.list.titles.favorites');
                 break;
             case 'mine':
                 $response->setPrivate();
@@ -390,18 +394,19 @@ class SocialController extends Controller
                 {
                 	$paginator = $decklist_manager->getEmptyList();
                 }
+                $pagetitle = $translator->trans('decklist.list.titles.mine');
                 break;
             case 'recent':
             	$paginator = $decklist_manager->findDecklistsByAge(false);
+                $pagetitle = $translator->trans('decklist.list.titles.recent');
                 break;
             case 'halloffame':
             	$paginator = $decklist_manager->findDecklistsInHallOfFame();
+                $pagetitle = $translator->trans('decklist.list.titles.halloffame');
                 break;
             case 'hottopics':
             	$paginator = $decklist_manager->findDecklistsInHotTopic();
-                break;
-            case 'tournament':
-            	$paginator = $decklist_manager->findDecklistsInTournaments();
+                $pagetitle = $translator->trans('decklist.list.titles.hottopics');
                 break;
             case 'popular':
             default:
@@ -409,8 +414,6 @@ class SocialController extends Controller
             	$paginator = $decklist_manager->findDecklistsByPopularity();
                 break;
         }
-
-        $pagetitle = $translator->trans('decklist.list.titles.'.$type);
         
         return $this->render('AppBundle:Decklist:decklists.html.twig',
                 array(

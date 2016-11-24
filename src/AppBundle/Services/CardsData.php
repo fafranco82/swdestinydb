@@ -59,12 +59,11 @@ class CardsData
 	 */
 	public function addAbbrTags($text)
 	{
-		static $keywords = ['guardian', 'redeploy', 'ambush'];
-
 		$locale = $this->request_stack->getCurrentRequest()->getLocale();
 
-		foreach($keywords as $keyword)
+		foreach(\AppBundle\Helper\Constants::KEYWORDS as $keyword)
 		{
+			/** @Ignore */
 			$translated = $this->translator->trans('keyword.'.$keyword.".name", array(), "messages", $locale);
 			
 			$text = preg_replace_callback("/\b($translated)\b/i", function ($matches) use ($keyword) {

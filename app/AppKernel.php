@@ -26,6 +26,9 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Aws\Symfony\AwsBundle(),
         	new AppBundle\AppBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\AopBundle\JMSAopBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

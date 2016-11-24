@@ -35,7 +35,7 @@ class CardType extends AbstractType
             ->add('is_military', 'checkbox', array('required' => false))
             ->add('is_intrigue', 'checkbox', array('required' => false))
             ->add('is_power', 'checkbox', array('required' => false))
-            ->add('file', 'file', array('label' => 'Image File', 'mapped' => false, 'required' => false))
+            ->add('file', 'file', array('label' => 'forms.imagefile', 'mapped' => false, 'required' => false))
             ;
     }
 

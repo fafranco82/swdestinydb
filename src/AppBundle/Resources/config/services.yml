@@ -36,3 +36,18 @@ services:
     deck_validation_helper:
         class: AppBundle\Helper\DeckValidationHelper
         arguments: ["@agenda_helper"]
+
+    bazinga_translation_extractor:
+        class: AppBundle\Translation\BazingaJavascriptTranslationExtractor
+        tags:
+            - {name: jms_translation.file_visitor, alias: bazinga_translation_extractor}
+
+    handlebars_translation_extractor:
+        class: AppBundle\Translation\HandlebarsTranslateTranslationExtractor
+        tags:
+            - {name: jms_translation.file_visitor, alias: handlebars_translation_extractor}
+
+    extra_translation_extractor:
+        class: AppBundle\Translation\ExtraTranslationExtractor
+        tags: 
+            - {name: jms_translation.extractor, alias: extra_translation_extractor}
