@@ -30,12 +30,12 @@ class SearchController extends Controller
 
 	public static $searchTypes = array(
 			'a' => 'code',
+			'b' => 'code',
 			't' => 'code',
 			'f' => 'code',
 			's' => 'code',
 			'y' => 'code',
 			''  => 'string',
-			'b' => 'string',
 			'i' => 'string',
 			'l' => 'string',
 			'r' => 'string',

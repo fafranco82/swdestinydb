@@ -146,12 +146,13 @@ class CardsData
 		// construction de la requete sql
 		$repo = $this->doctrine->getRepository('AppBundle:Card');
 		$qb = $repo->createQueryBuilder('c')
-		           ->select('c', 's', 't', 'f', 'a', 'r', 'd')
+		           ->select('c', 's', 't', 'b', 'f', 'a', 'y', 'd')
 				   ->leftJoin('c.set', 's')
 				   ->leftJoin('c.type', 't')
+				   ->leftJoin('c.subtype', 'b')
 				   ->leftJoin('c.faction', 'f')
 				   ->leftJoin('c.affiliation', 'a')
-				   ->leftJoin('c.rarity', 'r')
+				   ->leftJoin('c.rarity', 'y')
 				   ->leftJoin('c.sides', 'd')
 				   ;
 		$qb2 = null;
