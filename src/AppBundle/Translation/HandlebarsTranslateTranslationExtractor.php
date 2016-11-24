@@ -16,7 +16,7 @@ class HandlebarsTranslateTranslationExtractor implements FileVisitorInterface
 
         $content = file_get_contents($file);
 
-        preg_match_all('/\{\{\s*trans(Choice)?\s*([\'"])(.+?)\2[,)]/', $content, $matches);
+        preg_match_all('/\{\{\s*trans(Choice)?\s*([\'"])(.+?)\2/', $content, $matches);
         foreach($matches[3] as $key) {
        		$message = new Message($key);
         	$message->addSource(new FileSource((string) $file));

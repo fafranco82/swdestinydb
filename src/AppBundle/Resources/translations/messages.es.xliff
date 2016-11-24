@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-11-24T12:41:08Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+  <file date="2016-11-24T21:37:32Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -16,6 +16,8 @@
       <trans-unit id="40e4dbc3775f4fff342b6792ce7b100a0663b4bb" resname="card.info.cost">
         <source>card.info.cost</source>
         <target>Coste</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\card_modal-info.handlebars</jms:reference-file>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\tip-card.handlebars</jms:reference-file>
         <jms:reference-file line="7">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\card-props.html.twig\</jms:reference-file>
         <jms:reference-file line="176">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
@@ -45,6 +47,8 @@
       <trans-unit id="c3d10a65feea3de088d8f5778df14ce8ee814d4f" resname="card.info.health">
         <source>card.info.health</source>
         <target>Vida</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\card_modal-info.handlebars</jms:reference-file>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\tip-card.handlebars</jms:reference-file>
         <jms:reference-file line="93">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-build.html.twig\</jms:reference-file>
         <jms:reference-file line="133">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="10">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\card-props.html.twig\</jms:reference-file>
@@ -73,6 +77,8 @@
       <trans-unit id="0863dd806f29dae05743e46565086822ddf04d6d" resname="card.info.points">
         <source>card.info.points</source>
         <target>Puntos</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\card_modal-info.handlebars</jms:reference-file>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\tip-card.handlebars</jms:reference-file>
         <jms:reference-file line="4">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\card-props.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="fb3b89ff5beac1722b63a8b7fc407dfed794fa49" resname="card.info.points_cost">
@@ -714,6 +720,36 @@
         <target>Nombre</target>
         <jms:reference-file line="42">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\deckedit.html.twig\</jms:reference-file>
       </trans-unit>
+      <trans-unit id="39d24c8b30f759e762a3d80125f1d377424fe5a7" resname="decks.edit.meta.cards">
+        <source>decks.edit.meta.cards</source>
+        <target>%count% carta | %count% cartas</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9689264a36b54677520ea4b724722b6842781e11" resname="decks.edit.meta.characters">
+        <source>decks.edit.meta.characters</source>
+        <target>Personajes</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="204b39ddb0b852342a8a4f5e10e7476d1b87e5e7" resname="decks.edit.meta.dice">
+        <source>decks.edit.meta.dice</source>
+        <target>%count% dado | %count% dados</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d2cf83a6087c2fd48a4b8964e5fb2e0794a60e71" resname="decks.edit.meta.drawdeck">
+        <source>decks.edit.meta.drawdeck</source>
+        <target>Mazo de robo</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="819ac9c8a01c5e61ea1dd4ed7d9a4127623e3fe0" resname="decks.edit.meta.points">
+        <source>decks.edit.meta.points</source>
+        <target>%points% punto | %points% puntos</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="86938a4b55d675d99ea37196aec954ae936ac839" resname="decks.edit.meta.sets">
+        <source>decks.edit.meta.sets</source>
+        <target>Sets: %sets%</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
       <trans-unit id="7f16af96c317adac3b58097b3e8dd9d8284a8e31" resname="decks.edit.notes.notes.hint">
         <source>decks.edit.notes.notes.hint</source>
         <target>Escribe # para introducir el nombre de una carta. Escribe $ para introducir un símbolo.</target>
@@ -885,10 +921,25 @@
         <target>Versión</target>
         <jms:reference-file line="13">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-history.html.twig\</jms:reference-file>
       </trans-unit>
+      <trans-unit id="6a0fbfcf45fdb2a54ee3ad9efb442d1aee63ac44" resname="decks.history.firstversion">
+        <source>decks.history.firstversion</source>
+        <target>Primera versión</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck_history-snapshot.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4b4ba47da6f6a39c2263f2c54aaa909d85903a5d" resname="decks.history.revert">
+        <source>decks.history.revert</source>
+        <target>Deshacer</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck_history-snapshot.handlebars</jms:reference-file>
+      </trans-unit>
       <trans-unit id="50a10921a4066c61ab774e87f3f8cdc3fe1074ee" resname="decks.history.timeremaining">
         <source>decks.history.timeremaining</source>
         <target>Tiempo restante</target>
         <jms:reference-file line="6">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-history.html.twig\</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d2dc9a8462ecb014c6549aa91ab81c03abbbcc67" resname="decks.history.unsaved">
+        <source>decks.history.unsaved</source>
+        <target>sin guardar</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck_history-snapshot.handlebars</jms:reference-file>
       </trans-unit>
       <trans-unit id="3dfec219a047065c5c876b36f5cf166ead158294" resname="decks.modals.card.go">
         <source>decks.modals.card.go</source>
