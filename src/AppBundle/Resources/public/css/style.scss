@@ -11,8 +11,10 @@ body {
 	border-bottom: none;
 }
 .card-name {
-	font-family: 'Julius Sans One', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
+	font-variant: small-caps;
+	font-size: 1.3em;
 }
 .card-subtitle {
 	font-size: 0.8em;
@@ -501,7 +503,7 @@ ol {
 /************** INDEX PAGE ***************/
 
 h1.site-title {
-	font-family: 'Julius Sans One', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	position:relative;
 	font-size:116px;
 	text-align:center;
