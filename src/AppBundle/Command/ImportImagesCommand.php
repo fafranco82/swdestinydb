@@ -32,12 +32,12 @@ class ImportImagesCommand extends ContainerAwareCommand
 		foreach($cards as $card) {
 			$card_code = $card->getCode();
 			
-			if(!$card->getPack()->getDateRelease()) {
+			if(!$card->getSet()->getDateRelease()) {
 				$output->writeln("Skip $card_code because it's not released");
 				continue;
 			}
 			
-			if(!$card->getPack()->getCgdbId()) {
+			if(!$card->getSet()->getCgdbIdStart() || !$card->getSet()->getCgdbIdEnd()) {
 				$output->writeln("Skip $card_code because its cgdb_id is not defined");
 				continue;
 			}
@@ -48,17 +48,28 @@ class ImportImagesCommand extends ContainerAwareCommand
 			if(file_exists($imagepath)) {
 				$output->writeln("Skip $card_code because it's already there");
 			} else {
-				$cgdbfile = sprintf('GT%02d_%d.jpg', $card->getPack()->getCgdbId(), $card->getPosition());
-				$cgdburl = "http://lcg-cdn.fantasyflightgames.com/got2nd/" . $cgdbfile;
-
 				$dirname = dirname($imagepath);
 				$outputfile = $dirname . DIRECTORY_SEPARATOR . $card_code . ".jpg";
 
-				$image = file_get_contents($cgdburl);
-				if($image !== FALSE) {
-					file_put_contents($outputfile, $image);
-					$output->writeln("New file at $outputfile");
-				} else {
+				$written = FALSE;
+				$cgdbid = $card->getSet()->getCgdbIdEnd();
+
+				while($cgdbid >= $card->getSet()->getCgdbIdStart())
+				{
+					$cgdbfile = sprintf('SWD%02d_%d.jpg', $cgdbid, $card->getPosition());
+					$cgdburl = "http://lcg-cdn.fantasyflightgames.com/swd/" . $cgdbfile;
+
+					$image = @file_get_contents($cgdburl);
+					if($image !== FALSE) {
+						file_put_contents($outputfile, $image);
+						$output->writeln("New file at $outputfile");
+						$written = TRUE;
+					}
+
+					$cgdbid--;
+				}
+
+				if(!$written) {
 					$output->writeln("Failed at downloading $cgdburl");
 				}
 			}

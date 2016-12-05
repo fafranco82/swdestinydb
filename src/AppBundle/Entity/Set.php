@@ -4,24 +4,26 @@ namespace AppBundle\Entity;
 
 class Set implements \Gedmo\Translatable\Translatable, \Serializable
 {
-	public function serialize() {
-		return [
-				'code' => $this->code,
-				'date_release' => $this->dateRelease ? $this->dateRelease->format('Y-m-d') : null,
-				'name' => $this->name,
-				'position' => $this->position,
-				'size' => $this->size
-		];
-	}
-	
-	public function unserialize($serialized) {
-		throw new \Exception("unserialize() method unsupported");
-	}
-	
+    public function serialize() {
+        return [
+                'code' => $this->code,
+                'date_release' => $this->dateRelease ? $this->dateRelease->format('Y-m-d') : null,
+                'name' => $this->name,
+                'position' => $this->position,
+                'cgdb_id_start' => $this->cgdbIdStart,
+                'cgdb_id_end' => $this->cgdbIdEnd,
+                'size' => $this->size
+        ];
+    }
+    
+    public function unserialize($serialized) {
+        throw new \Exception("unserialize() method unsupported");
+    }
+    
     public function toString() {
-		return $this->name;
-	}
-	
+        return $this->name;
+    }
+    
     /**
      * @var integer
      */
@@ -334,5 +336,63 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     public function getStarterPacks()
     {
         return $this->starterPacks;
+    }
+    /**
+     * @var integer
+     */
+    private $cgdbIdStart;
+
+    /**
+     * @var integer
+     */
+    private $cgdbIdEnd;
+
+
+    /**
+     * Set cgdbIdStart
+     *
+     * @param integer $cgdbIdStart
+     *
+     * @return Set
+     */
+    public function setCgdbIdStart($cgdbIdStart)
+    {
+        $this->cgdbIdStart = $cgdbIdStart;
+
+        return $this;
+    }
+
+    /**
+     * Get cgdbIdStart
+     *
+     * @return integer
+     */
+    public function getCgdbIdStart()
+    {
+        return $this->cgdbIdStart;
+    }
+
+    /**
+     * Set cgdbIdEnd
+     *
+     * @param integer $cgdbIdEnd
+     *
+     * @return Set
+     */
+    public function setCgdbIdEnd($cgdbIdEnd)
+    {
+        $this->cgdbIdEnd = $cgdbIdEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get cgdbIdEnd
+     *
+     * @return integer
+     */
+    public function getCgdbIdEnd()
+    {
+        return $this->cgdbIdEnd;
     }
 }

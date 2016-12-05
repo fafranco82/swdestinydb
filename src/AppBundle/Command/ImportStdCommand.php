@@ -322,6 +322,8 @@ class ImportStdCommand extends ContainerAwareCommand
 					'name', 
 					'position', 
 					'size', 
+					'cgdb_id_start',
+					'cgdb_id_end',
 					'date_release'
 			], [], []);
 			if($set) {

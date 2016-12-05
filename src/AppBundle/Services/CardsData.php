@@ -403,9 +403,9 @@ class CardsData
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
 		//test if image is in AWS S3
-		if(file_exists("s3://".$this->container->getParameter("s3_bucket")."/".$card->getCode().".png"))
+		if(file_exists("s3://".$this->container->getParameter("s3_bucket")."/".$card->getCode().".jpg"))
 		{
-			$cardinfo['imagesrc'] = $this->s3Client->getObjectUrl($this->container->getParameter("s3_bucket"), $card->getCode().'.png');
+			$cardinfo['imagesrc'] = $this->s3Client->getObjectUrl($this->container->getParameter("s3_bucket"), $card->getCode().'.jpg');
 		}	
 		else
 		{

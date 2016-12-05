@@ -35,7 +35,15 @@ AppBundle\Entity\Set:
             nullable: false
         size:
             type: smallint
-            nullable: false
+            nullable: false,
+        cgdbIdStart:
+            type: smallint
+            nullable: false,
+            column: cgdb_id_start
+        cgdbIdEnd:
+            type: smallint
+            nullable: false,
+            column: cgdb_id_end
         dateCreation:
             type: datetime
             nullable: false
