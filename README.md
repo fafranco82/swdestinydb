@@ -10,7 +10,7 @@ This guide assumes you know how to use the command-line and that your machine ha
 - clone the repo somewhere
 - cd to it
 - run `npm install`
-- run `composer install` (at the end it will ask for the database configuration parameters)
+- run `composer install` (at the end it will ask for the [database configuration parameters](https://github.com/bravesheep/database-url-bundle#usage)).
 - run `php app/console doctrine:database:create`
 - run `php app/console doctrine:schema:create`
 - run `php app/console app:import:std ../swdestinydb-json-data` or whatever the path to your SWDestinyDB JSON data repository is
