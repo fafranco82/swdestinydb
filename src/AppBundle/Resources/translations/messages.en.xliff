@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-11-24T22:33:24Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2016-12-07T10:23:28Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -1040,6 +1040,10 @@
         <source>Description of this deck problem</source>
         <target>Contains forbidden cards</target>
       </trans-unit>
+      <trans-unit id="9e4302468f8c19ba0ded11b0806e7d2e645c7a98" resname="decks.problems.no_battlefield">
+        <source>Description of this deck problem</source>
+        <target>There is no battlefield selected</target>
+      </trans-unit>
       <trans-unit id="75daa158f303d7962dd8f8b918e708f7e317345d" resname="decks.problems.too_many_character_points">
         <source>Description of this deck problem</source>
         <target>Character points limit exceeded</target>
@@ -1403,35 +1407,35 @@
       <trans-unit id="c259316f2ccec4c84485916a7f1baaec2f44ec10" resname="nav.advancedsearch">
         <source>nav.advancedsearch</source>
         <target>Advanced Search</target>
-        <jms:reference-file line="70">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="60">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="36de747427c9bae2cc89cbceb54614e7516ca0f0" resname="nav.cards">
         <source>nav.cards</source>
         <target>Cards</target>
-        <jms:reference-file line="68">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="58">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="1bc6786f0975743d9907a0ae9f9b234214f5c48a" resname="nav.cardsearch">
         <source>nav.cardsearch</source>
         <target>Card Search</target>
-        <jms:reference-file line="113">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
-        <jms:reference-file line="84">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="103">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="74">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="43d9aa32a953313bb7930f36f74b4948fa563403" resname="nav.decklists">
         <source>nav.decklists</source>
         <target>Decklists</target>
-        <jms:reference-file line="66">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="56">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="e1c33ab2cce910ea28ce78298332e17f827a66bf" resname="nav.mycollection">
         <source>nav.mycollection</source>
         <target>My collection</target>
-        <jms:reference-file line="65">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="55">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="d0914ad1bd4641b38cd9fbb1d1b95f5878972ee6" resname="nav.mydecks">
         <source>nav.mydecks</source>
         <target>My decks</target>
         <jms:reference-file line="576">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
         <jms:reference-file line="590">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
-        <jms:reference-file line="64">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
+        <jms:reference-file line="54">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="7279b50584c31c877b1dcb58f44170e4941a9718" resname="nav.user.editaccount">
         <source>nav.user.editaccount</source>

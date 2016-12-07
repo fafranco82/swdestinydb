@@ -31,6 +31,7 @@ class Constants
 	];
 
 	const PROBLEMS = [
+		'no_battlefield',
 		'incorrect_size',
     	'too_many_character_points',
     	'too_many_copies',
