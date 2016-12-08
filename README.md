@@ -33,3 +33,8 @@ To edit and maintain translations files, these are the steps:
 - run `php app/console server:run`
 - Open your web browser and navigate to `http://localhost:8000/_trans`. Here you can select file and locale from dropdowns on the top.
 - Find the message you want to translate, edit the text in the textarea. The text will be saved automacally when the textarea lose focus.
+
+Appart of the above, thera are two files that need to be created by copying the English version (or the language of your choice):
+
+- Copy `footer.en.html.twig` in `src/AppBundle/Resources/views` to `footer.<locale>.html.twig` and edit it, inserting your translation credits right after the author credits if you wish.
+- Copy `no-decks-text.en.twig` in `src/AppBundle/Resources/views/Builder` to `no-decks-text.<locale>.html.twig` and edit it.
