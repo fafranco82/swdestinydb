@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-02T13:34:25Z" source-language="en" target-language="pl" datatype="plaintext" original="not.available">
+  <file date="2016-12-08T21:48:17Z" source-language="en" target-language="pl" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="1c3be22e5cff2c97b34d24f4c9f7cb61231ca1ec" resname="card.info.flavor">
         <source>card.info.flavor</source>
-        <target>Tekst dodatkowy</target>
+        <target>Tekst fabularny</target>
         <jms:reference-file line="62">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0e839878c132773cabf55204e3275c10d7cd8307" resname="card.info.has_die">
@@ -637,7 +637,7 @@
       </trans-unit>
       <trans-unit id="3902b28a42b3396d246c36f43ba6afb2c911d718" resname="decks.compare.drawdecks">
         <source>decks.compare.drawdecks</source>
-        <target>Pociągnij karty z talii</target>
+        <target>Talie</target>
         <jms:reference-file line="90">/../src/AppBundle/Resources/views/Compare/deck_compare.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="70f5d8cd41a9fc0f5391b0ee6ef8ff21fa276519" resname="decks.defaultemptydesc">
@@ -697,7 +697,7 @@
       </trans-unit>
       <trans-unit id="6b189448e1d3254762939b5edb544c079794971c" resname="decks.edit.build.searchhint">
         <source>decks.edit.build.searchhint</source>
-        <target>Znajdź kartę, lub przefiltruj listę</target>
+        <target>Znajdź kartę lub przefiltruj listę</target>
         <jms:reference-file line="49">/../src/AppBundle/Resources/views/Builder/tab-pane-build.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9125442ae7892112f93cf1b0e0af7279a9f76b4d" resname="decks.edit.build.sets.hint">
@@ -722,7 +722,7 @@
       </trans-unit>
       <trans-unit id="39d24c8b30f759e762a3d80125f1d377424fe5a7" resname="decks.edit.meta.cards">
         <source>decks.edit.meta.cards</source>
-        <target>{0} kart | %count% karta | %count% karty | %count% kart</target>
+        <target>{0} 0 kart | %count% karta | %count% karty | %count% kart</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/hbs/deck-layout-standard.handlebars</jms:reference-file>
       </trans-unit>
       <trans-unit id="9689264a36b54677520ea4b724722b6842781e11" resname="decks.edit.meta.characters">
@@ -732,12 +732,12 @@
       </trans-unit>
       <trans-unit id="204b39ddb0b852342a8a4f5e10e7476d1b87e5e7" resname="decks.edit.meta.dice">
         <source>decks.edit.meta.dice</source>
-        <target>%count% kość | %count% kości</target>
+        <target>{0} 0 kości | {1} 1 kość | %count% kości</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/hbs/deck-layout-standard.handlebars</jms:reference-file>
       </trans-unit>
       <trans-unit id="d2cf83a6087c2fd48a4b8964e5fb2e0794a60e71" resname="decks.edit.meta.drawdeck">
         <source>decks.edit.meta.drawdeck</source>
-        <target>Pociągnij z talii</target>
+        <target>Talia</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/hbs/deck-layout-standard.handlebars</jms:reference-file>
       </trans-unit>
       <trans-unit id="819ac9c8a01c5e61ea1dd4ed7d9a4127623e3fe0" resname="decks.edit.meta.points">
@@ -1122,7 +1122,7 @@
       </trans-unit>
       <trans-unit id="a4692fe897680ffab9ec511fc8f3b74b87e2e5b4" resname="decks.smartfilter.filters.flavor">
         <source>decks.smartfilter.filters.flavor</source>
-        <target>Tekst dodatkowy</target>
+        <target>Tekst fabularny</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.smart_filter.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="d764387a495f0f6e108683e52c85e28396bd59a1" resname="decks.smartfilter.filters.has_die">
@@ -1296,7 +1296,7 @@
       </trans-unit>
       <trans-unit id="ced9ace03fd8e6b23922bd9c4272cdb75a41d1a2" resname="forms.upload">
         <source>forms.upload</source>
-        <target>Wyślij</target>
+        <target>Wgraj</target>
         <jms:reference-file line="13">/../src/AppBundle/Resources/views/Builder/no-decks.html.twig</jms:reference-file>
         <jms:reference-file line="24">/../src/AppBundle/Resources/views/Modale/file.html.twig</jms:reference-file>
       </trans-unit>
