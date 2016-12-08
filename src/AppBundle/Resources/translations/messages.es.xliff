@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-07T10:24:05Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+  <file date="2016-12-08T19:25:49Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,7 +9,7 @@
       <trans-unit id="95beaa25313687f3280c6a152ded9c1f95b62f3b" resname="card.info.affiliation">
         <source>card.info.affiliation</source>
         <target>Afiliación</target>
-        <jms:reference-file line="127">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="126">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="10">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="158">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
@@ -24,7 +24,7 @@
       <trans-unit id="27a144aaef4425d9e05fc9dd0938bc7b60a095cb" resname="card.info.die">
         <source>card.info.die</source>
         <target>Dado</target>
-        <jms:reference-file line="142">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="141">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="16">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="30465eb91bdb1328e9b65ae28f633732ecad30bb" resname="card.info.faction">
@@ -50,7 +50,7 @@
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\card_modal-info.handlebars</jms:reference-file>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\tip-card.handlebars</jms:reference-file>
         <jms:reference-file line="93">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-build.html.twig\</jms:reference-file>
-        <jms:reference-file line="133">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="132">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="10">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\card-props.html.twig\</jms:reference-file>
         <jms:reference-file line="13">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="189">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
@@ -63,14 +63,14 @@
       <trans-unit id="c689397a6d8a4e51e12338b6ac51369c2880e31c" resname="card.info.medium.points_cost">
         <source>card.info.medium.points_cost</source>
         <target>P./C.</target>
-        <jms:reference-file line="130">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="129">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="12">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="f9e68200c945af7b82ae5bf59e2818249af44480" resname="card.info.name">
         <source>card.info.name</source>
         <target>Nombre</target>
         <jms:reference-file line="79">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-build.html.twig\</jms:reference-file>
-        <jms:reference-file line="121">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="120">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="9">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="36">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
@@ -85,7 +85,7 @@
         <source>card.info.points_cost</source>
         <target>Puntos/Coste</target>
         <jms:reference-file line="88">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-build.html.twig\</jms:reference-file>
-        <jms:reference-file line="129">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="128">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="12">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="ae68b7b4a08f81a30b7e1919f3f68bff4cf924c6" resname="card.info.quantity">
@@ -96,14 +96,14 @@
       <trans-unit id="74d13e01b69253341ed89c50c705afb40e410677" resname="card.info.rarity">
         <source>card.info.rarity</source>
         <target>Rareza</target>
-        <jms:reference-file line="139">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="138">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="15">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="145">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="b03c369280544478cc6e3d29a976a4513e886a50" resname="card.info.set">
         <source>card.info.set</source>
         <target>Set</target>
-        <jms:reference-file line="145">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="144">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="17">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="92">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
@@ -146,7 +146,7 @@
         <source>card.info.type</source>
         <target>Tipo</target>
         <jms:reference-file line="98">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\tab-pane-build.html.twig\</jms:reference-file>
-        <jms:reference-file line="136">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="135">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="14">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="105">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
       </trans-unit>
@@ -233,57 +233,57 @@
       <trans-unit id="a6aff7ed063b650c6512576772c0f3592fb1c2f5" resname="collection.addstarter.label">
         <source>collection.addstarter.label</source>
         <target>Añadir un pack de inicio</target>
-        <jms:reference-file line="68">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="67">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="352427b519fcd21581b956205d389aa9afec951a" resname="collection.help">
         <source>collection.help</source>
         <target>Ayuda de filtros</target>
-        <jms:reference-file line="94">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="93">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="326837bee7760555294692fe1903217f4e0ab2f5" resname="collection.options.filter_button.cumulative">
         <source>collection.options.filter_button.cumulative</source>
         <target>Filtros acumulativos</target>
-        <jms:reference-file line="46">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="45">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="26c3b7097ef82eeaead706bebee642cc5f343d0c" resname="collection.options.filter_button.exclusive">
         <source>collection.options.filter_button.exclusive</source>
         <target>Filtros exclusivos</target>
-        <jms:reference-file line="53">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="52">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="6d1d578f0edf33de5f5c85f088270ea2a013a62d" resname="collection.options.label">
         <source>collection.options.label</source>
         <target>Opciones</target>
-        <jms:reference-file line="33">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="32">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c4b0ab0af725610a3844ea453f9787a4c4bdb4e" resname="collection.options.link_cards_dice">
         <source>collection.options.link_cards_dice</source>
         <target>Unir cartas con sus dados</target>
-        <jms:reference-file line="60">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="59">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="3e4d6647a38379ee9faebb247429031680aaad93" resname="collection.options.only_show_owned">
         <source>collection.options.only_show_owned</source>
         <target>Sólo mostrar cartas en mi colección</target>
-        <jms:reference-file line="39">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="38">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="a86a0b18c9470aa67d9e6fd97fa17980b75da702" resname="collection.owned">
         <source>collection.owned</source>
         <target>En propiedad</target>
-        <jms:reference-file line="124">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="123">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="fb71bb854163e89083f8c1a45ef1e155d25eb9ab" resname="collection.searchhint">
         <source>collection.searchhint</source>
         <target>Encuentra una carta o filtra la lista</target>
-        <jms:reference-file line="92">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="91">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="27d8453a45d5be7efd2f2d57ee1e6a0ab18bc4aa" resname="collection.sets.hint">
         <source>collection.sets.hint</source>
         <target>Mayús+Click para seleccionar solo uno; Alt+Mayús+Click para seleccionar todas las otras opciones</target>
-        <jms:reference-file line="29">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="28">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba44561a3dca59355d4c75fa91478a1d03134a22" resname="collection.sets.label">
         <source>collection.sets.label</source>
         <target>Sets</target>
-        <jms:reference-file line="27">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="26">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba5943315452d6a264fdcae61bf1332e12e79285" resname="data_load_fail">
         <source>data_load_fail</source>
@@ -1114,9 +1114,19 @@
         <target>Afiliación</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.smart_filter.js</jms:reference-file>
       </trans-unit>
+      <trans-unit id="d0f8bf40b24e918967c952cf0699bd587a7bd2c6" resname="decks.smartfilter.filters.cards_owned">
+        <source>decks.smartfilter.filters.cards_owned</source>
+        <target>Cantidad de cartas en mi colección</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.smart_filter.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="2eaca929b9b399f771e5d2589120ff3220c2760d" resname="decks.smartfilter.filters.cost">
         <source>decks.smartfilter.filters.cost</source>
         <target>Coste</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.smart_filter.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="390213bbf67cd3f455b7a3b5816363923cf9cb4a" resname="decks.smartfilter.filters.dice_owned">
+        <source>decks.smartfilter.filters.dice_owned</source>
+        <target>Cantidad de dados en mi colección</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.smart_filter.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="af07e0a3d9fd39e319e2fbdcb4dbf7dc4b25da34" resname="decks.smartfilter.filters.faction_code">
@@ -1276,13 +1286,13 @@
         <source>forms.save</source>
         <target>Guardar</target>
         <jms:reference-file line="45">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Builder\deckedit.html.twig\</jms:reference-file>
-        <jms:reference-file line="24">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+        <jms:reference-file line="23">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="31">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Decklist\decklist_edit.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="baf0e7c7beb30cd53b39ee660dce73f3259d6e34" resname="forms.saved">
         <source>forms.saved</source>
         <target>Datos guardados</target>
-        <jms:reference-file line="53">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\CollectionController.php\</jms:reference-file>
+        <jms:reference-file line="52">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\CollectionController.php\</jms:reference-file>
       </trans-unit>
       <trans-unit id="31f58cf619c5250cc1933b909fc39058f8e1bd60" resname="forms.search">
         <source>forms.search</source>

@@ -5,7 +5,9 @@ var SmartFilterQuery = [];
 var configuration = {
 	a: [ add_string_sf, 'affiliation', Translator.trans('decks.smartfilter.filters.affiliation') ],
 	b: [ add_string_sf, 'subtype_code', Translator.trans('decks.smartfilter.filters.subtype_code') ],
+	c: [ add_integer_sf, 'owned.cards', Translator.trans('decks.smartfilter.filters.cards_owned') ],
 	d: [ add_boolean_sf, 'has_die', Translator.trans('decks.smartfilter.filters.has_die') ],
+	e: [ add_integer_sf, 'owned.dice', Translator.trans('decks.smartfilter.filters.dice_owned')],
 	f: [ add_string_sf, 'faction_code', Translator.trans('decks.smartfilter.filters.faction_code') ],
 	h: [ add_integer_sf, 'health', Translator.trans('decks.smartfilter.filters.health') ],
 	i: [ add_string_sf, 'illustrator', Translator.trans('decks.smartfilter.filters.illustrator') ],
@@ -60,24 +62,24 @@ function add_integer_sf(key, operator, values) {
 	}
 	switch (operator) {
 	case ":":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$in' : values
-		};
+		});
 		break;
 	case "<":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$lt' : values[0]
-		};
+		});
 		break;
 	case ">":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$gt' : values[0]
-		};
+		});
 		break;
 	case "!":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$nin' : values
-		};
+		});
 		break;
 	}
 }
@@ -87,14 +89,14 @@ function add_string_sf(key, operator, values) {
 	}
 	switch (operator) {
 	case ":":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$in' : values
-		};
+		});
 		break;
 	case "!":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$nin' : values
-		};
+		});
 		break;
 	}
 }
@@ -102,12 +104,12 @@ function add_boolean_sf(key, operator, values) {
 	var value = parseInt(values.shift()), target = !!value;
 	switch (operator) {
 	case ":":
-		SmartFilterQuery[key] = target;
+		_.set(SmartFilterQuery, key, target);
 		break;
 	case "!":
-		SmartFilterQuery[key] = {
+		_.set(SmartFilterQuery, key, {
 			'$ne': target
-		};
+		});
 		break;
 	}
 }
