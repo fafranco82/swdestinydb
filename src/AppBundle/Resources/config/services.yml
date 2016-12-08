@@ -5,6 +5,15 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }
             
+    user_collection_listener:
+        class: AppBundle\Listener\UserCollectionListener
+        arguments:
+            - @twig
+            - @doctrine.orm.entity_manager
+            - @security.context
+        tags:
+            - {name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
     decks:
         class: AppBundle\Services\Decks
         arguments: ["@doctrine.orm.entity_manager", "@deck_validation_helper", "@agenda_helper", "@diff", "@logger"]

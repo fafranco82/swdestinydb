@@ -199,6 +199,12 @@
 	  <script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 
+  <script type="text/javascript">
+  {% if collection is defined %}
+    app.collection && app.collection.init({{ collection|json_encode|raw }});
+  {% endif %}
+  </script>
+
 	{% block javascripts %}{% endblock %}
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/2.0.0/jquery.dirtyforms.min.js"></script>
     </body>

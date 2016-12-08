@@ -6,7 +6,6 @@
 	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
-	app.collection && app.collection.init({{ collection|json_encode|raw }});
 	app.ui && app.ui.set_starters_data && app.ui.set_starters_data({{ starters|json_encode|raw }});
 	</script>
 {% endblock %}
