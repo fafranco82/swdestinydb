@@ -25,6 +25,12 @@ Handlebars.registerHelper('nb_dice', function(cards) {
 Handlebars.registerHelper('can_include', function(card, options) {
     return app.deck.can_include_card(card);
 });
+Handlebars.registerHelper('own_enough_cards', function(card, options) {
+    return app.deck.own_enough_cards(card);
+});
+Handlebars.registerHelper('own_enough_dice', function(card, options) {
+    return app.deck.own_enough_dice(card);
+});
 
 
 
@@ -208,7 +214,8 @@ deck.get_character_row_data = function get_character_row_data() {
 				clone.indeck = {
 					cards: 1,
 					dice: 1
-				}
+				};
+				clone.original = card;
 				spread.push(clone);
 			}
 			return spread;
@@ -496,6 +503,18 @@ deck.card_spot_faction = function card_spot_faction(card, character_factions) {
 	}
 
 	return false;
+}
+
+deck.own_enough_cards = function own_enough_cards(card) {
+	if(!card.owned) return true;
+
+	return card.indeck.cards <= card.owned.cards;
+}
+
+deck.own_enough_dice = function own_enough_dice(card) {
+	if(!card.owned) return true;
+
+	return card.indeck.dice <= card.owned.dice;
 }
 
 })(app.deck = {}, jQuery);

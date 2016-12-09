@@ -107,6 +107,21 @@ td.die-face {
   color: #daaa0b;
 }
 
+.card-amount {
+	display: inline-block;
+	width: 18px;
+	&.limited-pool-conflict {
+		font-weight: bold;
+		color: #ff9229;
+	}
+}
+
+.fa-exclamation-triangle {
+	&.limited-pool-conflict {
+		color: #999999;
+	}
+}
+
 .table-expanded>thead>tr>th, .table-expanded>tbody>tr>th, .table-expanded>tfoot>tr>th, .table-expanded>thead>tr>td, .table-expanded>tbody>tr>td, .table-expanded>tfoot>tr>td {
 	padding: 16px 8px;
 }

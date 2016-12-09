@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-08T19:27:00Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2016-12-09T09:17:35Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -1408,6 +1408,11 @@
       <trans-unit id="b3aa50f53c80f62753572a5880f2e5f7e5a55074" resname="keyword.redeploy.title">
         <source>Description of keyword 'redeploy' to be shown when mouse is over it</source>
         <target>After the attached character is defeated, you may immediately move this upgrade to any of your other characters. The upgrade die moves to the new character card, even if it was in your dice pool.</target>
+      </trans-unit>
+      <trans-unit id="385ace473263ea49f049c7376feb80a8a8c27b6a" resname="limited_pool_conflict">
+        <source>limited_pool_conflict</source>
+        <target>{0} You don't have this card in your collection | {1} You only have one card in your collection | [2,Inf] You only h ave %count% cards in your collection</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
       </trans-unit>
       <trans-unit id="b9e911ff24a19ad8bac42fb4fe7da8e6c2e27e21" resname="login_required">
         <source>login_required</source>
