@@ -242,10 +242,10 @@ class BuilderController extends Controller
 
 		$response = new Response();
 		$response->headers->set('Content-Type', 'text/plain');
-		/*$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
 		    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
 				$this->get('texts')->slugify($deck->getName()) . '.txt'
-		));*/
+		));
 
 		$response->setContent($content);
 		return $response;
