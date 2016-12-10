@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-09T09:16:15Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+  <file date="2016-12-10T17:27:26Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -106,6 +106,11 @@
         <jms:reference-file line="144">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
         <jms:reference-file line="17">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\display-list.html.twig\</jms:reference-file>
         <jms:reference-file line="92">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Search\searchform.html.twig\</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fe435d04e7e7b69fd00e9b0754f40fe3f8fa645c" resname="card.info.sets">
+        <source>card.info.sets</source>
+        <target>Sets</target>
+        <jms:reference-file line="9">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Export\plain.txt.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="a5c4d8f54d4a25de8742e2be404df788ae4a763d" resname="card.info.short.faction">
         <source>card.info.short.faction</source>
@@ -749,6 +754,11 @@
         <source>decks.edit.meta.sets</source>
         <target>Sets: %sets%</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\hbs\deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a53030da3a614c89441b1d52a9d96f244f759f8b" resname="decks.edit.meta.setsrange">
+        <source>decks.edit.meta.setsrange</source>
+        <target>Desde %first% hasta %last%</target>
+        <jms:reference-file line="10">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Export\plain.txt.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="7f16af96c317adac3b58097b3e8dd9d8284a8e31" resname="decks.edit.notes.notes.hint">
         <source>decks.edit.notes.notes.hint</source>
@@ -1448,8 +1458,8 @@
       <trans-unit id="d0914ad1bd4641b38cd9fbb1d1b95f5878972ee6" resname="nav.mydecks">
         <source>nav.mydecks</source>
         <target>Mis mazos</target>
-        <jms:reference-file line="576">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
-        <jms:reference-file line="590">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
+        <jms:reference-file line="582">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
+        <jms:reference-file line="596">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Controller\BuilderController.php\</jms:reference-file>
         <jms:reference-file line="54">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\layout.html.twig\</jms:reference-file>
       </trans-unit>
       <trans-unit id="7279b50584c31c877b1dcb58f44170e4941a9718" resname="nav.user.editaccount">

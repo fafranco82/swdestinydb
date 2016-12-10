@@ -229,17 +229,23 @@ class BuilderController extends Controller
         	);
         }
 
+        $factionNames = [];
+        foreach($this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName() as $faction) {
+            $factionNames[$faction->getCode()] = $faction->getName();
+        }
+
         $content = $this->renderView('AppBundle:Export:plain.txt.twig', [
-        	"deck" => $deck->getTextExport()
+        	"deck" => $deck->getTextExport(),
+            "factionNames" => $factionNames
       	]);
         $content = str_replace("\n", "\r\n", $content);
 
 		$response = new Response();
 		$response->headers->set('Content-Type', 'text/plain');
-		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+		/*$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
 		    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
 				$this->get('texts')->slugify($deck->getName()) . '.txt'
-		));
+		));*/
 
 		$response->setContent($content);
 		return $response;

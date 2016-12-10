@@ -27,13 +27,18 @@ class ExportableDeck
 	public function getTextExport() 
 	{
 		$slots = $this->getSlots();
+
+		$decklist_factions = $slots->getCountByFaction();
+        arsort($decklist_factions);
+        $factions = array_keys(array_filter($decklist_factions, function($v) {
+            return $v > 0;
+        }));
+
 		return [
 				'name' => $this->getName(),
 				'affiliation' => $this->getAffiliation(),
-				'agenda' => $slots->getAgenda(),
-				'draw_deck_size' => $slots->getDrawDeck()->countCards(),
-				'plot_deck_size' => $slots->getPlotDeck()->countCards(),
-				'included_packs' => $slots->getIncludedPacks(),
+				'factions' => $factions,
+				'included_sets' => $slots->getIncludedSets(),
 				'slots_by_type' => $slots->getSlotsByType()
 		];
 	}
