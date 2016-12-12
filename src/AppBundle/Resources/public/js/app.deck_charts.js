@@ -1,5 +1,11 @@
 (function app_deck_charts(deck_charts, $) {
 
+    Highcharts.setOptions({
+        lang: {
+            drillUpText: '< '+Translator.trans('forms.back')
+        }
+    });
+
 	var faction_colors = {
         red: '#b22222',
         yellow: '#dab032',
@@ -7,13 +13,36 @@
         gray: '#979d9f'
     };
 
-	deck_charts.chart_type = function chart_type() {
+    var faction_names = {};
+    function get_faction_name(faction_code) {
+        if(!_.hasIn(faction_names, faction_code)) {
+            faction_names[faction_code] = app.data.cards.find({faction_code: faction_code})[0].faction_name;
+        }
+        return faction_names[faction_code];
+    }
 
-        var categories = {
-            'Upgrade': '<span class="icon icon-upgrade"></span>',
-            'Support': '<span class="icon icon-support"></span>',
-            'Event': '<span class="icon icon-event"></span>'
-        };
+    var rarity_colors = {
+        S: '#bcbcbc',
+        C: '#6d9eeb',
+        U: '#fff56a',
+        R: '#aeca36',
+        L: '#a774b2'
+    };
+
+    var rarity_names = {};
+    function get_rarity_name(rarity_code) {
+        if(!_.hasIn(rarity_names, rarity_code)) {
+            rarity_names[rarity_code] = app.data.cards.find({rarity_code: rarity_code})[0].rarity_name;
+        }
+        return rarity_names[rarity_code];
+    }
+
+	deck_charts.chart_type = function chart_type() {
+        var categories = {};
+
+        categories[Translator.trans('icon.upgrade')] = '<span class="icon icon-upgrade"></span>';
+        categories[Translator.trans('icon.support')] = '<span class="icon icon-support"></span>';
+        categories[Translator.trans('icon.event')] = '<span class="icon icon-event"></span>';
 
         var iData = {
             'upgrade': { i: 0, name: Translator.trans('icon.upgrade') },
@@ -35,7 +64,7 @@
                 serie = {
                     name: card.faction_name,
                     color: faction_colors[card.faction_code],
-                    data: [0, 0, 0, 0, 0],
+                    data: [0, 0, 0],
                     type: "column",
                     animation: false,
                     showInLegend: false
@@ -69,7 +98,7 @@
                 type: 'column'
             },
             title: {
-                text: "Card Types"
+                text: Translator.trans('decks.charts.type.title')
             },
             subtitle: {
                 text: ""
@@ -98,11 +127,8 @@
             },
             tooltip: {
                 headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                pointFormat: '<span style="font-weight: bold; color: {point.color}">{series.name}</span>: {point.y}<br/><b>'+Translator.trans('decks.charts.globals.total')+'</b>: {point.stackTotal}'
             },
-            //tooltip: {
-            //    headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
-            //},
             series: series,
             plotOptions: {
                 column: {
@@ -115,7 +141,103 @@
         });
     };
 
-	deck_charts.chart_cost = function chart_cost() {
+    deck_charts.chart_rarity = function chart_rarity() {
+        var raritiesData = [];
+        var factionsData = {};
+
+        ['S', 'C', 'U', 'R', 'L'].forEach(function(rarity_code) {
+            var rarityData = {
+                name: get_rarity_name(rarity_code),
+                y: 0,
+                color: rarity_colors[rarity_code],
+                drilldown: rarity_code
+            };
+            ['blue', 'red', 'yellow', 'gray'].forEach(function(faction_code) {
+                var characterSample = app.deck.get_cards(null, {type_code: 'character', rarity_code: rarity_code, faction_code: faction_code});
+                var otherSample = app.deck.get_cards(null, {type_code: {$ne: 'character'}, rarity_code: rarity_code, faction_code: faction_code});
+                var total = app.deck.get_nb_dice(characterSample) + app.deck.get_nb_cards(otherSample);
+                if(total) {
+                    rarityData.y += total;
+                    if(!_.hasIn(factionsData, rarity_code)) factionsData[rarity_code] = [];
+                    factionsData[rarity_code].push({
+                        name: get_faction_name(faction_code),
+                        y: total,
+                        color: faction_colors[faction_code]
+                    });
+                }
+            });
+            if(rarityData.y) {
+                raritiesData.push(rarityData);
+            }
+        });
+
+        var factionSeries = [];
+        ['S', 'C', 'U', 'R', 'L'].forEach(function(rarity_code) {
+            factionSeries.push({
+                name: get_rarity_name(rarity_code),
+                id: rarity_code,
+                data: factionsData[rarity_code]
+            });
+        });
+
+        // Create the chart
+        var options = {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: Translator.trans('decks.charts.rarity.title')
+            },
+            subtitle: {
+                text: Translator.trans('decks.charts.rarity.subtitle')
+            },
+            plotOptions: {
+                pie: {
+                    shadow: false,
+                    borderWidth: 0,
+                    states: {
+                        hover: {
+                            halo: {
+                                size: 5
+                            }
+                        }
+                    }
+                },
+                series: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: "<b>{series.name}</b><br/>",
+                pointFormat: '<span style="font-weight: bold; color: {point.color}">{point.name}</span>: {point.y}<br/><b>'+Translator.trans('decks.charts.globals.total')+'</b>: {point.total}'
+            },
+            series: [{
+                name: 'Rarities',
+                tooltip: {
+                    headerFormat: "<b>{point.key}</b><br/>",
+                    pointFormat: Translator.trans("decks.charts.rarity.tooltip.amount", {
+                        amount: "<b>{point.y}</b>", 
+                        total: "<b>{point.total}</b>"
+                    })+" ({point.percentage:.2f}%)"
+                },
+                data: raritiesData
+            }],
+            drilldown: {
+                drillUpButton: {
+                    relativeTo: 'plotBox',
+                    position: {
+                        y: -10
+                    }
+                },
+                series: factionSeries
+            }
+        };
+        $('#deck-chart-rarity').highcharts(options);
+    };
+
+    deck_charts.chart_cost = function chart_cost() {
 
 		var data = [];
 
@@ -169,6 +291,7 @@
 
 	deck_charts.setup = function setup(options) {
 		deck_charts.chart_type();
+        deck_charts.chart_rarity();
 		deck_charts.chart_cost();
 	}
 

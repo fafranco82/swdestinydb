@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-10T17:28:16Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2016-12-12T14:36:43Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -624,6 +624,31 @@
         <target># cards</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
       </trans-unit>
+      <trans-unit id="ebcc0f71a63f5d516e5980445bac3f95a1e0790f" resname="decks.charts.globals.total">
+        <source>decks.charts.globals.total</source>
+        <target>Total</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="70cc764452ef0b12bcfa6b30166ed799acdb4a22" resname="decks.charts.rarity.subtitle">
+        <source>decks.charts.rarity.subtitle</source>
+        <target>Click to see more details</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7dcd8b143b1def953bd25ae941aa55db751a6ed1" resname="decks.charts.rarity.title">
+        <source>decks.charts.rarity.title</source>
+        <target>Card rarities</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="21301f92f629d72b873c8ee22fa0a0c4f2c1063e" resname="decks.charts.rarity.tooltip.amount">
+        <source>decks.charts.rarity.tooltip.amount</source>
+        <target>%amount% out of %total%</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0d95161e5afb8657db06282566d4cc1bd2130887" resname="decks.charts.type.title">
+        <source>decks.charts.type.title</source>
+        <target>Card types</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="684e4be26fac361f71bc7755c9d2b3e83202d053" resname="decks.compare.battlefield">
         <source>decks.compare.battlefield</source>
         <target>Battlefields</target>
@@ -1214,6 +1239,11 @@
         <source>forms.add</source>
         <target>Add</target>
         <jms:reference-file line="19">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Modale\tag_add.html.twig\</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="dd5c893e006c14bfbcbe1e392d4df17018561e5d" resname="forms.back">
+        <source>forms.back</source>
+        <target>Back</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="086c93a48dda64b3bb51133c57d95a6517714c75" resname="forms.cancel">
         <source>forms.cancel</source>
