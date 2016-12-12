@@ -237,6 +237,96 @@
         $('#deck-chart-rarity').highcharts(options);
     };
 
+    var templateTooltipDice = Handlebars.templates['charts-dice-tooltip'];
+    deck_charts.chart_dice = function chart_dice() {
+        var symbols = {MD: 'melee', RD: 'ranged', F: 'focus', Dr: 'disrupt', Dc: 'discard', Sh: 'shield', R: 'resource', Sp: 'special', '-': 'blank'};
+
+        var categories = [];
+        ["MD", "RD", "F", "Dr", "Sh", "Dc", "R", "Sp", "-"].forEach(function(symbol) {
+            categories.push({
+                name: Translator.trans('icon.'+symbols[symbol]),
+                code: symbol,
+                label: '<span class="icon icon-'+symbols[symbol]+'"></span>',
+                faces: 0,
+                dice: 0
+            });
+        });
+
+        app.deck.get_cards(null, {has_die: true}).forEach(function(card) {
+            var symbolsDie = {};
+            card.sides.forEach(function(side) {
+                var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
+                var symbol = elems[3];
+                var category = _.find(categories, {code: symbol});
+                category.faces = category.faces + card.indeck.dice;
+                if(!_.hasIn(symbolsDie, symbol)) {
+                    category.dice = category.dice + card.indeck.dice;
+                    symbolsDie[symbol] = 1;
+                }
+            });
+        });
+
+        var options = {
+            chart: {
+                type: 'line',
+                polar: true
+            },
+            title: {
+                text: Translator.trans('decks.charts.dice.title')
+            },
+            subtitle: {
+                text: ""
+            },
+            plotOptions: {
+                line: {
+                    showInLegend: false,
+                    marker: {
+                        enabled: false
+                    }
+                }
+            },
+            tooltip: {
+                shared: true,
+                useHTML: true,
+                formatter: function() {
+                    var category = _.find(categories, {name: this.x});
+                    this.icon = category ? category.label : null;
+                    return templateTooltipDice(this);
+                }
+            },
+            xAxis: {
+                categories: _.map(categories, 'name'),
+                labels: {
+                    useHTML: true,
+                    formatter: function() {
+                        var category = _.find(categories, {name: this.value});
+                        return category ? category.label : this.value;
+                    }
+                },
+                gridLineWidth: 0
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                max: _.max(_.map(['faces','dice'], function(c) { return _(categories).map(c).max(); })),
+                labels: {
+                    enabled: false
+                }
+            },
+            series: [
+                {
+                    name: Translator.trans('decks.charts.dice.series.faces.name'),
+                    data: _.map(categories, 'faces')
+                },
+                {
+                    name: Translator.trans('decks.charts.dice.series.dice.name'),
+                    data: _.map(categories, 'dice')
+                }
+            ]
+        };
+        $('#deck-chart-dice').highcharts(options);
+    };
+
     deck_charts.chart_cost = function chart_cost() {
 
 		var data = [];
@@ -292,6 +382,7 @@
 	deck_charts.setup = function setup(options) {
 		deck_charts.chart_type();
         deck_charts.chart_rarity();
+        deck_charts.chart_dice();
 		deck_charts.chart_cost();
 	}
 

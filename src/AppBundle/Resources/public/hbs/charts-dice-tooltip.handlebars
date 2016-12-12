@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center; padding: 0px .2em">{{#if icon}}{{{icon}}}{{/if}}</th>
+      <th colspan="2">{{x}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each points}}
+    <tr>
+      <td style="text-align: center; padding: 0px .2em">
+        <span style="color: {{{series.color}}}">&#x25CF;</span>
+      </td>
+      <td><b>{{series.name}}:</b></td>
+      <td>{{y}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
