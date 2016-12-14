@@ -166,7 +166,7 @@
     {% for flashMessage in app.session.flashbag.get('error') %}
     	app.ui.insert_alert_message('danger', {{ flashMessage|json_encode|raw }});
     {% endfor %}
-
+      app.ui.insert_alert_message('warning', "The site will be down for maintenance the 2016-12-15 between 07:00 and 09:00 UTC");
 	});
     </script>
 
