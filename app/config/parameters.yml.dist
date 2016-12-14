@@ -31,6 +31,6 @@ parameters:
     google_adsense_slot: 0000000000
 
     #AWS
-    aws_access_key_id: ~
-    aws_secret_access_key: ~
+    aws_access_key_id: false
+    aws_secret_access_key: false
     s3_bucket: ~
