@@ -157,17 +157,16 @@
     };
     moment.locale('{{ app.request.locale }}');
     $(function() {
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-    	app.ui.insert_alert_message('success', {{ flashMessage|json_encode|raw }});
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('warning') %}
-    	app.ui.insert_alert_message('warning', {{ flashMessage|json_encode|raw }});
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('error') %}
-    	app.ui.insert_alert_message('danger', {{ flashMessage|json_encode|raw }});
-    {% endfor %}
-      app.ui.insert_alert_message('warning', "The site will be down for maintenance the 2016-12-15 between 07:00 and 09:00 UTC");
-	});
+      {% for flashMessage in app.session.flashbag.get('notice') %}
+      	app.ui.insert_alert_message('success', {{ flashMessage|json_encode|raw }});
+      {% endfor %}
+      {% for flashMessage in app.session.flashbag.get('warning') %}
+      	app.ui.insert_alert_message('warning', {{ flashMessage|json_encode|raw }});
+      {% endfor %}
+      {% for flashMessage in app.session.flashbag.get('error') %}
+      	app.ui.insert_alert_message('danger', {{ flashMessage|json_encode|raw }});
+      {% endfor %}
+	  });
     </script>
 
 	{% if app.environment == 'prod' %}
