@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-12T21:52:23Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2016-12-15T22:28:05Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -629,9 +629,19 @@
         <target># of dice</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
       </trans-unit>
+      <trans-unit id="00248d0849b6a9ab1913f4174d33fe2ee7c18b94" resname="decks.charts.dice.series.direct.name">
+        <source>decks.charts.dice.series.direct.name</source>
+        <target># sides without +</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="459d4c9dd8e9fd7936ca3e026df8909687727e62" resname="decks.charts.dice.series.faces.name">
         <source>decks.charts.dice.series.faces.name</source>
         <target># of die sides</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="43101b18ea35eec246890e491135c5ea52b2fa96" resname="decks.charts.dice.subtitle">
+        <source>decks.charts.dice.subtitle</source>
+        <target>Duplicates not counted</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\app.deck_charts.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="2ad0e5f90a73f795ff68f0f9aed6fd28626b7a71" resname="decks.charts.dice.title">

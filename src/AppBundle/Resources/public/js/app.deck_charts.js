@@ -66,7 +66,6 @@
                     color: faction_colors[card.faction_code],
                     data: [0, 0, 0],
                     type: "column",
-                    animation: false,
                     showInLegend: false
                 };
                 iSeries[card.faction_code] = serie;
@@ -95,7 +94,8 @@
 
         $("#deck-chart-type").highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                animation: false
             },
             title: {
                 text: Translator.trans('decks.charts.type.title')
@@ -183,7 +183,8 @@
         // Create the chart
         var options = {
             chart: {
-                type: 'pie'
+                type: 'pie',
+                animation: false
             },
             title: {
                 text: Translator.trans('decks.charts.rarity.title')
@@ -195,6 +196,7 @@
                 pie: {
                     shadow: false,
                     borderWidth: 0,
+                    animation: false,
                     states: {
                         hover: {
                             halo: {
@@ -225,6 +227,7 @@
                 data: raritiesData
             }],
             drilldown: {
+                animation: false,
                 drillUpButton: {
                     relativeTo: 'plotBox',
                     position: {
@@ -238,6 +241,14 @@
     };
 
     var templateTooltipDice = Handlebars.templates['charts-dice-tooltip'];
+    var diceCharColors = (function() {
+        var colors = [];
+        var base = Highcharts.getOptions().colors[0];
+        for (var i = 0; i < 3; i += 1) {
+            colors.push(Highcharts.Color(base).brighten(-i/3).get());
+        }
+        return colors;
+    })();
     deck_charts.chart_dice = function chart_dice() {
         var symbols = {MD: 'melee', RD: 'ranged', F: 'focus', Dr: 'disrupt', Dc: 'discard', Sh: 'shield', R: 'resource', Sp: 'special', '-': 'blank'};
 
@@ -248,19 +259,22 @@
                 code: symbol,
                 label: '<span class="icon icon-'+symbols[symbol]+'"></span>',
                 faces: 0,
+                directFaces: 0,
                 dice: 0
             });
         });
 
         app.deck.get_cards(null, {has_die: true}).forEach(function(card) {
+            var amount = card.is_unique ? 1 : card.indeck.dice;
             var symbolsDie = {};
             card.sides.forEach(function(side) {
                 var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
                 var symbol = elems[3];
                 var category = _.find(categories, {code: symbol});
-                category.faces = category.faces + card.indeck.dice;
+                category.faces = category.faces + amount;
+                if(elems[1]!='+') category.directFaces += amount;
                 if(!_.hasIn(symbolsDie, symbol)) {
-                    category.dice = category.dice + card.indeck.dice;
+                    category.dice = category.dice + amount;
                     symbolsDie[symbol] = 1;
                 }
             });
@@ -268,17 +282,18 @@
 
         var options = {
             chart: {
-                type: 'line',
-                polar: true
+                type: 'area',
+                polar: true,
+                animation: false
             },
             title: {
                 text: Translator.trans('decks.charts.dice.title')
             },
             subtitle: {
-                text: ""
+                text: Translator.trans('decks.charts.dice.subtitle')
             },
             plotOptions: {
-                line: {
+                area: {
                     showInLegend: false,
                     marker: {
                         enabled: false
@@ -303,12 +318,12 @@
                         return category ? category.label : this.value;
                     }
                 },
-                gridLineWidth: 0
+                gridLineWidth: 1
             },
             yAxis: {
                 allowDecimals: false,
-                min: 0,
-                max: _.max(_.map(['faces','dice'], function(c) { return _(categories).map(c).max(); })),
+                endOnTick: false,
+                maxPadding: 0,
                 labels: {
                     enabled: false
                 }
@@ -316,11 +331,18 @@
             series: [
                 {
                     name: Translator.trans('decks.charts.dice.series.faces.name'),
-                    data: _.map(categories, 'faces')
+                    data: _.map(categories, 'faces'),
+                    color: diceCharColors[0]
+                },
+                {
+                    name: Translator.trans('decks.charts.dice.series.direct.name'),
+                    data: _.map(categories, 'directFaces'),
+                    color: diceCharColors[1]
                 },
                 {
                     name: Translator.trans('decks.charts.dice.series.dice.name'),
-                    data: _.map(categories, 'dice')
+                    data: _.map(categories, 'dice'),
+                    color: diceCharColors[2]
                 }
             ]
         };
@@ -342,7 +364,8 @@
 
 		$("#deck-chart-cost").highcharts({
 			chart: {
-				type: 'line'
+				type: 'line',
+                animation: false
 			},
 			title: {
 	            text: Translator.trans("decks.charts.cost.title")
@@ -370,7 +393,6 @@
 				headerFormat: '<span style="font-size: 10px">'+Translator.trans('decks.charts.cost.tooltip.header', {cost: '{point.key}'})+'</span><br/>'
 			},
 			series: [{
-				animation: false,
 				name: Translator.trans('decks.charts.cost.tooltip.label'),
 				showInLegend: false,
 				data: data
