@@ -471,6 +471,22 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		counter++;
 	});
 
+	var params = {
+		cards: counter,
+		total: Config['only-show-owned'] ? app.data.cards.find({owned: {cards: {$gt: 0}}}).length : app.data.cards.find({}).length
+	};
+
+	var showingText = Config['only-show-owned'] ?
+		Translator.transChoice('collection.showing_cards.only_collection', counter, params) :
+		Translator.transChoice('collection.showing_cards.total', counter, params);
+
+	if(Config['only-show-owned']) {
+		var total = app.data.cards.find(query).length;
+		showingText += Translator.transChoice('collection.cards_matching_filter', total, {cards: total});
+	}
+
+	$('#showing-cards').text(showingText);
+
 	ui.update_spinners();
 }, 250);
 

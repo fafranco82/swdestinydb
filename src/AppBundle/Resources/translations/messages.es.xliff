@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-15T22:32:30Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+  <file date="2016-12-16T13:38:33Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -240,6 +240,11 @@
         <target>Añadir un pack de inicio</target>
         <jms:reference-file line="67">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
       </trans-unit>
+      <trans-unit id="c391aacc2297e5414dd408ae48b5d3467414b34e" resname="collection.cards_matching_filter">
+        <source>collection.cards_matching_filter</source>
+        <target>%cards% carta cumple este filtro en todo el juego. | %cards% cartas cumplen este filtro en todo el juego.</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\ui.collection.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="352427b519fcd21581b956205d389aa9afec951a" resname="collection.help">
         <source>collection.help</source>
         <target>Ayuda de filtros</target>
@@ -289,6 +294,16 @@
         <source>collection.sets.label</source>
         <target>Sets</target>
         <jms:reference-file line="26">\..\..\..\..\..\..\C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\views\Collection\index.html.twig\</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0b9eb8a69ea685986f5dd24cbf05bea5109d41af" resname="collection.showing_cards.only_collection">
+        <source>collection.showing_cards.only_collection</source>
+        <target>Mostrando %cards% carta de %total% en mi colección. | Mostrando %cards% cartas de %total% en mi colección.</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\ui.collection.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c5aff388cea8cf3d7033fba22d736e00261818d7" resname="collection.showing_cards.total">
+        <source>collection.showing_cards.total</source>
+        <target>Mostrando %cards% carta de %total% en el juego. | Mostrando %cards% cartas de %total% en el juego.</target>
+        <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\ui.collection.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba5943315452d6a264fdcae61bf1332e12e79285" resname="data_load_fail">
         <source>data_load_fail</source>
