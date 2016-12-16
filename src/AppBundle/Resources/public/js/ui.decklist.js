@@ -28,6 +28,9 @@
 		case 'btn-download-text':
 			location.href = Routing.generate('decklist_export_text', {decklist_id:app.deck.get_id()});
 			break;
+		case 'btn-download-tts':
+			location.href = Routing.generate('decklist_export_tts', {decklist_id:app.deck.get_id()});
+			break;
 		case 'btn-download-octgn':
 			location.href = Routing.generate('decklist_export_octgn', {decklist_id:app.deck.get_id()});
 			break;

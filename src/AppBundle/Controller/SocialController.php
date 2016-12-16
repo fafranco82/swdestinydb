@@ -760,6 +760,40 @@ class SocialController extends Controller
     /*
 	 * returns a text file with the content of a decklist
 	 */
+    public function ttsexportAction ($decklist_id, Request $request)
+    {
+        $response = new Response();
+        $response->setPublic();
+        $response->setMaxAge($this->container->getParameter('cache_expiration'));
+
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $decklist \AppBundle\Entity\Decklist */
+        $decklist = $em->getRepository('AppBundle:Decklist')->find($decklist_id);
+        if (! $decklist)
+            throw new NotFoundHttpException("Unable to find decklist.");
+
+        $content = $this->renderView('AppBundle:Export:tts.json.twig', [
+        	"deck" => $decklist->getTtsExport()
+      	]);
+        $content = str_replace("\n", "\r\n", $content);
+
+        $response = new Response();
+
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+        		ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        		$decklist->getNameCanonical() . '.json'
+        ));
+
+        $response->setContent($content);
+        return $response;
+    }
+
+    /*
+	 * returns a text file with the content of a decklist
+	 */
     public function textexportAction ($decklist_id, Request $request)
     {
         $response = new Response();

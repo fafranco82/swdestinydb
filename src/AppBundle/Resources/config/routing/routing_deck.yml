@@ -111,6 +111,14 @@ deck_export_text:
     requirements:
         deck_id: \d+
 
+deck_export_tts:
+    path: /export/tts/{deck_id}
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Builder:ttsexport
+    requirements:
+        deck_id: \d+
+
 deck_export_octgn_list:
     path: /export/octgn/list
     methods: [GET]

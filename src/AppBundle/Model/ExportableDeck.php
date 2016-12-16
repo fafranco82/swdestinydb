@@ -42,4 +42,23 @@ class ExportableDeck
 				'slots_by_type' => $slots->getSlotsByType()
 		];
 	}
+
+	public function getTtsExport()
+	{
+		$slots = $this->getSlots();
+
+		$decklist_factions = $slots->getCountByFaction();
+        arsort($decklist_factions);
+        $factions = array_keys(array_filter($decklist_factions, function($v) {
+            return $v > 0;
+        }));
+
+		return [
+				'name' => $this->getName(),
+				'affiliation' => $this->getAffiliation(),
+				'factions' => $factions,
+				'included_sets' => $slots->getIncludedSets(),
+				'slots_by_type' => $slots->getSlotsByType()
+		];
+	}
 }

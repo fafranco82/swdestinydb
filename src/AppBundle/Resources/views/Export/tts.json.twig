@@ -1,0 +1,273 @@
+{
+	"SaveName": "",
+	"GameMode": "",
+	"Date": "",
+	"Table": "",
+	"Sky": "",
+	"Note": "",
+	"Rules": "",
+	"PlayerTurn": "",
+	"LuaScript": "",
+	"LuaScriptState": "",
+	"ObjectStates": [
+		{
+			"Name": "Bag",
+			"Transform": {
+				"posX": 0,
+				"posY": 0,
+				"posZ": 0,
+				"rotX": 0,
+				"rotY": 180,
+				"rotZ": 0,
+				"scaleX": 1,
+				"scaleY": 1,
+				"scaleZ": 1
+			},
+			"Nickname": "{{ deck.name }}",
+			"Description": "Exported from SWDestinyDB.com",
+			"ColorDiffuse": {
+				"r": 0.129,
+				"g": 0.694,
+				"b": 0.607
+			},
+			"Locked": false,
+			"Grid": true,
+			"Snap": true,
+			"Autoraise": true,
+			"Sticky": true,
+			"Tooltip": true,
+			"MaterialIndex": -1,
+			"MeshIndex": -1,
+			"LuaScript": "",
+			"LuaScriptState": "",
+			"ContainedObjects": [
+				{# BattleField #}
+				{% set battlefield = deck.slots_by_type.battlefield.0.card %}
+				{
+					"Name": "Card",
+					"Transform": {
+						"posX": 0.0,
+						"posY": 0.0,
+						"posZ": 0.0,
+						"rotX": 0.0,
+						"rotY": 270,
+						"rotZ": 0.0,
+						"scaleX": 1.42055011,
+						"scaleY": 1,
+						"scaleZ": 1.42055011
+					},
+					"Nickname": "{{ battlefield.name }}",
+					"Description": "",
+					"ColorDiffuse": {
+						"r": 0.713235259,
+						"g": 0.713235259,
+						"b": 0.713235259
+					},
+					"Locked": false,
+					"Grid": true,
+					"Snap": true,
+					"Autoraise": true,
+					"Sticky": true,
+					"Tooltip": true,
+					"CardID": {{ battlefield.ttscardid }},
+					"SidewaysCard": true,
+					"CustomDeck": {
+						{# All Battlefields use CustomDeck 18 #}
+						"18": {
+							"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
+							"BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						}
+					},
+					"LuaScript": "",
+					"LuaScriptState": "",
+					"GUID": ""
+				},
+				{# Characters #}
+				{% for slot in deck.slots_by_type.character %}
+				{
+			    "Name": "Card",
+			    "Transform": {
+			      "posX": 0.0,
+			      "posY": 0.0,
+			      "posZ": 0.0,
+			      "rotX": 0.0,
+			      "rotY": 0.0,
+			      "rotZ": 0.0,
+			      "scaleX": 1.42055011,
+			      "scaleY": 1.0,
+			      "scaleZ": 1.42055011
+			    },
+			    "Nickname": "{{ slot.card.name }}",
+			    "Description": "{% if slot.dice == 2 %}elite{% endif %}",
+			    "ColorDiffuse": {
+			      "r": 0.713235259,
+			      "g": 0.713235259,
+			      "b": 0.713235259
+			    },
+			    "Locked": false,
+			    "Grid": true,
+			    "Snap": true,
+			    "Autoraise": true,
+			    "Sticky": true,
+			    "Tooltip": true,
+			    "CardID": {{ slot.card.ttscardid }},
+			    "SidewaysCard": false,
+			    "CustomDeck": {
+			      "13": {
+			        "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
+			        "BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+			        "NumWidth": 10,
+			        "NumHeight": 7,
+			        "BackIsHidden": true,
+			        "UniqueBack": false
+			      }
+			    },
+			    "LuaScript": "",
+			    "LuaScriptState": "",
+			    "GUID": ""
+			  },
+				{% endfor %}
+				{# Deck of Other Cards #}
+				{
+					"Name": "Deck",
+					"Transform": {
+						"posX": 0,
+						"posY": 0,
+						"posZ": 0,
+						"rotX": 0,
+						"rotY": 0,
+						"rotZ": 180,
+						"scaleX": 1.42055011,
+						"scaleY": 1,
+						"scaleZ": 1.42055011
+					},
+					"Nickname": "Events, Supports, Upgrades",
+					"Description": "",
+					"ColorDiffuse": {
+						"r": 0.713235259,
+						"g": 0.713235259,
+						"b": 0.713235259
+					},
+					"Locked": false,
+					"Grid": true,
+					"Snap": true,
+					"Autoraise": true,
+					"Sticky": true,
+					"Tooltip": true,
+					"SidewaysCard": false,
+					"DeckIDs": [
+						{% set allSlots = deck.slots_by_type.upgrade %}
+						{% set allSlots = allSlots|merge(deck.slots_by_type.support) %}
+						{% set allSlots = allSlots|merge(deck.slots_by_type.event) %}
+						{% for slot in allSlots %}
+						{{ slot.card.ttscardid }}{% if not loop.last %},{% endif %}
+						{% endfor %}
+					],
+					"CustomDeck": {
+						"13": {
+							"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
+							"BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"14": {
+							"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LbWxBTlVoVUZ0QkE",
+							"BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"19": {
+							"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LR09TdWYtUkloUzQ",
+							"BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						}
+					},
+					"LuaScript": "",
+					"LuaScriptState": "",
+					"ContainedObjects": [
+						{% for slot in allSlots %}
+						{% for i in range (1,slot.quantity) %}
+							{
+			          "Name": "Card",
+			          "Transform": {
+			            "posX": 0.0,
+			            "posY": 0.0,
+			            "posZ": 0.0,
+			            "rotX": 0.0,
+			            "rotY": 0.0,
+			            "rotZ": 0.0,
+			            "scaleX": 1.42055011,
+			            "scaleY": 1.0,
+			            "scaleZ": 1.42055011
+			          },
+			          "Nickname": "{{ slot.card.name }}",
+			          "Description": "",
+			          "ColorDiffuse": {
+			            "r": 0.713235259,
+			            "g": 0.713235259,
+			            "b": 0.713235259
+			          },
+			          "Locked": false,
+			          "Grid": true,
+			          "Snap": true,
+			          "Autoraise": true,
+			          "Sticky": true,
+			          "Tooltip": true,
+			          "CardID": {{ slot.card.ttscardid }},
+			          "SidewaysCard": false,
+			          "CustomDeck": {
+									{%if slot.card.ttscardid[:2] == 13 %}
+										"13": {
+											"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
+											"BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 14 %}
+										"14": {
+				              "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LbWxBTlVoVUZ0QkE",
+				              "BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+				              "NumWidth": 10,
+				              "NumHeight": 7,
+				              "BackIsHidden": true,
+				              "UniqueBack": false
+				            }
+									{% elseif slot.card.ttscardid[:2] == 19 %}
+										"19": {
+				              "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LR09TdWYtUkloUzQ",
+				              "BackURL": "http://cloud-3.steamusercontent.com/ugc/263845944692793410/D285F2B6F28F272FAAD1BFA25D6DD12660C9972E/",
+				              "NumWidth": 10,
+				              "NumHeight": 7,
+				              "BackIsHidden": true,
+				              "UniqueBack": false
+				            }
+									{% endif %}
+			          },
+			          "LuaScript": "",
+			          "LuaScriptState": "",
+			          "GUID": ""
+			        }{% if (not loop.parent.loop.last) or (loop.parent.loop.last and not loop.last) %},{% endif %}
+						{% endfor %}
+						{% endfor %}
+					],
+					"GUID": ""
+				}
+      ],
+			"GUID": ""
+		}
+	],
+	"TabStates": {}
+}

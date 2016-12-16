@@ -67,6 +67,10 @@ AppBundle\Entity\Card:
             type: string
             length: 255
             nullable: false
+        ttscardid:
+            type: string
+            length: 255
+            nullable: true
         name:
             type: string
             length: 50

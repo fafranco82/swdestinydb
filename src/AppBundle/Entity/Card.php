@@ -23,6 +23,7 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
         ];
     
         $optionalFields = [
+                'ttscardid',
                 'illustrator',
                 'flavor',
                 'text',
@@ -116,6 +117,11 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
      * @var string
      */
     private $code;
+
+    /**
+     * @var string
+     */
+    private $ttscardid;
 
     /**
      * @var string
@@ -267,6 +273,30 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set ttscardid
+     *
+     * @param string $code
+     *
+     * @return Card
+     */
+    public function setTtscardid($ttscardid)
+    {
+        $this->ttscardid = $ttscardid;
+
+        return $this;
+    }
+
+    /**
+     * Get ttscardid
+     *
+     * @return string
+     */
+    public function getTtscardid()
+    {
+        return $this->ttscardid;
     }
 
     /**
