@@ -348,6 +348,7 @@ class ImportStdCommand extends ContainerAwareCommand
 		foreach($cardsData as $cardData) {
 			$card = $this->getEntityFromData('AppBundle\Entity\Card', $cardData, [
 					'code',
+					'ttscardid',
 					'deck_limit',
 					'position',
 					'name',

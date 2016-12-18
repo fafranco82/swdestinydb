@@ -252,6 +252,48 @@ class BuilderController extends Controller
 
     }
 
+		public function ttsexportAction ($deck_id)
+    {
+		/* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $deck \AppBundle\Entity\Deck */
+        $deck = $em->getRepository('AppBundle:Deck')->find($deck_id);
+
+        $is_owner = $this->getUser() && $this->getUser()->getId() == $deck->getUser()->getId();
+        if(!$deck->getUser()->getIsShareDecks() && !$is_owner) {
+        	return $this->render(
+        			'AppBundle:Default:error.html.twig',
+        			array(
+        					'pagetitle' => "Error",
+        					'error' => 'You are not allowed to view this deck. To get access, you can ask the deck owner to enable "Share your decks" on their account.'
+        			)
+        	);
+        }
+
+        $factionNames = [];
+        foreach($this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName() as $faction) {
+            $factionNames[$faction->getCode()] = $faction->getName();
+        }
+
+        $content = $this->renderView('AppBundle:Export:tts.json.twig', [
+        	"deck" => $deck->getTtsExport(),
+            "factionNames" => $factionNames
+      	]);
+        $content = str_replace("\n", "\r\n", $content);
+
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/json');
+		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+		    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+				$this->get('texts')->slugify($deck->getName()) . '.json'
+		));
+
+		$response->setContent($content);
+		return $response;
+
+    }
+
     public function octgnexportAction ($deck_id)
     {
         /* @var $em \Doctrine\ORM\EntityManager */

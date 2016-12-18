@@ -15,6 +15,14 @@ decklist_export_text:
     requirements:
         decklist_id: \d+
 
+decklist_export_tts:
+    path: /export/tts/{decklist_id}
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Social:ttsexport
+    requirements:
+        decklist_id: \d+
+
 decklist_detail:
     path: /view/{decklist_id}/{decklist_name}
     methods: [GET]
