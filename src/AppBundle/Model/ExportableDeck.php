@@ -20,11 +20,11 @@ class ExportableDeck
 				'characters' => $slots->getCharacterDeck()->getContent(),
 				'version' => $this->getVersion(),
 		];
-	
+
 		return $array;
 	}
-	
-	public function getTextExport() 
+
+	public function getTextExport()
 	{
 		$slots = $this->getSlots();
 
@@ -47,6 +47,11 @@ class ExportableDeck
 	{
 		$slots = $this->getSlots();
 
+		$guidArray = [];
+		for ($i = 1; $i <= 40; $i++) {
+			array_push($guidArray, bin2hex(openssl_random_pseudo_bytes(3)));
+		}
+
 		$decklist_factions = $slots->getCountByFaction();
         arsort($decklist_factions);
         $factions = array_keys(array_filter($decklist_factions, function($v) {
@@ -58,7 +63,8 @@ class ExportableDeck
 				'affiliation' => $this->getAffiliation(),
 				'factions' => $factions,
 				'included_sets' => $slots->getIncludedSets(),
-				'slots_by_type' => $slots->getSlotsByType()
+				'slots_by_type' => $slots->getSlotsByType(),
+				'guidArray' => $guidArray
 		];
 	}
 }

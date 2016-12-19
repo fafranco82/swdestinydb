@@ -1,3 +1,4 @@
+{% set guidCount = 0 %}
 {
 	"SaveName": "",
 	"GameMode": "",
@@ -13,12 +14,12 @@
 		{
 			"Name": "Bag",
 			"Transform": {
-				"posX": 0,
-				"posY": 0,
-				"posZ": 0,
-				"rotX": 0,
+				"posX": {{ random(999) /1000 }},
+				"posY": {{ random(999) /1000 }},
+				"posZ": {{ random(999) /1000 }},
+				"rotX": {{ random(999) /1000 }},
 				"rotY": 180,
-				"rotZ": 0,
+				"rotZ": {{ random(999) /1000 }},
 				"scaleX": 1,
 				"scaleY": 1,
 				"scaleZ": 1
@@ -46,12 +47,12 @@
 				{
 					"Name": "Card",
 					"Transform": {
-						"posX": 0.0,
-						"posY": 0.0,
-						"posZ": 0.0,
-						"rotX": 0.0,
+						"posX": {{ random(999) /1000 }},
+						"posY": {{ random(999) /1000 }},
+						"posZ": {{ random(999) /1000 }},
+						"rotX": {{ random(999) /1000 }},
 						"rotY": 270,
-						"rotZ": 0.0,
+						"rotZ": {{ random(999) /1000 }},
 						"scaleX": 1.42055011,
 						"scaleY": 1,
 						"scaleZ": 1.42055011
@@ -84,19 +85,20 @@
 					},
 					"LuaScript": "",
 					"LuaScriptState": "",
-					"GUID": ""
+					"GUID": "{{ deck.guidArray[guidCount] }}"
+					{% set guidCount = guidCount + 1 %}
 				},
 				{# Characters #}
 				{% for slot in deck.slots_by_type.character %}
 				{
 			    "Name": "Card",
 			    "Transform": {
-			      "posX": 0.0,
-			      "posY": 0.0,
-			      "posZ": 0.0,
-			      "rotX": 0.0,
-			      "rotY": 0.0,
-			      "rotZ": 0.0,
+			      "posX": {{ random(999) /1000 }},
+			      "posY": {{ random(999) /1000 }},
+			      "posZ": {{ random(999) /1000 }},
+			      "rotX": {{ random(999) /1000 }},
+			      "rotY": {{ random(999) /1000 }},
+			      "rotZ": {{ random(999) /1000 }},
 			      "scaleX": 1.42055011,
 			      "scaleY": 1.0,
 			      "scaleZ": 1.42055011
@@ -128,18 +130,19 @@
 			    },
 			    "LuaScript": "",
 			    "LuaScriptState": "",
-			    "GUID": ""
+					"GUID": "{{ deck.guidArray[guidCount] }}"
+					{% set guidCount = guidCount + 1 %}
 			  },
 				{% endfor %}
 				{# Deck of Other Cards #}
 				{
 					"Name": "Deck",
 					"Transform": {
-						"posX": 0,
-						"posY": 0,
-						"posZ": 0,
-						"rotX": 0,
-						"rotY": 0,
+						"posX": {{ random(999) /1000 }},
+						"posY": {{ random(999) /1000 }},
+						"posZ": {{ random(999) /1000 }},
+						"rotX": {{ random(999) /1000 }},
+						"rotY": {{ random(999) /1000 }},
 						"rotZ": 180,
 						"scaleX": 1.42055011,
 						"scaleY": 1,
@@ -201,12 +204,12 @@
 							{
 			          "Name": "Card",
 			          "Transform": {
-			            "posX": 0.0,
-			            "posY": 0.0,
-			            "posZ": 0.0,
-			            "rotX": 0.0,
-			            "rotY": 0.0,
-			            "rotZ": 0.0,
+			            "posX": {{ random(999) /1000 }},
+			            "posY": {{ random(999) /1000 }},
+			            "posZ": {{ random(999) /1000 }},
+			            "rotX": {{ random(999) /1000 }},
+			            "rotY": {{ random(999) /1000 }},
+			            "rotZ": {{ random(999) /1000 }},
 			            "scaleX": 1.42055011,
 			            "scaleY": 1.0,
 			            "scaleZ": 1.42055011
@@ -258,15 +261,18 @@
 			          },
 			          "LuaScript": "",
 			          "LuaScriptState": "",
-			          "GUID": ""
+								"GUID": "{{ deck.guidArray[guidCount] }}"
+								{% set guidCount = guidCount + 1 %}
 			        }{% if (not loop.parent.loop.last) or (loop.parent.loop.last and not loop.last) %},{% endif %}
 						{% endfor %}
 						{% endfor %}
 					],
-					"GUID": ""
+					"GUID": "{{ deck.guidArray[guidCount] }}"
+					{% set guidCount = guidCount + 1 %}
 				}
       ],
-			"GUID": ""
+			"GUID": "{{ deck.guidArray[guidCount] }}"
+			{% set guidCount = guidCount + 1 %}
 		}
 	],
 	"TabStates": {}
