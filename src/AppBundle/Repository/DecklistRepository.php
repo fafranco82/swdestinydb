@@ -12,10 +12,12 @@ class DecklistRepository extends TranslatableRepository
 	public function find($id)
 	{
 		$qb = $this->createQueryBuilder('d')
-			->select('d, a, ds, c')
+			->select('d, a, ds, c, t, s')
 			->join('d.affiliation', 'a')
 			->join('d.slots', 'ds')
 			->join('ds.card', 'c')
+			->leftJoin('c.type', 't')
+			->leftJoin('c.set', 's')
 			->andWhere('d.id = ?1');
 
 		$qb->setParameter(1, $id);

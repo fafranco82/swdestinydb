@@ -1,3 +1,4 @@
+{% import "AppBundle::macros.html.twig" as macros %}
 {{ deck.name }}
 
 {{ deck.affiliation.name }}
@@ -17,7 +18,7 @@
 {% for i in range (1,battlefields.0.card.type.name|length) %}¯{% endfor %}
 
 {% for slot in battlefields %}
-{{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }})
+{{macros.slot_plain(slot, 0)}}
 {% endfor %}
 
 
@@ -26,7 +27,7 @@
 {% for i in range (1,characters.0.card.type.name|length) %}¯{% endfor %}
 
 {% for slot in characters %}
-{{slot.dice}}x {{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }})
+{{macros.slot_plain(slot, slot.dice)}}
 {% endfor %}
 
 
@@ -35,7 +36,7 @@
 {% for i in range (1,upgrades.0.card.type.name|length) %}¯{% endfor %}
 
 {% for slot in upgrades %}
-{{slot.quantity}}x {{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }})
+{{macros.slot_plain(slot, slot.quantity)}}
 {% endfor %}
 
 
@@ -44,7 +45,7 @@
 {% for i in range (1,supports.0.card.type.name|length) %}¯{% endfor %}
 
 {% for slot in supports %}
-{{slot.quantity}}x {{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }})
+{{macros.slot_plain(slot, slot.quantity)}}
 {% endfor %}
 
 
@@ -53,7 +54,7 @@
 {% for i in range (1,events.0.card.type.name|length) %}¯{% endfor %}
 
 {% for slot in events %}
-{{slot.quantity}}x {{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }})
+{{macros.slot_plain(slot, slot.quantity)}}
 {% endfor %}
 
 

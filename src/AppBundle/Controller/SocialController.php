@@ -808,8 +808,14 @@ class SocialController extends Controller
         if (! $decklist)
             throw new NotFoundHttpException("Unable to find decklist.");
 
+        $factionNames = [];
+        foreach($this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName() as $faction) {
+            $factionNames[$faction->getCode()] = $faction->getName();
+        }
+
         $content = $this->renderView('AppBundle:Export:plain.txt.twig', [
-        	"deck" => $decklist->getTextExport()
+        	"deck" => $decklist->getTextExport(),
+            "factionNames" => $factionNames
       	]);
         $content = str_replace("\n", "\r\n", $content);
 
