@@ -1,7 +1,7 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% import "AppBundle::macros.html.twig" as macros %}
 
-{% block fb_og %}
+{#% block fb_og %}
 	{% set _route = app.request.attributes.get('_route') %}
 	{% set _route_params = app.request.attributes.get('_route_params')|default({}) %}
     {% set _get_params = app.request.query.all()|default({}) %}
@@ -18,7 +18,7 @@
 
      deck." />
     <meta property="og:image" content="{{ absolute_url(asset('/bundles/app/images/affiliations/' ~ decklist.affiliation.code ~ '.png')) }}" />
-{% endblock %}
+{% endblock %#}
 
 {% block javascripts %}
 	{% javascripts '@AppBundle/Resources/public/js/ui.decklist.js' %}
