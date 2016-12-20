@@ -15,7 +15,6 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		var stored = localStorage.getItem('ui.deck.config');
 		if(stored) {
 			Config = JSON.parse(stored);
-			Config['show-only-owned'] = true;
 		}
 	}
 	Config = _.extend({
