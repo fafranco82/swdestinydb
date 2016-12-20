@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
 
-    {% block fb_og %}{% endblock %}
-      
     <link rel="icon" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png" />
     {% if app.request.locale != "en" and app.request.attributes.get('_route') != "" %}
