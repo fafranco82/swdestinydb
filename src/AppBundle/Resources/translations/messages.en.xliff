@@ -302,7 +302,7 @@
       </trans-unit>
       <trans-unit id="c5aff388cea8cf3d7033fba22d736e00261818d7" resname="collection.showing_cards.total">
         <source>collection.showing_cards.total</source>
-        <target>Showing %count% card out of %total% in the game. | Showing %count% cards out of %total% in the game.</target>
+        <target>Showing %cards% card out of %total% in the game. | Showing %cards% cards out of %total% in the game.</target>
         <jms:reference-file>C:/Programacion/Git/Deckbuilders/swdestinydb/app/../src/AppBundle\Resources\public\js\ui.collection.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba5943315452d6a264fdcae61bf1332e12e79285" resname="data_load_fail">
