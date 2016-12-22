@@ -8,23 +8,23 @@
 	</td>
 	<td class="text-center td-spinner">
 		<div class="btn-group btn-group-xs btn-spinner" data-spin="cards">
-			<button class="btn btn-danger btn-spin">-</button>
+			<button class="btn btn-danger btn-spin hidden-print">-</button>
 			<button class="btn btn-default btn-value">
 				<span class="value">{{card.owned.cards}}</span>
 				<span class="icon-cards"></span>
 			</button>
-			<button class="btn btn-success btn-spin">+</button>
+			<button class="btn btn-success btn-spin hidden-print">+</button>
 		</div>
 	</td>
 	<td class="text-center td-spinner">
        {{#if card.has_die}} 
 		<div class="btn-group btn-group-xs btn-spinner" data-spin="dice">
-			<button class="btn btn-danger btn-spin">-</button>
+			<button class="btn btn-danger btn-spin hidden-print">-</button>
 			<button class="btn btn-default btn-value">
 				<span class="value">{{card.owned.dice}}</span>
 				<span class="icon-die"></span>
 			</button>
-			<button class="btn btn-success btn-spin">+</button>
+			<button class="btn btn-success btn-spin hidden-print">+</button>
 		</div>
        {{else}} &nbsp; 
        {{/if}} 
