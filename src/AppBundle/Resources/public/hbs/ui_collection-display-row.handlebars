@@ -1,7 +1,7 @@
 <tr>
 	<td data-th="Name">
 	    <span class="icon icon-{{card.type_code}} fg-{{card.faction_code}}"></span>
-		<a href="{{card.url}}" class="card-tip" data-code="{{card.code}}">
+		<a href="{{card.url}}" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{card.code}}">
 			{{card.name}}
 			{{#if card.subtitle}}<span class="card-subtitle hidden-xs">- {{card.subtitle}}</span>{{/if}}
 		</a>
