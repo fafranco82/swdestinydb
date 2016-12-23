@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2016-12-08T21:48:17Z" source-language="en" target-language="pl" datatype="plaintext" original="not.available">
+  <file date="2016-12-23T14:41:59Z" source-language="en" target-language="pl" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,7 +9,7 @@
       <trans-unit id="95beaa25313687f3280c6a152ded9c1f95b62f3b" resname="card.info.affiliation">
         <source>card.info.affiliation</source>
         <target>Stronnictwo</target>
-        <jms:reference-file line="127">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="126">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="10">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="158">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
       </trans-unit>
@@ -24,7 +24,7 @@
       <trans-unit id="27a144aaef4425d9e05fc9dd0938bc7b60a095cb" resname="card.info.die">
         <source>card.info.die</source>
         <target>Kość</target>
-        <jms:reference-file line="142">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="141">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="16">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="30465eb91bdb1328e9b65ae28f633732ecad30bb" resname="card.info.faction">
@@ -48,7 +48,7 @@
         <source>card.info.health</source>
         <target>Wytrzymałość</target>
         <jms:reference-file line="93">/../src/AppBundle/Resources/views/Builder/tab-pane-build.html.twig</jms:reference-file>
-        <jms:reference-file line="133">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="132">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="10">/../src/AppBundle/Resources/views/Search/card-props.html.twig</jms:reference-file>
         <jms:reference-file line="13">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="189">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
@@ -63,14 +63,14 @@
       <trans-unit id="c689397a6d8a4e51e12338b6ac51369c2880e31c" resname="card.info.medium.points_cost">
         <source>card.info.medium.points_cost</source>
         <target>Koszt</target>
-        <jms:reference-file line="130">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="129">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="12">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="f9e68200c945af7b82ae5bf59e2818249af44480" resname="card.info.name">
         <source>card.info.name</source>
         <target>Nazwa</target>
         <jms:reference-file line="79">/../src/AppBundle/Resources/views/Builder/tab-pane-build.html.twig</jms:reference-file>
-        <jms:reference-file line="121">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="120">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="9">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="36">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
       </trans-unit>
@@ -85,7 +85,7 @@
         <source>card.info.points_cost</source>
         <target>Koszt w punktach</target>
         <jms:reference-file line="88">/../src/AppBundle/Resources/views/Builder/tab-pane-build.html.twig</jms:reference-file>
-        <jms:reference-file line="129">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="128">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="12">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ae68b7b4a08f81a30b7e1919f3f68bff4cf924c6" resname="card.info.quantity">
@@ -96,16 +96,21 @@
       <trans-unit id="74d13e01b69253341ed89c50c705afb40e410677" resname="card.info.rarity">
         <source>card.info.rarity</source>
         <target>Rzadkość</target>
-        <jms:reference-file line="139">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="138">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="15">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="145">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b03c369280544478cc6e3d29a976a4513e886a50" resname="card.info.set">
         <source>card.info.set</source>
         <target>Edycja</target>
-        <jms:reference-file line="145">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="144">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="17">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="92">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fe435d04e7e7b69fd00e9b0754f40fe3f8fa645c" resname="card.info.sets">
+        <source>card.info.sets</source>
+        <target>Edycje</target>
+        <jms:reference-file line="10">/../src/AppBundle/Resources/views/Export/plain.txt.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a5c4d8f54d4a25de8742e2be404df788ae4a763d" resname="card.info.short.faction">
         <source>card.info.short.faction</source>
@@ -146,7 +151,7 @@
         <source>card.info.type</source>
         <target>Rodzaj</target>
         <jms:reference-file line="98">/../src/AppBundle/Resources/views/Builder/tab-pane-build.html.twig</jms:reference-file>
-        <jms:reference-file line="136">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="135">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="14">/../src/AppBundle/Resources/views/Search/display-list.html.twig</jms:reference-file>
         <jms:reference-file line="105">/../src/AppBundle/Resources/views/Search/searchform.html.twig</jms:reference-file>
       </trans-unit>
@@ -233,57 +238,72 @@
       <trans-unit id="a6aff7ed063b650c6512576772c0f3592fb1c2f5" resname="collection.addstarter.label">
         <source>collection.addstarter.label</source>
         <target>Dodaj zestaw podstawowy</target>
-        <jms:reference-file line="68">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="67">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c391aacc2297e5414dd408ae48b5d3467414b34e" resname="collection.cards_matching_filter">
+        <source>collection.cards_matching_filter</source>
+        <target>{0} %cards% kart dostępnych w grze spełnia te warunki. | %cards% karta dostępna w grze spełnia te warunki. | %cards% karty dostępne w grze spełniają te warunki. | %cards% kart dostępnych w grze spełnia te warunki.</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/ui.collection.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="352427b519fcd21581b956205d389aa9afec951a" resname="collection.help">
         <source>collection.help</source>
         <target>Pomoc do filtrów</target>
-        <jms:reference-file line="94">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="93">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="326837bee7760555294692fe1903217f4e0ab2f5" resname="collection.options.filter_button.cumulative">
         <source>collection.options.filter_button.cumulative</source>
         <target>Filtry łączne</target>
-        <jms:reference-file line="46">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="45">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="26c3b7097ef82eeaead706bebee642cc5f343d0c" resname="collection.options.filter_button.exclusive">
         <source>collection.options.filter_button.exclusive</source>
         <target>Filtry wyłączne</target>
-        <jms:reference-file line="53">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="52">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6d1d578f0edf33de5f5c85f088270ea2a013a62d" resname="collection.options.label">
         <source>collection.options.label</source>
         <target>Opcje</target>
-        <jms:reference-file line="33">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="32">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c4b0ab0af725610a3844ea453f9787a4c4bdb4e" resname="collection.options.link_cards_dice">
         <source>collection.options.link_cards_dice</source>
         <target>Połącz karty z kośćmi</target>
-        <jms:reference-file line="60">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="59">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3e4d6647a38379ee9faebb247429031680aaad93" resname="collection.options.only_show_owned">
         <source>collection.options.only_show_owned</source>
         <target>Pokazuj tylko karty z własnej kolekcji</target>
-        <jms:reference-file line="39">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="38">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a86a0b18c9470aa67d9e6fd97fa17980b75da702" resname="collection.owned">
         <source>collection.owned</source>
         <target>W kolekcji</target>
-        <jms:reference-file line="124">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="123">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="fb71bb854163e89083f8c1a45ef1e155d25eb9ab" resname="collection.searchhint">
         <source>collection.searchhint</source>
         <target>Wyszukaj kartę, albo przefiltruj listę</target>
-        <jms:reference-file line="92">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="91">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="27d8453a45d5be7efd2f2d57ee1e6a0ab18bc4aa" resname="collection.sets.hint">
         <source>collection.sets.hint</source>
         <target>Shift-Klik aby zaznaczyć pojedyńczą pozycję; Alt-Shift-Klik aby zaznaczyć wszystkie pozostałe pozycje</target>
-        <jms:reference-file line="29">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="28">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba44561a3dca59355d4c75fa91478a1d03134a22" resname="collection.sets.label">
         <source>collection.sets.label</source>
         <target>Edycje</target>
-        <jms:reference-file line="27">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="26">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0b9eb8a69ea685986f5dd24cbf05bea5109d41af" resname="collection.showing_cards.only_collection">
+        <source>collection.showing_cards.only_collection</source>
+        <target>{0} Pokazano %cards% kart z %total% w mojej kolekcji. | Pokazano %cards% kartę z %total% w mojej kolekcji. | Pokazano %cards% karty z %total% w mojej kolekcji. | Pokazano %cards% kart z %total% w mojej kolekcji.</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/ui.collection.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="c5aff388cea8cf3d7033fba22d736e00261818d7" resname="collection.showing_cards.total">
+        <source>collection.showing_cards.total</source>
+        <target>{0} Pokazano %cards% kart z %total% dostępnych w grze. | Pokazano %cards% kartę z %total% dostępnych w grze. | Pokazano %cards% karty z %total% dostępnych w grze. | Pokazano %cards% kart z %total% dostępnych w grze.</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/ui.collection.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="ba5943315452d6a264fdcae61bf1332e12e79285" resname="data_load_fail">
         <source>data_load_fail</source>
@@ -393,7 +413,7 @@
       <trans-unit id="de33e02e01e92df479802ad035250ba1583990e1" resname="decklist.list.titles.search">
         <source>decklist.list.titles.search</source>
         <target>Szukanie talii</target>
-        <jms:reference-file line="991">/../src/AppBundle/Controller/SocialController.php</jms:reference-file>
+        <jms:reference-file line="1031">/../src/AppBundle/Controller/SocialController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a14782a33428cfc02112a10203761369b2ab9c80" resname="decklist.list.types.hof">
         <source>decklist.list.types.hof</source>
@@ -619,6 +639,56 @@
         <target># kart</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
       </trans-unit>
+      <trans-unit id="4acf32a488a175464bf0c585c4f829bd7ee20749" resname="decks.charts.dice.series.dice.name">
+        <source>decks.charts.dice.series.dice.name</source>
+        <target>Ilość kości</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="00248d0849b6a9ab1913f4174d33fe2ee7c18b94" resname="decks.charts.dice.series.direct.name">
+        <source>decks.charts.dice.series.direct.name</source>
+        <target>Ilośc ścianek bez +</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="459d4c9dd8e9fd7936ca3e026df8909687727e62" resname="decks.charts.dice.series.faces.name">
+        <source>decks.charts.dice.series.faces.name</source>
+        <target>Ilość ścianek</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="43101b18ea35eec246890e491135c5ea52b2fa96" resname="decks.charts.dice.subtitle">
+        <source>decks.charts.dice.subtitle</source>
+        <target>Duplikaty kart nie są liczone</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2ad0e5f90a73f795ff68f0f9aed6fd28626b7a71" resname="decks.charts.dice.title">
+        <source>decks.charts.dice.title</source>
+        <target>Symbole kości</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ebcc0f71a63f5d516e5980445bac3f95a1e0790f" resname="decks.charts.globals.total">
+        <source>decks.charts.globals.total</source>
+        <target>Razem</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="70cc764452ef0b12bcfa6b30166ed799acdb4a22" resname="decks.charts.rarity.subtitle">
+        <source>decks.charts.rarity.subtitle</source>
+        <target>Kliknij aby uzyskać szczegóły</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7dcd8b143b1def953bd25ae941aa55db751a6ed1" resname="decks.charts.rarity.title">
+        <source>decks.charts.rarity.title</source>
+        <target>Rzadkości kart</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="21301f92f629d72b873c8ee22fa0a0c4f2c1063e" resname="decks.charts.rarity.tooltip.amount">
+        <source>decks.charts.rarity.tooltip.amount</source>
+        <target>%amount% z %total%</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="0d95161e5afb8657db06282566d4cc1bd2130887" resname="decks.charts.type.title">
+        <source>decks.charts.type.title</source>
+        <target>Rodzaje kart</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="684e4be26fac361f71bc7755c9d2b3e83202d053" resname="decks.compare.battlefield">
         <source>decks.compare.battlefield</source>
         <target>Pola bitew</target>
@@ -648,7 +718,7 @@
       <trans-unit id="c7da0a641618be79a0043043156521055488d00f" resname="decks.description">
         <source>decks.description</source>
         <target>Opis</target>
-        <jms:reference-file line="69">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
+        <jms:reference-file line="70">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2f3da887fee7cff237df994b3d2005bc3481685a" resname="decks.edit.build.help">
         <source>decks.edit.build.help</source>
@@ -749,6 +819,11 @@
         <source>decks.edit.meta.sets</source>
         <target>Edycje: %sets%</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/hbs/deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a53030da3a614c89441b1d52a9d96f244f759f8b" resname="decks.edit.meta.setsrange">
+        <source>decks.edit.meta.setsrange</source>
+        <target>Od %first% do %last%</target>
+        <jms:reference-file line="11">/../src/AppBundle/Resources/views/Export/plain.txt.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7f16af96c317adac3b58097b3e8dd9d8284a8e31" resname="decks.edit.notes.notes.hint">
         <source>decks.edit.notes.notes.hint</source>
@@ -1040,6 +1115,10 @@
         <source>Description of this deck problem</source>
         <target>Zawiera niedozwolone karty</target>
       </trans-unit>
+      <trans-unit id="9e4302468f8c19ba0ded11b0806e7d2e645c7a98" resname="decks.problems.no_battlefield">
+        <source>Description of this deck problem</source>
+        <target>Nie wybrano pola bitwy</target>
+      </trans-unit>
       <trans-unit id="75daa158f303d7962dd8f8b918e708f7e317345d" resname="decks.problems.too_many_character_points">
         <source>Description of this deck problem</source>
         <target>Przekroczono limit punktów postaci</target>
@@ -1051,13 +1130,13 @@
       <trans-unit id="ad0cdc3df2339a06512e2086ac626d6ebb3b7f0b" resname="decks.published.none">
         <source>decks.published.none</source>
         <target>Brak</target>
-        <jms:reference-file line="90">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
+        <jms:reference-file line="91">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
         <jms:reference-file line="36">/../src/AppBundle/Resources/views/Builder/tab-pane-history.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="77d86a2f973af16542c47b98e9dc1bbb40a64bbc" resname="decks.published.title">
         <source>decks.published.title</source>
         <target>Opublikowane wersje</target>
-        <jms:reference-file line="82">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
+        <jms:reference-file line="83">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
         <jms:reference-file line="28">/../src/AppBundle/Resources/views/Builder/tab-pane-history.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2efd7fa0faec658bb186e61c08e69074dadcee58" resname="decks.simulator.all">
@@ -1110,9 +1189,19 @@
         <target>Stronnictwo</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.smart_filter.js</jms:reference-file>
       </trans-unit>
+      <trans-unit id="d0f8bf40b24e918967c952cf0699bd587a7bd2c6" resname="decks.smartfilter.filters.cards_owned">
+        <source>decks.smartfilter.filters.cards_owned</source>
+        <target>Ile kopii posiadam w kolekcji</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.smart_filter.js</jms:reference-file>
+      </trans-unit>
       <trans-unit id="2eaca929b9b399f771e5d2589120ff3220c2760d" resname="decks.smartfilter.filters.cost">
         <source>decks.smartfilter.filters.cost</source>
         <target>Koszt</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.smart_filter.js</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="390213bbf67cd3f455b7a3b5816363923cf9cb4a" resname="decks.smartfilter.filters.dice_owned">
+        <source>decks.smartfilter.filters.dice_owned</source>
+        <target>Ile jej kości posiadam w kolekcji</target>
         <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.smart_filter.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="af07e0a3d9fd39e319e2fbdcb4dbf7dc4b25da34" resname="decks.smartfilter.filters.faction_code">
@@ -1184,12 +1273,17 @@
       <trans-unit id="8e86df0839cf65781aaad658f243d39d9507ef02" resname="decks.version">
         <source>decks.version</source>
         <target>Wersja %version%</target>
-        <jms:reference-file line="63">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
+        <jms:reference-file line="64">/../src/AppBundle/Resources/views/Builder/deckview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="458c359f6f6f46e3c820477772c5c73c67fe1bf5" resname="forms.add">
         <source>forms.add</source>
         <target>Dodaj</target>
         <jms:reference-file line="19">/../src/AppBundle/Resources/views/Modale/tag_add.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="dd5c893e006c14bfbcbe1e392d4df17018561e5d" resname="forms.back">
+        <source>forms.back</source>
+        <target>Wstecz</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/js/app.deck_charts.js</jms:reference-file>
       </trans-unit>
       <trans-unit id="086c93a48dda64b3bb51133c57d95a6517714c75" resname="forms.cancel">
         <source>forms.cancel</source>
@@ -1240,7 +1334,7 @@
       <trans-unit id="22d18ac0654f934d3c2cb102abea5b64d8f2aca8" resname="forms.imagefile">
         <source>forms.imagefile</source>
         <target>Plik obrazka</target>
-        <jms:reference-file line="38">/../src/AppBundle/Form/CardType.php</jms:reference-file>
+        <jms:reference-file line="39">/../src/AppBundle/Form/CardType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="8368b24cfac0250133ccb69108cb935356050220" resname="forms.import">
         <source>forms.import</source>
@@ -1272,13 +1366,13 @@
         <source>forms.save</source>
         <target>Zapisz</target>
         <jms:reference-file line="45">/../src/AppBundle/Resources/views/Builder/deckedit.html.twig</jms:reference-file>
-        <jms:reference-file line="24">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
+        <jms:reference-file line="23">/../src/AppBundle/Resources/views/Collection/index.html.twig</jms:reference-file>
         <jms:reference-file line="31">/../src/AppBundle/Resources/views/Decklist/decklist_edit.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="baf0e7c7beb30cd53b39ee660dce73f3259d6e34" resname="forms.saved">
         <source>forms.saved</source>
         <target>Zapisano</target>
-        <jms:reference-file line="53">/../src/AppBundle/Controller/CollectionController.php</jms:reference-file>
+        <jms:reference-file line="52">/../src/AppBundle/Controller/CollectionController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="31f58cf619c5250cc1933b909fc39058f8e1bd60" resname="forms.search">
         <source>forms.search</source>
@@ -1395,6 +1489,11 @@
         <source>Description of keyword 'redeploy' to be shown when mouse is over it</source>
         <target>Po tym, jak postać, do której dołączona została dana karta, zostanie pokonana, możesz natychmiast przesunąć dane ulepszenie do dowolnej swojej postaci. Kość ulepszenia porusza się na nową kartę postaci, nawet jeśli znajdowała się w puli kości.</target>
       </trans-unit>
+      <trans-unit id="385ace473263ea49f049c7376feb80a8a8c27b6a" resname="limited_pool_conflict">
+        <source>limited_pool_conflict</source>
+        <target>{0} Nie posiadasz tej karty w swojej kolekcji | Posiadasz tylko jedną taką kartę w swojej kolekcji | Posiadasz tylko %count% takie karty w swojej kolekcji | Posiadasz tylko %count% takich kart w swojej kolekcji</target>
+        <jms:reference-file>/home/siema/projects/php/swdestinydb/app/../src/AppBundle/Resources/public/hbs/deck-layout-standard.handlebars</jms:reference-file>
+      </trans-unit>
       <trans-unit id="b9e911ff24a19ad8bac42fb4fe7da8e6c2e27e21" resname="login_required">
         <source>login_required</source>
         <target>Aby wykonać tę czynność, musisz być zalogowany.</target>
@@ -1403,35 +1502,35 @@
       <trans-unit id="c259316f2ccec4c84485916a7f1baaec2f44ec10" resname="nav.advancedsearch">
         <source>nav.advancedsearch</source>
         <target>Szukanie zaawansowane</target>
-        <jms:reference-file line="60">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="61">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="36de747427c9bae2cc89cbceb54614e7516ca0f0" resname="nav.cards">
         <source>nav.cards</source>
         <target>Karty</target>
-        <jms:reference-file line="58">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="59">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1bc6786f0975743d9907a0ae9f9b234214f5c48a" resname="nav.cardsearch">
         <source>nav.cardsearch</source>
         <target>Szukaj kart</target>
-        <jms:reference-file line="103">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
-        <jms:reference-file line="74">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="104">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="75">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="43d9aa32a953313bb7930f36f74b4948fa563403" resname="nav.decklists">
         <source>nav.decklists</source>
         <target>Talie</target>
-        <jms:reference-file line="56">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="57">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="e1c33ab2cce910ea28ce78298332e17f827a66bf" resname="nav.mycollection">
         <source>nav.mycollection</source>
         <target>Moja kolekcja</target>
-        <jms:reference-file line="55">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="56">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="d0914ad1bd4641b38cd9fbb1d1b95f5878972ee6" resname="nav.mydecks">
         <source>nav.mydecks</source>
         <target>Moje talie</target>
-        <jms:reference-file line="576">/../src/AppBundle/Controller/BuilderController.php</jms:reference-file>
-        <jms:reference-file line="590">/../src/AppBundle/Controller/BuilderController.php</jms:reference-file>
-        <jms:reference-file line="54">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
+        <jms:reference-file line="624">/../src/AppBundle/Controller/BuilderController.php</jms:reference-file>
+        <jms:reference-file line="638">/../src/AppBundle/Controller/BuilderController.php</jms:reference-file>
+        <jms:reference-file line="55">/../src/AppBundle/Resources/views/layout.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="7279b50584c31c877b1dcb58f44170e4941a9718" resname="nav.user.editaccount">
         <source>nav.user.editaccount</source>
