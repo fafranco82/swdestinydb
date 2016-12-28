@@ -755,4 +755,33 @@ class User extends BaseUser
     {
         return $this->collection;
     }
+    /**
+     * @var string
+     */
+    private $notificationLocale;
+
+
+    /**
+     * Set notificationLocale
+     *
+     * @param string $notificationLocale
+     *
+     * @return User
+     */
+    public function setNotificationLocale($notificationLocale)
+    {
+        $this->notificationLocale = $notificationLocale;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationLocale
+     *
+     * @return string
+     */
+    public function getNotificationLocale()
+    {
+        return $this->notificationLocale;
+    }
 }

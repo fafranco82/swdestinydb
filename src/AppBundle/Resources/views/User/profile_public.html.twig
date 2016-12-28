@@ -9,27 +9,23 @@
   {% if user.donation > 0 %}<span class="fa fa-gift donator" title="ThronesDB Gracious Donator"></span>{% endif %}
     <small>{{ user.reputation }}</small></h1>
 	<p>
-        Member since {{ user.dateCreation|date('Y-m-d') }}.
+        {{'profile.public.since' | trans({'%date%': user.dateCreation|localizeddate('long', 'none') })}}.
         <div>
-        {% if user.decklists|length > 1 %}
-            <a href="{{ path('decklists_list',{type:'find',page:1,author:user.username}) }}">{{ user.decklists|length }} published decklists.</a>
+        {% if user.decklists|length > 0 %}
+            <a href="{{ path('decklists_list',{type:'find',page:1,author:user.username}) }}">
+                {{'profile.public.published_decklists' | transchoice(user.decklists|length, {'%count%': user.decklists|length})}}.
+            </a>
         {% else %}
-            {% if user.decklists|length == 1 %}
-                <a href="{{ path('decklists_list',{type:'find',page:1,author:user.username}) }}">One published decklist.</a>
-            {% else %}
-                No published decklist.
-            {% endif %}
+            {{'profile.public.published_decklists' | transchoice(user.decklists|length, {'%count%': user.decklists|length})}}.
         {% endif %}
         </div>
         <div>
-        {% if user.reviews|length > 1 %}
-            <a href="{{ path('card_reviews_list_byauthor',{page:1,user_id:user.id}) }}">{{ user.reviews|length }} published reviews.</a>
+        {% if user.reviews|length > 0 %}
+            <a href="{{ path('card_reviews_list_byauthor',{page:1,user_id:user.id}) }}">
+                {{'profile.public.published_reviews' | transchoice(user.reviews|length, {'%count%': user.reviews|length})}}.
+            </a>
         {% else %}
-            {% if user.reviews|length == 1 %}
-                <a href="{{ path('card_reviews_list_byauthor',{page:1,user_id:user.id}) }}">One published reviews.</a>
-            {% else %}
-                No published reviews.
-            {% endif %}
+            {{'profile.public.published_reviews' | transchoice(user.reviews|length, {'%count%': user.reviews|length})}}.
         {% endif %}
         </div>
 	</p>

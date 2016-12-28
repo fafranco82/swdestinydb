@@ -35,11 +35,11 @@ class UserController extends Controller
     {
     	$user = $this->getUser();
 
-    	$affiliations = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findAll();
+    	$factions = $this->getDoctrine()->getRepository('AppBundle:Faction')->findAllAndOrderByName();
 
     	return $this->render('AppBundle:User:profile_edit.html.twig', array(
-    			'user'=> $user,
-                'affiliations' => $affiliations
+			'user'=> $user,
+            'factions' => $factions
         ));
     }
 
@@ -58,7 +58,7 @@ class UserController extends Controller
 
     	        $this->get('session')
     	        ->getFlashBag()
-    	        ->set('error', "Username $username is already taken.");
+    	        ->set('error', $this->get("translator")->trans("profile.edit.errors.user_exists", array("%username%" => $username)));
 
     	        return $this->redirect($this->generateUrl('user_profile_edit'));
     	    }
@@ -73,6 +73,7 @@ class UserController extends Controller
 
     	$resume = filter_var($request->get('resume'), FILTER_SANITIZE_STRING);
     	$affiliation_code = filter_var($request->get('user_affiliation_code'), FILTER_SANITIZE_STRING);
+        $notifLocale = filter_var($request->get('notif_locale'), FILTER_SANITIZE_STRING);
     	$notifAuthor = $request->get('notif_author') ? TRUE : FALSE;
     	$notifCommenter = $request->get('notif_commenter') ? TRUE : FALSE;
     	$notifMention = $request->get('notif_mention') ? TRUE : FALSE;
@@ -80,6 +81,7 @@ class UserController extends Controller
 
     	$user->setColor($affiliation_code);
     	$user->setResume($resume);
+        $user->setNotificationLocale($notifLocale);
     	$user->setIsNotifAuthor($notifAuthor);
     	$user->setIsNotifCommenter($notifCommenter);
     	$user->setIsNotifMention($notifMention);
@@ -89,7 +91,7 @@ class UserController extends Controller
 
         $this->get('session')
             ->getFlashBag()
-            ->set('notice', "Successfully saved your profile.");
+            ->set('notice', $this->get("translator")->trans("profile.edit.success"));
 
     	return $this->redirect($this->generateUrl('user_profile_edit'));
     }

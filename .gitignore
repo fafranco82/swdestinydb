@@ -6,6 +6,7 @@
 /app/logs/*
 !app/logs/.gitkeep
 /app/phpunit.xml
+/app/Resources/translations
 /bin/
 /composer.phar
 /vendor/

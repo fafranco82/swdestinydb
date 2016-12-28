@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-12">
+
+    <ul class="list-inline">
+    <li><a href="{{ path('about') }}">{{'footer.about' | trans }}</a></li>
+    <li><a href="{{ path('api_intro') }}">{{'footer.api' | trans }}</a></li>
+    <li><a href="{{ path('donators') }}">{{'footer.donators.label' | trans }}</a> <span class="fa fa-gift donator" title="{{'footer.donators.title' | trans }}"></span></li>
+    </ul>
+
+    <p>
+        {% trans with {'%netrunner%': '<a href="https://netrunnerdb.com" target="_blank">NetrunnerDB</a>', '%thronesdb%': '<a href="https://thronesdb.com" target="_blank">ThronesDB</a>'} %}footer.original{% endtrans %}
+        {{'footer.contact' | trans}}:
+        <a href="https://twitter.com/alsciende" title="Twitter"><span class="fa fa-twitter"></span></a>
+        <a href="https://reddit.com/user/Alsciende/" title="Reddit"><span class="fa fa-reddit"></span></a>
+        <a href="mailto:alsciende@icloud.com" title="E-mail"><span class="fa fa-envelope"></span></a>
+    </p>
+
+    <p>
+        {{'footer.adapted' | trans}}
+        {{'footer.contact' | trans}}: 
+        <a href="https://twitter.com/morifinwe" title="Twitter"><span class="fa fa-twitter"></span></a>
+        <a href="mailto:webmaster@swdestinydb.com" title="E-mail"><span class="fa fa-envelope"></span></a>
+    </p>
+
+    {% if app.request.locale != default_locale %}
+        <p>
+            {{'footer.translated.text' | trans}}
+            {{'footer.contact' | trans}}: 
+            {% trans %}footer.translated.contact{% endtrans %}
+        </p>
+    {% endif %}
+
+    <p>
+        {% trans with {'%link%': '<a href="https://github.com/fafranco82/swdestinydb/issues">GitHub</a>'} %}footer.report{% endtrans %}
+    </p>
+
+    <p>
+        {% trans with {'%link%': '<a href="https://paypal.me/fafranco82">Paypal</a>'} %}footer.contribute{% endtrans %}
+    </p>
+
+    <p>
+        {{'footer.legal' | trans}}
+    </p>
+
+    </div>
+</div>

@@ -573,7 +573,10 @@ class SocialController extends Controller
             $spool = [];
             if($decklist->getUser()->getIsNotifAuthor()) {
                 if(!isset($spool[$decklist->getUser()->getEmail()])) {
-                    $spool[$decklist->getUser()->getEmail()] = 'AppBundle:Emails:newcomment_author.html.twig';
+                    $spool[$decklist->getUser()->getEmail()] = array(
+                        "view" => 'AppBundle:Emails:newcomment_author.html.twig',
+                        "locale" => $decklist->getUser()->getNotificationLocale()
+                    );
                 }
             }
             foreach($decklist->getComments() as $comment) {
@@ -581,7 +584,10 @@ class SocialController extends Controller
                 $commenter = $comment->getUser();
                 if($commenter && $commenter->getIsNotifCommenter()) {
                     if(!isset($spool[$commenter->getEmail()])) {
-                        $spool[$commenter->getEmail()] = 'AppBundle:Emails:newcomment_commenter.html.twig';
+                        $spool[$commenter->getEmail()] = array(
+                            'view' => 'AppBundle:Emails:newcomment_commenter.html.twig',
+                            'locale' => $commenter->getNotificationLocale()
+                        );
                     }
                 }
             }
@@ -590,7 +596,10 @@ class SocialController extends Controller
                 $mentionned_user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username' => $mentionned_username));
                 if($mentionned_user && $mentionned_user->getIsNotifMention()) {
                     if(!isset($spool[$mentionned_user->getEmail()])) {
-                        $spool[$mentionned_user->getEmail()] = 'AppBundle:Emails:newcomment_mentionned.html.twig';
+                        $spool[$mentionned_user->getEmail()] = array(
+                            'view' => 'AppBundle:Emails:newcomment_mentionned.html.twig',
+                            'locale' => $mentionned_user->getNotificationLocale()
+                        );
                     }
                 }
             }
@@ -603,14 +612,19 @@ class SocialController extends Controller
                 'comment' => $comment_html,
                 'profile' => $this->generateUrl('user_profile_edit', [], UrlGeneratorInterface::ABSOLUTE_URL)
             );
-            foreach($spool as $email => $view) {
+            $translator = $this->get('translator');
+            // Save the current session locale
+            $sessionLocale = $translator->getLocale();
+            foreach($spool as $email => $data) {
+                $translator->setLocale($data['locale']);
                 $message = \Swift_Message::newInstance()
-                ->setSubject("[thronesdb] New comment")
-                ->setFrom(array("alsciende@thronesdb.com" => $user->getUsername()))
+                ->setSubject("[swdestinydb] ".$translator->trans('emails.newcomment.subject'))
+                ->setFrom(array("webmaster@swdestinydb.com" => $user->getUsername()))
                 ->setTo($email)
-                ->setBody($this->renderView($view, $email_data), 'text/html');
+                ->setBody($this->renderView($data['view'], $email_data), 'text/html');
                 $this->get('mailer')->send($message);
             }
+            $translator->setLocale($sessionLocale);
 
         }
 

@@ -4,7 +4,14 @@
 
 <div class="jumbotron" id="no-deck-available">
   <div class="main white container">
-    {% include 'AppBundle:Builder:no-decks-text.'~ app.request.locale ~'.html.twig' %}
+    <h1>{{'decks.no-decks.heading' | trans}}</h1>
+	<p>
+		{% trans %}decks.no-decks.paragraph0{% endtrans %}
+	</p>
+
+	<p>
+		{% trans %}decks.no-decks.paragraph1{% endtrans %}
+	</p>
   </div>
 </div>
 <div style="text-align:center">

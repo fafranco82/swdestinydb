@@ -28,7 +28,9 @@ class AppKernel extends Kernel
         	new AppBundle\AppBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new JMS\AopBundle\JMSAopBundle()
+            new JMS\AopBundle\JMSAopBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
+            new Happyr\TranslationBundle\HappyrTranslationBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

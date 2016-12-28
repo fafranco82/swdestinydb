@@ -14,6 +14,19 @@ services:
         tags:
             - {name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
+    user.app_user_registration.form.type:
+        class: AppBundle\Form\RegistrationFormType
+        arguments: 
+            - %fos_user.model.user.class%
+            - @request_stack
+        tags:
+            - {name: form.type, alias: app_user_registration}
+
+    twig_extension_intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - {name: twig.extension }
+
     decks:
         class: AppBundle\Services\Decks
         arguments: ["@doctrine.orm.entity_manager", "@deck_validation_helper", "@agenda_helper", "@diff", "@logger"]

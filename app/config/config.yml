@@ -15,19 +15,17 @@ parameters:
         es: Español
         it: Italiano
         pl: Polski
-        kr: 한국어
-        jp: 日本語
-        zh: 中文
+        pt: Português
     supported_locales:
         - en
         - es
-        - fr
         - pl
+        - pt
     default_locale: en
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["en"] }
+    translator:      { fallbacks: [%default_locale%] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -64,6 +62,7 @@ twig:
     globals:
         default_locale: %default_locale%
         supported_locales: %supported_locales%
+        locale_names: %locale_names%
         cards_data: "@cards_data"
         deck_validation_helper: "@deck_validation_helper"
         google_analytics_tracking_code: "%google_analytics_tracking_code%"
@@ -131,6 +130,7 @@ jms_i18n_routing:
         es: "es.%website_url%" 
         fr: "fr.%website_url%"
         pl: "pl.%website_url%"
+        pt: "pt.%website_url%"
     redirect_to_host: true
 
 # Swiftmailer Configuration
@@ -149,6 +149,8 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     registration:
+        form:
+            type: app_user_registration
         confirmation:
             enabled: true
 
@@ -170,16 +172,31 @@ fos_oauth_server:
     service:
         user_provider: fos_user.user_manager
 
+bazinga_js_translation:
+    locale_fallback: %default_locale%
+    default_domain: messages
+    active_locales: %supported_locales%
+
 jms_translation:
     configs:
         AppBundle:
-            dirs: ["%kernel.root_dir%/../src/AppBundle"]
+            dirs: 
+                - "%kernel.root_dir%/../src/AppBundle"
+                - "%kernel.root_dir%/Resources/FOSUserBundle"
             output_dir: "%kernel.root_dir%/../src/AppBundle/Resources/translations"
-            ignored_domains: [routes]
+            ignored_domains: [routes, FOSUserBundle]
             excluded_names: ["*TestCase.php", "*Test.php"]
             excluded_dirs: [cache, data, logs]
             output_format: xliff
             extractors: [extra_translation_extractor]
+
+happyr_translation:
+    locales: %supported_locales%
+    projects:
+        messages:
+            api_key: D0UKEl28KeZhBRR0jXUSVjNYSIZV_0a9
+        validators:
+            api_key: ZLiyN9p8SRk3gEhXhA-aG0CSfd_wVYzQ
 
 services:
     fos_user.doctrine_registry:

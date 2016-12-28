@@ -83,6 +83,12 @@ AppBundle\Entity\User:
         donation:
             type: integer
             nullable: false
+        notificationLocale:
+            type: string
+            nullable: false
+            column: notif_locale
+            options:
+                default: en
         isNotifAuthor:
             type: boolean
             nullable: false

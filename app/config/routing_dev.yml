@@ -17,6 +17,9 @@ _errors:
 _main:
     resource: routing.yml
 
+_happyr_translation:
+  resource: '@HappyrTranslationBundle/Resources/config/routing_dev.yml'  
+
 JMSTranslationBundle_ui:
     resource: @JMSTranslationBundle/Controller/
     type:     annotation

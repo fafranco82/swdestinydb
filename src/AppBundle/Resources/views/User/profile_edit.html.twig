@@ -8,66 +8,77 @@
 <div class="col-md-6 col-md-offset-3">
 <div class="panel panel-default">
 <div class="panel-heading">
-<h3 class="panel-title" id="title">Profile</h3>
+<h3 class="panel-title" id="title">{{'user.profile' | trans}}</h3>
 </div>
 <div class="panel-body" id="main">
 
 <form role="form" action="{{ path('user_profile_save') }}" method="POST">
 
   <div class="form-group">
-    <label>Reputation</label>
+    <label>{{'user.reputation' | trans}}</label>
     <p>{{ user.reputation }}</p>
   </div>
 
   <div class="form-group">
-    <label for="username">Username</label>
+    <label for="username">{{'user.username' | trans}}</label>
     <input type="text" name="username" id="username" value="{{ user.username }}" class="form-control">
   </div>
 
   <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">{{'user.email' | trans}}</label>
     <input type="text" name="email" id="email" value="{{ user.email }}" class="form-control">
   </div>
 
   <div class="form-group">
-    <label for="resume">Something about you</label>
+    <label for="resume">{{'profile.edit.about' | trans}}</label>
     <textarea id="resume" name="resume" class="form-control">{{ user.resume }}</textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="notif_locale">{{'profile.edit.locale' | trans}}</label>
+    <select id="notif_locale" name="notif_locale" class="form-control">
+      {% for supported_locale in supported_locales %}
+        <option value="{{supported_locale}}" {% if user.notificationLocale==supported_locale %} selected="selected"{% endif %}>
+          {{locale_names[supported_locale]}}
+        </option>
+      {% endfor %}
+    </select>
   </div>
 
   <div class="checkbox">
     <label>
         <input type="checkbox" name="notif_author" value="1" {% if user.isNotifAuthor %}checked{% endif %}>
-        Be notified when a user comments one of your decklists
+        {{'profile.edit.notif_author' | trans}}
     </label>
   </div>
 
   <div class="checkbox">
     <label>
         <input type="checkbox" name="notif_commenter" value="1" {% if user.isNotifCommenter %}checked{% endif %}>
-        Be notified when a user also comments a decklist you commented
+        {{'profile.edit.notif_commenter' | trans}}
     </label>
   </div>
 
   <div class="checkbox">
     <label>
         <input type="checkbox" name="notif_mention" value="1" {% if user.isNotifMention %}checked{% endif %}>
-        Be notified when a user mentions you in a comment
+        {{'profile.edit.notif_mention' | trans}}
     </label>
   </div>
 
   <div class="checkbox">
     <label>
         <input type="checkbox" name="share_decks" value="1" {% if user.isShareDecks %}checked{% endif %}>
-        Share your decks.
+        {{'profile.edit.share_decks.label' | trans}}
     </label>
-    <p class="help-block">If you check this box, the "View" page of your decks will be public instead of private. You can then send the link to your friends. If you uncheck the box, all your decks become private immediately.</p>
+    <p class="help-block">{{'profile.edit.share_decks.help' | trans}}</p>
   </div>
 
   <div class="form-group">
-    <label for="color">Select a faction color for your username</label>
+    <label for="color">{{'profile.edit.faction' | trans}}</label>
     {% for faction in factions %}
     <div class="radio">
-      <label class="{{ faction.code }}">
+      <label class="fg-{{ faction.code }}">
         <input type="radio" name="user_faction_code" id="optionsRadios1" value="{{ faction.code }}" {% if user.color == faction.code %}checked{% endif %}>
           {{ faction.name }}
 	  </label>
@@ -75,7 +86,7 @@
 	{% endfor %}
   </div>
 
-  <button type="submit" class="btn btn-primary">Save</button>
+  <button type="submit" class="btn btn-primary">{{'forms.save' | trans}}</button>
 </form>
 
 </div>

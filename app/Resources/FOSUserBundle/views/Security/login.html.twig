@@ -7,7 +7,7 @@
 <div class="col-md-6 col-md-push-3">
 <div class="panel panel-default">
 <div class="panel-heading">
-Login
+{{'layout.login' | trans}}
 </div>
 <div class="panel-body">
 
@@ -37,13 +37,16 @@ Login
     
     {% if error and error.messageKey == 'Account is disabled.' %}
     <p>
-    	Never got the registration email? <a href="{{ path('remind_email',{username:last_username}) }}">Click here</a>.
+    	{{'user.confirmation_not_got' | trans({}, 'messages')}}
+        <a href="{{ path('remind_email',{username:last_username}) }}">
+            {{'forms.click_here' | trans({}, 'messages')}}
+        </a>.
     </p>
     {% endif %}
     
     <input type="submit" id="_submit" name="_submit" class="btn btn-primary" value="{{ 'security.login.submit'|trans }}" />
-    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-link">Register</a>
-    <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-link">Forgot your password?</a>
+    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-link">{{'layout.register' | trans}}</a>
+    <a href="{{ path('fos_user_resetting_request') }}" class="btn btn-link">{{'user.forgotten_password' | trans({}, 'messages')}}</a>
     
 </form>
 

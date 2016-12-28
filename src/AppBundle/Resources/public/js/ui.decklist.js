@@ -95,7 +95,7 @@
 				data: data,
 				type: 'POST',
 				success: function(data, textStatus, jqXHR) {
-					form.replaceWith('<div class="alert alert-success" role="alert">Your comment has been posted. It will appear on the site in a few minutes.</div>');
+					form.replaceWith('<div class="alert alert-success" role="alert">'+Translator.trans('decklist.view.comments.submitted')+'</div>');
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 					console.log('['+moment().format('YYYY-MM-DD HH:mm:ss')+'] Error on '+this.url, textStatus, errorThrown);
