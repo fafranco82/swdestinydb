@@ -24,7 +24,7 @@
 				"scaleY": 1,
 				"scaleZ": 1
 			},
-			"Nickname": "{{ deck.name }}",
+			"Nickname": "{{ deck.name|raw|replace({"'":""}) }}",
 			"Description": "Exported from SWDestinyDB.com",
 			"ColorDiffuse": {
 				"r": 0.129,
@@ -57,7 +57,7 @@
 						"scaleY": 1,
 						"scaleZ": 1.42055011
 					},
-					"Nickname": "{{ battlefield.name }}",
+					"Nickname": "{{ battlefield.name|raw|replace({"'":""}) }}",
 					"Description": "",
 					"ColorDiffuse": {
 						"r": 0.713235259,
@@ -103,7 +103,7 @@
 			      "scaleY": 1.0,
 			      "scaleZ": 1.42055011
 			    },
-			    "Nickname": "{{ slot.card.name }}",
+			    "Nickname": "{{ slot.card.name|raw|replace({"'":""}) }}",
 			    "Description": "{% if slot.dice == 2 %}elite{% endif %}",
 			    "ColorDiffuse": {
 			      "r": 0.713235259,
@@ -163,12 +163,16 @@
 					"Tooltip": true,
 					"SidewaysCard": false,
 					"DeckIDs": [
-						{% set allSlots = deck.slots_by_type.upgrade %}
-						{% set allSlots = allSlots|merge(deck.slots_by_type.support) %}
-						{% set allSlots = allSlots|merge(deck.slots_by_type.event) %}
-						{% for slot in allSlots %}
-						{{ slot.card.ttscardid }}{% if not loop.last %},{% endif %}
-						{% endfor %}
+{% set allSlots = deck.slots_by_type.upgrade %}
+{% set allSlots = allSlots|merge(deck.slots_by_type.support) %}
+{% set allSlots = allSlots|merge(deck.slots_by_type.event) %}
+{% for slot in allSlots %}
+{% for i in range (1,slot.quantity) %}
+					{{ slot.card.ttscardid }}{% if (not loop.parent.loop.last) or (loop.parent.loop.last and not loop.last) %},
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 					],
 					"CustomDeck": {
 						"13": {
@@ -214,7 +218,7 @@
 			            "scaleY": 1.0,
 			            "scaleZ": 1.42055011
 			          },
-			          "Nickname": "{{ slot.card.name }}",
+			          "Nickname": "{{ slot.card.name|raw|replace({"'":""}) }}",
 			          "Description": "",
 			          "ColorDiffuse": {
 			            "r": 0.713235259,
