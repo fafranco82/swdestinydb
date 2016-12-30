@@ -307,7 +307,8 @@
                     var category = _.find(categories, {name: this.x});
                     this.icon = category ? category.label : null;
                     return templateTooltipDice(this);
-                }
+                },
+                backgroundColor: "rgba(255,255,255,1)"
             },
             xAxis: {
                 categories: _.map(categories, 'name'),

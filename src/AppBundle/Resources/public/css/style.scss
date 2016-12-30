@@ -711,14 +711,17 @@ article.review .review-comment {
 	background: rgba(255,0,0,.5);
 }
 
+.highcharts-tooltip {
+	z-index: 9999 !important;
+	background-color: white;
 
-/************** SET NAVIGATION *******************/
-#setnavigation {
-	margin: 1em 0;
-	a {
-		border-width: 1px;
-		border-radius: 15px;
-		border-style: solid;
-		padding: 0.6em;
+	span {
+		z-index: 9999 !important;
+		background-color: white;
+
+		.tooltip-body {
+			background-color: white;
+			z-index: 9999 !important;
+		}
 	}
 }
