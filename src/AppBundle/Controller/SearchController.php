@@ -383,11 +383,11 @@ class SearchController extends Controller
 	    $prev = $repo->findPreviousCard($card);
 	    $next = $repo->findNextCard($card);
 	    return $this->renderView('AppBundle:Search:setnavigation.html.twig', array(
-	            "prevtitle" => $prev ? $prev->getName() : "",
+	            "prev" => $prev,
 	            "prevhref" => $prev ? $this->get('router')->generate('cards_zoom', array('card_code' => $prev->getCode())) : "",
-	            "nexttitle" => $next ? $next->getName() : "",
+	            "next" => $next,
 	            "nexthref" => $next ? $this->get('router')->generate('cards_zoom', array('card_code' => $next->getCode())) : "",
-	            "settitle" => $card->getSet()->getName(),
+	            "set" => $card->getSet(),
 	            "sethref" => $this->get('router')->generate('cards_list', array('set_code' => $card->getSet()->getCode())),
 	    ));
 	}

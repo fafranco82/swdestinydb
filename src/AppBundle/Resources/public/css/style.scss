@@ -710,3 +710,15 @@ article.review .review-comment {
 .diff {
 	background: rgba(255,0,0,.5);
 }
+
+
+/************** SET NAVIGATION *******************/
+#setnavigation {
+	margin: 1em 0;
+	a {
+		border-width: 1px;
+		border-radius: 15px;
+		border-style: solid;
+		padding: 0.6em;
+	}
+}

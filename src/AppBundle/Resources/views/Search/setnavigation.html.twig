@@ -2,13 +2,32 @@
 <div class="col-sm-12">
 <ul class="pager">
 	<li class="previous">
-		{% if prevtitle %}<a href="{{ prevhref }}" class="no-popup">&larr; {{ prevtitle }}</a>{% endif %}
+		{% if prev is defined %}
+		<a href="{{ prevhref }}" class="no-popup">
+			<span class="fa fa-arrow-left"></span>
+			&nbsp;
+			{% if prev.isUnique %}<span class="icon-unique"></span>{% endif %}
+			{{ prev.name }}
+			{% if prev.subtitle %}- {{prev.subtitle}}{% endif %}
+		</a>
+		{% endif %}
 	</li>
 	<li>
-		<a href="{{ sethref }}">{{ settitle }}</a>
+		<a href="{{ sethref }}">
+			<span class="icon-set-{{set.code}}"></span>
+			{{ set.name }}
+		</a>
 	</li>
 	<li class="next">
-		{% if nexttitle %}<a href="{{ nexthref }}" class="no-popup">{{ nexttitle }} &rarr;</a>{% endif %}
+		{% if next is defined %}
+		<a href="{{ nexthref }}" class="no-popup">
+			{% if next.isUnique %}<span class="icon-unique"></span>{% endif %}
+			{{ next.name }}
+			{% if next.subtitle %}- {{next.subtitle}}{% endif %}
+			&nbsp;
+			<span class="fa fa-arrow-right"></span>
+		</a>
+		{% endif %}
 	</li>
 </ul>
 </div>

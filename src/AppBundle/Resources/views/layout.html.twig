@@ -61,7 +61,7 @@
                 <li><a href="{{ path('cards_search') }}">{{ 'nav.advancedsearch' | trans}}</a></li>
                 <li class="divider"></li>
               {% for line in cards_data.allsetsdata() %}
-                <li><a href="{{ line['url'] }}">{{ line['label'] }}</a></li>
+                <li><a href="{{ line['url'] }}">{{ line['label'] | raw }}</a></li>
               {% endfor %}
               </ul>
             </li>

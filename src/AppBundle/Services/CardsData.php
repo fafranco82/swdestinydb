@@ -91,7 +91,7 @@ class CardsData
 			$known = count($set->getCards());
 			$max = $set->getSize();
 
-			$label = $set->getPosition() . '. ' . $set->getName();
+			$label = $set->getPosition() . '. <span class="icon-set-'.$set->getCode().'"></span> ' . $set->getName();
 			if($known < $max) {
 				$label = sprintf("%s (%d/%d)", $label, $known, $max);
 			}

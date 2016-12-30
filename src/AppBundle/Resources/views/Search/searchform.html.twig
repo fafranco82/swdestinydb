@@ -10,15 +10,13 @@
 <div class="col-md-3">
 	<h2>{{ 'search.setbrowse' | trans }}</h2>
 	<ol>
-	{% for cycle in cards_data.allsetsdatathreaded() %}
-		<li><a href="{{ cycle['url'] }}">{{ cycle['label'] }}</a></li>
-		{% if cycle['packs'] is defined %}
-		<ol>
-		{% for pack in cycle['packs'] %}
-		<li><a href="{{ pack['url'] }}">{{ pack['label'] }}</a></li>
-		{% endfor %}
-		</ol>
-		{% endif %}
+	{% for line in cards_data.allsetsdatathreaded() %}
+		<li>
+			<a href="{{ line['url'] }}">
+				<span class="icon-set-{{line['code']}}"></span>
+				{{ line['label']}}
+			</a>
+		</li>
 	{% endfor %}
 	</ol>
 </div>

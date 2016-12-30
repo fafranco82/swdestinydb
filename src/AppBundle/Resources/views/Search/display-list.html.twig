@@ -42,7 +42,11 @@
 	{% else %}
 	<td colspan="6" data-th="Die">&nbsp;</td>
 	{% endif %}
-	<td data-th="Set" class="text-nowrap">{{ card.set_name }} {{ card.position }}</td>
+	<td data-th="Set" class="text-nowrap">
+		<span class="icon-set-{{card.set_code}}"></span>
+		<span class="hidden-xs">{{ card.set_name }}</span>
+		{{ card.position }}
+	</td>
 </tr>
 {% endfor %}
 </table>
