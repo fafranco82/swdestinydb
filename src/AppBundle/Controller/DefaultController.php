@@ -93,9 +93,29 @@ class DefaultController extends Controller
     	$response->setMaxAge($this->container->getParameter('cache_expiration'));
 
     	$page = $this->renderView('AppBundle:Default:rulesreference.html.twig',
-    			array("pagetitle" => "Rules", "pagedescription" => "Rules Reference"));
+    			array(
+                    "pagetitle" => $this->get("translator")->trans("nav.rules"),
+                    "pagedescription" => $this->get("translator")->trans("nav.rulesreference")
+                )
+        );
     	$response->setContent($page);
     	return $response;
+    }
+
+    function faqAction()
+    {
+        $response = new Response();
+        $response->setPublic();
+        $response->setMaxAge($this->container->getParameter('cache_expiration'));
+
+        $page = $this->renderView('AppBundle:Default:faq.html.twig',
+                array(
+                    "pagetitle" => $this->get("translator")->trans("nav.faq"),
+                    "pagedescription" => $this->get("translator")->trans("nav.faq")
+                )
+        );
+        $response->setContent($page);
+        return $response;
     }
 
     function aboutAction()

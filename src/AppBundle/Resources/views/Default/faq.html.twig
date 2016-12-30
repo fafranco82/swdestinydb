@@ -6,11 +6,11 @@
 <div class="row">
 <div class="col-md-4">
 <h4>{{'toc' | trans}}</h4>
-<ul data-toc="div#rules" data-toc-headings="h1,h2,h3"></ul>
+<ul data-toc="div#rules" data-toc-headings="h1,h2,h3,h4"></ul>
 </div>
 
 <div class="col-md-8" id="rules">
-	{% include ['AppBundle:Default:rulesreference.'~app.request.locale~'.html.twig', 'AppBundle:Default:rulesreference.en.html.twig']%}
+	{% include ['AppBundle:Default:faq.'~app.request.locale~'.html.twig', 'AppBundle:Default:faq.en.html.twig']%}
 </div>
 
 </div>

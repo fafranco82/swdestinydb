@@ -90,6 +90,11 @@ rules:
     defaults:
         _controller: AppBundle:Default:rules
 
+faq:
+    path: /faq
+    defaults:
+        _controller: AppBundle:Default:faq        
+
 ffg:
     path: /ffg
     defaults:
