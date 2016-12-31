@@ -21,6 +21,7 @@ parameters:
         - en
         - es
         - hu
+        - it
         - pl
         - pt
     default_locale: en
@@ -131,6 +132,7 @@ jms_i18n_routing:
         en: "%website_url%"
         es: "es.%website_url%" 
         hu: "hu.%website_url%"
+        it: "it.%website_url%"
         pl: "pl.%website_url%"
         pt: "pt.%website_url%"
     redirect_to_host: true
