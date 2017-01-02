@@ -21,6 +21,7 @@ parameters:
         - de
         - en
         - es
+        - fr
         - hu
         - it
         - pl
@@ -133,6 +134,7 @@ jms_i18n_routing:
         en: "%website_url%"
         de: "de.%website_url%" 
         es: "es.%website_url%" 
+        fr: "fr.%website_url%" 
         hu: "hu.%website_url%"
         it: "it.%website_url%"
         pl: "pl.%website_url%"
