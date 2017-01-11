@@ -37,8 +37,8 @@
             'AW': '<span class="icon-set-AW"></span>',
             'SoR': '<span class="icon-set-SoR"></span>'
         };
-        _.each(function(span, key) {
-            str = str.replace(new RegExp("\[("+key+")\]", "g"), span);
+        _.forEach(icons, function(span, key) {
+            str = str.replace(new RegExp("\["+key+"\]", "g"), span);
         });
         str = str.split("\n").join('</p><p>');
         return new Handlebars.SafeString('<p>'+str+'</p>');
