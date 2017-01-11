@@ -23,7 +23,23 @@
 
     Handlebars.registerHelper('text', function(text, opt) {
         var str = text || '';
-        str = str.replace(/\[(\w+)\]/g, '<span class="icon-$1"></span>')
+        var icons = {
+            'blank': '<span class="icon-blank"></span>',
+            'discard': '<span class="icon-discard"></span>',
+            'disrupt': '<span class="icon-disrupt"></span>',
+            'focus': '<span class="icon-focus"></span>',
+            'melee': '<span class="icon-melee"></span>',
+            'ranged': '<span class="icon-ranged"></span>',
+            'shield': '<span class="icon-shield"></span>',
+            'resource': '<span class="icon-resource"></span>',
+            'special': '<span class="icon-special"></span>',
+            'unique': '<span class="icon-unique"></span>',
+            'AW': '<span class="icon-set-AW"></span>',
+            'SoR': '<span class="icon-set-SoR"></span>'
+        };
+        _.each(function(span, key) {
+            str = str.replace(new RegExp("\[("+key+")\]", "g"), span);
+        });
         str = str.split("\n").join('</p><p>');
         return new Handlebars.SafeString('<p>'+str+'</p>');
     });
