@@ -47,6 +47,8 @@ class CardsData
 			'[resource]' => '<span class="icon-resource"></span>',
 			'[special]' => '<span class="icon-special"></span>',
 			'[unique]' => '<span class="icon-unique"></span>',
+			'[AW]' => '<span class="icon-set-AW"></span>',
+			'[SoR]' => '<span class="icon-set-SoR"></span>'
 		];
 		
 		return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);
