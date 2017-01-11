@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'swdestiny';
-  src:  url('../fonts/swdestiny.eot?18wtca');
-  src:  url('../fonts/swdestiny.eot?18wtca#iefix') format('embedded-opentype'),
-    url('../fonts/swdestiny.ttf?18wtca') format('truetype'),
-    url('../fonts/swdestiny.woff?18wtca') format('woff'),
-    url('../fonts/swdestiny.svg?18wtca#swdestiny') format('svg');
+  src:  url('fonts/swdestiny.eot?x4v0bx');
+  src:  url('fonts/swdestiny.eot?x4v0bx#iefix') format('embedded-opentype'),
+    url('fonts/swdestiny.ttf?x4v0bx') format('truetype'),
+    url('fonts/swdestiny.woff?x4v0bx') format('woff'),
+    url('fonts/swdestiny.svg?x4v0bx#swdestiny') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -34,6 +34,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-set-SoR:before {
+  content: "\e90e";
+}
 .icon-set-AW:before {
   content: "\e90d";
 }
