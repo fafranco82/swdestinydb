@@ -161,6 +161,9 @@ fos_user:
             type: app_user_registration
         confirmation:
             enabled: true
+            from_email:
+                address: webmaster@swdestinydb.com
+                sender_name: SW Destiny DB
 
 # FOSJsRoutingBundle Configuration
 fos_js_routing:
