@@ -186,6 +186,8 @@ unless an effect or ability discards them.</p>
 <li>Support cards cannot take damage.</li>
 <li>If a support has a die, that die is rolled when the support
 is activated.</li>
+<li>There is no limit to the number of supports a player
+can have.</li>
 </ul>
 
 <h4 id="subtypesalsoappearsonupgrades">Subtypes (also appears on upgrades)</h4>
@@ -358,6 +360,10 @@ remaining cards.</li>
 sides of their choice. The number of dice they turn is equal to
 or less than the value of the symbol.</p>
 
+<ul>
+<li>A player cannot turn their opponent’s dice.</li>
+</ul>
+
 <h4 id="special_symbol"><span class="icon-special"></span> Special</h4>
 
 <p>Uses the special ability marked by a <span class="icon-special"></span>
@@ -369,6 +375,8 @@ they must use the special ability on the die’s matching card.</li>
 <li>Just like other symbols, a player can use multiple special
 abilities during the same action, and chooses the order
 that they are resolved in.</li>
+<li>A special ability that rerolls its die cannot be resolved a
+second time during the same action.</li>
 </ul>
 
 <h4 id="blank_symbol"><span class="icon-blank"></span> Blank</h4>
@@ -479,6 +487,8 @@ discard cards when they have more than their hand size.</li>
 <li>The number of cards in a player’s hand is open
 information, but the actual cards in it are hidden from a
 player’s opponent.</li>
+<li>A player cannot have a card their opponent owns in
+their hand.</li>
 </ul>
 
 <h4 id="deck">Deck</h4>
@@ -493,6 +503,8 @@ facedown, and players cannot look through it or change its
 order except through game abilities.</li>
 <li>The number of cards left in a player’s deck is
 open information.</li>
+<li>A player cannot have a card their opponent owns in
+their deck.</li>
 </ul>
 
 <h4 id="discardpile">Discard pile</h4>
@@ -773,6 +785,11 @@ same action, provided the dice share a symbol.</li>
 <li>A player cannot choose to resolve dice symbols if they have
 no symbols of that type to resolve. A player must resolve at
 least one die when taking this action.</li>
+<li>A player can resolve any dice with the same symbol, even
+if those dice were not showing that symbol when the player
+started resolving dice.</li>
+<li>A player cannot resolve the same die more than once
+per action.</li>
 </ul>
 
 <h4 id="discardtorerolldice">Discard to reroll dice</h4>
@@ -867,7 +884,10 @@ game.</p>
 
 <ul>
 <li>Any excess damage dealt to a character from a source that
-defeats the character is ignored.</li>
+defeats the character is ignored. A player can deal more
+damage to a character than they have health, even when
+distributing the damage as they wish (e.g., from the special
+on the F&#8211;11D Rifle).</li>
 <li>When all of a player’s characters are defeated, they lose.</li>
 </ul>
 
@@ -1067,11 +1087,13 @@ enter the queue.</li>
 <h4 id="simultaneousabilities">Simultaneous abilities</h4>
 
 <p>When two or more triggered abilities meet their trigger conditions
-at the same time, the player who controls the battlefield chooses
-the order they resolve in (in the case of before abilities) or enter
-the queue in (in the case of after abilities).</p>
+at the same time, the player who is resolving those abilities
+chooses the order they resolve in (in the case of before abilities)
+or enter the queue in (in the case of after abilities). If more than
+one player has abilities that are simulatenous, the player who
+controls the battlefield chooses the order they resolve in.</p>
 
-<p><em>Example: A Tusken Raider (<span class="icon-set-AW"></span>22) is activated with Jango Fett (<span class="icon-set-AW"></span>21) in play. Both have an after ability that can resolve after the Tusken Raider activates, so it is the battlefield controller’s choice as to which one enters the queue first.</em></p>
+<p><em>Example: A Tusken Raider (<span class="icon-set-AW"></span>22) is activated with Jango Fett (<span class="icon-set-AW"></span>21) in play. Each card is controlled by a different player. Both have an after ability that can resolve after the Tusken Raider activates, so it is the battlefield controller’s choice as to which one enters the queue first.</em></p>
 
 <h3 id="keywords">Keywords</h3>
 
@@ -1451,7 +1473,7 @@ ability chooses which opponent it affects.</p>
 <h4 id="playerelimination">Player elimination</h4>
 
 <p>If all of a player’s characters are defeated, or there are no
-cards left in their deck or hand at the end of the round, that
+cards left in their deck and hand at the end of the round, that
 player is immediately eliminated from the game. Any of their
 cards and dice are removed from the game, except for cards
 that they no longer control or their battlefield if it is active.
