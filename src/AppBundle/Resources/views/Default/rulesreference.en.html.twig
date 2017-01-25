@@ -64,6 +64,9 @@ another copy of that card in play.</p>
 <li><p>The unique restriction applies to each player individually.
 Players can each have one copy of a unique card in play at
 the same time.</p></li>
+<li><p>If a player ever controls more than one copy of a unique
+card, then they must immediately discard one of those
+cards from play.</p></li>
 <li><p>The unique restriction does not apply to dice. A player can
 have multiples of the same dice in play at the same time.</p></li>
 <li><p>Characters with the same title but a different subtitle
@@ -219,6 +222,10 @@ the character they are attached to is defeated.</p>
 character ever has more than 3 upgrades, the player who
 controls it must choose and discard upgrades from it until
 it only has 3.</li>
+<li>The color of a character and its upgrades do not have
+to match. A character can have an upgrade that does
+not match its color, provided all deckbuilding and play
+restrictions were followed.</li>
 <li>There is no limit to the number of <strong>weapons</strong>, <strong>equipment</strong>, or
 <strong>abilities</strong> a character can have as part of its 3 upgrades.</li>
 <li>A character can have multiple copies of the same
@@ -638,7 +645,13 @@ them, along with those character’s matching dice.</li>
 from it.</li>
 <li>Each player shuffles any number of cards from their hand
 back into their deck, and then redraws until they have 5
-cards in hand.</li>
+cards in hand.
+
+<ul>
+<li>Players should try and choose their cards simultaneously.
+If there is a disagreement over who chooses their cards
+first, then randomly determine a player to choose first.</li>
+</ul></li>
 <li>Players sort the various game tokens (damage, shields, and
 resources) into piles near the play area. Each player gains
 2 resources from this supply.</li>
@@ -703,9 +716,11 @@ actions are listed below and described in detail later:</p>
 </ul>
 
 <p>When a player is allowed to take additional actions on their
-turn, they must immediately take them or pass. They cannot
-save the actions for later. If they are allowed to take an action
-outside of their turn, they also must take it immediately.</p>
+turn, they must immediately take them following the resolution
+of the current action or decline to act (this is not the same as
+passing your turn). They cannot save the actions for later. If
+they are allowed to take an action outside of their turn, they
+also must take it immediately or decline to act.</p>
 
 <h4 id="playacardfromhand">Play a card from hand</h4>
 
@@ -815,10 +830,11 @@ card’s instructions.</p>
 <p>When a player claims the battlefield, they may use its claim
 ability. If they do not control the battlefield, they take control
 of it and move the battlefield card next to their deck. For
-the rest of this round, that player automatically passes all of
-their future actions. Their opponent continues taking actions
-until they also pass. Only one player can claim the battlefield
-each round.</p>
+the rest of this round, that player automatically passes all
+of their future turns and declines to act if they ever have the
+opportunity to take actions. Their opponent continues taking
+turns until they also pass. Only one player can claim the
+battlefield each round.</p>
 
 <ul>
 <li>A player can claim the battlefield even if they already control
@@ -833,6 +849,17 @@ each round.</li>
 They do nothing, but they retain the option to take an action
 after their opponent. After both players pass consecutively,
 the round proceeds to the upkeep phase.</p>
+
+<ul>
+<li>If a player triggers an action that does not change the
+game state, then they are considered to have passed their
+turn instead. If a player exhausts or plays a card that does
+not change the game state other than that card being
+exhausted or played, then they are also considered to have
+passed their turn instead.</li>
+</ul>
+
+<p><em>Example: A player uses the Action on General Veers (<span class="icon-set-AW"></span>4), but there is no Veers die for them to remove. As such, nothing happens and they are considered to have passed their turn.</em></p>
 
 <h3 id="winningthegame">Winning the game</h3>
 
@@ -982,6 +1009,19 @@ unless it includes the word “may” or explicitly gives the player
 a choice. Special abilities (<span class="icon-special"></span>)
 are mandatory if that side of its die is resolved.</p>
 
+<h3 id="queue">Queue</h3>
+
+<p>The queue is an imaginary line that all game effects and
+abilities enter and leave in chronological order when
+triggered, based on a “first in, first out” principle. Each one
+waits its turn in the queue until the trigger condition is
+complete. Each effect must fully resolve before the next one
+resolves. If during the resolution of something in the queue,
+another effect is added, it moves to “the end” of the queue
+and is resolved last.</p>
+
+<p><em>Example: A player resolves one of their dice to deal 2 damage to a character. The 2 damage enters the queue, and since nothing else is in the queue it currently resolves.</em></p>
+
 <h3 id="actionabilities">Action abilities</h3>
 
 <p>Some support, upgrade, and character cards have unique
@@ -1006,21 +1046,76 @@ condition and does not have a bold word in front of it (like
 
 <p><em>Example: Personal Escort (<span class="icon-set-AW"></span>78) has the ongoing ability “Attached character has the Guardian keyword.”</em></p>
 
-<h3 id="specialabilities">Special abilities</h3>
+<h3 id="inherentdiceabilities">Inherent dice abilities</h3>
 
-<p>These abilities appear on some cards that have a matching
-die and are marked by the special (<span class="icon-special"></span>)
-symbol. When a die with that symbol is resolved, the special
-ability on its matching card is resolved.</p>
+<p>Some cards have abilities on them which are considered to
+be inherent to the die, and always affect how the die resolves,
+independent of the card being in play.</p>
+
+<pre><code>_Example: Diplomatic Immunity (&lt;span class=&quot;icon-set-AW&quot;&gt;&lt;/span&gt;50) says “The shields from this die can be given to any of your characters, distributed as you wish.” The shields from this die can be split up regardless of whether the card is in play or not, such as when resolved through Poe Dameron’s (&lt;span class=&quot;icon-set-AW&quot;&gt;&lt;/span&gt;29) special ability._
+</code></pre>
 
 <ul>
-<li><p>The special (<span class="icon-special"></span>)
-cannot be resolved to use the special ability on a different card.</p></li>
-<li><p>If a die is rolled into a dice pool independently of the card
-being played, the die still references any special ability the
-card has and can resolve it as normal, if necessary.</p>
+<li>Dice with a non-special inherent die ability: Diplomatic
+Immunity (<span class="icon-set-AW"></span>50), Launch Bay (<span class="icon-set-AW"></span>31).</li>
+</ul>
 
-<p><em>Example: Ace in the Hole (<span class="icon-set-AW"></span>92) says “Roll a Yellow upgrade die into your pool.” The special ability on that upgrade can be resolved as it is written on the card, since the die is considered to have that ability on that side, regardless of whether the card is in play or not.</em></p></li>
+<h4 id="specialabilities">Special abilities</h4>
+
+<p>These are a type of inherent die abilities that appear on
+some cards and are marked by the special (<span class="icon-special"></span>) symbol. When
+a die with that symbol is resolved, the special ability on its
+matching card is resolved.</p>
+
+<ul>
+<li>The special (<span class="icon-special"></span>) cannot be resolved to use the special ability
+on a different card.</li>
+</ul>
+
+<h3 id="keywords">Keywords</h3>
+
+<p>Keywords are shorthands for abilities that appear on
+multiple cards.</p>
+
+<ul>
+<li>A card cannot gain another copy of a keyword; it either has
+the keyword or does not have the keyword.</li>
+<li>If a card loses a keyword, then it loses the keyword no
+matter how many times it would gain it.</li>
+<li>The italicized text that explains keywords on cards is
+solely reminder text, and is overridden by the full rules
+written below.</li>
+</ul>
+
+<h4 id="ambush">Ambush</h4>
+
+<p>After playing (and resolving) a card with Ambush, a player
+may immediately take another action.</p>
+
+<ul>
+<li>If a player is allowed to take an action outside of their turn,
+they immediately take it.</li>
+</ul>
+
+<h4 id="guardian">Guardian</h4>
+
+<p>Before a character with Guardian activates, its owner
+may remove one die showing damage (<span class="icon-melee"></span>
+or <span class="icon-ranged"></span>) from
+their opponent’s dice pool to deal damage equal to
+the value showing on the die removed to the activating
+Guardian character.</p>
+
+<h4 id="redeploy">Redeploy</h4>
+
+<p>This keyword only appears on upgrades. After the attached
+character is defeated, its controller may immediately move
+this upgrade to any of their other characters. The upgrade die
+moves to the new character card, even if it was in the dice pool.</p>
+
+<ul>
+<li>The Redeploy keyword ignores play restrictions when
+attaching to a new character.</li>
 </ul>
 
 <h3 id="triggeredabilities">Triggered abilities</h3>
@@ -1064,26 +1159,6 @@ the queue to resolve.</p>
 
 <p><em>Example: Comlink (<span class="icon-set-AW"></span>61) says “After you play this upgrade, you may reroll any number of your dice or any number of your opponent’s dice.” The effect of playing the card must fully resolve (paying the cost, choosing a character to attach it to), and then the after ability resolves.</em></p>
 
-<h4 id="queue">Queue</h4>
-
-<p>After abilities enter an imaginary line once they meet their
-trigger conditions, known as the queue. They wait in the
-queue until the trigger condition is complete. If the trigger
-condition was part of another ability, that entire ability is
-completed before the after ability resolves. Abilities in the
-queue are resolved in the order they entered it. Each one
-must fully resolve before the next one resolves. If, during the
-resolution of an ability in the queue, another ability is added,
-it moves to “the end” of the queue and is resolved last.</p>
-
-<ul>
-<li>Abilities enter and leave the queue in chronological order,
-based on a “first in, first out” principle.</li>
-<li>If two or more abilities have the same trigger condition, the
-player who controls the battlefield decides the order they
-enter the queue.</li>
-</ul>
-
 <h4 id="simultaneousabilities">Simultaneous abilities</h4>
 
 <p>When two or more triggered abilities meet their trigger conditions
@@ -1094,49 +1169,6 @@ one player has abilities that are simulatenous, the player who
 controls the battlefield chooses the order they resolve in.</p>
 
 <p><em>Example: A Tusken Raider (<span class="icon-set-AW"></span>22) is activated with Jango Fett (<span class="icon-set-AW"></span>21) in play. Each card is controlled by a different player. Both have an after ability that can resolve after the Tusken Raider activates, so it is the battlefield controller’s choice as to which one enters the queue first.</em></p>
-
-<h3 id="keywords">Keywords</h3>
-
-<p>Keywords are shorthands for abilities that appear on
-multiple cards.</p>
-
-<ul>
-<li>A card cannot gain another copy of a keyword; it either has
-the keyword or does not have the keyword.</li>
-<li>If a card loses a keyword, then it loses the keyword no
-matter how many times it would gain it.</li>
-</ul>
-
-<h4 id="ambush">Ambush</h4>
-
-<p>After playing (and resolving) a card with Ambush, a player
-may immediately take another action.</p>
-
-<ul>
-<li>If a player is allowed to take an action outside of their turn,
-they immediately take it.</li>
-</ul>
-
-<h4 id="guardian">Guardian</h4>
-
-<p>Before a character with Guardian activates, its owner
-may remove one die showing damage (<span class="icon-melee"></span>
-or <span class="icon-ranged"></span>) from
-their opponent’s dice pool to deal damage equal to
-the value showing on the die removed to the activating
-Guardian character.</p>
-
-<h4 id="redeploy">Redeploy</h4>
-
-<p>This keyword only appears on upgrades. After the attached
-character is defeated, its controller may immediately move
-this upgrade to any of their other characters. The upgrade die
-moves to the new character card, even if it was in the dice pool.</p>
-
-<ul>
-<li>The Redeploy keyword ignores play restrictions when
-attaching to a new character.</li>
-</ul>
 
 <h3 id="effects">Effects</h3>
 
@@ -1476,6 +1508,12 @@ ability chooses which opponent it affects.</p>
 cards left in their deck and hand at the end of the round, that
 player is immediately eliminated from the game. Any of their
 cards and dice are removed from the game, except for cards
-that they no longer control or their battlefield if it is active.
-The other players continue playing until there is only one
-player left in the game; that player wins.</p>
+that they no longer control or their battlefield if it is active. If
+the eliminated player controlled the battlefield, then no one
+controls the battlefield until someone else claims it (and if it
+has already been claimed this round, then players must wait
+until the next round). The player to their left decides how
+simultaneous abilities controlled by more than one player are
+resolved until someone else controls the battlefield. The other
+players continue playing until there is only one player left in
+the game; that player wins.</p>
