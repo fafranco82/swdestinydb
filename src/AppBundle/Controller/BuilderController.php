@@ -252,7 +252,7 @@ class BuilderController extends Controller
 
     }
 
-		public function ttsexportAction ($deck_id)
+	public function ttsexportAction ($deck_id)
     {
 		/* @var $em \Doctrine\ORM\EntityManager */
         $em = $this->getDoctrine()->getManager();
