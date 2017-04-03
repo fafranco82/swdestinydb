@@ -5,9 +5,6 @@ namespace AppBundle\Entity;
 class Side
 {
     public function toString() {
-        if($this->type == NULL)
-            return "";
-        
         $s = "";
         $type = $this->type->getCode();
 
