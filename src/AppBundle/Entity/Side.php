@@ -28,7 +28,7 @@ class Side
         if($type != "X")
             $s = $s.$type;
         else
-            $s = $s.""
+            $s = $s."";
 
         if($this->cost > 0)
         {
