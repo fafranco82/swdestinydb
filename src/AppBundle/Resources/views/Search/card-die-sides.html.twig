@@ -2,9 +2,9 @@
 {% if card.has_die %}
 <div class="card-die">
   {% for face in card.sides %}
-  <div class="card-die-face border-{{card.faction_code}} card-die-face-{{face.type.icon}}{% if not face.cost %} card-die-face-nocost{% endif %}{% if face.modifier %} card-die-face-modified{% endif %}">
+  <div class="card-die-face border-{{card.faction_code}}{% if face.type %} card-die-face-{{face.type.icon}}{% endif %}{% if not face.cost %} card-die-face-nocost{% endif %}{% if face.modifier %} card-die-face-modified{% endif %}">
     <div class="card-die-face-content">
-      <span class="card-die-face-value">{{face.modifier ? '+' : ''}}{{ macros.nonzero_or_x(face.value) }}</span><span class="icon-{{face.type.icon}}"></span>
+      <span class="card-die-face-value">{{face.modifier ? '+' : ''}}{{ macros.nonzero_or_x(face.value) }}</span>{% if face.type %}<span class="icon-{{face.type.icon}}"></span>{% endif %}
     </div>
     {% if face.cost %}
     <div class="card-die-face-cost">
