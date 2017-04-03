@@ -46,7 +46,7 @@
     });
 
     Handlebars.registerHelper('dieside', function(side) {
-    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield'};
+    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield', 'X': ''};
     	var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
         var side = {
             code: elems[3],

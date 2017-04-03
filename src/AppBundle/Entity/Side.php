@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 class Side
 {
     public function toString() {
-        if($this->type == NULL)
-            return "";
+        $type = "X";
+        if($this->type != NULL)
+            $type = $this->type->getCode();
         
         $s = "";
-        $type = $this->type->getCode();
-
+        
         if($this->modifier > 0)
         {
             $s = $s."+";
@@ -20,7 +20,7 @@ class Side
             $s = $s."-";
         }
 
-        if($type != "-" && $type != "Sp")
+        if($type=="X" || ($type != "-" && $type != "Sp"))
         {
             $s = $s.$this->value;
         }
