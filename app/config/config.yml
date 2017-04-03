@@ -51,15 +51,6 @@ framework:
     fragments:       ~
     http_method_override: true
 
-#AWS Configuration
-aws:
-    version: latest
-    region: us-east-1
-    credentials:
-        key: %aws_access_key_id%
-        secret: %aws_secret_access_key%
-    scheme: http
-
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

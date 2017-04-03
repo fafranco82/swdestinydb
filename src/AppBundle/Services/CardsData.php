@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Aws\S3\S3Client;
 use function Functional\map;
 
 /*
@@ -19,14 +18,14 @@ use function Functional\map;
  */
 class CardsData
 {
-	public function __construct(Registry $doctrine, RequestStack $request_stack, Router $router, TranslatorInterface $translator, S3Client $s3Client, ContainerInterface $container) {
+	public function __construct(Registry $doctrine, RequestStack $request_stack, Router $router, AssetsHelper $assets_helper, TranslatorInterface $translator,ContainerInterface $container, $rootDir) {
 		$this->doctrine = $doctrine;
         $this->request_stack = $request_stack;
         $this->router = $router;
+        $this->assets_helper = $assets_helper;
         $this->translator = $translator;
-        $this->s3Client = $s3Client;
-        $this->s3Client->registerStreamWrapper();
         $this->container = $container;
+        $this->rootDir = $rootDir;
 	}
 
 	/**
@@ -404,23 +403,23 @@ class CardsData
 
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
-		//test if image is in AWS S3
-		if(file_exists("s3://".$this->container->getParameter("s3_bucket")."/".$card->getCode().".jpg"))
-		{
-			$cardinfo['imagesrc'] = $this->s3Client->getObjectUrl($this->container->getParameter("s3_bucket"), $card->getCode().'.jpg');
-		}	
-		else
-		{
-			$cardinfo['imagesrc'] = null;
-		}
+		$setcode = str_pad($card->getSet()->getPosition(), 2, '0', STR_PAD_LEFT);
+		$imageurl = $this->assets_helper->getUrl("bundles/cards/en/{$setcode}/{$card->getCode()}.jpg");
+        $imagepath = $this->rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
+        if(file_exists($imagepath)) {
+            $cardinfo['imagesrc'] = $imageurl;
+        } else {
+            $cardinfo['imagesrc'] = null;
+        }
+        
 
 		// look for another card with the same name to set the label
-		$homonyms = $this->doctrine->getRepository('AppBundle:Card')->findBy(['name' => $card->getName()]);
+		/*$homonyms = $this->doctrine->getRepository('AppBundle:Card')->findBy(['name' => $card->getName()]);
 		if(count($homonyms) > 1) {
 			$cardinfo['label'] = $card->getName() . ' (' . $card->getSet()->getCode() . ')';
 		} else {
 			$cardinfo['label'] = $card->getName();
-		}
+		}*/
 
 		if($api) {
 			unset($cardinfo['id']);

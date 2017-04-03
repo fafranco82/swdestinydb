@@ -44,7 +44,7 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
     cards_data:
         class: AppBundle\Services\CardsData
-        arguments: ["@doctrine", "@request_stack", "@router", "@translator", "@aws.s3", "@service_container"]
+        arguments: ["@doctrine", "@request_stack", "@router", "@templating.helper.assets", "@translator", "@service_container", "%kernel.root_dir%"]
     decklist_manager:
         class: AppBundle\Model\DecklistManager
         shared: false

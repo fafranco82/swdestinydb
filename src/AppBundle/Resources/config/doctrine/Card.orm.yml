@@ -51,6 +51,7 @@ AppBundle\Entity\Card:
             targetEntity: Side
             orderBy: {'id': 'ASC'}
             mappedBy: card
+            fetch: EAGER
             cascade:
                 - persist
                 - remove

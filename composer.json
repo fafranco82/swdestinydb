@@ -36,7 +36,6 @@
         "willdurand/js-translation-bundle": "^2.5",
         "jms/i18n-routing-bundle": "^2.0",
         "lstrojny/functional-php": "^1.2",
-        "aws/aws-sdk-php-symfony": "^1.2",
         "jms/translation-bundle": "^1.3",
         "jms/di-extra-bundle": "^1.8",
         "php-http/httplug-bundle": "^1.3",
