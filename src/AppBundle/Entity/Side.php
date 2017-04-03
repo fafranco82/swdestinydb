@@ -20,12 +20,15 @@ class Side
             $s = $s."-";
         }
 
-        if($type != "-" && $type != "Sp")
+        if($type==null || ($type != "-" && $type != "Sp"))
         {
             $s = $s.$this->value;
         }
 
-        $s = $s.$type;
+        if($type != null)
+            $s = $s.$type;
+        else
+            $s = $s."X";
 
         if($this->cost > 0)
         {
