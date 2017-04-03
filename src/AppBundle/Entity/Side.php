@@ -25,10 +25,7 @@ class Side
             $s = $s.$this->value;
         }
 
-        if($type != "X")
-            $s = $s.$type;
-        else
-            $s = $s."";
+        $s = $s.$type;
 
         if($this->cost > 0)
         {
