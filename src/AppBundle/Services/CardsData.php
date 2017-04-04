@@ -404,10 +404,10 @@ class CardsData
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
 		$setcode = str_pad($card->getSet()->getPosition(), 2, '0', STR_PAD_LEFT);
-		$imageurl = $this->assets_helper->getUrl("bundles/cards/en/{$setcode}/{$card->getCode()}.jpg");
+		$imageurl = $this->assets_helper->getUrl("/bundles/cards/en/{$setcode}/{$card->getCode()}.jpg");
         $imagepath = $this->rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
         if(file_exists($imagepath)) {
-            $cardinfo['imagesrc'] = $imageurl;
+            $cardinfo['imagesrc'] = $this->ensureUrlIsAbsolute($imageurl);
         } else {
             $cardinfo['imagesrc'] = null;
         }
@@ -437,6 +437,42 @@ class CardsData
 
 		return $cardinfo;
 	}
+
+	/**
+     * Ensures an URL is absolute, if possible.
+     *
+     * @param string $url The URL that has to be absolute
+     *
+     * @return string The absolute URL
+     *
+     * @throws \RuntimeException
+     */
+    private function ensureUrlIsAbsolute($url)
+    {
+        if (false !== strpos($url, '://') || 0 === strpos($url, '//')) {
+            return $url;
+        }
+
+        $request = $this->request_stack->getCurrentRequest();
+        if (!$request) {
+            throw new \RuntimeException('To generate an absolute URL for an asset, the Symfony Routing component is required.');
+        }
+
+        if ('' === $host = $request->getHost()) {
+            return $url;
+        }
+
+        $scheme = $request->getScheme();
+        $port = '';
+
+        if ('http' === $scheme && 80 != $request->getPort()) {
+            $port = ':'.$request->getPort();
+        } elseif ('https' === $scheme && 443 != $request->getPort()) {
+            $port = ':'.$request->getPort();
+        }
+
+        return $scheme.'://'.$host.$port.$url;
+    }
 
 	public function syntax($query)
 	{
