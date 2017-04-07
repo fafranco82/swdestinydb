@@ -361,6 +361,7 @@ class CardsData
 	 */
 	public function getCardInfo($card, $api = false)
 	{
+		$locale = $this->request_stack->getCurrentRequest()->getLocale();
 		$cardinfo = [];
 
 	    $metadata = $this->doctrine->getManager()->getClassMetadata('AppBundle:Card');
@@ -404,14 +405,16 @@ class CardsData
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
 		$setcode = str_pad($card->getSet()->getPosition(), 2, '0', STR_PAD_LEFT);
-		$imageurl = $this->assets_helper->getUrl("/bundles/cards/en/{$setcode}/{$card->getCode()}.jpg");
+		$imageurl = $this->assets_helper->getUrl("/bundles/cards/{$locale}/{$setcode}/{$card->getCode()}.jpg");
         $imagepath = $this->rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
         if(file_exists($imagepath)) {
             $cardinfo['imagesrc'] = $this->ensureUrlIsAbsolute($imageurl);
+            if($locale != 'en') {
+	        	$cardinfo['imagesrc_en'] = $this->ensureUrlIsAbsolute($this->assets_helper->getUrl("/bundles/cards/en/{$setcode}/{$card->getCode()}.jpg"));
+	        }
         } else {
             $cardinfo['imagesrc'] = null;
         }
-        
 
 		// look for another card with the same name to set the label
 		/*$homonyms = $this->doctrine->getRepository('AppBundle:Card')->findBy(['name' => $card->getName()]);
