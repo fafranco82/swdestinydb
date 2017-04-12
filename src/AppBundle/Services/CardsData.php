@@ -424,6 +424,10 @@ class CardsData
 			$cardinfo['label'] = $card->getName();
 		}*/
 
+		$cardinfo['label'] = $card->getName();
+		if($card->getSubtitle())
+			$cardinfo['label'] .= ' - ' . $card->getSubtitle();
+
 		if($api) {
 			unset($cardinfo['id']);
             $cardinfo['cp'] = $card->getHighestCostPointsValue();
