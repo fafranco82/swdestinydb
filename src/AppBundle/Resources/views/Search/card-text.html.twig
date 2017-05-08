@@ -1,3 +1,4 @@
+{% if card.has_errata %}<div class="text-muted"><small>{{ 'card.with_errata' | trans }}</small></div>{% endif %}
 <div class="card-text border-{{ card.faction_code }}">
 	{{ card.text|raw }}
 </div>

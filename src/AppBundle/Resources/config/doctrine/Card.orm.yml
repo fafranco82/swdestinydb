@@ -134,6 +134,10 @@ AppBundle\Entity\Card:
             type: boolean
             nullable: false
             column: has_die
+        hasErrata:
+            type: boolean
+            nullable: false
+            column: has_errata
     uniqueConstraints:
         card_code_idx:
             columns: [ code ]

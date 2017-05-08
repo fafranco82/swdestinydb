@@ -46,5 +46,8 @@
   {{/each}}
 </div>
 {{/if}}
+{{#if card.has_errata}}
+	<div class="text-muted"><small>{{trans 'card.with_errata'}}</small></div>
+{{/if}}
 <div class="card-text border-{{card.faction_code}}">{{text card.text}}</div>
 <div class="card-set"><span class="icon-set-{{card.set_code}}"></span> {{card.set_name}} #{{card.position}}.</div>

@@ -19,7 +19,8 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
                 'position',
                 'name',
                 'is_unique',
-                'has_die'
+                'has_die',
+                'has_errata'
         ];
     
         $optionalFields = [
@@ -876,5 +877,34 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
         }
 
         return max($cost, $points);
+    }
+    /**
+     * @var boolean
+     */
+    private $hasErrata;
+
+
+    /**
+     * Set hasErrata
+     *
+     * @param boolean $hasErrata
+     *
+     * @return Card
+     */
+    public function setHasErrata($hasErrata)
+    {
+        $this->hasErrata = $hasErrata;
+
+        return $this;
+    }
+
+    /**
+     * Get hasErrata
+     *
+     * @return boolean
+     */
+    public function getHasErrata()
+    {
+        return $this->hasErrata;
     }
 }

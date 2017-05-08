@@ -352,7 +352,8 @@ class ImportStdCommand extends ContainerAwareCommand
 					'position',
 					'name',
 					'has_die',
-					'is_unique'
+					'is_unique',
+					'has_errata'
 			], [
 					'affiliation_code',
 					'faction_code',
