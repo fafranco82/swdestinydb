@@ -31,18 +31,21 @@ class ImportImagesCommand extends ContainerAwareCommand
 		/* @var \AppBundle\Entity\Card $card */
 		foreach($cards as $card) {
 			$card_code = $card->getCode();
+			$set_code = sprintf("%02d", $card->getSet()->getPosition());
 			
+			/*
 			if(!$card->getSet()->getDateRelease()) {
 				$output->writeln("Skip $card_code because it's not released");
 				continue;
 			}
+			*/
 			
 			if(!$card->getSet()->getCgdbIdStart() || !$card->getSet()->getCgdbIdEnd()) {
 				$output->writeln("Skip $card_code because its cgdb_id is not defined");
 				continue;
 			}
 				
-			$imageurl = $assets_helper->getUrl('bundles/cards/'.$card_code.'.png');
+			$imageurl = $assets_helper->getUrl('bundles/cards/en/'.$set_code.'/'.$card_code.'.jpg');
 			$imagepath= $rootDir . '/../web' . preg_replace('/\?.*/', '', $imageurl);
 			
 			if(file_exists($imagepath)) {
