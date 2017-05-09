@@ -69,6 +69,19 @@
         return Routing.generate(path, options.hash || {});
     });
 
+    Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+        lvalue = parseFloat(lvalue);
+        rvalue = parseFloat(rvalue);
+            
+        return {
+            "+": lvalue + rvalue,
+            "-": lvalue - rvalue,
+            "*": lvalue * rvalue,
+            "/": lvalue / rvalue,
+            "%": lvalue % rvalue
+        }[operator];
+    });
+
     Handlebars.registerHelper('concat', function() {
     	var str = '';
     	for(var i=0;i < arguments.length-1;i++) {

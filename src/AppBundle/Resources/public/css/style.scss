@@ -112,13 +112,24 @@ td.die-face {
 	width: 18px;
 	&.limited-pool-conflict {
 		font-weight: bold;
-		color: #ff9229;
+		
+		&.limited-pool-conflict-2 {
+			color: #ff0000;
+		}
+
+		&.limited-pool-conflict-1 {
+			color: #ff9229;
+		}
 	}
 }
 
 .fa-exclamation-triangle {
 	&.limited-pool-conflict {
-		color: #999999;
+		color: #ff0000;
+
+		&.limited-pool-conflict-1 {
+			color: #ff9229;
+		}
 	}
 }
 

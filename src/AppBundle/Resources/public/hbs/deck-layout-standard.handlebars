@@ -52,11 +52,11 @@
 							</a>
 							{{#if is_unique}}
 								{{#unless (own_enough_dice this)}}
-								<span class="fa fa-exclamation-triangle limited-pool-conflict" title="{{transChoice "limited_pool_conflict" owned.dice count=owned.dice}}"></span>
+								<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math indeck.dice "-" owned.dice}}" title="{{transChoice "limited_pool_conflict" owned.dice count=owned.dice}}"></span>
 								{{/unless}}
 							{{else}}
 								{{#unless (own_enough_cards original)}}
-								<span class="fa fa-exclamation-triangle limited-pool-conflict" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
+								<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math original.indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
 								{{/unless}}
 							{{/if}}
 						</div>
@@ -83,7 +83,7 @@
 					{{#if (own_enough_cards this)}}
 						<span class="card-amount">x{{indeck.cards}}</span>
 					{{else}}
-						<span class="card-amount limited-pool-conflict" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}">x{{indeck.cards}}</span>
+						<span class="card-amount limited-pool-conflict limited-pool-conflict-{{math indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}">x{{indeck.cards}}</span>
 					{{/if}}
 					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>
 					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
