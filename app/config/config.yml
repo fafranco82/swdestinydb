@@ -17,6 +17,7 @@ parameters:
         it: Italiano
         pl: Polski
         pt: Português
+        zh: Simplified Chinese
     supported_locales:
         - de
         - en
@@ -26,6 +27,7 @@ parameters:
         - it
         - pl
         - pt
+        - zh
     default_locale: en
 
 framework:
@@ -130,6 +132,7 @@ jms_i18n_routing:
         it: "it.%website_url%"
         pl: "pl.%website_url%"
         pt: "pt.%website_url%"
+        zh: "zh.%website_url%"
     redirect_to_host: true
 
 # Swiftmailer Configuration

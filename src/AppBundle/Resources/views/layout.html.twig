@@ -162,7 +162,7 @@
 	  var app = {
       locale: '{{ app.request.locale }}'
     };
-    moment.locale('{{ app.request.locale }}');
+    moment.locale('{{ app.request.locale }}{% if app.request.locale == 'zh' %}-cn{% endif %}');
     $(function() {
       {% for flashMessage in app.session.flashbag.get('notice') %}
       	app.ui.insert_alert_message('success', {{ flashMessage|json_encode|raw }});
