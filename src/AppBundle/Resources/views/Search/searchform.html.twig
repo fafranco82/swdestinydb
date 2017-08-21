@@ -92,7 +92,7 @@
 				<select class="form-control" name="s" id="s">
 					<option value="">{{ 'search.any' | trans }}</option>
 					{% for cardset in sets %}
-					<option value="{{ cardset.code }}">{{ cardset.label }}</option>
+					<option value="{{ cardset.code }}">{{ cardset.label | raw }}</option>
 					{% endfor %}
 				</select>
 			</div>
