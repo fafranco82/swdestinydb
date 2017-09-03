@@ -42,7 +42,17 @@ AppBundle\Entity\Card:
             joinColumn:
                 name: rarity_id
                 referencedColumnName: id
+        reprintOf:
+            targetEntity: Card
+            inversedBy: reprints
+            joinColumn:
+                name: reprint_of
+                referencedColumnName: id
     oneToMany:
+        reprints:
+            targetEntity: Card
+            orderBy: {'code': 'ASC'}
+            mappedBy: reprintOf
         reviews:
             targetEntity: Review
             orderBy: {'dateCreation':'DESC'}

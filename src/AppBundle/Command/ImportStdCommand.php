@@ -160,6 +160,7 @@ class ImportStdCommand extends ContainerAwareCommand
 		
 		$output->writeln("Importing Cards...");
 		$fileSystemIterator = $this->getFileSystemIterator($path);
+		$this->tempCardMap = [];
 		$imported = [];
 		foreach ($fileSystemIterator as $fileinfo) {
 			$imported = array_merge($imported, $this->importCardsJsonFile($fileinfo));
@@ -371,6 +372,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			]);
 			if($card) {
 				$result[] = $card;
+				$tempCardMap[$card->getCode()] = $card;
 				$this->em->persist($card);
 			}
 		}
@@ -509,6 +511,8 @@ class ImportStdCommand extends ContainerAwareCommand
 			$this->$functionName($entity, $data);
 
 			$this->importCardDieSides($entity, $data);
+
+			$this->setReprintOf($entity, $data);
 		}
 
 		// special case for StarterPack
@@ -562,6 +566,24 @@ class ImportStdCommand extends ContainerAwareCommand
 				if($orig !== $side->toString())
 					$this->output->writeln("Changing the <info>side #".($index+1)."</info> of <info>".$card->toString()."</info> (".$orig." => ".$side->toString().")");
 			}
+		}
+	}
+
+	protected function setReprintOf(Card $card, $data)
+	{
+		if(array_key_exists("reprint_of", $data))
+		{
+			$reprintOfCard = NULL;
+			if(array_key_exists($data["reprint_of"], $this->tempCardMap))
+				$reprintOfCard = $this->tempCardMap[$data["reprint_of"]];
+			else
+				$reprintOfCard = $this->em->getRepository("AppBundle:Card")->findOneBy(['code' => $data['reprint_of']]);
+
+			if(!$reprintOfCard)
+				throw new \Exception('Card ['.$card->getName().'] is marked as reprint of a card that doen\'t exists: '.$data["reprint_of"]);
+
+			$card->setReprintOf($reprintOfCard);
+			$reprintOfCard->addReprint($card);
 		}
 	}
 	

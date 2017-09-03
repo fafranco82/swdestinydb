@@ -52,6 +52,11 @@ ui.init_config_buttons = function init_config_buttons() {
 	})
 }
 
+ui.on_collection_loaded = function on_collection_loaded() {
+	ui.sum_reprints_owned();
+	ui.set_max_qty();
+}
+
 /**
  * sets the maxqty of each card
  * @memberOf ui
@@ -80,6 +85,18 @@ ui.set_max_qty = function set_max_qty() {
 
 		app.data.cards.updateById(record.code, {
 			maxqty : max_qty
+		});
+	});
+}
+
+ui.sum_reprints_owned = function sum_reprints_owned() {
+	app.data.cards.find({reprint_of: {$exists: true}}).forEach(function(card) {
+		var cardReprinted = app.data.cards.findById(card.reprint_of);
+		app.data.cards.updateById(card.reprint_of, {
+			owned: {
+				cards: cardReprinted.owned.cards + card.owned.cards,
+				dice: cardReprinted.owned.dice + card.owned.dice
+			}
 		});
 	});
 }
@@ -552,7 +569,9 @@ ui.refresh_list = _.debounce(function refresh_list() {
 	var counter = 0,
 		container = $('#collection-table'),
 		filters = ui.get_filters(),
-		query = app.smart_filter.get_query(filters),
+		query = $.extend({}, app.smart_filter.get_query(filters), {
+			reprint_of: {$exists: false}
+		}, true),
 		orderBy = {};
 
 	SortKey.split('|').forEach(function (key ) {
@@ -633,7 +652,7 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
-		cb(app.data.cards.find({name: regexp}));
+		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
 	}
 
 	$('#filter-text').typeahead({
@@ -696,10 +715,10 @@ ui.on_dom_loaded = function on_dom_loaded() {
  */
 ui.on_data_loaded = function on_data_loaded() {
 	if(app.collection.isLoaded) {
-		ui.set_max_qty();
+		ui.on_collection_loaded();
 	} else {
 		$(document).on('collection.app', function(e) {
-			ui.set_max_qty();
+			ui.on_collection_loaded();
 		});
 	}
 	app.draw_simulator && app.draw_simulator.on_data_loaded();

@@ -402,6 +402,20 @@ class CardsData
 	    	$cardinfo[$fieldName] = $value;
 	    }
 
+	    if(!$card->getReprints()->isEmpty())
+	    {
+		    $cardinfo['reprints'] = [];
+		    foreach ($card->getReprints() as $reprint) {
+		    	$cardinfo['reprints'][] = $reprint->getCode();
+		    }
+		}
+
+	    if($card->getReprintOf() != NULL)
+	    {
+	    	$cardinfo['reprint_of'] = $card->getReprintOf()->getCode();
+	    }
+
+
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
 		$setcode = str_pad($card->getSet()->getPosition(), 2, '0', STR_PAD_LEFT);

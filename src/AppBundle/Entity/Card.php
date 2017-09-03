@@ -907,4 +907,72 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     {
         return $this->hasErrata;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $reprints;
+
+    /**
+     * @var \AppBundle\Entity\Card
+     */
+    private $reprintOf;
+
+
+    /**
+     * Add reprint
+     *
+     * @param \AppBundle\Entity\Card $reprint
+     *
+     * @return Card
+     */
+    public function addReprint(\AppBundle\Entity\Card $reprint)
+    {
+        $this->reprints[] = $reprint;
+
+        return $this;
+    }
+
+    /**
+     * Remove reprint
+     *
+     * @param \AppBundle\Entity\Card $reprint
+     */
+    public function removeReprint(\AppBundle\Entity\Card $reprint)
+    {
+        $this->reprints->removeElement($reprint);
+    }
+
+    /**
+     * Get reprints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReprints()
+    {
+        return $this->reprints;
+    }
+
+    /**
+     * Set reprintOf
+     *
+     * @param \AppBundle\Entity\Card $reprintOf
+     *
+     * @return Card
+     */
+    public function setReprintOf(\AppBundle\Entity\Card $reprintOf = null)
+    {
+        $this->reprintOf = $reprintOf;
+
+        return $this;
+    }
+
+    /**
+     * Get reprintOf
+     *
+     * @return \AppBundle\Entity\Card
+     */
+    public function getReprintOf()
+    {
+        return $this->reprintOf;
+    }
 }
