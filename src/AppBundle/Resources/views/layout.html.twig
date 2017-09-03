@@ -181,9 +181,14 @@
 		{% include 'AppBundle:Default:google-analytics.html.twig' %}
 	{% endif %}
   
-  {% javascripts filter="?jsqueeze" output="js/app.js"
+  {% javascripts filter="?jsqueeze" output="js/templates.js"
     '@AppBundle/Resources/public/hbs/*.handlebars'
     '@AppBundle/Resources/public/js/register-partials.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  
+  {% javascripts filter="?jsqueeze" output="js/app.js"
     '@AppBundle/Resources/public/js/bootstrap.js'
 		'@AppBundle/Resources/public/js/fdb-all.min.js'
     '@AppBundle/Resources/public/js/jquery.toc.min.js'

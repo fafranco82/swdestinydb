@@ -123,6 +123,10 @@ td.die-face {
 	}
 }
 
+.card-reprints-list {
+	list-style-type: none;
+}
+
 .fa-exclamation-triangle {
 	&.limited-pool-conflict {
 		color: #ff0000;

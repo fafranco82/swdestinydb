@@ -1,10 +1,10 @@
 (function() {
     Handlebars.registerHelper('trans', function(key, opt) {
-    	return Translator.trans(key, opt.hash);
+        return new Handlebars.SafeString(Translator.trans(key, opt.hash));
     });
 
     Handlebars.registerHelper('transChoice', function(key, value, opt) {
-    	return Translator.transChoice(key, value, opt.hash);
+        return new Handlebars.SafeString(Translator.transChoice(key, value, opt.hash));
     });
 
     Handlebars.registerHelper('int_or_x', function(value, opt) {
@@ -35,7 +35,9 @@
             'special': '<span class="icon-special"></span>',
             'unique': '<span class="icon-unique"></span>',
             'AW': '<span class="icon-set-AW"></span>',
-            'SoR': '<span class="icon-set-SoR"></span>'
+            'SoR': '<span class="icon-set-SoR"></span>',
+            'EaW': '<span class="icon-set-EaW"></span>',
+            'TPG': '<span class="icon-set-TPG"></span>'
         };
         
         _.forEach(icons, function(span, key) {
@@ -43,6 +45,10 @@
         });
         str = str.split("\n").join('</p><p>');
         return new Handlebars.SafeString('<p>'+str+'</p>');
+    });
+
+    Handlebars.registerHelper('set_icon', function(code) {
+        return new Handlebars.SafeString('<span class="icon-set-'+code+'"></span>');
     });
 
     Handlebars.registerHelper('dieside', function(side) {

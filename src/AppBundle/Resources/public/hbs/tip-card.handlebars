@@ -51,3 +51,20 @@
 {{/if}}
 <div class="card-text border-{{card.faction_code}}">{{text card.text}}</div>
 <div class="card-set"><span class="icon-set-{{card.set_code}}"></span> {{card.set_name}} #{{card.position}}.</div>
+{{#if card.reprint_of}}
+	{{#with (card card.reprint_of)}}
+		<div class="card-reprint-of">{{trans 'card.info.reprintOf' card=(concat (set_icon set_code) ' ' set_name " #" position)}}.</div>
+	{{/with}}
+{{/if}}
+{{#if card.reprints}}
+	<div class="card-reprints">
+		{{trans "card.info.reprinted"}}:
+		<ul class="card-reprints-list">
+			{{#each card.reprints}}
+			{{#with (card this)}}
+			<li><span class="icon-set-{{set_code}}"></span> {{set_name}} #{{position}}</li>
+			{{/with}}
+			{{/each}}
+		</ul>
+	</div>
+{{/if}}
