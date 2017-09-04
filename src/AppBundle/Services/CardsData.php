@@ -459,6 +459,14 @@ class CardsData
 		return $cardinfo;
 	}
 
+	public function get_card_by_code($code)
+	{
+		$card = $this->doctrine->getRepository('AppBundle:Card')->findByCode($code);
+		if($card) {
+			return $this->getCardInfo($card);
+		}
+	}
+
 	/**
      * Ensures an URL is absolute, if possible.
      *

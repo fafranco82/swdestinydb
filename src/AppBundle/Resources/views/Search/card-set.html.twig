@@ -1,1 +1,16 @@
 <div class="card-set"><span class="icon-set-{{card.set_code}}"></span> {{ card.set_name }} #{{ card.position }}.</div>
+{% if card.reprint_of is defined %}
+	{% set reprint=cards_data.get_card_by_code(card.reprint_of) %}
+	<div class="card-reprint-of">{{ 'card.info.reprintOf' | trans({'%card%': '<span class="icon-set-'~reprint.set_code~'"></span> '~reprint.set_name~' #'~reprint.position}) | raw }}.</div>
+{% endif %}
+{% if card.reprints is defined %}
+	<div class="card-reprints">
+		{{"card.info.reprinted" | trans }}:
+		<ul class="card-reprints-list">
+			{% for code in card.reprints %}
+			{% set reprint=cards_data.get_card_by_code(code) %}
+			<li><span class="icon-set-{{reprint.set_code}}"></span> {{reprint.set_name}} #{{reprint.position}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}

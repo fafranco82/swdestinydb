@@ -41,7 +41,11 @@ class CardRepository extends TranslatableRepository
 	public function findByCode($code)
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c')
+			->select('c, t, st, f, s')
+			->join('c.type', 't')
+			->join('c.faction', 'f')
+			->join('c.set', 's')
+			->leftJoin('c.subtype', 'st')
 			->andWhere('c.code = ?1');
 
 		$qb->setParameter(1, $code);
