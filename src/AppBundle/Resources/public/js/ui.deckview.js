@@ -8,6 +8,22 @@ function confirm_delete() {
 	$('#deleteModal').modal('show');
 }
 
+ui.on_collection_loaded = function on_collection_loaded() {
+	ui.sum_reprints_owned();
+}
+
+ui.sum_reprints_owned = function sum_reprints_owned() {
+	app.data.cards.find({reprint_of: {$exists: true}}).forEach(function(card) {
+		var cardReprinted = app.data.cards.findById(card.reprint_of);
+		app.data.cards.updateById(card.reprint_of, {
+			owned: {
+				cards: cardReprinted.owned.cards + card.owned.cards,
+				dice: cardReprinted.owned.dice + card.owned.dice
+			}
+		});
+	});
+}
+
 ui.do_action_deck = function do_action_deck(event) {
 
 	var action_id = $(this).attr('id');
@@ -62,6 +78,13 @@ ui.on_dom_loaded = function on_dom_loaded() {
  * @memberOf ui
  */
 ui.on_data_loaded = function on_data_loaded() {
+	if(app.collection.isLoaded) {
+		ui.on_collection_loaded();
+	} else {
+		$(document).on('collection.app', function(e) {
+			ui.on_collection_loaded();
+		});
+	}
 };
 
 /**
