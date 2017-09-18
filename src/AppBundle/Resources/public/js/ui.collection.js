@@ -34,6 +34,42 @@ ui.write_config_to_storage = function write_config_to_storage() {
 	}
 }
 
+ui.write_filters_to_storage = function write_filters_to_storage() {
+	if (localStorage) {
+		localStorage.setItem('ui.collection.filters', JSON.stringify(ui.get_active_filters()));
+	}
+}
+
+ui.get_active_filters = function get_active_filters() {
+	return _.reduce($('[data-filter]'), function(acc, filter) {
+	  acc[$(filter).data('filter')] = _($(filter).find('input[type=checkbox]')).filter(function(opt) {
+	    return $(opt).prop('checked');
+	  }).map(function(opt) {
+	    return $(opt).attr('name');
+	  }).value();
+	  return acc;
+	}, {});
+}
+
+ui.init_selectors = function init_selectors() {
+	if(localStorage) {
+		var stored = localStorage.getItem('ui.collection.filters');
+		if(stored) {
+			_.forIn(JSON.parse(stored), function(values, column) {
+				if(column=='set_code') {
+					$('[data-filter='+column+']').find('input').each(function() {
+						$(this).prop('checked', _.includes(values, $(this).attr('name')));
+					});
+				} else {
+					_.each(values, function(value) {
+						$('[data-filter='+column+']').find('input[name='+value+']').prop('checked', true).parent().addClass('active');
+					});
+				}
+			});
+		}
+	}
+}
+
 ui.set_starters_data = function set_starters_data(data) {
 	Starters = _.keyBy(data, 'code');
 }
@@ -166,7 +202,7 @@ ui.build_set_selector = function build_set_selector() {
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
 		var checked = true;
-		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
+		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '><span class="icon-set-'+record.code+'"></span> ' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
 
@@ -444,6 +480,8 @@ ui.reset_list = function reset_list() {
  * @memberOf ui
  */
 ui.refresh_list = _.debounce(function refresh_list() {
+	ui.write_filters_to_storage();
+
 	$('#collection-table').empty();
 	$('#collection-grid').empty();
 
@@ -574,6 +612,7 @@ ui.on_all_loaded = function on_all_loaded() {
 	ui.build_type_selector();
 	ui.build_rarity_selector();
 	ui.build_set_selector();
+	ui.init_selectors();
 
 	ui.refresh_list();
 };
