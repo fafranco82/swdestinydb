@@ -91,7 +91,7 @@
 				},
 				{# Characters #}
 				{% for slot in deck.slots_by_type.character %}
-				{% set slotLabel = slot.card.name~(slot.card.subtitle is defined ? ", "~slot.card.subtitle : "")%}
+				{% set slotLabel = slot.card.name~(slot.card.subtitle is defined and slot.card.subtitle != "" ? ", "~slot.card.subtitle : "")%}
 				{% for i in range (1, min(slot.dice,slot.card.deckLimit)) %}
 				{
 			    "Name": "Card",
@@ -264,7 +264,7 @@
 					"LuaScriptState": "",
 					"ContainedObjects": [
 						{% for slot in allSlots %}
-						{% set slotLabel = slot.card.name~(slot.card.subtitle is defined ? ", "~slot.card.subtitle : "")%}
+						{% set slotLabel = slot.card.name~(slot.card.subtitle is defined and slot.card.subtitle != "" ? ", "~slot.card.subtitle : "")%}
 						{% for i in range (1,slot.quantity) %}
 							{
 			          "Name": "Card",
