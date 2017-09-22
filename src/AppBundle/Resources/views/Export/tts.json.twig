@@ -91,6 +91,7 @@
 				},
 				{# Characters #}
 				{% for slot in deck.slots_by_type.character %}
+				{% set slotLabel = slot.card.name~(slot.card.subtitle is defined ? ", "~slot.card.subtitle : "")%}
 				{% for i in range (1, min(slot.dice,slot.card.deckLimit)) %}
 				{
 			    "Name": "Card",
@@ -105,7 +106,7 @@
 			      "scaleY": 1.0,
 			      "scaleZ": 1.42055011
 			    },
-			    "Nickname": "{{ slot.card.name|raw|replace({"'":""}) }}",
+			    "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
 			    "Description": "{% if slot.dice == 2 and slot.card.deckLimit == 1 %}elite{% endif %}",
 			    "ColorDiffuse": {
 			      "r": 0.713235259,
@@ -201,12 +202,69 @@
 							"NumHeight": 7,
 							"BackIsHidden": true,
 							"UniqueBack": false
+						},
+						"22": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658840041859/705089CFD0C34899FB3E42BA0D3876C35DB344C6/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"23": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658839675034/9D44369D8E610149D33AB7498508159E965B9E87/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"24": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658839856357/A85592A456EC31A220A8B9FCF39099378D4AA92F/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"1": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/858354911724386771/892B79793EE86A4BAB29B487F313BA2F1D86E16B/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"25": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446942640/7A5C06F273A82BB74B0A9351D835D0C24E213003/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"26": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446949526/DAF4C217B2F790AE91A387A96BD8E9E9EC8000B2/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						},
+						"27": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446951260/8A3BDCF34E9D60A070ED753C9E15EF10A99D55BD/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
 						}
 					},
 					"LuaScript": "",
 					"LuaScriptState": "",
 					"ContainedObjects": [
 						{% for slot in allSlots %}
+						{% set slotLabel = slot.card.name~(slot.card.subtitle is defined ? ", "~slot.card.subtitle : "")%}
 						{% for i in range (1,slot.quantity) %}
 							{
 			          "Name": "Card",
@@ -221,7 +279,7 @@
 			            "scaleY": 1.0,
 			            "scaleZ": 1.42055011
 			          },
-			          "Nickname": "{{ slot.card.name|raw|replace({"'":""}) }}",
+			          "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
 			          "Description": "",
 			          "ColorDiffuse": {
 			            "r": 0.713235259,
@@ -237,7 +295,16 @@
 			          "CardID": {{ slot.card.ttscardid }},
 			          "SidewaysCard": false,
 			          "CustomDeck": {
-									{%if slot.card.ttscardid[:2] == 13 %}
+									{% if slot.card.ttscardid|length == 3 and slot.card.ttscardid[:1] == 1 %}	
+										"1": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/858354911724386771/892B79793EE86A4BAB29B487F313BA2F1D86E16B/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 13 %}
 										"13": {
 											"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
 											"BackURL": "{{backUrl}}",
@@ -248,22 +315,76 @@
 										}
 									{% elseif slot.card.ttscardid[:2] == 14 %}
 										"14": {
-				              "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LbWxBTlVoVUZ0QkE",
-				              "BackURL": "{{backUrl}}",
-				              "NumWidth": 10,
-				              "NumHeight": 7,
-				              "BackIsHidden": true,
-				              "UniqueBack": false
-				            }
+											"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LbWxBTlVoVUZ0QkE",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
 									{% elseif slot.card.ttscardid[:2] == 19 %}
 										"19": {
-				              "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LR09TdWYtUkloUzQ",
-				              "BackURL": "{{backUrl}}",
-				              "NumWidth": 10,
-				              "NumHeight": 7,
-				              "BackIsHidden": true,
-				              "UniqueBack": false
-				            }
+											"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LR09TdWYtUkloUzQ",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										} 
+									{% elseif slot.card.ttscardid[:2] == 22 %}
+										"22": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658840041859/705089CFD0C34899FB3E42BA0D3876C35DB344C6/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 23 %}
+										"23": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658839675034/9D44369D8E610149D33AB7498508159E965B9E87/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 24 %}
+										"24": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/87099658839856357/A85592A456EC31A220A8B9FCF39099378D4AA92F/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 25 %}
+										"25": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446942640/7A5C06F273A82BB74B0A9351D835D0C24E213003/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 26 %}
+										"26": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446949526/DAF4C217B2F790AE91A387A96BD8E9E9EC8000B2/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
+									{% elseif slot.card.ttscardid[:2] == 27 %}
+										"27": {
+											"FaceURL": "http://cloud-3.steamusercontent.com/ugc/869614971446951260/8A3BDCF34E9D60A070ED753C9E15EF10A99D55BD/",
+											"BackURL": "{{backUrl}}",
+											"NumWidth": 10,
+											"NumHeight": 7,
+											"BackIsHidden": true,
+											"UniqueBack": false
+										}
 									{% endif %}
 			          },
 			          "LuaScript": "",
