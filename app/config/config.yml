@@ -118,6 +118,13 @@ doctrine:
                         alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
                         is_bundle: false
 
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: false
+
 #
 jms_i18n_routing:
     default_locale: %default_locale%
