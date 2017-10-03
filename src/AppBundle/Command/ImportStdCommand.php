@@ -161,17 +161,16 @@ class ImportStdCommand extends ContainerAwareCommand
 		$output->writeln("Importing Cards...");
 		$fileSystemIterator = $this->getFileSystemIterator($path);
 		$this->tempCardMap = [];
-		$imported = [];
 		foreach ($fileSystemIterator as $fileinfo) {
-			$imported = array_merge($imported, $this->importCardsJsonFile($fileinfo));
-		}
-		if(count($imported)) {
-			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-			if(!$helper->ask($input, $output, $question)) {
-				die();
+			$imported = $this->importCardsJsonFile($fileinfo);
+			if(count($imported)) {
+				$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+				if(!$helper->ask($input, $output, $question)) {
+					die();
+				}
 			}
+			$this->em->flush();
 		}
-		$this->em->flush();
 		$this->loadCollection('Card');
 		$output->writeln("Done.");
 		
