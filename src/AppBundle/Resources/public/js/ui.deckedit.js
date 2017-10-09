@@ -150,7 +150,7 @@ ui.build_type_selector = function build_type_selector() {
 	var tpl = Handlebars.templates['ui_deckedit-types'];
 
 	$('[data-filter=type_code]').html(
-		tpl({codes: get_examples(['battlefield','character','upgrade','support', 'event'], 'type_code')})
+		tpl({codes: get_examples(['battlefield','plot','character','upgrade','support', 'event'], 'type_code')})
 	).button().find('label').tooltip({container: 'body'});
 }
 

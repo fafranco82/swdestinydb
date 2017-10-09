@@ -165,7 +165,7 @@ deck.get_cards = function get_cards(sort, query) {
 deck.get_draw_deck = function get_draw_deck(sort) {
 	return deck.get_cards(sort, {
 		type_code: {
-			'$nin' : ['character', 'battlefield']
+			'$in' : ['upgrade', 'support', 'event']
 		}
 	});
 }
@@ -173,7 +173,7 @@ deck.get_draw_deck = function get_draw_deck(sort) {
 /**
  * @memberOf deck
  */
-deck.get_character_deck = function get_draw_deck(sort) {
+deck.get_character_deck = function get_character_deck(sort) {
 	return deck.get_cards(sort, {
 		type_code: 'character'
 	});
@@ -221,6 +221,25 @@ deck.get_character_row_data = function get_character_row_data() {
 			return spread;
 		}
 	}));
+}
+
+/**
+ * @memberOf deck
+ */
+deck.get_plot_deck = function get_plot_deck(sort) {
+	return deck.get_cards(sort, {
+		type_code: 'plot'
+	});
+}
+
+/**
+ * @memberOf deck
+ */
+deck.get_plot_points = function get_plot_points() {
+	var points = _.reduce(deck.get_plot_deck(), function(points, plot) {
+		return points + parseInt(plot.points, 10) * plot.indeck.cards;
+	}, 0);
+	return points;
 }
 
  /**
@@ -308,8 +327,9 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	// card-specific rules
 	switch(card.type_code) {
 		case 'battlefield':
+		case 'plot':
 			app.data.cards.update({
-				type_code: 'battlefield'
+				type_code: card.type_code
 			}, {
 				indeck: {
 					cards: 0,
@@ -426,8 +446,8 @@ deck.get_problem = function get_problem() {
 		return 'incorrect_size';
 	}
 
-	if(deck.get_character_points() > 30) {
-		return 'too_many_character_points';
+	if(deck.get_character_points()+deck.get_plot_points() > 30) {
+		return 'too_many_points';
 	}
 
 	if(!deck.get_battlefields() || deck.get_battlefields().length == 0) {

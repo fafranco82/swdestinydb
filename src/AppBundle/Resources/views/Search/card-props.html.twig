@@ -1,6 +1,6 @@
 {% import "AppBundle::macros.html.twig" as macros %}
 <span class="card-props">
-{% if card.type_code == 'character' %}
+{% if card.type_code == 'character' or card.type_code == 'plot' %}
 	{{'card.info.points' | trans}}: {{ card.points }}.
 {% endif %}
 {% if card.type_code == 'upgrade' or card.type_code == 'event' or card.type_code == 'support' %}

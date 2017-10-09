@@ -150,8 +150,9 @@ class DefaultController extends Controller
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
         $cards = [];
-        foreach($this->getDoctrine()->getRepository('AppBundle:Card')->findAll() as $card)
+        foreach($this->getDoctrine()->getRepository('AppBundle:Type')->findAll() as $type)
         {
+            $card = $this->getDoctrine()->getRepository('AppBundle:Card')->findByType($type->getCode())[0];
             $cards[] = $this->get('cards_data')->getCardInfo($card, false);
         }
 

@@ -371,6 +371,7 @@ ol {
 	$initialh: (w: 395px, h: 140px);
 	$background: (w: 350px, h: 487px);
 	$backgroundh: (w: 428px, h: 307px);
+	$backgroundp: (w: 300px, h: 417px);
 
 	@for $i from 1 through $limit {
 		$size: round($initial/$i);
@@ -385,7 +386,8 @@ ol {
 				(name: character, x: -75px, y: -72px),
 				(name: upgrade, x: -80px, y: -0px),
 				(name: event, x: -80px, y: -24px),
-				(name: support, x: -89px, y: -89px)) {
+				(name: support, x: -73px, y: -88px),
+				(name: plot, x: -45px, y: -10px)) {
 				&.card-thumbnail-#{map-get($elem, name)} {
 					background-position: round(map-get($elem, x)/$i) round(map-get($elem, y)/$i);
 				}
@@ -397,11 +399,15 @@ ol {
 				background-size: round(map-get($backgroundh, w)/$i) round(map-get($backgroundh, h)/$i);
 				background-position: round(0px/$i) round(-67px/$i);
 			}
+
+			&.card-thumbnail-plot {
+				background-size: round(map-get($backgroundp, w)/$i) round(map-get($backgroundp, h)/$i);
+			}
 		}
 	}
 }
 
-.character-thumbnail, .battlefield-thumbnail {
+.character-thumbnail, .battlefield-thumbnail, .plot-thumbnail {
 	background-attachment: scroll;
 	background-origin: padding-box;
 	background-clip: border-box;
@@ -469,7 +475,33 @@ ol {
   }
 }
 
+.plot-deck-list {
+  .deck-plot {
+  	position: relative;
+    text-align: center;
+    float: left;
+    margin-right: 15px;
+    max-width: 100px;
+
+    .plot-thumbnail {
+      margin: 5px auto 0 auto;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 .small .deck-character {
+  max-width: 65px;
+
+  .icon {
+    display: none;
+  }
+}
+
+.small .deck-plot {
   max-width: 65px;
 
   .icon {
@@ -510,6 +542,22 @@ ol {
 		text-shadow: inherit;
 	}
   }
+
+  .small .deck-plot {
+    text-align: left;
+    display: block;
+    float: none;
+    margin-right: 0;
+    max-width: none;
+
+    .plot-thumbnail {
+      display: none;
+    }
+
+    .icon {
+      display: inline-block;
+    }
+  }
 }
 
 @media print {
@@ -521,6 +569,22 @@ ol {
     max-width: none !important;
 
     .character-thumbnail {
+      display: none !important;
+    }
+
+    .icon {
+      display: inline-block !important;
+    }
+  }
+
+  .deck-plot {
+    text-align: left !important;
+    display: block !important;
+    float: none !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+
+    .plot-thumbnail {
       display: none !important;
     }
 
@@ -565,7 +629,7 @@ div.site-slogan {
 
 .index-character {
 	vertical-align: top;
-	max-width: 120px;
+	max-width: 102px;
 	font-size: 12px;
 
 	text-align: center;
@@ -575,20 +639,41 @@ div.site-slogan {
 		margin: 10px auto 0 auto;
 		background-color: #ecf0f1;
 	}
+
+	.index-character-name {
+		word-wrap: break-word;
+		overflow-x: hidden;
+	}
 }
 
 /************ LIST OF DECKLISTS **************/
 
-.decklist-character-images {
-	width: 232px;
-}
+.decklist-images {
+	width: 290px;
 
-.decklist-character {
-	text-align: center;
-	display: inline-block;
-	background-color: #ecf0f1;
+	.decklist-character-images, .decklist-plot-images {
+		display: inline-block;
+	}
 
-	border-bottom: 7px solid black;
+	.decklist-character {
+		text-align: center;
+		display: inline-block;
+		background-color: #ecf0f1;
+
+		border-bottom: 7px solid black;
+	}
+
+	.decklist-plot {
+		text-align: center;
+		display: inline-block;
+		background-color: #ecf0f1;
+
+		border-bottom: 7px solid black;
+
+		&:last-child {
+			margin-right: 7px;
+		}
+	}
 }
 
 /************* DECKLIST *********************/

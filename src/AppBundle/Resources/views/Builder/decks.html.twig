@@ -71,21 +71,32 @@
 {% for deck in decks %}
 	<tr data-id="{{ deck.id }}">
 		<td><input type="checkbox"></td>
-		<td class="decklist-character-images hidden-xs">
-			{% for character in deck.characters %}
-			<div class="decklist-character border-light-{{character.faction_code}}">
-				<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{character.imagesrc}}')" data-code="{{character.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
-					{% if character.is_unique %}
-                    <div class="character-unique"><span class="icon-unique"></span></div>
-                    {% endif %}
-                    <div class="character-dice">
-                        {% for i in 1..character.dice %}
-                        <span class="icon-die"></span>
-                    	{% endfor %}
-                    </div>
-                </div>
+		<td class="decklist-images hidden-xs">
+			<div class="decklist-plot-images">
+				{% for plot in deck.plots %}
+				<div class="decklist-plot border-light-{{plot.faction_code}}">
+					<div class="plot-thumbnail card-thumbnail-4x card-thumbnail-plot card card-tip" style="background-image:url('{{plot.imagesrc}}')" data-code="{{plot.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+						
+	                </div>
+				</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
+			<div class="decklist-character-images">
+				{% for character in deck.characters %}
+				<div class="decklist-character border-light-{{character.faction_code}}">
+					<div class="character-thumbnail card-thumbnail-4x card-thumbnail-character card card-tip" style="background-image:url('{{character.imagesrc}}')" data-code="{{character.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+						{% if character.is_unique %}
+	                    <div class="character-unique"><span class="icon-unique"></span></div>
+	                    {% endif %}
+	                    <div class="character-dice">
+	                        {% for i in 1..character.dice %}
+	                        <span class="icon-die"></span>
+	                    	{% endfor %}
+	                    </div>
+	                </div>
+				</div>
+				{% endfor %}
+			</div>
 		</td>
 		<td>
 			<a href="{{ path('deck_view',{deck_id:deck.id}) }}" class="deck-name">{{ deck.name }}</a> {{ deck.version }}

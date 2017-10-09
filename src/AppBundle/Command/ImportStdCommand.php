@@ -667,6 +667,17 @@ class ImportStdCommand extends ContainerAwareCommand
 		}
 	}
 
+	protected function importPlotData(Card $card, $data)
+	{
+		$mandatoryKeys = [
+				'points'
+		];
+
+		foreach($mandatoryKeys as $key) {
+			$this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, TRUE);
+		}
+	}
+
 	protected function getDataFromFile(\SplFileInfo $fileinfo)
 	{
 	

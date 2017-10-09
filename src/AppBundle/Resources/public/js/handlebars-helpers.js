@@ -30,6 +30,7 @@
             'focus': '<span class="icon-focus"></span>',
             'melee': '<span class="icon-melee"></span>',
             'ranged': '<span class="icon-ranged"></span>',
+            'indirect': '<span class="icon-indirect"></span>',
             'shield': '<span class="icon-shield"></span>',
             'resource': '<span class="icon-resource"></span>',
             'special': '<span class="icon-special"></span>',
@@ -37,7 +38,8 @@
             'AW': '<span class="icon-set-AW"></span>',
             'SoR': '<span class="icon-set-SoR"></span>',
             'EaW': '<span class="icon-set-EaW"></span>',
-            'TPG': '<span class="icon-set-TPG"></span>'
+            'TPG': '<span class="icon-set-TPG"></span>',
+            'LEG': '<span class="icon-set-TPG"></span>'
         };
         
         _.forEach(icons, function(span, key) {
@@ -52,7 +54,7 @@
     });
 
     Handlebars.registerHelper('dieside', function(side) {
-    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield', 'X': ''};
+    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'ID': 'indirect', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield', 'X': ''};
     	var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
         var side = {
             code: elems[3],

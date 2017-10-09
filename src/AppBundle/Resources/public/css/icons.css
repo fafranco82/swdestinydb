@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'swdestiny';
-  src:  url('../fonts/swdestiny.eot?mc3vw5');
-  src:  url('../fonts/swdestiny.eot?mc3vw5#iefix') format('embedded-opentype'),
-    url('../fonts/swdestiny.ttf?mc3vw5') format('truetype'),
-    url('../fonts/swdestiny.woff?mc3vw5') format('woff'),
-    url('../fonts/swdestiny.svg?mc3vw5#swdestiny') format('svg');
+  src:  url('../fonts/swdestiny.eot?c7x3yt');
+  src:  url('../fonts/swdestiny.eot?c7x3yt#iefix') format('embedded-opentype'),
+    url('../fonts/swdestiny.ttf?c7x3yt') format('truetype'),
+    url('../fonts/swdestiny.woff?c7x3yt') format('woff'),
+    url('../fonts/swdestiny.svg?c7x3yt#swdestiny') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -74,6 +74,9 @@
 .icon-ranged:before {
   content: "\e907";
 }
+.icon-indirect:before {
+  content: "\e911";
+}
 .icon-shield:before {
   content: "\e908";
 }
@@ -85,8 +88,17 @@
   content: "\e901";
   color: #000;
 }
+.icon-cards:before {
+  content: "\e90b";
+}
+.icon-plot:before {
+  content: "\e912";
+}
 .icon-upgrade:before {
   content: "\e92e";
+}
+.icon-cart:before {
+  content: "\e93a";
 }
 .icon-battlefield:before {
   content: "\e947";
@@ -99,7 +111,4 @@
 }
 .icon-event:before {
   content: "\e9b5";
-}
-.icon-cards:before {
-  content: "\e90b";
 }

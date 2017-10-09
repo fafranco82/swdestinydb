@@ -75,6 +75,18 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function getCharacterPoints();
 
 	/**
+	 * Get the character deck
+	 * @return \AppBundle\Model\SlotCollectionInterface
+	 */
+	public function getPlotDeck();
+
+	/**
+	 * Get character points
+	 * @return integer
+	 */
+	public function getPlotPoints();
+
+	/**
 	 * Get factions in an array (colors)
 	 * @return array
 	 */

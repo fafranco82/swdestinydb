@@ -17,9 +17,9 @@
 <div class="card-info">
 	<span class="card-type">{{ card.type_name }}{{#if card.subtype_code }} - {{card.subtype_name}}{{/if}}.</span>
 	<span class="card-props">
-		{{#compare card.type_code "character"}}
+		{{#in card.type_code "character" "plot"}}
 			{{trans "card.info.points"}}: {{card.points}}.
-		{{/compare}}
+		{{/in}}
 		{{#in card.type_code "upgrade" "support" "event"}}
 			{{trans "card.info.cost"}}: {{int_or_x card.cost}}.
 		{{/in}}

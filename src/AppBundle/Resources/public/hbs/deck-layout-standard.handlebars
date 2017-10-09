@@ -2,6 +2,12 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>
+			{{#if (deck.get_plot_points)}}
+			<div>
+				{{trans "decks.edit.meta.plots"}}:
+				{{transChoice "decks.edit.meta.points" (deck.get_plot_points) points=(deck.get_plot_points)}}
+			</div>
+			{{/if}}
 			<div>
 				{{trans "decks.edit.meta.characters"}}: 
 				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},
@@ -37,7 +43,32 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-12">
+		{{#if (deck.get_plot_points)}}
+		<div class="col-sm-3">
+			<div>
+				{{#with (cards "type_code" "plot")}}
+				<h5><span class="icon icon-plot"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				<div class="plot-deck-list">
+					{{#each this}}
+					<div class="deck-plot">
+						<div class="plot-thumbnail card-thumbnail-2x card-thumbnail-plot border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+						<div class="plot-name">
+							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+								{{name}}
+							</a>
+							{{#unless (own_enough_cards this)}}
+							<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math this.indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
+							{{/unless}}
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				{{/with}}
+			</div>
+		</div>
+		{{/if}}
+		<div class="col-sm-9">
 			<div>
 				{{#with (deck.get_character_row_data)}}
 				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>

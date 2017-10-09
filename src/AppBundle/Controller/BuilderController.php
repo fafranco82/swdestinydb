@@ -617,6 +617,19 @@ class BuilderController extends Controller
                 }
 
                 $deck['characters'] = $characters;
+
+                /* @var $plotDeck \AppBundle\Entity\Deckslot[] */
+                $plotDeck = $em->getRepository('AppBundle:Deck')->find($deck['id'])->getSlots()->getPlotDeck();
+                $plots = [];
+
+                foreach ($plotDeck as $plot) {
+                    $info = $this->get('cards_data')->getCardInfo($plot->getCard(), false);
+                    $info['qty'] = $plot->getQuantity();
+                    $info['dice'] = $plot->getDice();
+                    $plots[] = $info;
+                }
+
+                $deck['plots'] = $plots;
 			}
 			$tags = array_unique($tags);
         	return $this->render('AppBundle:Builder:decks.html.twig',

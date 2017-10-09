@@ -23,7 +23,7 @@
         {{#if card.has_die}}<span class="icon-die"></span>{{/if}} 
     </td> 
     <td>
-      {{ternary (compare card.type_code "character") card.points card.cost}}
+      {{ternary (in card.type_code "character" "plot") card.points card.cost}}
     </td>
     <td>
         {{#if card.health}}{{card.health}}{{/if}}
@@ -32,6 +32,6 @@
         <span class="icon-{{card.type_code}}"></span>
     </td>
     <td>
-        <span class="bg-{{card.faction_code}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="fg-{{card.faction_code}}"><span class="fa fa-square"></span></span>
     </td>
 </tr> 

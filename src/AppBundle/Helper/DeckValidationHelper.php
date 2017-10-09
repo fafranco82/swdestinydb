@@ -82,8 +82,8 @@ class DeckValidationHelper
 			return 'incorrect_size';
 		}
 
-		if($deck->getSlots()->getCharacterPoints() > 30) {
-			return 'too_many_character_points';
+		if($deck->getSlots()->getCharacterPoints()+$deck->getSlots()->getPlotPoints() > 30) {
+			return 'too_many_points';
 		}
 
 		if(count($deck->getSlots()->getBattlefieldDeck()) == 0) {

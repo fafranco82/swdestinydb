@@ -42,12 +42,16 @@ class CardsData
 			'[focus]' => '<span class="icon-focus"></span>',
 			'[melee]' => '<span class="icon-melee"></span>',
 			'[ranged]' => '<span class="icon-ranged"></span>',
+			'[indirect]' => '<span class="icon-indirect"></span>',
 			'[shield]' => '<span class="icon-shield"></span>',
 			'[resource]' => '<span class="icon-resource"></span>',
 			'[special]' => '<span class="icon-special"></span>',
 			'[unique]' => '<span class="icon-unique"></span>',
 			'[AW]' => '<span class="icon-set-AW"></span>',
-			'[SoR]' => '<span class="icon-set-SoR"></span>'
+			'[SoR]' => '<span class="icon-set-SoR"></span>',
+			'[EaW]' => '<span class="icon-set-EaW"></span>',
+			'[TPG]' => '<span class="icon-set-TPG"></span>',
+			'[LEG]' => '<span class="icon-set-LEG"></span>'
 		];
 		
 		return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);

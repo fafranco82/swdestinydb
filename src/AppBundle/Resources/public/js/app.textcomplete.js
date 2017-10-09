@@ -1,6 +1,6 @@
 (function app_textcomplete(textcomplete, $) {
 
-var icons = 'unique battlefield character upgrade support event cards die melee ranged disrupt discard focus resource shield special blank'.split(' ');
+var icons = 'unique battlefield character plot upgrade support event cards die melee ranged indirect disrupt discard focus resource shield special blank'.split(' ');
 
 /**
  * options: cards, icons, users

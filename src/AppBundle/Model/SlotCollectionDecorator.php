@@ -213,6 +213,30 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		return $points;
 	}
 
+	public function getPlotDeck()
+	{
+		$plotDeck = [];
+		foreach($this->slots as $slot) {
+			if($slot->getCard()->getType()->getCode() === 'plot') {
+				$plotDeck[] = $slot;
+			}
+		}
+		return new SlotCollectionDecorator(new ArrayCollection($plotDeck));
+	}
+
+	public function getPlotPoints()
+	{
+		$points = 0;
+		forEach($this->slots as $slot)
+		{
+			$card = $slot->getCard();
+			if($card->getType()->getCode() != 'plot') continue;
+
+			$points += intval($card->getPoints()) * $slot->getQuantity();
+		};
+		return $points;
+	}
+
 	public function getFactions()
 	{
 		$factions = [];
