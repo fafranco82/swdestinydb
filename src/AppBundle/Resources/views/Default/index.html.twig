@@ -41,7 +41,20 @@
                   {% if not loop.last %} / {% endif %}
                 {% endfor %}
               </div>
-              <div class="text-center character-card-list">
+              <div class="text-center character-card-list plot-card-list">
+                {% for plot in data.plot_deck %}
+                  {% set card = cards_data.getCardInfo(plot.getCard()) %}
+                  <div class="index-plot">
+                    <div class="plot-thumbnail card-thumbnail-2x card-thumbnail-plot" style="background-image:url('{{card.imagesrc}}')">
+                      <div class="plot-icon">
+                        <span class="icon-plot"></span>
+                      </div>
+                    </div>
+                    <a href="{{ path('cards_zoom', {card_code: card.code}) }}" class="fg-{{card.faction_code}} card card-tip" data-code="{{card.code}}" data-toggle="modal" data-target="#cardModal" data-remote="false">
+                      <strong>{{card.name}}</strong>
+                    </a>
+                  </div>
+                {% endfor %}
                 {% for character in data.character_deck %}
                   {% set card = cards_data.getCardInfo(character.getCard()) %}
                   <div class="index-character">

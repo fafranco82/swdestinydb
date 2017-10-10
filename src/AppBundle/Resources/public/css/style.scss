@@ -418,7 +418,7 @@ ol {
 	text-shadow: 1px 1px black;
 	background-color: #ecf0f1;
 
-	.character-unique {
+	.character-unique, .plot-icon {
 		position: absolute;
 		bottom: 1px;
 		font-size: 110%;
@@ -639,10 +639,19 @@ div.site-slogan {
 		margin: 10px auto 0 auto;
 		background-color: #ecf0f1;
 	}
+}
 
-	.index-character-name {
-		word-wrap: break-word;
-		overflow-x: hidden;
+.index-plot {
+	vertical-align: top;
+	max-width: 102px;
+	font-size: 12px;
+
+	text-align: center;
+	display: inline-block;
+
+	.plot-thumbnail {
+		margin: 10px auto 0 auto;
+		background-color: #ecf0f1;
 	}
 }
 

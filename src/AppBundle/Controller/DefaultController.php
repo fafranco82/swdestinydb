@@ -60,6 +60,8 @@ class DefaultController extends Controller
                     $characterDeck = $decklist->getSlots()->getCharacterRow();
                     $array['character_deck'] = $characterDeck;
 
+                    $array['plot_deck'] = $decklist->getSlots()->getPlotDeck();
+
                     $array['count_by_type'] = $decklist->getSlots()->getCountByType();
 
                     $decklist_factions = $decklist->getSlots()->getCountByFaction();
