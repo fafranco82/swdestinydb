@@ -16,7 +16,7 @@ window.addEventListener("load", function(){
       "message": Translator.trans('cookiesconsent.message'),
       "dismiss": Translator.trans('cookiesconsent.dismiss'),
       "link": Translator.trans('cookiesconsent.learnmore'),
-      "href": "https://www.google.com/intl/"+{{app.locale}}+"/policies/privacy/partners/"
+      "href": "https://www.google.com/intl/{{- app.request.locale | default(default_locale) -}}/policies/privacy/partners/"
     }
   })
 });
