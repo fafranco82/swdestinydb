@@ -34,9 +34,14 @@ class UpdateDeckProblemsCommand extends ContainerAwareCommand
             {
                 $count++;
                 $deck->setProblem($newProblem);
+                if($count%20==0) 
+                {
+                    $em->flush();
+                    $output->writeln(date('c') . " $count decks have been updated its problem by now...");
+                }
             }
         }
         $em->flush();
-        $output->writeln(date('c') . " $count decks have been updated its problem.");
+        $output->writeln(date('c') . " $count decks in total have been updated its problem.");
     }
 }
