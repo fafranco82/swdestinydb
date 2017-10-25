@@ -248,7 +248,7 @@ identification, and rarity.</p>
 
 <ul>
 <li>Blanks and specials have no value printed on the die, and
-are considered to have a value of 0.</li>
+thus have a value of 0</li>
 </ul>
 
 <h3 id="symbol">Symbol</h3>
@@ -257,9 +257,9 @@ are considered to have a value of 0.</li>
 an effect is carried out based on the symbol that is showing
 on the die.</p>
 
-<h3 id="cost">Cost</h3>
+<h3 id="cost">Resource cost</h3>
 
-<p>Some dice have a cost, listed in a yellow box at the bottom of
+<p>Some dice have a resource cost, listed in a yellow box at the bottom of
 the side. A player must spend resources equal to the cost of
 the die side in order to resolve it. If they cannot pay the cost,
 they cannot resolve that die’s side.</p>
@@ -374,7 +374,8 @@ or less than the value of the symbol.</p>
 <h4 id="special_symbol"><span class="icon-special"></span> Special</h4>
 
 <p>Uses the special ability marked by a <span class="icon-special"></span>
-symbol on that die’s card. Specials have a value of 0.</p>
+symbol on that die’s card. Specials have a value of 0 that cannot be
+increased or decreased.</p>
 
 <ul>
 <li>A player cannot use the special ability on a different card;
@@ -389,7 +390,7 @@ second time during the same action.</li>
 <h4 id="blank_symbol"><span class="icon-blank"></span> Blank</h4>
 
 <p>Blank symbols have no effect and cannot be resolved. Blanks
-have a value of 0.</p>
+have a value of 0 that cannot be increased or decreased.</p>
 
 <h3 id="resolvingdicethroughcards">Resolving dice through cards</h3>
 
@@ -410,9 +411,9 @@ multiple dice of the same symbol.</li>
 
 <ul>
 <li>If a card with a matching die leaves play, the matching die
-is also immediately removed from the game and set aside.
-The removed die can enter the game again at a later time,
-if its card enters play again</li>
+is also immediately returned to the set-aside zone. The
+removed die can enter play again at a later time, if its card
+enters play again.</li>
 <li>If a player has two copies of the same upgrade on a
 character, and both of those upgrade dice are in their
 dice pool when they have to discard an upgrade from
@@ -471,8 +472,9 @@ require a specific side to be showing.</li>
 
 <h3 id="out-of-play">Out-of-play</h3>
 
-<p>Cards in a player’s hand, deck, and discard pile are out of play
-and their abilities cannot be used until they are played.</p>
+<p>Cards in a player’s hand, deck, discard pile, and set-aside
+zone are out of play and their abilities cannot be used until
+they are played or return to play, or a card says otherwise.</p>
 
 <ul>
 <li>A card leaves play when it transitions from the play area to
@@ -549,11 +551,18 @@ matching card.</p>
 of their sides are considered to be showing.</li>
 </ul>
 
-<h4 id="set-asidedice">Set-aside dice</h4>
+<h4 id="set-asidezone">Set-aside zone</h4>
 
-<p>At the beginning of the game, some dice are set aside. These
-are dice that can enter play via cards. Players may hide these
-dice from their opponent using a tray or a dice bag.</p>
+<p>Each player has a set-aside zone. At the beginning of the
+game, some dice are set aside. These are dice that can
+enter play via cards. Players may hide these dice from their
+opponent using a tray or a dice bag.</p>
+
+<p>Cards can also enter or leave the set-aside zone. Cards in the
+set-aside zone are open knowledge unless otherwise noted.
+Defeated characters are placed in the set-aside zone, and
+some cards, like Premonitions (<span class="icon-set-SoR"></span>131)
+or battlefields that are not chosen during setup, also use this zone.</p>
 
 <h4 id="supply">Supply</h4>
 
@@ -661,7 +670,7 @@ roll again. The player with the highest total chooses which
 battlefield to fight on. The player whose battlefield is
 being used controls the battlefield and places it next to
 their deck. The player whose battlefield is not being used
-removes their battlefield from the game and gives 2 shields
+sets their battlefield aside from the game and gives 2 shields
 to their characters, distributed as they wish. After rolling,
 return all character dice to their matching cards.</li>
 </ol>
@@ -731,7 +740,9 @@ those conditions are not met, then the card cannot be played.</p>
 <p>If there are no restrictions, or all restrictions to play the card
 are met, then the player must pay resources equal to the
 card’s cost. If they do not have enough resources to pay, then
-the card cannot be played.</p>
+the card is not played. A player can attempt to play a card
+even if they do not currently have the resources for it, as the
+cost printed on the card can be altered by in-game effects.</p>
 
 <p>Once a card’s cost has been paid, the card is resolved based
 on its type.</p>
@@ -837,11 +848,37 @@ turns until they also pass. Only one player can claim the
 battlefield each round.</p>
 
 <ul>
+<li>A player does not have to use the claim ability.</li>
 <li>A player can claim the battlefield even if they already control
 it in order to keep control of it and use its claim ability.</li>
 <li>The player who controls the battlefield takes the first action
 each round.</li>
 </ul>
+
+<h4 id="extraactions">Extra actions</h4>
+
+<p>When a player is allowed to take additional actions on
+their turn, they must immediately take them following the
+resolution of the current action or decline to act (this is
+not the same as passing your turn). If they are allowed to
+take an action outside of their turn, they also must take it
+immediately or decline to act.</p>
+
+<p>Each action, and any abilities its resolution triggers, must fully
+resolve before an additional action is taken. Actions wait to be
+resolved in the order they were created in. They do not enter
+the queue (see <a href="#queue">Queue</a>) like other game effects.</p>
+
+<p><em>Example: A player plays an upgrade that has the Ambush
+keyword on Rey (<span class="icon-set-AW"></span>38) while their opponent has a Jango
+Fett (<span class="icon-set-AW"></span>21) ready. They now have two additional actions to
+resolve, one from the Ambush and one from Rey’s ability.
+They use one of the additional actions to activate Rey. As a
+consequence of Rey activating, Jango’s after ability meets
+its trigger condition and is added to the queue. Because
+additional actions exist outside the queue, waiting for the
+current action to complete, his ability resolves before the Rey
+player spends their second additional action.</em></p>
 
 <h3 id="passing">Passing</h3>
 
@@ -850,16 +887,14 @@ They do nothing, but they retain the option to take an action
 after their opponent. After both players pass consecutively,
 the round proceeds to the upkeep phase.</p>
 
-<ul>
-<li>If a player triggers an action that does not change the
-game state, then they are considered to have passed their
-turn instead. If a player exhausts or plays a card that does
-not change the game state other than that card being
-exhausted or played, then they are also considered to have
-passed their turn instead.</li>
-</ul>
+<p>If a player takes an action that does nothing, then they are
+considered to have passed their turn instead.</p>
 
 <p><em>Example: A player uses the Action on General Veers (<span class="icon-set-AW"></span>4), but there is no Veers die for them to remove. As such, nothing happens and they are considered to have passed their turn.</em></p>
+<p><em>Example 2: A player uses the Action on Backup Muscle (<span class="icon-set-AW"></span>99)
+when the card is ready and there’s no damage on it to move.
+However, since the Backup Muscle exhausts, something
+happened and the action does not count as a pass.</em></p>
 
 <h3 id="winningthegame">Winning the game</h3>
 
@@ -890,6 +925,12 @@ its health, it is immediately defeated.</p>
 effects. Any shields on a character who is dealt unblockable
 damage remain on that character; the shields are ignored
 for the purposes of dealing the unblockable damage.</li>
+<li><p>Unless specified, damage is neither ranged or melee. “That
+damage” is short for “that amount of damage.”</p>
+<p><em>Example: A player uses Deflect (<span class="icon-set-AW"></span>145) to remove a
+die showing ranged damage and deal 2 damage to
+a character. The damage that was just dealt is not
+considered to be ranged damage.</em></p></li>
 <li>Damage tokens come in values of one and three. A player
 can swap between these tokens as necessary in order to
 track the amount of damage on a character. If the supply
@@ -899,15 +940,23 @@ track damage using a different method.</li>
 different times since the dice are resolved one at a time.
 The only time multiple dice deal damage at the exact same
 time is when a die is being modified by other dice.</li>
+<li><p>When a player distributes damage “as they wish,” players
+cannot deal excess damage (damage above their health) to
+their characters.</p>
+<p><em>Example: A player has two characters with 1 health
+remaining each. They are forced to distribute two-damage
+from the special on the F-11D Rifle (<span class="icon-set-AW"></span>8). They must deal
+each of their characters one-damage, instead of dealing
+one of the characters two damage.</em></p></li>
 </ul>
 
 <h3 id="defeatedcharacters">Defeated characters</h3>
 
-<p>When a character has damage on it equal to its health, it
-is immediately defeated. Remove all of its dice from the
-game (both its character dice and its upgrades), discard
-all upgrades on it, and remove the character card from the
-game.</p>
+<p>When a character has damage on it equal to its health, it is
+immediately defeated. Set aside its character card and all of
+its dice (both its character and upgrade dice), and discard all
+upgrades on it. (While set aside, the character and its dice
+are no longer in play and cannot be used.)</p>
 
 <ul>
 <li>Any excess damage dealt to a character from a source that
@@ -1020,7 +1069,33 @@ resolves. If during the resolution of something in the queue,
 another effect is added, it moves to “the end” of the queue
 and is resolved last.</p>
 
+<ul>
+<li>After abilities enter the queue.</li>
+<li>Before abilities do not enter the queue, but interrupt it.</li>
+<li>Additional actions that are gained do not enter the queue,
+but instead wait their turn since a player can only resolve
+one action at a time.</li>
+</ul>
+
 <p><em>Example: A player resolves one of their dice to deal 2 damage to a character. The 2 damage enters the queue, and since nothing else is in the queue it currently resolves.</em></p>
+
+<p><em>Example 2 (see diagram below): A player plays the event
+Squad Tactics (<span class="icon-set-AW"></span>143) with two Tusken Raiders (<span class="icon-set-AW"></span>22) and
+Captian Phasma (<span class="icon-set-AW"></span>1) on their team. Both of the Tusken
+Raiders have the Guardian keyword, and since this is a before
+ability it interrupts the game (and does not enter the queue).
+One of the Tusken Raiders is defeated by the damage it takes
+with Guardian, and the Redeploy keyword on the Gaffi Stick
+(<span class="icon-set-AW"></span>25) attached to it enters the queue. However, since Squad
+Tactics is currently in the queue, waiting for the Guardian
+abilities to resolve, the Redeploy keyword goes to the end
+of the line. Now that one Tusken Raider is defeated, Squad
+Tactics activates the other Tusken Raider. It rolls its dice into
+the pool, completing the resolution of Squad Tactics, and then
+the Gaffi Stick is redeployed to either it or Captain Phasma.
+(It cannot be rolled in by the other Tusken Raider.)</em></p>
+
+<p><img src="{{ asset('/bundles/app/images/rulesreference/queue_example2.png') }}"/></p>
 
 <h3 id="actionabilities">Action abilities</h3>
 
@@ -1048,16 +1123,18 @@ condition and does not have a bold word in front of it (like
 
 <h3 id="inherentdiceabilities">Inherent dice abilities</h3>
 
-<p>Some cards have abilities on them which are considered to
-be inherent to the die, and always affect how the die resolves,
-independent of the card being in play.</p>
+<p>Some cards have ongoing abilities on them which are
+considered to be inherent to the die, and always affect how
+the die resolves, independent of the card being in play.
+Inherent dice abilities other than specials never use the words
+“before” or “after” or “while.”</p>
 
-<pre><code>_Example: Diplomatic Immunity (&lt;span class=&quot;icon-set-AW&quot;&gt;&lt;/span&gt;50) says “The shields from this die can be given to any of your characters, distributed as you wish.” The shields from this die can be split up regardless of whether the card is in play or not, such as when resolved through Poe Dameron’s (&lt;span class=&quot;icon-set-AW&quot;&gt;&lt;/span&gt;29) special ability._
-</code></pre>
+<p><em>Example: Diplomatic Immunity (<span class="icon-set-AW"></span>50) says “The shields from this die can be given to any of your characters, distributed as you wish.” The shields from this die can be split up regardless of whether the card is in play or not, such as when resolved through Poe Dameron’s (<span class="icon-set-AW"></span>29) special ability.</em></p>
 
 <ul>
 <li>Dice with a non-special inherent die ability: Diplomatic
-Immunity (<span class="icon-set-AW"></span>50), Launch Bay (<span class="icon-set-AW"></span>31).</li>
+Immunity (<span class="icon-set-AW"></span>50), Launch Bay (<span class="icon-set-AW"></span>31),
+Lure of Power (<span class="icon-set-SoR"></span>16).</li>
 </ul>
 
 <h4 id="specialabilities">Special abilities</h4>
@@ -1070,6 +1147,8 @@ matching card is resolved.</p>
 <ul>
 <li>The special (<span class="icon-special"></span>) cannot be resolved to use the special ability
 on a different card.</li>
+<li>If a card has more than one special ability, the player who
+resolves it may choose which one to use.</li>
 </ul>
 
 <h3 id="keywords">Keywords</h3>
@@ -1143,9 +1222,9 @@ that takes place in the game.</p>
 <h4 id="beforeabilities">Before abilities</h4>
 
 <p>If, during the course of a game, a before ability meets its
-trigger condition, immediately resolve the before ability
-before continuing to resolve the rest of the effect. In this way,
-before abilities can interrupt the flow of the game.</p>
+trigger condition, immediately resolve the before ability prior
+to resolving the rest of the effect. In this way, before abilities
+can interrupt the flow of the game and ignore the queue.</p>
 
 <p><em>Example: One with the Force (<span class="icon-set-AW"></span>42) says “Before attached character is defeated, this card becomes a support for the rest of the game.” The trigger condition is “attached character is defeated,” and the timing word “before” tells you to resolve the rest of the effect before the trigger condition resolves.</em></p>
 
@@ -1204,12 +1283,25 @@ discard this upgrade.” Because this prevents the character
 from being defeated, the character is never considered to
 have been defeated.</em></p>
 
+<p>Some replacement effects that are part of before abilities use
+the word “would be” in their text. These effects are faster than
+other before abilities, and no abilities can be triggered off of
+the original effect.</p>
+
+<p><em>Example: Second Chance (<span class="icon-set-AW"></span>137) resolves before the before
+ability on General Grievous (<span class="icon-set-AW"></span>3). Since the character affected
+by Second Chance is no longer defeated, General Grievous’
+ability cannot be triggered.</em></p>
+
 <ul>
-<li>If two or more replacement effects are trying to replace the
-same thing, the battlefield controller chooses which one
-resolves. The other replacement effects no longer resolve,
-since the thing they are replacing no longer exists (it has
-already been replaced).</li>
+<li>When two or more replacement effects are trying to replace
+the same thing, the player who is resolving those abilities
+chooses the order they resolve/enter the queue in. If more than
+one player has abilities that are simultaneous, the player who
+controls the battlefield chooses the order they resolve in. The
+other replacement effect(s) no longer resolve, since the thing
+they are replacing no longer exists (it has already been
+replaced).</li>
 </ul>
 
 <h4 id="self-referentialeffects">Self-referential effects</h4>
@@ -1359,6 +1451,8 @@ move, the move cannot resolve.</li>
 <li>When damage is moved to a new character, it ignores
 shields and the character is not considered to have
 taken damage.</li>
+<li>An upgrade with a play restriction can be moved to any
+character, as the upgrade is not being played.</li>
 </ul>
 
 <h3 id="owner">Owner</h3>
@@ -1395,6 +1489,16 @@ effect, then it does not matter if those dice can currently be
 resolved. Symbols that are modifiers or require a resource
 match still count as that symbol.</li>
 </ul>
+
+<h3 id="replace">Replace</h3>
+
+<p>When an upgrade is discarded to decrease the cost of another
+upgrade, the new upgrade replaces the old one.</p>
+
+<h3 id="rolling">Rolling</h3>
+
+<p>When a card refers to rolling a die, this applies to both rolling
+it into your pool and rerolling it (if it was already in your pool).</p>
 
 <h3 id="showing">Showing</h3>
 
@@ -1517,3 +1621,30 @@ simultaneous abilities controlled by more than one player are
 resolved until someone else controls the battlefield. The other
 players continue playing until there is only one player left in
 the game; that player wins.</p>
+
+<h1 id="errata">Errata</h1>
+
+<p>This section includes a list of changes made to cards that are
+not reflected on the printed card, sorted by set.</p>
+
+<h3 id="errata_AW">Awakenings (<span class="icon-set-AW"></span>)</h3>
+
+<h4 id="errata_01129">Hyperspace Jump (129)</h4>
+
+<p>Should read: "End the action phase. You may switch the
+battlefield with the battlefield that is not being used. <strong>Set
+aside this card instead of discarding it.</strong>"</p>
+
+<p><em>Context: This card could be played many times per game with
+the Millennium Falcon, so now it goes to your set-aside zone
+after resolving.</em></p>
+
+<h3 id="errata_SoR">Spirit of Rebellion (<span class="icon-set-SoR"></span>)</h3>
+
+<h4 id="errata_02046">Outer Rim Smuggler (46)</h4>
+
+<p>Should read: "<strong>The first time each round</strong> you play the last
+card from your hand, gain 1 resource."</p>
+
+<p><em>Context: Two of this card could generate countless resources
+with Return of the Jedi.</em></p>
