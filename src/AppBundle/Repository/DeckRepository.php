@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\DBAL\Connection;
+
 class DeckRepository extends TranslatableRepository
 {
 	function __construct($entityManager)
@@ -22,5 +24,17 @@ class DeckRepository extends TranslatableRepository
 
 		$qb->setParameter(1, $id);
 		return $this->getOneOrNullResult($qb);
+	}
+
+	public function findWithCard($cards)
+	{
+		if(!is_array($cards)) $cards = [$cards];
+		$qb = $this->createQueryBuilder('d')
+			->select('d')
+			->leftJoin('d.slots', 'ds')
+			->leftJoin('ds.card', 'c')
+			->andWhere('c.code IN (:codes)')
+			->setParameter('codes', $cards, Connection::PARAM_STR_ARRAY);
+		return $this->getResult($qb);
 	}
 }
