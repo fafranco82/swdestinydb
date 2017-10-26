@@ -1,6 +1,14 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% import "AppBundle::macros.html.twig" as macros %}
 
+{% block stylesheets %}
+	<style>
+	.new {
+		color: red;
+	}
+	</style>
+{% endblock %}
+
 {% block body %}
 <div class="main white container">
 <div class="row">
