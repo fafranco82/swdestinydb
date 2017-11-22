@@ -582,7 +582,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 	var divs = CardDivs[ Config['display-column'] - 1 ];
 
 	cards.forEach(function (card) {
-		if (Config['show-only-deck'] && !card.indeck) return;
+		if (Config['show-only-deck'] && !card.indeck.cards) return;
 		var unusable = !app.deck.can_include_card(card);
 		if (!Config['show-unusable'] && unusable) return;
 		if (Config['show-only-owned'] && card.maxqty.cards==0) return;
