@@ -7,6 +7,7 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     public function serialize() {
         return [
                 'code' => $this->code,
+                'cycle' => $this->cycle != NULL ? $this->cycle->getCode() : null,
                 'date_release' => $this->dateRelease ? $this->dateRelease->format('Y-m-d') : null,
                 'name' => $this->name,
                 'position' => $this->position,
@@ -22,6 +23,16 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     
     public function toString() {
         return $this->name;
+    }
+    
+    /*
+    * I18N vars
+    */
+    private $locale = 'en';
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
     
     /**
@@ -50,6 +61,16 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     private $size;
 
     /**
+     * @var integer
+     */
+    private $cgdbIdStart;
+
+    /**
+     * @var integer
+     */
+    private $cgdbIdEnd;
+
+    /**
      * @var \DateTime
      */
     private $dateCreation;
@@ -70,11 +91,22 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     private $cards;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $starterPacks;
+
+    /**
+     * @var \AppBundle\Entity\Cycle
+     */
+    private $cycle;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->cards = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->starterPacks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -92,7 +124,7 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param string $code
      *
-     * @return Pack
+     * @return Set
      */
     public function setCode($code)
     {
@@ -116,7 +148,7 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param string $name
      *
-     * @return Pack
+     * @return Set
      */
     public function setName($name)
     {
@@ -140,7 +172,7 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param integer $position
      *
-     * @return Pack
+     * @return Set
      */
     public function setPosition($position)
     {
@@ -164,7 +196,7 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
      *
      * @param integer $size
      *
-     * @return Pack
+     * @return Set
      */
     public function setSize($size)
     {
@@ -182,171 +214,6 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     {
         return $this->size;
     }
-
-    /**
-     * Set dateCreation
-     *
-     * @param \DateTime $dateCreation
-     *
-     * @return Pack
-     */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
-
-    /**
-     * Set dateUpdate
-     *
-     * @param \DateTime $dateUpdate
-     *
-     * @return Pack
-     */
-    public function setDateUpdate($dateUpdate)
-    {
-        $this->dateUpdate = $dateUpdate;
-
-        return $this;
-    }
-
-    /**
-     * Get dateUpdate
-     *
-     * @return \DateTime
-     */
-    public function getDateUpdate()
-    {
-        return $this->dateUpdate;
-    }
-
-    /**
-     * Set dateRelease
-     *
-     * @param \DateTime $dateRelease
-     *
-     * @return Pack
-     */
-    public function setDateRelease($dateRelease)
-    {
-        $this->dateRelease = $dateRelease;
-
-        return $this;
-    }
-
-    /**
-     * Get dateRelease
-     *
-     * @return \DateTime
-     */
-    public function getDateRelease()
-    {
-        return $this->dateRelease;
-    }
-
-    /**
-     * Add card
-     *
-     * @param \AppBundle\Entity\Card $card
-     *
-     * @return Pack
-     */
-    public function addCard(\AppBundle\Entity\Card $card)
-    {
-        $this->cards[] = $card;
-
-        return $this;
-    }
-
-    /**
-     * Remove card
-     *
-     * @param \AppBundle\Entity\Card $card
-     */
-    public function removeCard(\AppBundle\Entity\Card $card)
-    {
-        $this->cards->removeElement($card);
-    }
-
-    /**
-     * Get cards
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCards()
-    {
-        return $this->cards;
-    }
-
-    /*
-    * I18N vars
-    */
-    private $locale = 'en';
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $starterPacks;
-
-
-    /**
-     * Add starterPack
-     *
-     * @param \AppBundle\Entity\StarterPack $starterPack
-     *
-     * @return Set
-     */
-    public function addStarterPack(\AppBundle\Entity\StarterPack $starterPack)
-    {
-        $this->starterPacks[] = $starterPack;
-
-        return $this;
-    }
-
-    /**
-     * Remove starterPack
-     *
-     * @param \AppBundle\Entity\StarterPack $starterPack
-     */
-    public function removeStarterPack(\AppBundle\Entity\StarterPack $starterPack)
-    {
-        $this->starterPacks->removeElement($starterPack);
-    }
-
-    /**
-     * Get starterPacks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStarterPacks()
-    {
-        return $this->starterPacks;
-    }
-    /**
-     * @var integer
-     */
-    private $cgdbIdStart;
-
-    /**
-     * @var integer
-     */
-    private $cgdbIdEnd;
-
 
     /**
      * Set cgdbIdStart
@@ -394,5 +261,169 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     public function getCgdbIdEnd()
     {
         return $this->cgdbIdEnd;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Set
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set dateUpdate
+     *
+     * @param \DateTime $dateUpdate
+     *
+     * @return Set
+     */
+    public function setDateUpdate($dateUpdate)
+    {
+        $this->dateUpdate = $dateUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUpdate
+     *
+     * @return \DateTime
+     */
+    public function getDateUpdate()
+    {
+        return $this->dateUpdate;
+    }
+
+    /**
+     * Set dateRelease
+     *
+     * @param \DateTime $dateRelease
+     *
+     * @return Set
+     */
+    public function setDateRelease($dateRelease)
+    {
+        $this->dateRelease = $dateRelease;
+
+        return $this;
+    }
+
+    /**
+     * Get dateRelease
+     *
+     * @return \DateTime
+     */
+    public function getDateRelease()
+    {
+        return $this->dateRelease;
+    }
+
+    /**
+     * Add card
+     *
+     * @param \AppBundle\Entity\Card $card
+     *
+     * @return Set
+     */
+    public function addCard(\AppBundle\Entity\Card $card)
+    {
+        $this->cards[] = $card;
+
+        return $this;
+    }
+
+    /**
+     * Remove card
+     *
+     * @param \AppBundle\Entity\Card $card
+     */
+    public function removeCard(\AppBundle\Entity\Card $card)
+    {
+        $this->cards->removeElement($card);
+    }
+
+    /**
+     * Get cards
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+    /**
+     * Add starterPack
+     *
+     * @param \AppBundle\Entity\StarterPack $starterPack
+     *
+     * @return Set
+     */
+    public function addStarterPack(\AppBundle\Entity\StarterPack $starterPack)
+    {
+        $this->starterPacks[] = $starterPack;
+
+        return $this;
+    }
+
+    /**
+     * Remove starterPack
+     *
+     * @param \AppBundle\Entity\StarterPack $starterPack
+     */
+    public function removeStarterPack(\AppBundle\Entity\StarterPack $starterPack)
+    {
+        $this->starterPacks->removeElement($starterPack);
+    }
+
+    /**
+     * Get starterPacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStarterPacks()
+    {
+        return $this->starterPacks;
+    }
+
+    /**
+     * Set cycle
+     *
+     * @param \AppBundle\Entity\Cycle $cycle
+     *
+     * @return Set
+     */
+    public function setCycle(\AppBundle\Entity\Cycle $cycle = null)
+    {
+        $this->cycle = $cycle;
+
+        return $this;
+    }
+
+    /**
+     * Get cycle
+     *
+     * @return \AppBundle\Entity\Cycle
+     */
+    public function getCycle()
+    {
+        return $this->cycle;
     }
 }

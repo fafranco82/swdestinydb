@@ -139,6 +139,22 @@ class ImportStdCommand extends ContainerAwareCommand
 		$this->em->flush();
 		$this->loadCollection('SideType');
 		$output->writeln("Done.");
+
+		// cycles
+
+		$output->writeln("Importing Cycles...");
+		$setsFileInfo = $this->getFileInfo($path, 'cycles.json');
+		$imported = $this->importCyclesJsonFile($setsFileInfo);
+		$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$this->loadCollection('Cycle');
+		$output->writeln("Done.");
 		
 		// second, sets
 
@@ -310,6 +326,27 @@ class ImportStdCommand extends ContainerAwareCommand
 	
 		return $result;
 	}
+
+	protected function importCyclesJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$cyclesData = $this->getDataFromFile($fileinfo);
+		foreach($cyclesData as $cycleData) {
+			$cycle = $this->getEntityFromData('AppBundle\Entity\Cycle', $cycleData, [
+					'code', 
+					'name', 
+					'position', 
+					'date_release'
+			], [], []);
+			if($cycle) {
+				$result[] = $cycle;
+				$this->em->persist($cycle);
+			}
+		}
+		
+		return $result;
+	}
 	
 	protected function importSetsJsonFile(\SplFileInfo $fileinfo)
 	{
@@ -325,7 +362,9 @@ class ImportStdCommand extends ContainerAwareCommand
 					'cgdb_id_start',
 					'cgdb_id_end',
 					'date_release'
-			], [], []);
+			], [
+				'cycle_code'
+			], []);
 			if($set) {
 				$result[] = $set;
 				$this->em->persist($set);
