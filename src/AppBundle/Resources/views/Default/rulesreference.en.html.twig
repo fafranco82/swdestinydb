@@ -33,11 +33,12 @@ and smugglers.</li>
 under one of the other three colors.</li>
 </ul>
 
-<h3 id="type">Type</h3>
+<h3 id="typesubtype" class="new">Type &amp; Subtype</h3>
 
-<p>Each card is one of five types: battlefield, character, event,
-upgrade, or support. The type is listed above a card’s abilities,
-except on battlefields, where it does not appear.</p>
+<p>Each card is one of <span class="new">six</span> types: battlefield, character, event,
+upgrade, support, or plot. The type is listed above a card’s abilities,
+except on battlefields, where it does not appear. <span class="new">Some cards have one
+or more subtypes listed after the type.</span></p>
 
 <h3 id="title">Title</h3>
 
@@ -133,6 +134,27 @@ each round.</li>
 and helps distinguish different versions of characters from
 each other.</p>
 
+<h3 id="plots" class="new">Plots</h3>
+
+<p class="new">Plots represent various schemes and strategies that players
+can begin the game with. Players may optionally select one
+plot (but no more than one) when building their team. Each
+plot has a point value that counts toward the 30 point limit,
+just like characters. Plots start the game in play and remain
+in play.</p>
+
+<ul>
+<li class="new">A hero or villain plot can only be selected if there is a
+character of that affiliation on a player’s team. A Blue, Red,
+or Yellow plot can only be selected if there is a character of
+that color on a player’s team.</li>
+</ul>
+
+<h4 id="pointvalue" class="new">Point value</h4>
+
+<p class="new">A card’s point value is how many points it costs to include it
+on a team.</p>
+
 <h3 id="characters">Characters</h3>
 
 <p>Characters represent notable individuals in the Star Wars
@@ -193,7 +215,7 @@ is activated.</li>
 can have.</li>
 </ul>
 
-<h4 id="subtypesalsoappearsonupgrades">Subtypes (also appears on upgrades)</h4>
+<h4 id="subtypesalsoappearsoncharactersandupgrades">Subtypes (also appears on <span class="new">characters and</span> upgrades)</h4>
 
 <p>Some cards have subtypes listed after
 the card’s type, such as “Vehicle” or
@@ -206,7 +228,7 @@ cards may reference them.</p>
 text, the subtype is bold.</li>
 </ul>
 
-<h3 id="upgrades" class="new">Upgrades</h3>
+<h3 id="upgrades">Upgrades</h3>
 
 <p>Upgrades represent weapons, gear, and abilities that
 characters have at their disposal. When a player plays an
@@ -218,18 +240,10 @@ and stay in play unless an effect or ability discards them, or
 the character they are attached to is defeated.</p>
 
 <ul>
-<li><span class="new">A player may discard an upgrade already on a character to
-decrease the cost of a new upgrade being played on that
-character by the cost of the discarded one. This is called
-“replacing an upgrade” and each player can only do this
-once per round.</span></li>
 <li>Each character cannot have more than 3 upgrades. If a
 character ever has more than 3 upgrades, the player who
 controls it must choose and discard upgrades from it until
-it only has 3. <span class="new">(A player can play an upgrade on a character
-with 3 upgrades and then discard one. This is not the same
-as replacing an upgrade, and the cost of the new upgrade
-is not decreased.)</span></li>
+it only has 3.</li>
 <li>The color of a character and its upgrades do not have
 to match. A character can have an upgrade that does
 not match its color, provided all deckbuilding and play
@@ -256,7 +270,7 @@ identification, and rarity.</p>
 
 <ul>
 <li>Blanks and specials have no value printed on the die, and
-thus have a value of 0</li>
+are considered to have a value of 0.</li>
 </ul>
 
 <h3 id="symbol">Symbol</h3>
@@ -265,9 +279,9 @@ thus have a value of 0</li>
 an effect is carried out based on the symbol that is showing
 on the die.</p>
 
-<h3 id="cost">Resource cost</h3>
+<h3 id="cost">Cost</h3>
 
-<p>Some dice have a resource cost, listed in a yellow box at the bottom of
+<p>Some dice have a cost, listed in a yellow box at the bottom of
 the side. A player must spend resources equal to the cost of
 the die side in order to resolve it. If they cannot pay the cost,
 they cannot resolve that die’s side.</p>
@@ -327,6 +341,15 @@ resolving multiple dice in the same action, each die can
 deal damage to a different character.</li>
 </ul>
 
+<h4 id="indirect_symbol" class="new"><span class="icon-indirect"></span> Indirect damage</h4>
+
+<p class="new">Force an opponent to deal damage to their characters equal
+to the value of the symbol, distributed as they wish.</p>
+
+<ul>
+<li>All damage can be split among multiple characters.</li>
+</ul>
+
 <h4 id="shield_symbol"><span class="icon-shield"></span> Shield</h4>
 
 <p>Gives a character shields equal to the value of the symbol.</p>
@@ -382,8 +405,7 @@ or less than the value of the symbol.</p>
 <h4 id="special_symbol"><span class="icon-special"></span> Special</h4>
 
 <p>Uses the special ability marked by a <span class="icon-special"></span>
-symbol on that die’s card. Specials have a value of 0 that cannot be
-increased or decreased.</p>
+symbol on that die’s card. Specials have a value of 0.</p>
 
 <ul>
 <li>A player cannot use the special ability on a different card;
@@ -398,7 +420,7 @@ second time during the same action.</li>
 <h4 id="blank_symbol"><span class="icon-blank"></span> Blank</h4>
 
 <p>Blank symbols have no effect and cannot be resolved. Blanks
-have a value of 0 that cannot be increased or decreased.</p>
+have a value of 0.</p>
 
 <h3 id="resolvingdicethroughcards">Resolving dice through cards</h3>
 
@@ -419,16 +441,14 @@ multiple dice of the same symbol.</li>
 
 <ul>
 <li>If a card with a matching die leaves play, the matching die
-is also immediately returned to the set-aside zone. The
-removed die can enter play again at a later time, if its card
-enters play again.</li>
+is also immediately removed from the game and set aside.
+The removed die can enter the game again at a later time,
+if its card enters play again</li>
 <li>If a player has two copies of the same upgrade on a
-character, they do not need to keep track of which die is
-associated with which card, unless there is a reason to do
-so (like Con Artist). When both dice are in a dice pool and
-an ability targets one of their cards, the player resolving
-the ability chooses which die it affects.</li>
-<li>If a player has two copies of the same upgrade on
+character, and both of those upgrade dice are in their
+dice pool when they have to discard an upgrade from
+play, the player can choose which die to remove and set
+aside. If a player has two copies of the same upgrade on
 different characters (one upgrade on each character),
 they must make sure to track each die separately.</li>
 </ul>
@@ -438,12 +458,12 @@ they must make sure to track each die separately.</li>
 <p>Each player has their own areas of play. These areas are
 either in play or out-of-play.</p>
 
-<h3 id="inplay">In play</h3>
+<h3 id="inplay" class="new">In-Play</h3>
 
-<h4 id="charactersplayedcards">Characters &amp; played cards</h4>
+<h4 id="charactersplotsplayedcards">Characters, <span class="new">plots</span> &amp; played cards</h4>
 
 <p>After an upgrade or support is played, it is added to the play
-area and is in play. Characters also start the game in play,
+area and is in play. Characters <span class="new">and plots</span> also start the game in play,
 and remain there until defeated. Events are never in play;
 they are played, resolved, and discarded without entering the
 play area.</p>
@@ -464,8 +484,8 @@ not in a dice pool.</p>
 <ul>
 <li>A player can only resolve dice in their own dice pool.</li>
 <li>Dice in a player’s dice pool can be manipulated (removed,
-turned, rerolled, or resolved) or used as a reference for
-card effects that require a specific side to be showing.</li>
+turned, etc.) or used as a reference for card effects that
+require a specific side to be showing.</li>
 </ul>
 
 <h4 id="resources">Resources</h4>
@@ -480,17 +500,14 @@ card effects that require a specific side to be showing.</li>
 
 <p>If a player controls the battlefield, it kept in their in play area.</p>
 
-<h3 id="out-of-play" class="new">Out-of-play</h3>
+<h3 id="out-of-play">Out-of-play</h3>
 
-<p>Cards in a player’s hand, deck, discard pile, and set-aside
-zone are out of play and their abilities cannot be used until
-they are played or return to play, or a card says otherwise.</p>
+<p>Cards in a player’s hand, deck, and discard pile are out of play
+and their abilities cannot be used until they are played.</p>
 
 <ul>
 <li>A card leaves play when it transitions from the play area to
-an out-of-play area. <span class="new">Remove all tokens from that card.</span></li>
-<li>A player cannot have a card their opponent owns in their
-own out-of-play area.</li>
+an out-of-play area.</li>
 </ul>
 
 <h4 id="hand">Hand</h4>
@@ -563,20 +580,11 @@ matching card.</p>
 of their sides are considered to be showing.</li>
 </ul>
 
-<h4 id="set-asidezone">Set-aside zone</h4>
+<h4 id="set-asidedice">Set-aside dice</h4>
 
-<p>Each player has a set-aside zone. At the beginning of the
-game, some dice are set aside. These are dice that can enter
-play via cards. Players can set aside any number of dice that
-match cards in their deck, or are referenced by cards in their
-deck. Players may hide these dice from their opponent using
-a tray or a dice bag.</p>
-
-<p>Cards can also enter or leave the set-aside zone. Cards in the
-set-aside zone are open knowledge unless otherwise noted.
-Defeated characters are placed in the set-aside zone, and
-some cards, like Premonitions (<span class="icon-set-SoR"></span>131)
-or battlefields that are not chosen during setup, also use this zone.</p>
+<p>At the beginning of the game, some dice are set aside. These
+are dice that can enter play via cards. Players may hide these
+dice from their opponent using a tray or a dice bag.</p>
 
 <h4 id="supply">Supply</h4>
 
@@ -593,14 +601,14 @@ they should find a proper proxy.</p>
 experience the game in new ways by developing one-of-a-kind
 strategies and combinations.</p>
 
-<h3 id="1.buildingateam">1. Building a team</h3>
+<h3 id="1.buildingateam" class="new">1. Building a team</h3>
 
 <p>To build a team, a player chooses up to 30 points
-of characters.</p>
+of characters <span class="new">and up to one plot.</span></p>
 
 <ul>
-<li>A player must select either hero or villain characters; hero
-and villain characters cannot be on the same team.</li>
+<li>Hero and villain characters cannot be on the same team. <span class="new">Neutral
+characters can be on any team.</span></li>
 <li>A player can select only one copy of each unique (<span class="icon-unique"></span>)
 character, but they can select any number of copies of nonunique
 characters. When selecting a unique character, the
@@ -613,21 +621,20 @@ player may include characters of the same color or different
 colors on their team.</li>
 </ul>
 
-<h3 id="2.buildingadeck">2. Building a deck</h3>
-
-<p>A deck includes exactly 30 cards.</p>
+<h3 id="2.buildingadeck" class="new">2. Building a deck</h3>
 
 <ul>
-<li>The deck cannot include more than 2 copies of the
-same card.</li>
+<li>A deck includes exactly 30 cards. The deck cannot include more
+than 2 copies of the same card.</li>
 <li>If a team has hero characters, its deck cannot contain villain
 cards. If a team has villain characters, its deck cannot contain
-hero cards. Neutral cards can be included in any deck.</li>
+hero cards. <span class="new">If a team has all neutral characters, its deck cannot
+contain hero or villain cards.</span> Neutral cards can be included in any deck.</li>
 <li>Blue, Red, and Yellow cards can only be included in the
 deck if the team includes a character of the corresponding
 color. Gray cards can be included in any deck.</li>
-<li>A deck can contain events, upgrades, and support cards.
-Characters and battlefields are not included in a deck and do
+<li>A deck can contain events, upgrades, and support.
+Characters, <span class="new">plots,</span> and battlefields are not included in a deck and do
 not count toward its 30 card limit.</li>
 </ul>
 
@@ -656,12 +663,12 @@ damage side, for free.</em></p>
 <p>The game is a fast-paced, back-and-forth battle where players
 alternate taking actions.</p>
 
-<h3 id="setup">Setup</h3>
+<h3 id="setup" class="new">Setup</h3>
 
 <p>To set up the game, follow these steps in order:</p>
 
 <ol>
-<li>Each player places their character cards faceup in front of
+<li>Each player places their character <span class="new">and plot</span> cards faceup in front of
 them, along with those character’s matching dice.</li>
 <li>Each player sets aside their battlefield faceup.</li>
 <li>Each player shuffles their 30-card deck and draws 5 cards
@@ -684,9 +691,10 @@ roll again. The player with the highest total chooses which
 battlefield to fight on. The player whose battlefield is
 being used controls the battlefield and places it next to
 their deck. The player whose battlefield is not being used
-sets their battlefield aside from the game and gives 2 shields
+removes their battlefield from the game and gives 2 shields
 to their characters, distributed as they wish. After rolling,
 return all character dice to their matching cards.</li>
+<li class="new">&#8220;After setup&#8221; abilities trigger.</li>
 </ol>
 
 <h3 id="rounds">Rounds</h3>
@@ -734,7 +742,7 @@ actions are listed below and described in detail later:</p>
 <li>Activate a character or support</li>
 <li>Resolve dice</li>
 <li>Discard a card to reroll dice</li>
-<li>Use a card action</li>
+<li>Use a card action <span class="new">(including a power action)</span></li>
 <li>Claim the battlefield</li>
 </ul>
 
@@ -754,9 +762,7 @@ those conditions are not met, then the card cannot be played.</p>
 <p>If there are no restrictions, or all restrictions to play the card
 are met, then the player must pay resources equal to the
 card’s cost. If they do not have enough resources to pay, then
-the card is not played. A player can attempt to play a card
-even if they do not currently have the resources for it, as the
-cost printed on the card can be altered by in-game effects.</p>
+the card cannot be played.</p>
 
 <p>Once a card’s cost has been paid, the card is resolved based
 on its type.</p>
@@ -766,22 +772,21 @@ on its type.</p>
 and then discards it. The card is in limbo while resolving.</li>
 <li><strong>Playing an Upgrade</strong>: The player chooses and attaches the
 upgrade to a character by placing it next to or below that
-character
-
-<ul>
-<li><span class="new">Once per round,</span> before paying the cost to play an upgrade, the
+character. Before paying the cost to play an upgrade, the
 player can choose to replace an upgrade that is already
 on the chosen character. The cost to play the new upgrade
 is decreased by the cost of the old upgrade, and the old
 upgrade is discarded when the new one comes into play. If
 the old upgrade costs equal to or more than the new one,
-then the new upgrade is free.</li>
+then the new upgrade is free.
 
+<ul>
 <li>Most upgrades come with an extra die. When they are
 played, the player takes the matching die from their setaside
 dice and places it on the upgrade (or, for ease of
 use, they can also place it on that character instead since
 it is rolled along with the character’s dice).</li>
+<li>A character cannot have more than 3 upgrades.</li>
 </ul></li>
 <li><strong>Playing a Support</strong>: The player places the card on the table
 below their team. Some supports also have a die that
@@ -793,13 +798,13 @@ the support.</li>
 <h4 id="activateacharacterorsupport">Activate a character or support</h4>
 
 <p>To activate a character or support card, a player exhausts
-that card and rolls all of its dice. Any of its dice already in the
-pool are not rerolled. These dice are now in that player’s dice
-pool, and that player can take an action on a future turn to
-resolve their symbols. Characters always roll their character
-dice and their upgrade dice (from attached upgrades) when
-activated. Supports roll their own die into the dice pool when
-activated. Supports without a die cannot be activated.</p>
+that card and rolls all of its dice. These dice are now in that
+player’s dice pool, and that player can take an action on a
+future turn to resolve their symbols. Characters always roll
+their character dice and their upgrade dice (from attached
+upgrades) when activated. Supports roll their own die into
+the dice pool when activated. Supports without a die cannot
+be activated.</p>
 
 <ul>
 <li>All of the dice associated with a character (its character
@@ -833,18 +838,31 @@ started resolving dice.</li>
 per action.</li>
 </ul>
 
-<h4 id="discardtorerolldice" class="new">Discard to reroll dice</h4>
+<h4 id="discardtorerolldice">Discard to reroll dice</h4>
 
 <p>A player can discard one card of their choice from their hand
-to reroll <span class="new">any number of their</span> dice in their pool. They must choose all
+to reroll one or more dice in their pool. They must choose all
 the dice they want to reroll before rerolling.</p>
 
-<h4 id="useacardaction">Use a card action</h4>
+<ul>
+<li>If there are no dice in their pool, they cannot discard a card
+from their hand to reroll.</li>
+</ul>
+
+<h4 id="useacardaction" class="new">Use a card action</h4>
 
 <p>Some support, upgrade, and character cards have special
 actions listed on them. These actions are preceded by the
-word “<strong>Action</strong>” in bold. To resolve this action, follow the
+word “Action” in bold. To resolve this action, follow the
 card’s instructions.</p>
+
+<ul>
+<li class="new"><strong>Power Actions</strong>. A power action is an action that can only
+be used once per round, even if the card with a power
+action changes control, is moved to another character, etc.
+A player can use each power action once on each card,
+even if the cards have the same title.</li>
+</ul>
 
 <h4 id="claimthebattlefield">Claim the battlefield</h4>
 
@@ -858,39 +876,11 @@ turns until they also pass. Only one player can claim the
 battlefield each round.</p>
 
 <ul>
-<li>A player does not have to use the claim ability.</li>
 <li>A player can claim the battlefield even if they already control
 it in order to keep control of it and use its claim ability.</li>
 <li>The player who controls the battlefield takes the first action
 each round.</li>
-<li>Players can still use their card abilities after they claim
-the battlefield.</li>
 </ul>
-
-<h4 id="extraactions">Extra actions</h4>
-
-<p>When a player is allowed to take additional actions on
-their turn, they must immediately take them following the
-resolution of the current action or decline to act (this is
-not the same as passing your turn). If they are allowed to
-take an action outside of their turn, they also must take it
-immediately or decline to act.</p>
-
-<p>Each action, and any abilities its resolution triggers, must fully
-resolve before an additional action is taken. Actions wait to be
-resolved in the order they were created in. They do not enter
-the queue (see <a href="#queue">Queue</a>) like other game effects.</p>
-
-<p><em>Example: A player plays an upgrade that has the Ambush
-keyword on Rey (<span class="icon-set-AW"></span>38) while their opponent has a Jango
-Fett (<span class="icon-set-AW"></span>21) ready. They now have two additional actions to
-resolve, one from the Ambush and one from Rey’s ability.
-They use one of the additional actions to activate Rey. As a
-consequence of Rey activating, Jango’s after ability meets
-its trigger condition and is added to the queue. Because
-additional actions exist outside the queue, waiting for the
-current action to complete, his ability resolves before the Rey
-player spends their second additional action.</em></p>
 
 <h3 id="passing">Passing</h3>
 
@@ -899,14 +889,22 @@ They do nothing, but they retain the option to take an action
 after their opponent. After both players pass consecutively,
 the round proceeds to the upkeep phase.</p>
 
-<p>If a player takes an action that does nothing, then they are
-considered to have passed their turn instead.</p>
+<ul>
+<li>If a player triggers an action that does not change the
+game state, then they are considered to have passed their
+turn instead. If a player exhausts or plays a card that does
+not change the game state other than that card being
+exhausted or played, then they are also considered to have
+passed their turn instead.</li>
+</ul>
 
 <p><em>Example: A player uses the Action on General Veers (<span class="icon-set-AW"></span>4), but there is no Veers die for them to remove. As such, nothing happens and they are considered to have passed their turn.</em></p>
-<p><em>Example 2: A player uses the Action on Backup Muscle (<span class="icon-set-AW"></span>99)
-when the card is ready and there’s no damage on it to move.
-However, since the Backup Muscle exhausts, something
-happened and the action does not count as a pass.</em></p>
+
+<h3 id="remindertext" class="new">Reminder text</h3>
+
+<p class="new">Reminder text is text in parentheses that clarifies game text.
+It is used to remind players of rules and does not supersede
+the rules.</p>
 
 <h3 id="winningthegame">Winning the game</h3>
 
@@ -937,12 +935,6 @@ its health, it is immediately defeated.</p>
 effects. Any shields on a character who is dealt unblockable
 damage remain on that character; the shields are ignored
 for the purposes of dealing the unblockable damage.</li>
-<li><p>Unless specified, damage is neither ranged or melee. “That
-damage” is short for “that amount of damage.”</p>
-<p><em>Example: A player uses Deflect (<span class="icon-set-AW"></span>145) to remove a
-die showing ranged damage and deal 2 damage to
-a character. The damage that was just dealt is not
-considered to be ranged damage.</em></p></li>
 <li>Damage tokens come in values of one and three. A player
 can swap between these tokens as necessary in order to
 track the amount of damage on a character. If the supply
@@ -952,42 +944,15 @@ track damage using a different method.</li>
 different times since the dice are resolved one at a time.
 The only time multiple dice deal damage at the exact same
 time is when a die is being modified by other dice.</li>
-<li>Any excess damage <span class="new">taken by</span> a character above its health
-is ignored.</li>
-<li>
-	<p class="new">When a player distributes damage "as they wish:"</p>
-	<p class="new">
-		<ol>
-			<li>
-				<p>The player assigns their characters the amount of damage
-				they will be dealt.</p>
-
-				<p>A player cannot assign an amount of damage greater
-				than the remaining health plus the number of shields on the
-				character, unless a player cannot assign any more damage
-				to their characters and there is still damage remaining to be
-				assigned, then the player must assign the remaining damage
-				to their characters as they choose.</p>
-			</li>
-			<li>Once all damage is assigned, it is dealt simultaneously.</li>
-		</ol>
-	</p>
-	<p><em>Example: A player has two characters with 1 remaining
-	health each. They are forced to distribute 2 damage from the
-	special on the F-11D Rifle (<span class="icon-set-AW"></span>8). They must deal each of their
-	characters 1 damage, instead of dealing one of the characters
-	2 damage. <span class="new">If one of those characters had 1 shield, then both of
-	the damage could have been dealt to that character.</span></em></p>
-</li>
 </ul>
 
 <h3 id="defeatedcharacters">Defeated characters</h3>
 
-<p>When a character has damage on it equal to its health, it is
-immediately defeated. Set aside its character card and all of
-its dice (both its character and upgrade dice), and discard all
-upgrades on it. (While set aside, the character and its dice
-are no longer in play and cannot be used.)</p>
+<p>When a character has damage on it equal to its health, it
+is immediately defeated. Remove all of its dice from the
+game (both its character dice and its upgrades), discard
+all upgrades on it, and remove the character card from the
+game.</p>
 
 <ul>
 <li>Any excess damage dealt to a character from a source that
@@ -1017,14 +982,12 @@ different token or track resources using a different method.</li>
 <h3 id="shields">Shields</h3>
 
 <p>Shields block damage. Each shield blocks 1 damage that
-is dealt to the character. After blocking damage, the shield
-token is removed.</p>
+would be dealt to the character. After blocking damage, the
+shield token is removed.</p>
 
 <ul>
-<li>Shields block damage before it is taken. Shields must be
-used to block damage, if possible. Other effects that block
-damage do so at the same time, and can be used before or
-after shields, the same as any other simultaneous abilities.</li>
+<li>It is not optional to use a shield. Shields must be used to
+block damage, if possible.</li>
 <li>Each character can have a maximum of 3 shields at one
 time. If an effect would give a character more than 3
 shields, ignore the excess shields.</li>
@@ -1091,7 +1054,7 @@ unless it includes the word “may” or explicitly gives the player
 a choice. Special abilities (<span class="icon-special"></span>)
 are mandatory if that side of its die is resolved.</p>
 
-<h3 id="queue" class="new">Queue</h3>
+<h3 id="queue">Queue</h3>
 
 <p>The queue is an imaginary line that all game effects and
 abilities enter and leave in chronological order when
@@ -1102,39 +1065,15 @@ resolves. If during the resolution of something in the queue,
 another effect is added, it moves to “the end” of the queue
 and is resolved last.</p>
 
-<ul>
-<li>After abilities enter the queue.</li>
-<li>Before abilities do not enter the queue, but interrupt it.</li>
-<li>Additional actions that are gained do not enter the queue,
-but instead wait their turn since a player can only resolve
-one action at a time.</li>
-</ul>
-
 <p><em>Example: A player resolves one of their dice to deal 2 damage to a character. The 2 damage enters the queue, and since nothing else is in the queue it currently resolves.</em></p>
 
-<p class="new"><em>Example 2 (see diagram below): A player plays the event
-Squad Tactics (<span class="icon-set-AW"></span>143) and has a Gomorrean Guard (<span class="icon-set-EaW"></span>19)
-upgraded with a Gaffi Stick (<span class="icon-set-AW"></span>25) and a Tusken Raider (<span class="icon-set-AW"></span>22)
-on their team. The Guard has the Guardian keyword and,
-since this is a before ability, it interrupts the activation and
-resolves (it does not enter the queue). The Guard is defeated
-by the damage it takes with Guardian, and the Redeploy
-keyword on the Gaffi Stick interrupts it being defeated and
-moves to the Raider (it does not enter the queue). Squad
-Tactics then activates the Raider and it rolls both its die and
-its Gaffi Stick die into the pool. The “after” ability on the
-Raider triggers and enters the queue, and since nothing else
-is in the queue it resolves.</em></p>
-
-<p><img src="{{ asset('/bundles/app/images/rulesreference/queue_example2.png') }}"/></p>
-
-<h3 id="actionabilities">Action abilities</h3>
+<h3 id="actionabilities" class="new">Action abilities</h3>
 
 <p>Some support, upgrade, and character cards have unique
 actions listed on them. These actions are preceded by the
-word “<strong>Action</strong>” in bold. To resolve this ability, a player must
-spend one action on it during their turn and then follow the
-instructions on the card.</p>
+word “<strong>Action</strong>” or “<strong class="new">Power Action</strong>” in bold. To resolve
+this ability, a player must spend one action on it during
+their turn and then follow the instructions on the card.</p>
 
 <p><em>Example: Underworld Connections (<span class="icon-set-AW"></span>101) has the action ability “<strong>Action</strong> - Exhaust this support to gain 1 resource.”</em></p>
 
@@ -1154,20 +1093,18 @@ condition and does not have a bold word in front of it (like
 
 <h3 id="inherentdiceabilities" class="new">Inherent dice abilities</h3>
 
-<p>Some cards have ongoing abilities on them which are
-considered to be inherent to the die, and always affect how
-the die resolves, independent of the card being in play.
-Inherent dice abilities other than specials never use the words
-“before” or “after” or “while.”</p>
+<p>Some cards have abilities on them which are considered to
+be inherent to the die, and always affect how the die resolves,
+independent of the card being in play.</p>
 
-<p><em>Example: Diplomatic Immunity (<span class="icon-set-AW"></span>50) says “The shields from this die can be given to any of your characters, distributed as you wish.” The shields from this die can be split up regardless of whether the card is in play or not, such as when resolved through Poe Dameron’s (<span class="icon-set-AW"></span>29) special ability.</em></p>
+<p><em>Example: Diplomatic Immunity (<span class="icon-set-AW"></span>50) says “The shields from this die can be given to any of your characters, distributed as you wish.” The shields from this die can be split up regardless of whether the card is in play or not, such as when resolved through Poe Dameron’s (<span class="icon-set-AW"></span>29) special ability.</em>
 
 <ul>
 <li>Dice with a non-special inherent die ability: Diplomatic
 Immunity (<span class="icon-set-AW"></span>50), Launch Bay (<span class="icon-set-AW"></span>31),
-Lure of Power (<span class="icon-set-SoR"></span>16),
-<span class="new">ID-9 Seeker Droid (<span class="icon-set-EaW"></span>13), Training Remote (<span class="icon-set-EaW"></span>35).</span>
-</li>
+Lure of Power (<span class="icon-set-SoR"></span>16), ID&#8211;9 Seeker Droid (<span class="icon-set-EaW"></span>13),
+Training Remote (<span class="icon-set-EaW"></span>35), <span class="new">Gang Up (<span class="icon-set-LEG"></span>68),
+Vibroknife (<span class="icon-set-SoR"></span>57).</span></li>
 </ul>
 
 <h4 id="specialabilities">Special abilities</h4>
@@ -1180,8 +1117,6 @@ matching card is resolved.</p>
 <ul>
 <li>The special (<span class="icon-special"></span>) cannot be resolved to use the special ability
 on a different card.</li>
-<li>If a card has more than one special ability, the player who
-resolves it may choose which one to use.</li>
 </ul>
 
 <h3 id="keywords">Keywords</h3>
@@ -1218,11 +1153,11 @@ their opponent’s dice pool to deal damage equal to
 the value showing on the die removed to the activating
 Guardian character.</p>
 
-<h4 id="redeploy" class="new">Redeploy</h4>
+<h4 id="redeploy">Redeploy</h4>
 
-<p>This keyword only appears on upgrades. <span class="new">Before this upgrade
-would be discarded by its character being defeated, you may
-instead move it to one of your other characters.</span> The upgrade die
+<p>This keyword only appears on upgrades. After the attached
+character is defeated, its controller may immediately move
+this upgrade to any of their other characters. The upgrade die
 moves to the new character card, even if it was in the dice pool.</p>
 
 <ul>
@@ -1255,9 +1190,9 @@ that takes place in the game.</p>
 <h4 id="beforeabilities">Before abilities</h4>
 
 <p>If, during the course of a game, a before ability meets its
-trigger condition, immediately resolve the before ability prior
-to resolving the rest of the effect. In this way, before abilities
-can interrupt the flow of the game and ignore the queue.</p>
+trigger condition, immediately resolve the before ability
+before continuing to resolve the rest of the effect. In this way,
+before abilities can interrupt the flow of the game.</p>
 
 <p><em>Example: One with the Force (<span class="icon-set-AW"></span>42) says “Before attached character is defeated, this card becomes a support for the rest of the game.” The trigger condition is “attached character is defeated,” and the timing word “before” tells you to resolve the rest of the effect before the trigger condition resolves.</em></p>
 
@@ -1277,16 +1212,10 @@ the queue to resolve.</p>
 at the same time, the player who is resolving those abilities
 chooses the order they resolve in (in the case of before abilities)
 or enter the queue in (in the case of after abilities). If more than
-one player has abilities that are simultaneous, the player who
-controls the battlefield chooses the order in which each player
-resolves their own abilities or has them enter the queue.</p>
+one player has abilities that are simulatenous, the player who
+controls the battlefield chooses the order they resolve in.</p>
 
-<p><em>Example: A Tusken Raider (<span class="icon-set-AW"></span>22) with Fast Hands (<span class="icon-set-SoW"></span>150) is
-activated when there is also a Jango Fett (<span class="icon-set-AW"></span>21) with Fast
-Hands in play. Each card is controlled by a different player.
-Both players have after abilities that can resolve after the
-Tusken Raider activates, so it is the battlefield controller’s
-choice as to which player resolves theirs first.</em></p>
+<p><em>Example: A Tusken Raider (<span class="icon-set-AW"></span>22) is activated with Jango Fett (<span class="icon-set-AW"></span>21) in play. Each card is controlled by a different player. Both have an after ability that can resolve after the Tusken Raider activates, so it is the battlefield controller’s choice as to which one enters the queue first.</em></p>
 
 <h3 id="effects">Effects</h3>
 
@@ -1322,25 +1251,12 @@ discard this upgrade.” Because this prevents the character
 from being defeated, the character is never considered to
 have been defeated.</em></p>
 
-<p>Some replacement effects that are part of before abilities use
-the word “would be” in their text. These effects are faster than
-other before abilities, and no abilities can be triggered off of
-the original effect.</p>
-
-<p><em>Example: Second Chance (<span class="icon-set-AW"></span>137) resolves before the before
-ability on General Grievous (<span class="icon-set-AW"></span>3). Since the character affected
-by Second Chance is no longer defeated, General Grievous’
-ability cannot be triggered.</em></p>
-
 <ul>
-<li>When two or more replacement effects are trying to replace
-the same thing, the player who is resolving those abilities
-chooses the order they resolve/enter the queue in. If more than
-one player has abilities that are simultaneous, the player who
-controls the battlefield chooses the order they resolve in. The
-other replacement effect(s) no longer resolve, since the thing
-they are replacing no longer exists (it has already been
-replaced).</li>
+<li>If two or more replacement effects are trying to replace the
+same thing, the battlefield controller chooses which one
+resolves. The other replacement effects no longer resolve,
+since the thing they are replacing no longer exists (it has
+already been replaced).</li>
 </ul>
 
 <h4 id="self-referentialeffects">Self-referential effects</h4>
@@ -1429,16 +1345,11 @@ the dice being referenced.</p>
 
 <p><em>Example: The combined value of two dice showing ranged damage, with values of 2 and 1 respectively, would be 3.</em></p>
 
-<h3 id="controller" class="new">Controller</h3>
+<h3 id="controller">Controller</h3>
 
 <p>The controller of a card or die is the player who has it in their
 in play area. By default, players control all of the cards and
 dice they own.</p>
-
-<ul>
-	<li class="new">When an ability refers to “your” card or die, it is referring to
-a card or die under your control.</li>
-</ul>
 
 <h3 id="copyofacard">Copy (of a card)</h3>
 
@@ -1484,7 +1395,7 @@ player’s hand or deck. Looking at a card does not change the
 position of the card, and after being looked at the card should
 be returned to its previous location.</p>
 
-<h3 id="move" class="new">Move</h3>
+<h3 id="move">Move</h3>
 
 <p>Some effects allow players to move cards or tokens.</p>
 
@@ -1492,12 +1403,6 @@ be returned to its previous location.</p>
 <li>When something moves, it cannot move to its same
 (current) placement. If there is no valid destination for a
 move, the move cannot resolve.</li>
-<li>When an upgrade moves to a new character, its die returns
-to the matching card.</li>
-<li class="new">When an upgrade moves to a new character, it maintains
-its state (ready or exhausted).</li>
-<li>An upgrade with a play restriction can be moved to any
-character, as the upgrade is not being played.</li>
 <li>When damage is moved to a new character, it ignores
 shields and the character is not considered to have
 taken damage.</li>
@@ -1538,17 +1443,6 @@ resolved. Symbols that are modifiers or require a resource
 match still count as that symbol.</li>
 </ul>
 
-<h3 id="replace" class="new">Replace</h3>
-
-<p>When an upgrade is discarded to decrease the cost of another
-upgrade, the new upgrade replaces the old one. <span class="new">Each player
-can only replace an upgrade once per round.</span></p>
-
-<h3 id="rolling">Rolling</h3>
-
-<p>When a card refers to rolling a die, this applies to both rolling
-it into your pool and rerolling it (if it was already in your pool).</p>
-
 <h3 id="showing">Showing</h3>
 
 <p>A die side is showing if it is the faceup side after being rolled
@@ -1558,7 +1452,8 @@ into a dice pool.</p>
 <li>Dice sides that are not faceup cannot be referenced when a
 card requires a symbol to be showing.</li>
 <li>Effects which reference a certain symbol showing on a die work
-with any side showing that symbol, even if it is a modified side.</li>
+with any side showing that symbol, even if it is a modified side.
+<span class="new">Showing damage includes ranged, melee, and indirect damage.</span></li>
 <li>Dice on cards do not have any sides showing. A die can
 only show a side once it has been rolled into a player’s
 dice pool.</li>
@@ -1670,78 +1565,3 @@ simultaneous abilities controlled by more than one player are
 resolved until someone else controls the battlefield. The other
 players continue playing until there is only one player left in
 the game; that player wins.</p>
-
-<h1 id="balanceoftheforce" class="new">Balance of The Force</h1>
-
-<p class="new">This section includes a list of characters whose point values
-have been modified. The point values listed here supersede
-the point values printed on the card.</p>
-
-<h3 id="plus1point" class="new">+1 Point</h3>
-
-<h4 id="bof_04002" class="new">Captain Phasma (<span class="icon-set-TPG"></span>2) 10/14 Points</h4>
-
-<h3 id="plus2point" class="new">+2 Points</h3>
-
-<h4 id="bof_02002" class="new">FN-2199 (<span class="icon-set-SoR"></span>2) 12/15 Points</h4>
-
-<h4 id="bof_01029" class="new">Poe Dameron (<span class="icon-set-AW"></span>29) 16/20 Points</h4>
-
-<h4 id="bof_02021" class="new">Captain Phasma (<span class="icon-set-SoR"></span>21) 12/15 Points</h4>
-
-<h1 id="errata">Errata</h1>
-
-<p>This section includes a list of changes made to cards that are
-not reflected on the printed card, sorted by set.</p>
-
-<h3 id="errata_AW">Awakenings (<span class="icon-set-AW"></span>)</h3>
-
-<h4 id="errata_01129">Hyperspace Jump (129)</h4>
-
-<p>Should read: "End the action phase. You may switch the
-battlefield with the battlefield that is not being used. <strong>Set
-aside this card instead of discarding it.</strong>"</p>
-
-<h4 id="errata_01107" class="new">It's A Trap (107)</h4>
-
-<p class="new">No longer has Ambush and should read: "Choose a symbol
-showing on an opponent’s die. Then turn <strong>up to 2</strong> of your Red
-dice to sides showing that symbol."</p>
-
-<h3 id="errata_SoR">Spirit of Rebellion (<span class="icon-set-SoR"></span>)</h3>
-
-<h4 id="errata_02141">Ammo Belt (141)</h4>
-
-<p>Should read: "Before a <i>weapon</i> upgrade on attached
-character would be discarded by a card effect, you may
-discard this upgrade instead."</p>
-
-<h4 id="errata_02150">Fast Hands (150)</h4>
-
-<p>Should read: "<strong>Yellow character only</strong>. After you activate
-attached character, you may resolve one of its character or
-upgrade dice."</p>
-
-<h4 id="errata_02070" class="new">Imperial Inspection (70)</h4>
-
-<p class="new">Should read: "After one of your dice rolls a disrupt (<span class="icon-disrupt"></span>), you
-may <strong>set this support aside</strong> to return an upgrade in play that
-costs 2 or less to its owner’s hand."</p>
-
-<h4 id="errata_02046">Outer Rim Smuggler (46)</h4>
-
-<p>Should read: "<strong>The first time each round</strong> you play the last
-card from your hand, gain 1 resource."</p>
-
-<h4 id="errata_02057" class="new">Vibroknife (57)</h4>
-
-<p class="new">Should read: "Ambush. <strong>Damage dealt by this die or by dice
-it modifies is unblockable.</strong>"</p>
-
-<h3 id="errata_EaW" class="new">Empire At War (<span class="icon-set-EaW"></span>)</h3>
-
-<h4 id="errata_03123" class="new">Heat of Battle (123)</h4>
-
-<p class="new">Should read: "Choose an opponent. That opponent turns <strong>up
-to 2</strong> of their dice to sides showing damage (<span class="icon-ranged"></span> or <span class="icon-melee"></span>).
-Turn <strong>up to 2</strong> of your dice to sides showing damage."</p>
