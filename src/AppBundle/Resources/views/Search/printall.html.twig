@@ -1,0 +1,68 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}Print all{% endblock %}
+
+{% block stylesheets %}
+	<style>
+	div.info {
+		display: inline-block;
+		width: 50px;
+	}
+
+	div.info span {
+		display: inline-block;
+		width: 20px;
+		text-align: center;
+	}
+	@media print {
+		h4.header {
+			page-break-before: always;
+		}
+
+		h4.header:first-child {
+			page-break-before: avoid;
+		}
+	}
+	</style>
+{% endblock %}
+
+{% block body %}
+<div class="main white container">
+	{% for affiliation in affiliations %}
+		{% for faction in factions %}
+			{% for type in types %}
+				{% if cards[affiliation][faction][type] is defined %}
+					{% set ex = cards[affiliation][faction][type]|first %}
+					<h4 class="header">
+						{% if ex.affiliation.code != 'neutral' %}
+						<img src="{{ asset('/bundles/app/images/affiliations/' ~ ex.affiliation.code ~ '.png') }}" height="20" width="20"/>
+						{% endif %}
+						{{ex.affiliation.name}}
+						<span class="fa fa-square fg-{{ex.faction.code}}"></span>
+						{{ex.faction.name}}
+						<span class="icon icon-{{ex.type.code}} fg-{{ex.faction.code}}"></span>
+						{{ex.type.name}}
+					</h4>
+					<div>
+						{% for card in cards[affiliation][faction][type] %}
+							<div>
+								<div class="info">
+									<span class="icon icon-set-{{card.set.code}}"></span>
+									{{ "%03d" | format(card.position) }}
+								</div>
+								<a class="card-tip" data-code="{{card.code}}">
+									{{card.name}}
+									{% if card.subtitle %}
+									<span>- {{card.subtitle}}</span>
+									{% endif %}
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	{% endfor %}
+</div>
+
+{% endblock %}

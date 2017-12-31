@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Functional as F;
+
 class SearchController extends Controller
 {
 
@@ -446,4 +448,38 @@ class SearchController extends Controller
 		));
 	}
 
+	public function printallAction()
+	{
+		$response = new Response();
+		$response->setPublic();
+		$response->setMaxAge($this->container->getParameter('cache_expiration'));
+
+		$cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAll();
+
+		$cards = F\group($cards, function($card) {
+			return $card->getAffiliation()->getCode();
+		});
+
+		foreach($cards as $affiliation => $cardsByAffiliation)
+		{
+			$cards[$affiliation] = F\group($cardsByAffiliation, function($card) {
+				return $card->getFaction()->getCode();
+			});
+			foreach($cards[$affiliation] as $faction => $cardsByFaction)
+			{
+				$cards[$affiliation][$faction] = F\group($cardsByFaction, function($card) {
+					return $card->getType()->getCode();
+				});
+			}
+		}
+
+		return $this->render(
+			'AppBundle:Search:printall.html.twig', [
+				'cards' => $cards,
+				'affiliations' => ['villain', 'hero', 'neutral'],
+				'factions' => ['red', 'blue', 'yellow', 'gray'],
+				'types' => ['character', 'upgrade', 'support', 'event', 'battlefield', 'plot']
+			]
+		);
+	}
 }

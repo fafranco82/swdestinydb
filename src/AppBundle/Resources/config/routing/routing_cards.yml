@@ -26,3 +26,8 @@ cards_processSearchForm:
     path: /process
     defaults:
         _controller: AppBundle:Search:process
+
+cards_printing_page:
+    path: /printall
+    defaults:
+        _controller: AppBundle:Search:printall
