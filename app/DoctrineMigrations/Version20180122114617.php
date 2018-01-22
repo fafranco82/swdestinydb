@@ -34,8 +34,8 @@ class Version20180122114617 extends AbstractMigration
         $this->addSql("INSERT INTO format (code, name) VALUES ('TRI', 'Trilogy')");
         $this->addSql("INSERT INTO format (code, name) VALUES ('INF', 'Infinite')");
 
-        $this->addSql("UPDATE deck SET format_id=(SELECT id FROM format WHERE code='INF')");
-        $this->addSql("UPDATE decklist SET format_id=(SELECT id FROM format WHERE code='INF')");
+        $this->addSql("UPDATE deck SET format_id=(SELECT id FROM format WHERE code='STD')");
+        $this->addSql("UPDATE decklist SET format_id=(SELECT id FROM format WHERE code='STD')");
     }
 
     /**
