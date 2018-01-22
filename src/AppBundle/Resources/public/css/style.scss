@@ -325,10 +325,15 @@ ol {
 	margin-right: 4px;
 }
 
+.deck-name {
+	display: inline-block;
+	margin-top: 0.5em;
+}
+
 .deck-format {
 	color: #ccc;
     border: 2px solid #ccc;
-    font-size: 75%;
+    font-size: 10px;
     padding: 0.2em 0.5em;
     font-weight: bold;
     border-radius: 1em;
@@ -668,8 +673,9 @@ div.site-slogan {
 
 /************ LIST OF DECKLISTS **************/
 
-.decklist-images {
+td.decklist-images {
 	width: 290px;
+	vertical-align: middle !important;
 
 	.decklist-character-images, .decklist-plot-images {
 		display: inline-block;
@@ -698,7 +704,6 @@ div.site-slogan {
 
 .decklist-format {
 	@extend .deck-format;
-	font-size: 65%;
 }
 
 /************* DECKLIST *********************/
