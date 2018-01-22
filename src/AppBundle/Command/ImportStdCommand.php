@@ -155,6 +155,22 @@ class ImportStdCommand extends ContainerAwareCommand
 		$this->em->flush();
 		$this->loadCollection('Cycle');
 		$output->writeln("Done.");
+
+		// formats
+
+		$output->writeln("Importing Formats...");
+		$setsFileInfo = $this->getFileInfo($path, 'formats.json');
+		$imported = $this->importFormatsJsonFile($setsFileInfo);
+		$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+		if(count($imported)) {
+			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+			if(!$helper->ask($input, $output, $question)) {
+				die();
+			}
+		}
+		$this->em->flush();
+		$this->loadCollection('Format');
+		$output->writeln("Done.");
 		
 		// second, sets
 
@@ -347,6 +363,26 @@ class ImportStdCommand extends ContainerAwareCommand
 		
 		return $result;
 	}
+
+	protected function importFormatsJsonFile(\SplFileInfo $fileinfo)
+	{
+		$result = [];
+	
+		$formatsData = $this->getDataFromFile($fileinfo);
+		foreach($formatsData as $formatData) {
+			$format = $this->getEntityFromData('AppBundle\Entity\Format', $formatData, [
+					'code', 
+					'name',
+					'data'
+			], [], []);
+			if($format) {
+				$result[] = $format;
+				$this->em->persist($format);
+			}
+		}
+		
+		return $result;
+	}
 	
 	protected function importSetsJsonFile(\SplFileInfo $fileinfo)
 	{
@@ -442,13 +478,13 @@ class ImportStdCommand extends ContainerAwareCommand
 	{
 		$metadata = $this->em->getClassMetadata($entityName);
 		$type = $metadata->fieldMappings[$fieldName]['type'];
-		
+
 		// new value, by default what json gave us is the correct typed value
-		$newTypedValue = $newJsonValue;
-		
+		$newStringValue = $newTypedValue = $newJsonValue;
+
 		// current value, by default the json, serialized value is the same as what's in the entity
 		$getter = 'get'.ucfirst($fieldName);
-		$currentJsonValue = $currentTypedValue = $entity->$getter();
+		$currentJsonValue = $currentTypedValue = $currentStringValue = $entity->$getter();
 
 		// if the field is a data, the default assumptions above are wrong
 		if(in_array($type, ['date', 'datetime'])) {
@@ -467,10 +503,20 @@ class ImportStdCommand extends ContainerAwareCommand
 				}
 			}
 		}
+
+		if(in_array($type, ['json', 'json_array'])) {
+			if($newJsonValue !== NULL) {
+				$newStringValue = json_encode($newJsonValue);
+			}
+			if($currentJsonValue !== NULL) {
+				$currentStringValue = json_encode($currentJsonValue);
+			}
+		}
 		
 		$different = ($currentJsonValue !== $newJsonValue);
+
 		if($different) {
-			$this->output->writeln("Changing the <info>$fieldName</info> of <info>".$entity->toString()."</info> ($currentJsonValue => $newJsonValue)");
+			$this->output->writeln("Changing the <info>$fieldName</info> of <info>".$entity->toString()."</info> ($currentStringValue => $newStringValue)");
 			$setter = 'set'.ucfirst($fieldName);
 			$entity->$setter($newTypedValue);
 		}
@@ -488,7 +534,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			}
 		}
 		$value = $data[$key];
-		
+
 		if(!key_exists($key, $metadata->fieldNames)) {
 			throw new \Exception("Missing column [$key] in entity ".$entityName);
 		}

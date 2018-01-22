@@ -1,0 +1,6 @@
+{{#each formats}}
+<label class="btn btn-default" data-code="{{code}}" title='{{#each data.sets}}{{set_icon this}}{{#unless @last}} · {{/unless}}{{/each}}'>
+	<input type="radio" name="format_code" value="{{code}}">
+	<strong>{{name}}</strong>
+</label>
+{{/each}}

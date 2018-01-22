@@ -52,7 +52,7 @@ class ImportTransCommand extends ContainerAwareCommand
 			$path = substr($path, 0, strlen($path) - 1);
 		}
 		
-		$things = ['affiliation', 'faction', 'type', 'rarity', 'set', 'sideType', 'subtype'];
+		$things = ['format', 'affiliation', 'faction', 'type', 'rarity', 'set', 'sideType', 'subtype'];
 		
 		foreach($locales as $locale) 
 		{

@@ -325,6 +325,17 @@ ol {
 	margin-right: 4px;
 }
 
+.deck-format {
+	color: #ccc;
+    border: 2px solid #ccc;
+    font-size: 75%;
+    padding: 0.2em 0.5em;
+    font-weight: bold;
+    border-radius: 1em;
+    text-align: center;
+    vertical-align: middle;
+}
+
 /********** NEW DECK **********/
 
 .list-factions li label {
@@ -683,6 +694,11 @@ div.site-slogan {
 			margin-right: 7px;
 		}
 	}
+}
+
+.decklist-format {
+	@extend .deck-format;
+	font-size: 65%;
 }
 
 /************* DECKLIST *********************/

@@ -18,6 +18,7 @@
 				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},
 				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}
 			</div>
+			<div>{{trans "decks.edit.meta.format"}}: {{deck.get_format_name}}</div>
 			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>
 			{{#if deck.get_problem}}
 			<div class="text-danger small">
@@ -31,7 +32,7 @@
 				<div class="deck-battlefield">
 					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
 					<div>
-						<a href="#" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+						<a href="#" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
 							{{name}}
 						</a>
 						{{#unless (own_enough_cards this)}}
@@ -54,7 +55,7 @@
 						<div class="plot-thumbnail card-thumbnail-2x card-thumbnail-plot border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
 						<div class="plot-name">
 							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
-							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
 								{{name}}
 							</a>
 							{{#unless (own_enough_cards this)}}
@@ -78,7 +79,7 @@
 						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
 						<div class="character-name">
 							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
-							<a href="{{url}}" class="card card-tip fg-{{faction_code}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
 								{{name}}
 							</a>
 							{{#if is_unique}}

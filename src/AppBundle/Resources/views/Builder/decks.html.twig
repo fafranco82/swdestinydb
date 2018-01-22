@@ -99,7 +99,9 @@
 			</div>
 		</td>
 		<td>
-			<a href="{{ path('deck_view',{deck_id:deck.id}) }}" class="deck-name">{{ deck.name }}</a> {{ deck.version }}
+			<span class="deck-format">{{ deck.format_name }}</span>
+			<a href="{{ path('deck_view',{deck_id:deck.id}) }}" class="deck-name">{{ deck.name }}</a>
+			<span class="deck-version">{{ deck.version }}</span>
 			{% if deck.problem is not null %}
 			<div class="text-danger small"><span class="fa fa-exclamation-triangle"></span> {{('decks.problems.'~deck.problem) | trans}}</div>
 			{% endif %}

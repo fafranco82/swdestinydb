@@ -12,6 +12,75 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ApiController extends Controller
 {
+	private function createResponse(Request $request)
+	{
+		$response = new Response();
+		$response->setPublic();
+		$response->setMaxAge($this->container->getParameter('cache_expiration'));
+		$response->headers->add(array(
+			'Access-Control-Allow-Origin' => '*',
+			'Content-Language' => $request->getLocale()
+		));
+
+		return $response;
+	}
+	/**
+	 * Get the description of all the formats as an array of JSON objects.
+	 * 
+	 * @ApiDoc(
+	 *  section="Format",
+	 *  resource=true,
+	 *  description="All the Formats",
+	 *  parameters={
+	 *    {"name"="jsonp", "dataType"="string", "required"=false, "description"="JSONP callback"}
+	 *  },
+	 * )
+	 * @param Request $request
+	 */
+	public function listFormatsAction(Request $request)
+	{
+		$response = $this->createResponse($request);
+
+		$jsonp = $request->query->get('jsonp');
+
+		$list_formats = $this->getDoctrine()->getRepository('AppBundle:Format')->findAll();
+
+		$lastModified = NULL;
+		/* @var $format \AppBundle\Entity\Format */
+		foreach($list_formats as $format) {
+			if(!$lastModified || $lastModified < $format->getDateUpdate()) {
+				$lastModified = $format->getDateUpdate();
+			}
+		}
+		$response->setLastModified($lastModified);
+		if ($response->isNotModified($request)) {
+			return $response;
+		}
+
+		// build the response
+
+		$formats = array();
+		/* @var $format \AppBundle\Entity\Format */
+		foreach($list_formats as $format) {
+			$formats[] = array(
+					"name" => $format->getName(),
+					"code" => $format->getCode(),
+					"data" => $format->getData()
+			);
+		}
+
+		$content = json_encode($formats);
+		if(isset($jsonp))
+		{
+			$content = "$jsonp($content)";
+			$response->headers->set('Content-Type', 'application/javascript');
+		} else
+		{
+			$response->headers->set('Content-Type', 'application/json');
+		}
+		$response->setContent($content);
+		return $response;
+	}
 
 	/**
 	 * Get the description of all the sets as an array of JSON objects.

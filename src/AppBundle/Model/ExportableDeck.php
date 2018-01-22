@@ -13,6 +13,8 @@ class ExportableDeck
 				'date_creation' => $this->getDateCreation()->format('c'),
 				'date_update' => $this->getDateUpdate()->format('c'),
 				'description_md' => $this->getDescriptionMd(),
+				'format_code' => $this->getFormat()->getCode(),
+				'format_name' => $this->getFormat()->getName(),
 				'user_id' => $this->getUser()->getId(),
 				'affiliation_code' => $this->getAffiliation()->getCode(),
 				'affiliation_name' => $this->getAffiliation()->getName(),

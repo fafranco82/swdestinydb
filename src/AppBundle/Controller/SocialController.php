@@ -315,6 +315,7 @@ class SocialController extends Controller
 
         $cards_code = $request->query->get('cards');
         $affiliation_code = filter_var($request->query->get('affiliation'), FILTER_SANITIZE_STRING);
+        $format_code = filter_var($request->query->get('format'), FILTER_SANITIZE_STRING);
         $author_name = filter_var($request->query->get('author'), FILTER_SANITIZE_STRING);
         $decklist_name = filter_var($request->query->get('name'), FILTER_SANITIZE_STRING);
         $sort = $request->query->get('sort');
@@ -326,6 +327,8 @@ class SocialController extends Controller
         $params['sort_'.$sort] = ' selected="selected"';
         $params['affiliations'] = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findAllAndOrderByName();
         $params['affiliation_selected'] = $affiliation_code;
+        $params['formats'] = $this->getDoctrine()->getRepository('AppBundle:Format')->findAll();
+        $params['format_selected'] = $format_code;
 
         if (! empty($cards_code) && is_array($cards_code)) {
             $cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAllByCodes($cards_code);
@@ -1031,10 +1034,12 @@ class SocialController extends Controller
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
 
         $affiliations = $this->getDoctrine()->getRepository('AppBundle:Affiliation')->findPrimaries();
+        $formats = $this->getDoctrine()->getRepository('AppBundle:Format')->findAll();
 
         $searchForm = $this->renderView('AppBundle:Search:form.html.twig',
                             array(
                                 'affiliations' => $affiliations,
+                                'formats' => $formats,
                                 'author' => '',
                                 'name' => '',
                             )

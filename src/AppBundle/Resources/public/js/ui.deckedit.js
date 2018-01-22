@@ -4,6 +4,7 @@ var DisplayColumnsTpl = '',
 	SortKey = 'type_code',
 	SortOrder = 1,
 	CardDivs = [[],[],[]],
+	Format = null,
 	Config = null;
 
 /**
@@ -109,6 +110,18 @@ function get_examples(codes, key) {
 }
 
 /**
+ * builds the format selector
+ * @memberOf ui
+ */
+ui.build_format_selector = function build_format_selector() {
+	$('#format-selector').empty();
+	var tpl = Handlebars.templates['ui_deckedit-formats'];
+	$('#format-selector').html(tpl({
+		formats: app.data.formats.find({name: {'$exists': true } }, {})
+	})).button().find('label').tooltip({container: 'body', html: true});
+}
+
+/**
  * builds the affiliation selector
  * @memberOf ui
  */
@@ -191,6 +204,7 @@ ui.build_set_selector = function build_set_selector() {
  * @memberOf ui
  */
 ui.init_selectors = function init_selectors() {
+	$('#format-selector').find('input[value='+app.deck.get_format_code()+']').prop('checked', true).parent().addClass('active');
 	$('[data-filter=affiliation_code]').find('input[name=neutral]').prop("checked", true).parent().addClass('active');
 	$('[data-filter=affiliation_code]').find('input[name='+app.deck.get_affiliation_code()+']').prop("checked", true).parent().addClass('active');
 	$('[data-filter=faction_code]').find('input').prop("checked", true).parent().addClass('active');
@@ -451,6 +465,12 @@ ui.on_2nd_die_change = function on_2nd_die_change(card_code, active) {
  */
 ui.setup_event_handlers = function setup_event_handlers() {
 
+	$('#format-selector').on('change', 'input', function(event) {
+		app.deck.set_format_code($(this).val());
+		ui.refresh_deck();
+		ui.refresh_list(true);
+	});
+
 	$('[data-filter]').on({
 		change : ui.refresh_list,
 		click : ui.on_click_filter
@@ -562,7 +582,7 @@ ui.reset_list = function reset_list() {
  * don't fire unless 250ms has passed since last invocation
  * @memberOf ui
  */
-ui.refresh_list = _.debounce(function refresh_list() {
+ui.refresh_list = _.debounce(function refresh_list(refresh) {
 	$('#collection-table').empty();
 	$('#collection-grid').empty();
 
@@ -588,7 +608,7 @@ ui.refresh_list = _.debounce(function refresh_list() {
 		if (Config['show-only-owned'] && card.maxqty.cards==0) return;
 
 		var row = divs[card.code];
-		if(!row) row = divs[card.code] = ui.build_row(card);
+		if(!row || refresh) row = divs[card.code] = ui.build_row(card);
 
 		row.data("code", card.code).addClass('card-container');
 
@@ -730,6 +750,7 @@ ui.on_data_loaded = function on_data_loaded() {
  */
 ui.on_all_loaded = function on_all_loaded() {
 	ui.update_list_template();
+	ui.build_format_selector();
 	ui.build_affiliation_selector();
 	ui.build_faction_selector();
 	ui.build_type_selector();

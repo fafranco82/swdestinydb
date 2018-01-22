@@ -73,6 +73,13 @@
         return {};
     });
 
+    Handlebars.registerHelper('format', function(code) {
+        if(app.data && app.data.formats) {
+            return app.data.formats.findById(code);
+        }
+        return {};
+    });
+
     Handlebars.registerHelper('routing', function(path, options) {
         return Routing.generate(path, options.hash || {});
     });

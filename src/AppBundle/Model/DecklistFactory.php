@@ -63,6 +63,7 @@ class DecklistFactory
 		$decklist->setDateUpdate(new \DateTime());
 		$decklist->setSignature($new_signature);
 		$decklist->setAffiliation($deck->getAffiliation());
+		$decklist->setFormat($deck->getFormat());
 		$decklist->setLastSet($deck->getLastSet());
 		$decklist->setNbVotes(0);
 		$decklist->setNbfavorites(0);

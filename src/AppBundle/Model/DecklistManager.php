@@ -173,6 +173,11 @@ class DecklistManager
 			$affiliation = $this->doctrine->getRepository('AppBundle:Affiliation')->findOneBy(['code' => $affiliation_code]);
 		}
 
+		$format_code = filter_var($request->query->get('format'), FILTER_SANITIZE_STRING);
+		if($format_code) {
+			$format = $this->doctrine->getRepository('AppBundle:Format')->findByCode($format_code);
+		}
+
 		$author_name = filter_var($request->query->get('author'), FILTER_SANITIZE_STRING);
 
 		$decklist_name = filter_var($request->query->get('name'), FILTER_SANITIZE_STRING);
@@ -185,6 +190,10 @@ class DecklistManager
 		if(!empty($affiliation)) {
 			$qb->andWhere('d.affiliation = :affiliation');
 			$qb->setParameter('affiliation', $affiliation);
+		}
+		if(!empty($format)) {
+			$qb->andWhere('d.format = :format');
+			$qb->setParameter('format', $format);
 		}
 		if(!empty($author_name)) {
 			$qb->innerJoin('d.user', 'u');
