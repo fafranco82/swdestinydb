@@ -4,6 +4,8 @@ var date_creation,
 	date_update,
 	description_md,
 	id,
+	format_code,
+	format_name,
 	name,
 	tags,
 	affiliation_code,
@@ -55,11 +57,25 @@ deck.init = function init(data) {
 	user_id = data.user_id;
 	
 	if(app.data.isLoaded) {
-		deck.set_slots(data.slots);
+		deck.on_data_loaded(data);
 	} else {
 		console.log("deck.set_slots put on hold until data.app");
-		$(document).on('data.app', function () { deck.set_slots(data.slots); });
+		$(document).on('data.app', function () {
+			deck.on_data_loaded(data);
+		});
 	}
+}
+
+deck.on_data_loaded = function on_data_loaded(data) {
+	//back up points and has_errata from characters
+	app.data.cards.find({type_code: 'character'}).forEach(function(card) {
+		app.data.cards.updateById(card.code, {
+			backedUp: _.pick(card, ['points'])
+		});
+	});
+
+	deck.set_format_code(data.format_code);
+	deck.set_slots(data.slots);	
 }
 
 /**
@@ -100,6 +116,55 @@ deck.get_id = function get_id() {
 deck.get_name = function get_name() {
 	return name;
 }
+
+/**
+ * @memberOf deck
+ * @returns string
+ */
+ deck.get_format_code = function get_format_code() {
+ 	return format_code;
+ }
+
+ /**
+ * @memberOf deck
+ * @returns string
+ */
+ deck.get_format_name = function get_format_name() {
+ 	return format_name;
+ }
+
+/**
+ * @memberOf deck
+ */
+ deck.set_format_code = function set_format_code(code) {
+ 	format_code = code;
+ 	var data = deck.get_format_data();
+ 	format_name = data.name;
+
+ 	//restore cards to its state
+ 	app.data.cards.find({
+ 		backedUp: {$exists: true}
+ 	}).forEach(function(card) {
+ 		app.data.cards.updateById(card.code, card.backedUp);
+ 		app.data.cards.updateById(card.code, {$unset: {balance: 1}});
+ 	});
+
+ 	//balance of the force
+ 	_.forIn(data.data.balance, function(points, code) {
+ 		app.data.cards.updateById(code, {
+ 			points: points,
+ 			balance: format_code
+ 		});
+ 	});
+ }
+
+ /**
+ * @memberOf deck
+ * @returns object
+ */
+ deck.get_format_data = function get_format_data() {
+ 	return app.data.formats.findById(format_code);
+ }
 
 /**
  * @memberOf deck
@@ -490,6 +555,9 @@ deck.get_notmatching_cards = function get_notmatching_cards() {
  * @memberOf deck
  */
 deck.can_include_card = function can_include_card(card) {
+	// card not valid in format
+	if(!deck.within_format_sets(card)) return false;
+
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;
 
@@ -504,6 +572,25 @@ deck.can_include_card = function can_include_card(card) {
 
 	// if none above => no
 	return false;
+}
+
+/**
+* returns true if the card set (or a set with a reprint of the card) is
+* included within valid set of formats
+* @memberOf deck
+*/
+deck.within_format_sets = function within_format_sets(card) {
+	var set_codes = [card.set_code];
+	if(_.has(card, 'reprints')) {
+		card.reprints.forEach(function(code) {
+			set_codes.push(app.data.cards.findById(code).set_code);
+		});
+	}
+	if(_.has(card, 'reprint_of')) {
+		set_codes.push(app.data.cards.findById(card.reprint_of).set_code);
+	}
+	set_codes = _.uniq(set_codes);
+	return _.intersection(set_codes, deck.get_format_data().data.sets).length > 0;
 }
 
 /**

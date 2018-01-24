@@ -636,4 +636,33 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable,
     {
         return $this->affiliation;
     }
+    /**
+     * @var \AppBundle\Entity\Format
+     */
+    private $format;
+
+
+    /**
+     * Set format
+     *
+     * @param \AppBundle\Entity\Format $format
+     *
+     * @return Deck
+     */
+    public function setFormat(\AppBundle\Entity\Format $format = null)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * Get format
+     *
+     * @return \AppBundle\Entity\Format
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
 }

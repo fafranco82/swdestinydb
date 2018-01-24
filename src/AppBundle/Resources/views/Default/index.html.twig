@@ -18,9 +18,10 @@
                 <div class="media-left">
                     <img src="{{ asset('/bundles/app/images/affiliations/' ~ data.affiliation.code ~ '.png') }}" height="30" width="30"/>
                 </div>
-                <div class="media-body">
+                <div class="media-body" style="padding-bottom: 2px;">
                     <h4 class="media-heading" style="white-space:nowrap"><a href="{{ path('decklist_detail',{decklist_id:data.decklist.id,decklist_name:data.decklist.nameCanonical}) }}">{{ data.decklist.name }}</a></h4>
                     <div class="small">
+                      <span class="deck-format">{{ data.decklist.format.name }}</span>
                       {% set username %}
                         <span class="username">{{ macros.username_colorless(data.decklist.user) }}</span>
                       {% endset %}

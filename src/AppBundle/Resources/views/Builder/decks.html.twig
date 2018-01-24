@@ -99,7 +99,9 @@
 			</div>
 		</td>
 		<td>
-			<a href="{{ path('deck_view',{deck_id:deck.id}) }}" class="deck-name">{{ deck.name }}</a> {{ deck.version }}
+			<div><span class="deck-format">{{ deck.format_name }}</span></div>
+			<a href="{{ path('deck_view',{deck_id:deck.id}) }}" class="deck-name">{{ deck.name }}</a>
+			<span class="deck-version">{{ deck.version }}</span>
 			{% if deck.problem is not null %}
 			<div class="text-danger small"><span class="fa fa-exclamation-triangle"></span> {{('decks.problems.'~deck.problem) | trans}}</div>
 			{% endif %}
@@ -109,7 +111,7 @@
 			{% endfor %}
 			</div>
 		</td>
-		<td class="decks-actions text-right">
+		<td class="decks-actions text-right text-nowrap">
 			<a href="{{ path('deck_edit',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.edit' | trans}}"><span class="fa fa-pencil fa-fw"></span></a>
 			<a href="{{ path('deck_publish_form',{deck_id:deck.id}) }}" class="btn btn-xs btn-default" data-toggle="tooltip" title="{{ 'forms.publish' | trans}}"><span class="fa fa-share fa-fw"></span></a>
 			<button class="btn btn-xs btn-default btn-delete-deck" data-toggle="tooltip" title="{{ 'forms.delete' | trans}}"><span class="fa fa-trash-o fa-fw"></span></button>

@@ -95,10 +95,13 @@ $(function () {
 </td>
 <td>
     <article>
+    <div>
+    	<span class="decklist-format">{{ decklist.format.name }}</span>
+    </div>
 	<h4>
 		<small class="pull-right">
 			{{ macros.decklist_social_icons(decklist) }}
-		</small>
+		</small>		
 		<a class="decklist-name" href="{{ path('decklist_detail', { 'decklist_id': decklist.id, 'decklist_name': decklist.nameCanonical|e('url') }) }}">{{ decklist.name }}</a>
 	</h4>
 	<h5>

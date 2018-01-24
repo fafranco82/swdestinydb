@@ -768,4 +768,33 @@ class Decklist extends \AppBundle\Model\ExportableDeck implements \JsonSerializa
     {
         return $this->predominantFaction;
     }
+    /**
+     * @var \AppBundle\Entity\Format
+     */
+    private $format;
+
+
+    /**
+     * Set format
+     *
+     * @param \AppBundle\Entity\Format $format
+     *
+     * @return Decklist
+     */
+    public function setFormat(\AppBundle\Entity\Format $format = null)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * Get format
+     *
+     * @return \AppBundle\Entity\Format
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
 }

@@ -1,3 +1,9 @@
+api_formats:
+    path: /formats/
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Api:listFormats
+
 api_sets:
     path: /sets/
     methods: [GET]

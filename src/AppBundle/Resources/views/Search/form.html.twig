@@ -10,6 +10,14 @@
 					{% endfor %}
 				</select>
 			</div>
+			<div class="form-group">
+				<label for="">{{ 'decklist.list.search.format.label' | trans }}</label> <select class="form-control" id="format" name="format">
+					<option value="">{{ 'decklist.list.search.format.any' | trans}}</option>
+					{% for format in formats %}
+					<option value="{{ format.code }}"{% if format_selected is defined  and format_selected == format.code %} selected="selected"{% endif %}>{{ format.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
             <div class="form-group">
 				<label for="">{{ 'decklist.list.search.used.label' | trans }}</label>
 				{{ cards|default('')|raw }}

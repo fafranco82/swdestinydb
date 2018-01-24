@@ -16,6 +16,12 @@ AppBundle\Entity\Decklist:
             joinColumn:
                 name: affiliation_id
                 referencedColumnName: id
+        format:
+            targetEntity: Format
+            nullable: false
+            joinColumn:
+                name: format_id
+                referencedColumnName: id
         lastSet:
             targetEntity: Set
             nullable: false

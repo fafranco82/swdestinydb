@@ -8,86 +8,76 @@ var force_update = false;
  * @memberOf data
  */
 data.load = function load() {
-	
-	data.isLoaded = false;
+    data.isLoaded = false;
 
-	var fdb = new ForerunnerDB();
-	data.db = fdb.db('swdestinydb');
+    var fdb = new ForerunnerDB();
+    data.db = fdb.db('swdestinydb');
 
-	data.masters = {
-		sets: data.db.collection('master_set', {primaryKey:'code', changeTimestamp: true}),
-		cards: data.db.collection('master_card', {primaryKey:'code', changeTimestamp: true})
-	};
+    data.collections = ['formats', 'sets', 'cards'];
 
-	data.dfd = {
-		sets: new $.Deferred(),
-		cards: new $.Deferred()
-	};
+    data.masters = {};
+    data.collections.forEach(function(collection) {
+        data.masters[collection] = data.db.collection('master_'+collection, {primaryKey: 'code', changeTimestamp: true});
+    });
 
-	$.when(data.dfd.sets, data.dfd.cards).done(data.update_done).fail(data.update_fail);
+    data.dfd = {};
+    data.collections.forEach(function(collection) {
+        data.dfd[collection] = new $.Deferred();
+    });
 
-	data.masters.sets.load(function (err) {
-		if(err) {
-			console.log('error when loading sets', err);
-			force_update = true;
-		}
-		data.masters.cards.load(function (err) {
-			if(err) {
-				console.log('error when loading cards', err);
-				force_update = true;
-			}
 
-			/*
-			 * data has been fetched from local store
-			 */
+    $.when.apply(_.map(data.collections, _.partial(_.get, data.dfd))).done(data.update_done).fail(data.update_fail);
 
-			/*
-			 * if database is older than 10 days, we assume it's obsolete and delete it
-			 */
-			var age_of_database = new Date() - new Date(data.masters.cards.metaData().lastChange);
-			if(age_of_database > 864000000) {
-				console.log('database is older than 10 days => refresh it');
-				data.masters.sets.setData([]);
-				data.masters.cards.setData([]);
-			}
+    async.eachSeries(data.collections, function(collection, done) {
+        data.masters[collection].load(function(err) {
+            if(err) {
+                console.log('error when loading '+collection, err);
+                done(err);
+            } else {
+                //if database is older than 10 days, we assume it's obsolete and delete it
+                var age_of_database = new Date() - new Date(data.masters[collection].metaData().lastChange);
+                if(age_of_database > 864000000) {
+                    console.log(collection+' database is older than 10 days => refresh it');
+                    data.masters[collection].setData([]);
+                }
 
-			/*
-			 * if database is empty, we will wait for the new data
-			 */
-			if(data.masters.sets.count() === 0 || data.masters.cards.count() === 0) {
-				console.log('database is empty => load it');
-				force_update = true;
-			}
+                //if database is empty, we will wait for the new data
+                if(data.masters[collection].count() === 0) {
+                    console.log(collection+' database is empty => load it');
+                    force_update = true;
+                }
 
-			/*
-			 * triggering event that data is loaded
-			 */
-			if(!force_update) {
-				data.release();
-			}
+                done();
+            }
+        });
+    }, function(err) {
+        if(err) {
+            force_update = true;
+        }
 
-			/*
-			 * then we ask the server if new data is available
-			 */
-			data.query();
-		});
-	});
-}
+        //triggering event that data is loaded
+        if(!force_update) {
+            data.release();
+        }
+
+        //then we ask the server if new data is available
+        data.query();
+    });
+};
 
 /**
  * release the data for consumption by other modules
  * @memberOf data
  */
 data.release = function release() {
-	data.sets = data.db.collection('set', {primaryKey:'code', changeTimestamp: false});
-	data.sets.setData(data.masters.sets.find());
-
-	data.cards = data.db.collection('card', {primaryKey:'code', changeTimestamp: false});
-	data.cards.setData(data.masters.cards.find());
-
-	data.isLoaded = true;
-	
-	$(document).trigger('data.app');
+    async.each(data.collections, function(collection, done) {
+        data[collection] = data.db.collection(collection, {primaryKey: 'code', changeTimestamp: false});
+        data[collection].setData(data.masters[collection].find());
+        done();
+    }, function(err) {
+        data.isLoaded = true;
+        $(document).trigger('data.app');
+    });
 }
 
 /**
@@ -95,10 +85,10 @@ data.release = function release() {
  * @memberOf data
  */
 data.update = function update() {
-	_.each(data.masters, function (collection) {
-		collection.drop();
-	});
-	data.load();
+    _.each(data.masters, function(collection) {
+        collection.drop();
+    });
+    data.load();
 }
 
 /**
@@ -106,23 +96,47 @@ data.update = function update() {
  * @memberOf data
  */
 data.query = function query() {
-	$.ajax({
-		url: Routing.generate('api_sets'),
-		success: data.parse_sets,
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log('error when requesting sets', errorThrown);
-			data.dfd.sets.reject(false);
-		}
-	});
+    async.each(data.collections, function(collection, done) {
+        $.ajax({
+            url: Routing.generate('api_'+collection),
+            success: function(response, textStatus, jqXHR) {
+                var master = data.masters[collection];
+                var deferred = data.dfd[collection];
 
-	$.ajax({
-		url: Routing.generate('api_cards'),
-		success: data.parse_cards,
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log('error when requesting cards', errorThrown);
-			data.dfd.cards.reject(false);
-		}
-	});
+                var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
+                var lastChangeDatabase = new Date(master.metaData().lastChange);
+                var isCollectionUpdated = false;
+
+                /*
+                 * if we decided to force the update,
+                 * or if the database is fresh,
+                 * or if the database is older than the data,
+                 * then we update the database
+                 */
+                if(force_update || !lastChangeDatabase || lastChangeDatabase < lastModified) {
+                    console.log(collection+' data is newer than database or update forced => update the database')
+                    master.setData(response);
+                    isCollectionUpdated = true;
+                }
+
+                master.save(function (err) {
+                    if(err) {
+                        console.log('error when saving '+master.name(), err);
+                        deferred.reject(true)
+                    } else {
+                        deferred.resolve(isCollectionUpdated);
+                    }
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('error when requesting '+collection, errorThrown);
+                data.dfd[collection].reject(false);
+            }
+        });
+        done();
+    }, function(err) {
+
+    });
 };
 
 /**
@@ -130,98 +144,47 @@ data.query = function query() {
  * deferred returns true if data has been updated
  * @memberOf data
  */
-data.update_done = function update_done(sets_updated, cards_updated) {
-	if(force_update || (sets_updated[1] === true && cards_updated[1] === true)) {
-		data.release();
-		return;
-	}
+data.update_done = function update_done(updated) {
+    if(force_update) {
+        data.release();
+        return;
+    }
 
-	if(sets_updated[0] === true || cards_updated[0] === true) {
-		/*
-		 * we display a message informing the user that they can reload their page to use the updated data
-		 * except if we are on the front page, because data is not essential on the front page
-		 */
-		if($('.site-title').size() === 0) {
-			var message = "A new version of the data is available. Click <a href=\"javascript:window.location.reload(true)\">here</a> to reload your page.";
-			app.ui.insert_alert_message('warning', message);
-		}
-	}
+    if(updated) {
+        /*
+         * we display a message informing the user that they can reload their page to use the updated data
+         * except if we are on the front page, because data is not essential on the front page
+         */
+        if($('.site-title').size() === 0) {
+            var message = "A new version of the data is available. Click <a href=\"javascript:window.location.reload(true)\">here</a> to reload your page.";
+            //app.ui.insert_alert_message('warning', message);
+            alert(message);
+        }
+    }
 };
+
 
 /**
  * called if an operation (load+update) fails (reject)
  * deferred returns true if data has been loaded
  * @memberOf data
  */
-data.update_fail = function update_fail(sets_loaded, cards_loaded) {
-	if(sets_loaded === false || cards_loaded === false) {
-		var message = Translator.trans('data_load_fail');
-		app.ui.insert_alert_message('danger', message);
-	} else {
-		/*
-		 * since data hasn't been persisted, we will have to do the query next time as well
-		 * -- not much we can do about it
-		 * but since data has been loaded, we call the promise
-		 */
-		data.release();
-	}
-};
-
-/**
- * updates the database if necessary, from fetched data
- * @memberOf data
- */
-data.update_collection = function update_collection(data, collection, lastModifiedData, locale, deferred) {
-	var lastChangeDatabase = new Date(collection.metaData().lastChange);
-	var lastLocale = collection.metaData().locale;
-	var isCollectionUpdated = false;
-
-	/*
-	 * if we decided to force the update,
-	 * or if the database is fresh,
-	 * or if the database is older than the data,
-	 * or if the locale has changed
-	 * then we update the database
-	 */
-	if(force_update || !lastChangeDatabase || lastChangeDatabase < lastModifiedData || locale != lastLocale) {
-		console.log('data is newer than database or update forced or locale has changed => update the database')
-		collection.setData(data);
-		collection.metaData().locale = locale;
-		isCollectionUpdated = true;
-	}
-
-	collection.save(function (err) {
-		if(err) {
-			console.log('error when saving '+collection.name(), err);
-			deferred.reject(true)
-		} else {
-			deferred.resolve(isCollectionUpdated, locale != lastLocale);
-		}
-	});
-}
-
-/**
- * handles the response to the ajax query for sets data
- * @memberOf data
- */
-data.parse_sets = function parse_sets(response, textStatus, jqXHR) {
-	var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
-	var locale = jqXHR.getResponseHeader('Content-Language');
-	data.update_collection(response, data.masters.sets, lastModified, locale, data.dfd.sets);
-};
-
-/**
- * handles the response to the ajax query for the cards data
- * @memberOf data
- */
-data.parse_cards = function parse_cards(response, textStatus, jqXHR) {
-	var lastModified = new Date(jqXHR.getResponseHeader('Last-Modified'));
-	var locale = jqXHR.getResponseHeader('Content-Language');
-	data.update_collection(response, data.masters.cards, lastModified, locale, data.dfd.cards);
+data.update_fail = function update_fail(loaded) {
+    if(!loaded) {
+        //var message = Translator.trans('data_load_fail');
+        //app.ui.insert_alert_message('danger', message);
+    } else {
+        /*
+         * since data hasn't been persisted, we will have to do the query next time as well
+         * -- not much we can do about it
+         * but since data has been loaded, we call the promise
+         */
+        data.release();
+    }
 };
 
 $(function() {
-	data.load();
+    data.load();
 });
 
 })(app.data = {}, jQuery);

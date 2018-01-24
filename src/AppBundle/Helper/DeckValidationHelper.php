@@ -35,6 +35,10 @@ class DeckValidationHelper
 	}
 	
 	public function canIncludeCard(SlotCollectionProviderInterface $deck, $card) {
+		if(!$this->withinFormatSets($card, $deck->getFormat())) {
+			return false;
+		}
+
 		if($card->getAffiliation()->getCode() === 'neutral') {
 			return true;
 		}
@@ -52,6 +56,26 @@ class DeckValidationHelper
 				return true;
 			}
 		}
+
+		return false;
+	}
+
+	public function withinFormatSets($card, $format) {
+		if(in_array($card->getSet()->getCode(), $format->getData()["sets"]))
+			return true;
+
+		if($card->getReprints() !== NULL) {
+			foreach($card->getReprints() as $reprint) {
+				if(in_array($reprint->getSet()->getCode(), $format->getData()["sets"]))
+					return true;
+			}
+		}
+
+		if($card->getReprintOf() !== NULL) {
+			if(in_array($card->getReprintOf()->getSet()->getCode(), $format->getData()["sets"]))
+				return true;
+		}
+
 
 		return false;
 	}

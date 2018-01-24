@@ -39,12 +39,13 @@ class Decks
 	 * @param unknown $decklist_id
 	 * @param unknown $name
 	 * @param unknown $affiliation
+	 * @param unknown $format
 	 * @param unknown $description
 	 * @param unknown $tags
 	 * @param unknown $content
 	 * @param unknown $source_deck
 	 */
-	public function saveDeck($user, $deck, $decklist_id, $name, $affiliation, $description, $tags, $content, $source_deck)
+	public function saveDeck($user, $deck, $decklist_id, $name, $affiliation, $format, $description, $tags, $content, $source_deck)
 	{
 		$deck_content = [ ];
 
@@ -56,6 +57,7 @@ class Decks
 
 		$deck->setName($name);
 		$deck->setAffiliation($affiliation);
+		$deck->setFormat($format);
 		$deck->setDescriptionMd($description);
 		$deck->setUser($user);
 		$deck->setMinorVersion($deck->getMinorVersion() + 1);

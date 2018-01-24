@@ -25,11 +25,20 @@ class BuilderController extends Controller
 		/* @var $em \Doctrine\ORM\EntityManager */
 		$em = $this->getDoctrine()->getManager();
 
-		$affiliations = $em->getRepository('AppBundle:Affiliation')->findPrimaries();
+        $affiliations = $em->getRepository('AppBundle:Affiliation')->findPrimaries();
+		$formats = $em->getRepository('AppBundle:Format')->findAll();
+        $setlist = $em->getRepository('AppBundle:Set')->findAll();
+        $sets = [];
+        foreach($setlist as $set)
+        {
+            $sets[$set->getCode()] = $set->getName();
+        }
 
 		return $this->render('AppBundle:Builder:initbuild.html.twig', [
 				'pagetitle' => $this->get('translator')->trans('decks.form.new'),
-				'affiliations' => $affiliations
+                'affiliations' => $affiliations,
+                'formats' => $formats,
+                'sets' => $sets
 		], $response);
     }
 
@@ -56,11 +65,27 @@ class BuilderController extends Controller
         }
 		$tags = [ $affiliation_code ];
 
+        $format_code = $request->request->get('format');
+        if(!$format_code)
+        {
+            $this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.noformat"));
+            return $this->redirect($this->generateUrl('deck_buildform'));
+        }
+
+        $format = $em->getRepository('AppBundle:Format')->findByCode($format_code);
+        if(!$format)
+        {
+            $this->get('session')->getFlashBag()->set('error', $translator->trans("decks.build.errors.noformat"));
+            return $this->redirect($this->generateUrl('deck_buildform'));
+        }
+        $tags[] = $format->getName();
+
         $name = $translator->trans("decks.build.newname", array("%affiliation%" => $affiliation->getName()));
 
         $deck = new Deck();
         $deck->setDescriptionMd("");
         $deck->setAffiliation($affiliation);
+        $deck->setFormat($format);
         $deck->setName($name);
         $deck->setProblem('too_few_cards');
         $deck->setTags(join(' ', array_unique($tags)));
@@ -389,6 +414,15 @@ class BuilderController extends Controller
 			return new Response('Cannot import deck with unknown affiliation ' . $affiliation_code);
 		}
 
+        $format_code = filter_var($request->get('format_code'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+        if(!$format_code) {
+            return new Response('Cannot import deck without format');
+        }
+        $format = $em->getRepository('AppBundle:Format')->findOneBy(['code' => $format_code]);
+        if(!$format) {
+            return new Response('Cannot import deck with unknown format ' . $format_code);
+        }
+
         $cancel_edits = (boolean) filter_var($request->get('cancel_edits'), FILTER_SANITIZE_NUMBER_INT);
         if($cancel_edits) {
             if($deck) $this->get('decks')->revertDeck($deck);
@@ -410,7 +444,7 @@ class BuilderController extends Controller
         $description = trim($request->get('description'));
         $tags = filter_var($request->get('tags'), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-        $this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $affiliation, $description, $tags, $content, $source_deck ? $source_deck : null);
+        $this->get('decks')->saveDeck($this->getUser(), $deck, $decklist_id, $name, $affiliation, $format, $description, $tags, $content, $source_deck ? $source_deck : null);
         $em->flush();
         
         return $this->redirect($this->generateUrl('decks_list'));
