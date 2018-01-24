@@ -30,9 +30,9 @@ class Version20180122114617 extends AbstractMigration
         $this->addSql('ALTER TABLE cardset ADD CONSTRAINT FK_CA997ACC5EC1162 FOREIGN KEY (cycle_id) REFERENCES cycle (id)');
         $this->addSql('CREATE INDEX IDX_CA997ACC5EC1162 ON cardset (cycle_id)');
 
-        $this->addSql("INSERT INTO format (code, name) VALUES ('STD', 'Standard')");
-        $this->addSql("INSERT INTO format (code, name) VALUES ('TRI', 'Trilogy')");
-        $this->addSql("INSERT INTO format (code, name) VALUES ('INF', 'Infinite')");
+        $this->addSql("INSERT INTO format (code, name, data, date_creation, date_update) VALUES ('STD', 'Standard', '{}', NOW(), NOW())");
+        $this->addSql("INSERT INTO format (code, name, date_creation, date_update) VALUES ('TRI', 'Trilogy', '{}', NOW(), NOW())");
+        $this->addSql("INSERT INTO format (code, name, date_creation, date_update) VALUES ('INF', 'Infinite', '{}', NOW(), NOW())");
 
         $this->addSql("UPDATE deck SET format_id=(SELECT id FROM format WHERE code='STD')");
         $this->addSql("UPDATE decklist SET format_id=(SELECT id FROM format WHERE code='STD')");
