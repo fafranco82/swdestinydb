@@ -31,8 +31,8 @@ class Version20180122114617 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_CA997ACC5EC1162 ON cardset (cycle_id)');
 
         $this->addSql("INSERT INTO format (code, name, data, date_creation, date_update) VALUES ('STD', 'Standard', '{}', NOW(), NOW())");
-        $this->addSql("INSERT INTO format (code, name, date_creation, date_update) VALUES ('TRI', 'Trilogy', '{}', NOW(), NOW())");
-        $this->addSql("INSERT INTO format (code, name, date_creation, date_update) VALUES ('INF', 'Infinite', '{}', NOW(), NOW())");
+        $this->addSql("INSERT INTO format (code, name, data, date_creation, date_update) VALUES ('TRI', 'Trilogy', '{}', NOW(), NOW())");
+        $this->addSql("INSERT INTO format (code, name, data, date_creation, date_update) VALUES ('INF', 'Infinite', '{}', NOW(), NOW())");
 
         $this->addSql("UPDATE deck SET format_id=(SELECT id FROM format WHERE code='STD')");
         $this->addSql("UPDATE decklist SET format_id=(SELECT id FROM format WHERE code='STD')");
