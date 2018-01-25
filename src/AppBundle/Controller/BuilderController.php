@@ -378,6 +378,7 @@ class BuilderController extends Controller
             array(
                 'name' => $deck->getName().' (clone)',
                 'affiliation_code' => $deck->getAffiliation()->getCode(),
+                'format_code' => $deck->getFormat()->getCode(),
                 'content' => json_encode($content),
                 'deck_id' => $deck->getParent() ? $deck->getParent()->getId() : null
             ));
@@ -702,6 +703,7 @@ class BuilderController extends Controller
                 array(
                         'name' => $decklist->getName(),
                 		'affiliation_code' => $decklist->getAffiliation()->getCode(),
+                        'format_code' => $decklist->getFormat()->getCode(),
                         'content' => json_encode($content),
                         'decklist_id' => $decklist_id
                 ));
