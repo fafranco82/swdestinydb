@@ -80,6 +80,62 @@
         return {};
     });
 
+    Handlebars.registerHelper('legal', function(card_code, format_code) {
+        if(arguments < 2)
+            throw new Error("Handlerbars Helper 'legal' needs 2 parameters");
+
+        if(app.data && app.data.formats && app.data.cards) {
+            var card = app.data.cards.findById(card_code);
+            var format = app.data.formats.findById(format_code);
+
+            //if card's set included in legal sets of the format
+            if(_.includes(format.data.sets, card.set_code))
+                return true;
+
+            //if not, but the card is a reprint of a legal card...
+            if(card.reprint_of) {
+                var reprint = app.data.cards.findById(card.reprint_of);
+                if(_.includes(format.data.sets, reprint.set_code))
+                    return true;
+            }
+
+            //or the card has a reprint that is legal...
+            if(card.reprints) {
+                var legal = _.some(card.reprints, function(reprint_code) {
+                    var reprint = app.data.cards.findById(reprint_code);
+                    return _.includes(format.data.sets, reprint.set_code);
+                });
+                if(legal)
+                    return true;
+            }
+
+            return false;
+        }
+        
+        return false;
+    });
+
+    Handlebars.registerHelper('balance', function(card_code, format_code) {
+        if(arguments < 2)
+            throw new Error("Handlerbars Helper 'legal' needs 2 parameters");
+
+        if(app.data && app.data.formats && app.data.cards) {
+            var card = app.data.cards.findById(card_code);
+            var format = app.data.formats.findById(format_code);
+
+            if(card.reprint_of) {
+                card = app.data.cards.findById(card.reprint_of);
+            }
+
+            if(_.has(format.data.balance, card.code))
+                return new Handlebars.SafeString("<b>"+format.data.balance[card.code]+"</b>");
+            else
+                return new Handlebars.SafeString(card.points);
+        }
+
+        return new Handlebars.SafeString("");
+    });
+
     Handlebars.registerHelper('routing', function(path, options) {
         return Routing.generate(path, options.hash || {});
     });

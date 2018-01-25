@@ -1,0 +1,18 @@
+<table class="table table-condensed table-bordered">
+	<thead>
+		<tr>
+			{{#each formats as |format formatId|}}
+			<th class="text-center bg-{{../card.faction_code}}">{{format.name}}</th>
+			{{/each}}
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			{{#each formats as |format formatId|}}
+			<td class="text-center fg-{{../card.faction_code}} {{#unless (legal ../card.code format.code)}}no-{{/unless}}legal">
+				<span class="fa fa-lg {{ternary (legal ../card.code format.code) 'fa-check-circle' 'fa-ban'}}"></span>
+			</td>
+			{{/each}}
+		</tr>
+	</tbody>
+</table>

@@ -1,5 +1,30 @@
 (function ui_card(ui, $) {
 
+	ui.build_legality_table = function build_legality_table()
+	{
+		$('#card-legality-table').each(function() {
+			var $table = $(this);
+			var tpl = Handlebars.templates['ui_card-legality'];
+			$table.html(tpl({
+				card: app.data.cards.findById(app.user.params.card_code),
+				formats: app.data.formats.find({})
+			}));
+		});
+	}
+
+	ui.build_balance_table = function build_balance_table()
+	{
+		$('#card-balance-table').each(function() {
+			var $table = $(this);
+
+			var tpl = Handlebars.templates['ui_card-balance'];
+			$table.html(tpl({
+				card: app.data.cards.findById(app.user.params.card_code),
+				formats: app.data.formats.find({})
+			}));
+		});
+	}
+
 	/**
 	 * The user is loaded and they have written a review on the page
 	 */
@@ -155,6 +180,15 @@
 		$(window.document).on('click', '.social-icon-like', ui.like_review);
 		$(window.document).on('click', '#review-button', ui.write_review_open);
 		$(window.document).on('submit', 'form.form-comment', ui.form_comment_submit);
+	};
+
+	/**
+	* called when both the DOM and the data app have finished loading
+	* @memberOf ui
+	*/
+	ui.on_all_loaded = function on_all_loaded() {
+		ui.build_legality_table();
+		ui.build_balance_table();
 	};
 
 })(app.ui, jQuery);

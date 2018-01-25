@@ -6,7 +6,8 @@
 	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
-	app.user.params.card_id = {{ cards[0].id }};
+    app.user.params.card_id = {{ cards[0].id }};
+	app.user.params.card_code = '{{ cards[0].code }}';
 	</script>
 {% endblock %}
 
@@ -31,6 +32,8 @@
                             {% include 'AppBundle:Search:card-flavor.html.twig' %}
         					{% include 'AppBundle:Search:card-illustrator.html.twig' %}
 							{% include 'AppBundle:Search:card-set.html.twig' %}
+                            {% include 'AppBundle:Search:card-legality.html.twig' %}
+                            {% include 'AppBundle:Search:card-balance.html.twig' %}
         				</div>
         			</div>
         		</div>

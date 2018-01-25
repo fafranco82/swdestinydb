@@ -1,0 +1,22 @@
+<table class="table table-condensed table-bordered">
+	<thead>
+		<tr>
+			{{#each formats as |format formatId|}}
+			<th class="text-center bg-{{../card.faction_code}}">{{format.name}}</th>
+			{{/each}}
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			{{#each formats as |format formatId|}}
+			<td class="text-center fg-{{../card.faction_code}}">
+				{{#if (legal ../card.code format.code)}}
+				{{balance ../card.code format.code}}
+				{{else}}
+				--
+				{{/if}}
+			</td>
+			{{/each}}
+		</tr>
+	</tbody>
+</table>

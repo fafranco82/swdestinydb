@@ -42,6 +42,7 @@ body {
 .card-flavor {
 	font-style: italic;
 	text-align: justify;
+	font-family: 'Abel', sans-serif;
 }
 .card-flavor cite {
 	white-space: nowrap;
@@ -126,6 +127,31 @@ td.die-face {
 .card-reprints-list {
 	list-style-type: none;
 }
+
+.card-balance {
+	h5 {
+		font-weight: bold;
+		text-align: center;
+	}
+
+	th {
+		font-size: 90%;
+	}
+}
+
+.card-legality {
+	@extend .card-balance;
+
+	td.legal {
+		background-color: #b7ecb7;
+	}
+
+	td.no-legal {
+		background-color: #ffd9d9;
+	}
+}
+
+
 
 .fa-exclamation-triangle {
 	&.limited-pool-conflict {
