@@ -494,11 +494,11 @@ class ImportStdCommand extends ContainerAwareCommand
 			if($currentTypedValue !== null) {
 				switch($type) {
 					case 'date': {
-						$currentJsonValue = $currentTypedValue->format('Y-m-d');
+						$currentJsonValue = $currentStringValue = $currentTypedValue->format('Y-m-d');
 						break;
 					}
 					case 'datetime': {
-						$currentJsonValue = $currentTypedValue->format('Y-m-d H:i:s');
+						$currentJsonValue = $currentStringValue = $currentTypedValue->format('Y-m-d H:i:s');
 					}
 				}
 			}
