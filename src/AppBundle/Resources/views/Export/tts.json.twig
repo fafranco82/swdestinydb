@@ -107,7 +107,7 @@
 			      "scaleZ": 1.42055011
 			    },
 			    "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
-			    "Description": "{% if slot.dice == 2 and slot.card.deckLimit == 1 %}elite {% endif %}{{slot.card.set_code}} {{slot.card.position}}",
+			    "Description": "{% if slot.dice == 2 and slot.card.deckLimit == 1 %}elite {% endif %}{{slot.card.set.code}} {{slot.card.position}}",
 			    "ColorDiffuse": {
 			      "r": 0.713235259,
 			      "g": 0.713235259,
@@ -280,7 +280,7 @@
 			            "scaleZ": 1.42055011
 			          },
 			          "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
-			          "Description": "{{slot.card.set_code}} {{slot.card.position}}",
+			          "Description": "{{slot.card.set.code}} {{slot.card.position}}",
 			          "ColorDiffuse": {
 			            "r": 0.713235259,
 			            "g": 0.713235259,
