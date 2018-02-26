@@ -90,7 +90,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	}
 	
 	public function getSlotsByType() {
-		$slotsByType = [ 'battlefield' => [], 'character' => [], 'upgrade' => [], 'support' => [], 'event' => [] ];
+		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'character' => [], 'upgrade' => [], 'support' => [], 'event' => [] ];
 		foreach($this->slots as $slot) {
 			if(array_key_exists($slot->getCard()->getType()->getCode(), $slotsByType)) {
 				$slotsByType[$slot->getCard()->getType()->getCode()][] = $slot;

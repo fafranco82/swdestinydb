@@ -89,6 +89,53 @@
 					"GUID": "{{ deck.guidArray[guidCount] }}"
 					{% set guidCount = guidCount + 1 %}
 				},
+				{# Plot #}
+				{% for plot in deck.slots_by_type.plot %}
+				{
+					"Name": "Card",
+					"Transform": {
+						"posX": {{ random(999) /1000 }},
+						"posY": {{ random(999) /1000 }},
+						"posZ": {{ random(999) /1000 }},
+						"rotX": {{ random(999) /1000 }},
+						"rotY": 270,
+						"rotZ": {{ random(999) /1000 }},
+						"scaleX": 1.42055011,
+						"scaleY": 1,
+						"scaleZ": 1.42055011
+					},
+					"Nickname": "{{ plot.card.name|raw|replace({"'":""}) }}",
+					"Description": "{{plot.card.set.code}} {{plot.card.position}}",
+					"ColorDiffuse": {
+						"r": 0.713235259,
+						"g": 0.713235259,
+						"b": 0.713235259
+					},
+					"Locked": false,
+					"Grid": true,
+					"Snap": true,
+					"Autoraise": true,
+					"Sticky": true,
+					"Tooltip": true,
+					"CardID": {{ plot.card.ttscardid }},
+					"SidewaysCard": true,
+					"CustomDeck": {
+						{# All Plots use CustomDeck 473 #}
+						"473": {
+							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/910157197472506127/6038134EFC06C9B338C589EA58F3638B38B47AAF/",
+							"BackURL": "{{backUrl}}",
+							"NumWidth": 10,
+							"NumHeight": 7,
+							"BackIsHidden": true,
+							"UniqueBack": false
+						}
+					},
+					"LuaScript": "",
+					"LuaScriptState": "",
+					"GUID": "{{ deck.guidArray[guidCount] }}"
+					{% set guidCount = guidCount + 1 %}
+				},
+				{% endfor %}
 				{# Characters #}
 				{% for slot in deck.slots_by_type.character %}
 				{% set slotLabel = slot.card.name~(slot.card.subtitle is defined and slot.card.subtitle != "" ? ", "~slot.card.subtitle : "")%}
