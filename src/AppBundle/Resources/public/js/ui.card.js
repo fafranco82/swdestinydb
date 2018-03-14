@@ -2,7 +2,7 @@
 
 	ui.build_legality_table = function build_legality_table()
 	{
-		$('#card-legality-table').each(function() {
+		$('div.card-legality-table').each(function() {
 			var $table = $(this);
 			var tpl = Handlebars.templates['ui_card-legality'];
 			$table.html(tpl({
@@ -14,7 +14,7 @@
 
 	ui.build_balance_table = function build_balance_table()
 	{
-		$('#card-balance-table').each(function() {
+		$('div.card-balance-table').each(function() {
 			var $table = $(this);
 
 			var tpl = Handlebars.templates['ui_card-balance'];
