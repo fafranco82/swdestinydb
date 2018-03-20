@@ -418,7 +418,7 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	app.deck_history && app.deck_history.notify_change();
 
 	//list of cards which, by rules, deny or allow some cards
-	if(_.includes(['01045'], card_code))
+	if(_.includes(['01045', '07089'], card_code))
 		updated_other_card = true; //force list refresh
 
 	return updated_other_card;
@@ -567,6 +567,12 @@ deck.can_include_card = function can_include_card(card) {
 	// Finn (AW #45) special case
 	if(deck.get_cards(null, {code: '01045'}).length > 0) {
 		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.includes(['vehicle','weapon'], card.subtype_code))
+			return true;
+	}
+
+	// Bo-Katan Kryze (WotF #89) special case
+	if(deck.get_cards(null, {code: '07089'}).length > 0) {
+		if(card.affiliation_code==='villain' && card.faction_code==='yellow' && card.type_code==='upgrade')
 			return true;
 	}
 

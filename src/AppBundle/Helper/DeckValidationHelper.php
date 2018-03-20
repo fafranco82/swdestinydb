@@ -57,6 +57,16 @@ class DeckValidationHelper
 			}
 		}
 
+		// Bo-Katan Kryze (WotF #89) special case
+		if($deck->getSlots()->getSlotByCode('07089') != NULL) {
+			if(    $card->getAffiliation()->getCode()==='villain' 
+				&& $card->getFaction()->getCode()==='yellow' 
+				&& $card->getType()->getCode()==='upgrade')
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 
