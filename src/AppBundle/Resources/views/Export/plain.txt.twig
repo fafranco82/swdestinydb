@@ -14,17 +14,32 @@
 {% endif %}
 
 {% set battlefields = deck.slots_by_type.battlefield %}
-{{battlefields.0.card.type.name | upper}}
-{% for i in range (1,battlefields.0.card.type.name|length) %}¯{% endfor %}
+{% if battlefields|length > 0 %}
+{{battlefields.0.card.type.name|upper}}
+{% for i in range (1,battlefields.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
 
 {% for slot in battlefields %}
 {{macros.slot_plain(slot, 0)}}
 {% endfor %}
 
 
+{% set plots = deck.slots_by_type.plot %}
+{% if plots|length > 0 %}
+{{plots.0.card.type.name|upper}}
+{% for i in range (1,plots.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
+
+{% for slot in plots %}
+{{macros.slot_plain(slot, 0)}}
+{% endfor %}
+
+
 {% set characters = deck.slots_by_type.character %}
-{{characters.0.card.type.name | upper}}
-{% for i in range (1,characters.0.card.type.name|length) %}¯{% endfor %}
+{% if characters|length > 0 %}
+{{characters.0.card.type.name|upper}}
+{% for i in range (1,characters.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
 
 {% for slot in characters %}
 {{macros.slot_plain(slot, slot.dice)}}
@@ -32,8 +47,10 @@
 
 
 {% set upgrades = deck.slots_by_type.upgrade %}
+{% if upgrades|length > 0 %}
 {{upgrades.0.card.type.name | upper}}
-{% for i in range (1,upgrades.0.card.type.name|length) %}¯{% endfor %}
+{% for i in range (1,upgrades.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
 
 {% for slot in upgrades %}
 {{macros.slot_plain(slot, slot.quantity)}}
@@ -41,8 +58,11 @@
 
 
 {% set supports = deck.slots_by_type.support %}
+{% if supports|length > 0 %}
 {{supports.0.card.type.name | upper}}
-{% for i in range (1,supports.0.card.type.name|length) %}¯{% endfor %}
+{% for i in range (1,supports.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
+
 
 {% for slot in supports %}
 {{macros.slot_plain(slot, slot.quantity)}}
@@ -50,8 +70,10 @@
 
 
 {% set events = deck.slots_by_type.event %}
+{% if events|length > 0 %}
 {{events.0.card.type.name | upper}}
-{% for i in range (1,events.0.card.type.name|length) %}¯{% endfor %}
+{% for i in range (1,events.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
 
 {% for slot in events %}
 {{macros.slot_plain(slot, slot.quantity)}}
