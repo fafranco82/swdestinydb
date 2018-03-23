@@ -63,4 +63,4 @@
 {% if slot.card.hasDie %} ({{slot.dice}} <span class="icon icon-die"></span>){% endif %}
 {% endmacro %}
 
-{% macro slot_plain(slot, qty) %}{% if qty > 0 %}{{qty}}x {% endif %}{{ slot.card.name }}{% if slot.card.subtitle %}, {{slot.card.subtitle}}{% endif %} ({{ slot.card.set.name }} #{{slot.card.position}}){% endmacro %}
+{% macro slot_plain(slot, qty) %}{% if qty > 0 %}{{qty}}x {% endif %}{{ slot.card.name|raw }}{% if slot.card.subtitle %}, {{slot.card.subtitle|raw}}{% endif %} ({{ slot.card.set.name }} #{{slot.card.position}}){% endmacro %}
