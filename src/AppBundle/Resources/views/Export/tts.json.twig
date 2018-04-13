@@ -25,7 +25,7 @@
 				"scaleY": 1,
 				"scaleZ": 1
 			},
-			"Nickname": "{{ deck.name|raw|replace({"'":""}) }}",
+			"Nickname": "{{ deck.name|raw }}",
 			"Description": "Exported from SWDestinyDB.com",
 			"ColorDiffuse": {
 				"r": 0.129,
@@ -58,7 +58,7 @@
 						"scaleY": 1,
 						"scaleZ": 1.42055011
 					},
-					"Nickname": "{{ battlefield.name|raw|replace({"'":""}) }}",
+					"Nickname": "{{ battlefield.name|raw }}",
 					"Description": "{{battlefield.set.code}} {{battlefield.position}}",
 					"ColorDiffuse": {
 						"r": 0.713235259,
@@ -104,7 +104,7 @@
 						"scaleY": 1,
 						"scaleZ": 1.42055011
 					},
-					"Nickname": "{{ plot.card.name|raw|replace({"'":""}) }}",
+					"Nickname": "{{ plot.card.name|raw }}",
 					"Description": "{{plot.card.set.code}} {{plot.card.position}}",
 					"ColorDiffuse": {
 						"r": 0.713235259,
@@ -153,7 +153,7 @@
 			      "scaleY": 1.0,
 			      "scaleZ": 1.42055011
 			    },
-			    "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
+			    "Nickname": "{{ slotLabel|raw }}",
 			    "Description": "{% if slot.dice == 2 and slot.card.deckLimit == 1 %}elite {% endif %}{{slot.card.set.code}} {{slot.card.position}}",
 			    "ColorDiffuse": {
 			      "r": 0.713235259,
@@ -326,7 +326,7 @@
 			            "scaleY": 1.0,
 			            "scaleZ": 1.42055011
 			          },
-			          "Nickname": "{{ slotLabel|raw|replace({"'":""}) }}",
+			          "Nickname": "{{ slotLabel|raw }}",
 			          "Description": "{{slot.card.set.code}} {{slot.card.position}}",
 			          "ColorDiffuse": {
 			            "r": 0.713235259,
