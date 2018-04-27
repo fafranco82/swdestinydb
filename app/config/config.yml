@@ -206,9 +206,9 @@ happyr_translation:
     locales: %supported_locales%
     projects:
         messages:
-            api_key: D0UKEl28KeZhBRR0jXUSVjNYSIZV_0a9
+            api_key: -GeNAIp8XIzwIZCFZL3ZsP9k5vWBxo4F
         validators:
-            api_key: ZLiyN9p8SRk3gEhXhA-aG0CSfd_wVYzQ
+            api_key: CWow0Q-lOtg1QdZaV5UsrhpKrd2fYz9z
 
 services:
     fos_user.doctrine_registry:
