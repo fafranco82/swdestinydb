@@ -1,0 +1,8 @@
+{% if moneytizer_site_id is defined and moneytizer_site_id is not empty %}
+{% if moneytizer_ad_types is defined and type is defined and type in moneytizer_ad_types %}
+<div id="{{ moneytizer_site_id }}-{{ type }}">
+	<script src="//ads.themoneytizer.com/s/gen.js?type={{ type }}"></script>
+	<script src="//ads.themoneytizer.com/s/requestform.js?siteId={{ moneytizer_site_id }}&formatId={{ type }}"></script>
+</div>
+{% endif %}
+{% endif %}

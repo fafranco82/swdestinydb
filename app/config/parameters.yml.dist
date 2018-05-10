@@ -29,3 +29,7 @@ parameters:
     google_analytics_tracking_code: UA-00000000-1
     google_adsense_client: ca-pub-000000000000000
     google_adsense_slot: 0000000000
+
+    # The Moneytizer
+    moneytizer_site_id: ~
+    moneytizer_ad_types: ~

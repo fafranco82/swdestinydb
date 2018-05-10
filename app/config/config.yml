@@ -66,6 +66,8 @@ twig:
         google_analytics_tracking_code: "%google_analytics_tracking_code%"
         google_adsense_client: "%google_adsense_client%"
         google_adsense_slot: "%google_adsense_slot%"
+        moneytizer_site_id: "%moneytizer_site_id%"
+        moneytizer_ad_types: "%moneytizer_ad_types%"
     form_themes:
         - 'bootstrap_3_layout.html.twig'
 
