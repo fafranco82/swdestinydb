@@ -2,7 +2,7 @@
 <div class="col-sm-12">
 <ul class="pager">
 	<li class="previous">
-		{% if prev is defined %}
+		{% if prev is defined and prev.code is defined %}
 		<a href="{{ prevhref }}" class="no-popup">
 			<span class="fa fa-arrow-left"></span>
 			&nbsp;
@@ -19,7 +19,7 @@
 		</a>
 	</li>
 	<li class="next">
-		{% if next is defined %}
+		{% if next is defined and next.code is defined %}
 		<a href="{{ nexthref }}" class="no-popup">
 			{% if next.isUnique %}<span class="icon-unique"></span>{% endif %}
 			{{ next.name }}

@@ -12,13 +12,12 @@ class CardRepository extends TranslatableRepository
 	public function findAll()
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, st, f, s, a, r')
+			->select('c, t, f, s, a, r')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
 			->join('c.affiliation', 'a')
 		    ->join('c.rarity', 'r')
 			->join('c.set', 's')
-			->leftJoin('c.subtype', 'st')
 			->orderBY('c.code', 'ASC');
 
 		return $this->getResult($qb);
@@ -41,11 +40,10 @@ class CardRepository extends TranslatableRepository
 	public function findByCode($code)
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, st, f, s')
+			->select('c, t, f, s')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
 			->join('c.set', 's')
-			->leftJoin('c.subtype', 'st')
 			->andWhere('c.code = ?1');
 
 		$qb->setParameter(1, $code);
@@ -56,11 +54,10 @@ class CardRepository extends TranslatableRepository
 	public function findAllByCodes($codes)
 	{
 		$qb = $this->createQueryBuilder('c')
-			->select('c, t, st, f, s')
+			->select('c, t, f, s')
 			->join('c.type', 't')
 			->join('c.faction', 'f')
 			->join('c.set', 's')
-			->leftJoin('c.subtype', 'st')
 			->andWhere('c.code in (?1)')
 			->orderBY('c.code', 'ASC');
 
@@ -93,6 +90,7 @@ class CardRepository extends TranslatableRepository
 		return $this->findByRelativePosition($card, 1);
 	}
 
+	/*
 	public function findSubtypes()
 	{
 		$qb = $this->createQueryBuilder('c')
@@ -100,4 +98,5 @@ class CardRepository extends TranslatableRepository
 			->andWhere("c.subtype != ''");
 		return $this->getResult($qb);
 	}
+	*/
 }

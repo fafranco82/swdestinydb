@@ -15,7 +15,7 @@
 	<span class="card-rarity">{{card.rarity_name}}</span>.
 </div>
 <div class="card-info">
-	<span class="card-type">{{ card.type_name }}{{#if card.subtype_code }} - {{card.subtype_name}}{{/if}}.</span>
+	<span class="card-type">{{ card.type_name }}{{#each card.subtypes}} - {{name}}{{/each}}.</span>
 	<span class="card-props">
 		{{#in card.type_code "character" "plot"}}
 			{{trans "card.info.points"}}: {{card.points}}.

@@ -18,12 +18,6 @@ AppBundle\Entity\Card:
             joinColumn:
                 name: type_id
                 referencedColumnName: id
-        subtype:
-            targetEntity: Subtype
-            inversedBy: cards
-            joinColumn:
-                name: subtype_id
-                referencedColumnName: id
         faction:
             targetEntity: Faction
             inversedBy: cards
@@ -65,6 +59,18 @@ AppBundle\Entity\Card:
             cascade:
                 - persist
                 - remove
+    manyToMany:
+        subtypes:
+            targetEntity: Subtype
+            inversedBy: cards
+            joinTable:
+                name: card_subtype
+                joinColumns:
+                    card_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    subtype_id:
+                        referencedColumnName: id
     fields:
         id:
             type: integer

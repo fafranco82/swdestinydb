@@ -5,11 +5,10 @@ AppBundle\Entity\Subtype:
     gedmo:
         translation:
             locale: locale
-    oneToMany:
+    manyToMany:
         cards:
             targetEntity: Card
-            orderBy: {'position':'ASC'}
-            mappedBy: subtype
+            mappedBy: subtypes
     fields:
         id:
             type: integer

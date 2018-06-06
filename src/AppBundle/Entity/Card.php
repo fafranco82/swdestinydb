@@ -36,7 +36,6 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
                 'faction',
                 'set',
                 'type',
-                'subtype',
                 'rarity',
                 'affiliation'
         ];
@@ -70,6 +69,15 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
             $object = $this->$getter();
             if($object)
                 $serialized[$externalField.'_code'] = $this->$getter()->getCode();
+        }
+
+        if(!empty($this->subtypes))
+        {
+            $serialized['subtypes'] = array();
+            foreach($this->subtypes as $subtype)
+            {
+                $serialized['subtypes'][] = $subtype->getCode();
+            }
         }
 
         if($this->hasDie)
@@ -140,9 +148,9 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     private $text;
 
     /**
-     * @var \AppBundle\Entity\Subtype
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $subtype;
+    private $subtypes;
 
     /**
      * @var \DateTime
@@ -214,6 +222,7 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
      */
     public function __construct()
     {
+        $this->subtypes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sides = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -375,13 +384,13 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     /**
      * Set subtype
      *
-     * @param \AppBundle\Entity\Subtype $subtype
+     * @param \Doctrine\Common\Collections\ArrayCollection $subtypes
      *
      * @return Card
      */
-    public function setSubtype(\AppBundle\Entity\Subtype $subtype)
+    public function setSubtypes(\Doctrine\Common\Collections\ArrayCollection $subtypes)
     {
-        $this->subtype = $subtype;
+        $this->subtypes = $subtypes;
 
         return $this;
     }
@@ -389,11 +398,16 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     /**
      * Get subtype
      *
-     * @return \AppBundle\Entity\Subtype
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getSubtype()
+    public function getSubtypes()
     {
-        return $this->subtype;
+        return $this->subtypes;
+    }
+
+    public function addSubtype(Subtype $subtype)
+    {
+        $this->subtypes[] = $subtype;
     }
 
     /**

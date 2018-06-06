@@ -151,13 +151,13 @@ class CardsData
 		// construction de la requete sql
 		$repo = $this->doctrine->getRepository('AppBundle:Card');
 		$qb = $repo->createQueryBuilder('c')
-		           ->select('c', 's', 't', 'b', 'f', 'a', 'y', 'd')
+		           ->select('c', 's', 't', 'f', 'a', 'y', 'd', 'b')
 				   ->leftJoin('c.set', 's')
 				   ->leftJoin('c.type', 't')
-				   ->leftJoin('c.subtype', 'b')
 				   ->leftJoin('c.faction', 'f')
 				   ->leftJoin('c.affiliation', 'a')
 				   ->leftJoin('c.rarity', 'y')
+				   ->leftJoin('c.subtypes', 'b')
 				   ->leftJoin('c.sides', 'd')
 				   ;
 		$qb2 = null;
@@ -234,6 +234,19 @@ class CardsData
 											$or[] = $qb->expr()->gt('s.dateRelease', '(' . $qb3->select('s3.dateRelease')->where("s3.code = ?$i")->getDql() . ')');
 										}
 										break;
+								}
+								$qb->setParameter($i++, $arg);
+							}
+							$qb->andWhere(implode($operator == '!' ? " and " : " or ", $or));
+							break;
+						}
+						case 'b':
+						{
+							$or = [];
+							foreach($condition as $arg) {
+								switch($operator) {
+									case ':': $or[] = "(b.code = ?$i)"; break;
+									case '!': $or[] = "(b.code  != ?$i)"; break;
 								}
 								$qb->setParameter($i++, $arg);
 							}
@@ -375,12 +388,29 @@ class CardsData
 	    foreach($associationMappings as $fieldName => $associationMapping)
 	    {
 	    	if($associationMapping['isOwningSide']) {
-	    		$getter = str_replace(' ', '', ucwords(str_replace('_', ' ', "get_$fieldName")));
-	    		$associationEntity = $card->$getter();
-	    		if(!$associationEntity) continue;
+		    	$getter = str_replace(' ', '', ucwords(str_replace('_', ' ', "get_$fieldName")));
+	    		if(array_key_exists('joinTable', $associationMapping))
+	    		{
+	    			$associationEntities = $card->$getter();
+	    			if(count($associationEntities) == 0) continue; 
 
-    			$cardinfo[$fieldName.'_code'] = $associationEntity->getCode();
-    			$cardinfo[$fieldName.'_name'] = $associationEntity->getName();
+	    			$cardinfo[$fieldName] = [];
+	    			foreach($associationEntities->getValues() as $associationEntity)
+	    			{
+	    				$cardinfo[$fieldName][] = [
+	    					"code" => $associationEntity->getCode(),
+	    					"name" => $associationEntity->getName()
+	    				];
+	    			}
+	    		}
+	    		else
+	    		{
+		    		$associationEntity = $card->$getter();
+		    		if(!$associationEntity) continue;
+
+	    			$cardinfo[$fieldName.'_code'] = $associationEntity->getCode();
+	    			$cardinfo[$fieldName.'_name'] = $associationEntity->getName();
+	    		}
 	    	}
 
 	    	if($fieldName=='sides')

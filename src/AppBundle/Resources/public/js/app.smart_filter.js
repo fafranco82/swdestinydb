@@ -4,7 +4,7 @@ var SmartFilterQuery = [];
 
 var configuration = {
 	a: [ add_string_sf, 'affiliation', Translator.trans('decks.smartfilter.filters.affiliation') ],
-	b: [ add_string_sf, 'subtype_code', Translator.trans('decks.smartfilter.filters.subtype_code') ],
+	b: [ add_string_sf, 'subtypes.code', Translator.trans('decks.smartfilter.filters.subtype_code') ],
 	c: [ add_integer_sf, 'owned.cards', Translator.trans('decks.smartfilter.filters.cards_owned') ],
 	d: [ add_boolean_sf, 'has_die', Translator.trans('decks.smartfilter.filters.has_die') ],
 	e: [ add_integer_sf, 'owned.dice', Translator.trans('decks.smartfilter.filters.dice_owned')],

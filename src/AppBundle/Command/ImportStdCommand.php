@@ -434,8 +434,7 @@ class ImportStdCommand extends ContainerAwareCommand
 					'faction_code',
 					'set_code',
 					'rarity_code',
-					'type_code',
-					'subtype_code'
+					'type_code'
 			], [
 					'illustrator',
 					'flavor',
@@ -594,6 +593,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			$functionName = 'import' . $entity->getType()->getName() . 'Data';
 			$this->$functionName($entity, $data);
 
+			$this->importCardSubtypes($entity, $data);
 			$this->importCardDieSides($entity, $data);
 
 			$this->setReprintOf($entity, $data);
@@ -605,6 +605,28 @@ class ImportStdCommand extends ContainerAwareCommand
 		}
 	
 		if($entity->serialize() !== $orig) return $entity;
+	}
+
+	protected function importCardSubtypes(Card $card, $data)
+	{
+		if(!empty($data['subtypes']))
+		{
+			$prev = $card->serialize()['subtypes'];
+			$current = $data['subtypes'];
+			if(count(array_diff(array_merge($prev, $current), array_intersect($prev, $current))) !== 0)
+			{
+				$card->getSubtypes()->clear();
+				foreach($current as $subtype_code)
+				{
+					if(!key_exists($subtype_code, $this->collections['Subtype'])) {
+						throw new \Exception("Invalid code [$subtype_code] for key [subtype] in ".json_encode($data['subtypes']));
+					}
+					$subtype = $this->collections['Subtype'][$subtype_code];
+					$card->addSubtype($subtype);
+				}
+				$this->output->writeln("Changing the <info>subtypes</info> of <info>".$card->toString()."</info> (".implode(", ", $prev)." => ".implode(", ", $current).")");
+			}
+		}
 	}
 
 	protected function importCardDieSides(Card $card, $data)
