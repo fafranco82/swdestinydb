@@ -27,8 +27,9 @@
 			{{/if}}
 		</div>
 		<div class="col-sm-6">		
-			{{#with deck.get_battlefield}}
-			<h5><span class="icon icon-battlefield"></span> {{this.type_name}}</h5>
+			{{#with (cards "type_code" "battlefield")}}
+			<h5><span class="icon icon-battlefield"></span> {{this.0.type_name}} {{#compare (nb_cards this) 1 operator=">"}}({{nb_cards this}}){{/compare}}</h5>
+				{{#each this}}
 				<div class="deck-battlefield">
 					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
 					<div>
@@ -40,6 +41,7 @@
 						{{/unless}}
 					</div>
 				</div>
+				{{/each}}
 			{{/with}}
 		</div>
 	</div>

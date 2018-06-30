@@ -124,6 +124,10 @@ class DeckValidationHelper
 			return 'no_battlefield';
 		}
 
+		if(count($deck->getSlots()->getBattlefieldDeck()) > ($deck->getSlots()->getSlotByCode('01045') != NULL ? 2 : 1)) {
+			return 'too_many_battlefields';
+		}
+
 		foreach($deck->getSlots()->getCopiesAndDeckLimit() as $cardName => $value) {
 			if($value['deck_limit'] && $value['copies'] > $value['deck_limit']) return 'too_many_copies';
 		}

@@ -392,6 +392,10 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	// card-specific rules
 	switch(card.type_code) {
 		case 'battlefield':
+			if(deck.get_cards(null, {code: '07127'}).length > 0) {
+				//with 'Home Turf Advantage' plot
+				break;
+			}
 		case 'plot':
 			app.data.cards.update({
 				type_code: card.type_code
@@ -519,6 +523,10 @@ deck.get_problem = function get_problem() {
 		return 'no_battlefield';
 	}
 
+	if(deck.get_battlefields().length > (deck.get_cards(null, {code: '07127'}).length == 1 ? 2 : 1)) {
+		return 'too_many_battlefields';
+	}
+
 	// too many copies of one card
 	if(_.findKey(deck.get_copies_and_deck_limit(), function(value) {
 	    return value.nb_copies > value.deck_limit;
@@ -533,7 +541,7 @@ deck.get_problem = function get_problem() {
 	if(deck.get_notmatching_cards().length > 0) {
 		return 'faction_not_included';
 	}
-	
+
 	return null;
 }
 
