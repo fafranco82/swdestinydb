@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'swdestiny';
-  src:  url('../fonts/swdestiny.eot?4kg3uq');
-  src:  url('../fonts/swdestiny.eot?4kg3uq#iefix') format('embedded-opentype'),
-    url('../fonts/swdestiny.ttf?4kg3uq') format('truetype'),
-    url('../fonts/swdestiny.woff?4kg3uq') format('woff'),
-    url('../fonts/swdestiny.svg?4kg3uq#swdestiny') format('svg');
+  src:  url('../fonts/swdestiny.eot?totfte');
+  src:  url('../fonts/swdestiny.eot?totfte#iefix') format('embedded-opentype'),
+    url('../fonts/swdestiny.ttf?totfte') format('truetype'),
+    url('../fonts/swdestiny.woff?totfte') format('woff'),
+    url('../fonts/swdestiny.svg?totfte#swdestiny') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -51,6 +51,9 @@
 }
 .icon-set-RIV:before {
   content: "\e914";
+}
+.icon-set-WotF:before {
+  content: "\e915";
 }
 .icon-collectors:before {
   content: "\e90c";
