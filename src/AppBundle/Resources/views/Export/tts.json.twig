@@ -43,8 +43,8 @@
 			"LuaScript": "",
 			"LuaScriptState": "",
 			"ContainedObjects": [
-				{# BattleField #}
-				{% set battlefield = deck.slots_by_type.battlefield.0.card %}
+        {# BattleField #}
+				{% for battlefield in deck.slots_by_type.battlefield %}
 				{
 					"Name": "Card",
 					"Transform": {
@@ -58,8 +58,8 @@
 						"scaleY": 1,
 						"scaleZ": 1.42055011
 					},
-					"Nickname": "{{ battlefield.name|replace({"\"":"\\\""})|raw }}",
-					"Description": "{{battlefield.set.code}} {{battlefield.position}}",
+					"Nickname": "{{ battlefield.card.name|replace({"\"":"\\\""})|raw }}",
+					"Description": "{{battlefield.card.set.code}} {{battlefield.card.position}}",
 					"ColorDiffuse": {
 						"r": 0.713235259,
 						"g": 0.713235259,
@@ -71,24 +71,25 @@
 					"Autoraise": true,
 					"Sticky": true,
 					"Tooltip": true,
-					"CardID": {{ battlefield.ttscardid }},
+					"CardID": {{ battlefield.card.ttscardid }},
 					"SidewaysCard": true,
 					"CustomDeck": {
-						{# All Battlefields use CustomDeck 18 #}
-						"18": {
-							"FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
-							"BackURL": "{{backUrl}}",
-							"NumWidth": 10,
-							"NumHeight": 7,
-							"BackIsHidden": true,
-							"UniqueBack": false
-						}
+                  {# All Battlefields use CustomDeck 18 #}
+                  "18": {
+                     "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
+                     "BackURL": "{{backUrl}}",
+                     "NumWidth": 10,
+                     "NumHeight": 7,
+                     "BackIsHidden": true,
+                     "UniqueBack": false
+                  }
 					},
 					"LuaScript": "",
 					"LuaScriptState": "",
 					"GUID": "{{ deck.guidArray[guidCount] }}"
 					{% set guidCount = guidCount + 1 %}
 				},
+				{% endfor %}
 				{# Plot #}
 				{% for plot in deck.slots_by_type.plot %}
 				{
@@ -452,3 +453,4 @@
 	],
 	"TabStates": {}
 }
+
