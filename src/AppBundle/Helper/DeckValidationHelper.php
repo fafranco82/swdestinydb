@@ -124,7 +124,7 @@ class DeckValidationHelper
 			return 'no_battlefield';
 		}
 
-		if(count($deck->getSlots()->getBattlefieldDeck()) > ($deck->getSlots()->getSlotByCode('01045') != NULL ? 2 : 1)) {
+		if(count($deck->getSlots()->getBattlefieldDeck()) > ($deck->getSlots()->getSlotByCode('07127') != NULL ? 2 : 1)) {
 			return 'too_many_battlefields';
 		}
 
