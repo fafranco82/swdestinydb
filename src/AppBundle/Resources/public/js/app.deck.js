@@ -70,7 +70,7 @@ deck.on_data_loaded = function on_data_loaded(data) {
 	//back up points and has_errata from characters
 	app.data.cards.find({type_code: 'character'}).forEach(function(card) {
 		app.data.cards.updateById(card.code, {
-			backedUp: _.pick(card, ['points'])
+			backedUp: _.pick(card, ['points', 'cp'])
 		});
 	});
 
@@ -151,8 +151,10 @@ deck.get_name = function get_name() {
 
  	//balance of the force
  	_.forIn(data.data.balance, function(points, code) {
+ 		var pointsData = /^(\d+)(\/(\d+))?$/.exec(points);
  		app.data.cards.updateById(code, {
  			points: points,
+ 			cp: parseInt(pointsData[1], 10)*100+parseInt(pointsData[3]||0, 10),
  			balance: format_code
  		});
  	});
