@@ -9,3 +9,9 @@ collection_save:
     methods: [POST]
     defaults:
         _controller: AppBundle:Collection:Save
+
+collection_export:
+    path: /export
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Collection:Export
