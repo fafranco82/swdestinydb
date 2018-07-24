@@ -555,12 +555,12 @@ ui.set_card_collection_status = function set_card_collection_status(card, row) {
 	if(card.owned.cards==0) {
 		row.addClass('collection-card-not-owned');
 	} else if(card.owned.cards==1) {
-		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield')
+		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield' || card.type_code=='plot')
 			row.addClass('collection-card-playset');
 		else
 			row.addClass('collection-card-not-playset');
 	} else if(card.owned.cards==2) {
-		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield')
+		if((card.type_code=='character' && card.is_unique) || card.type_code=='battlefield' || card.type_code=='plot')
 			row.addClass('collection-card-excess');
 		else
 			row.addClass('collection-card-playset');
