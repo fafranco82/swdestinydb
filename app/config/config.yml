@@ -17,6 +17,7 @@ parameters:
         it: Italiano
         pl: Polski
         pt: Português
+        ru: Русский
         zh: Simplified Chinese
     supported_locales:
         - de
@@ -27,6 +28,7 @@ parameters:
         - it
         - pl
         - pt
+        - ru
         - zh
     default_locale: en
 
@@ -141,6 +143,7 @@ jms_i18n_routing:
         it: "it.%website_url%"
         pl: "pl.%website_url%"
         pt: "pt.%website_url%"
+        ru: "ru.%website_url%"
         zh: "zh.%website_url%"
     redirect_to_host: true
 
