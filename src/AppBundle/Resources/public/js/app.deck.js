@@ -568,6 +568,12 @@ deck.can_include_card = function can_include_card(card) {
 	// card not valid in format
 	if(!deck.within_format_sets(card)) return false;
 
+	// No Allegiance (AtG #155) special case
+	if(deck.get_cards(null, {code: '08155'}).length > 0) {
+		if(card.type_code==='character' && _.includes(['hero', 'villain'], card.affiliation_code))
+			return false;
+	}
+
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;
 
@@ -583,6 +589,12 @@ deck.can_include_card = function can_include_card(card) {
 	// Bo-Katan Kryze (WotF #89) special case
 	if(deck.get_cards(null, {code: '07089'}).length > 0) {
 		if(card.affiliation_code==='villain' && card.faction_code==='yellow' && card.type_code==='upgrade')
+			return true;
+	}
+
+	// Qi'Ra (AtG #135) special case
+	if(deck.get_cards(null, {code: '08135'}).length > 0) {
+		if(card.faction_code==='yellow' && card.type_code==='event')
 			return true;
 	}
 

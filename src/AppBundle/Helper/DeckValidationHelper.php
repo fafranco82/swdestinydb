@@ -39,6 +39,15 @@ class DeckValidationHelper
 			return false;
 		}
 
+		// No Allegiance (AtG #155) special case
+		if($deck->getSlots()->getSlotByCode('08155') != NULL) {
+			if(    $card->getType()->getCode()==='character' 
+				&& in_array($card->getAffiliation()->getCode(), array('hero', 'villain')))
+			{
+				return false;
+			}
+		}
+
 		if($card->getAffiliation()->getCode() === 'neutral') {
 			return true;
 		}
@@ -62,6 +71,15 @@ class DeckValidationHelper
 			if(    $card->getAffiliation()->getCode()==='villain' 
 				&& $card->getFaction()->getCode()==='yellow' 
 				&& $card->getType()->getCode()==='upgrade')
+			{
+				return true;
+			}
+		}
+
+		// Qi'Ra (AtG #135) special case
+		if($deck->getSlots()->getSlotByCode('08135') != NULL) {
+			if(    $card->getFaction()->getCode()==='yellow' 
+				&& $card->getType()->getCode()==='event')
 			{
 				return true;
 			}
