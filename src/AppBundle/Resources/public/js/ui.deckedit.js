@@ -64,7 +64,7 @@ ui.on_collection_loaded = function on_collection_loaded() {
  */
 ui.set_max_qty = function set_max_qty() {
 	app.data.cards.find().forEach(function(record) {
-		var max_value = Math.min(2, record.deck_limit);
+		var max_value = record.deck_limit || 2;
 		if(record.type_code=='character' && !record.is_unique) {
 			max_value = Math.min(parseInt(30 / parseInt(record.points, 10)));
 		}
