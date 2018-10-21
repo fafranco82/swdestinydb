@@ -88,6 +88,11 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		}
 		return NULL;
 	}
+
+	public function isSlotIncluded($code) {
+		$slot = $this->getSlotByCode($code);
+		return $slot != NULL;
+	}
 	
 	public function getSlotsByType() {
 		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'character' => [], 'upgrade' => [], 'support' => [], 'event' => [] ];
@@ -250,7 +255,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	public function getCopiesAndDeckLimit()
 	{
 		$copiesAndDeckLimit = [];
-		foreach($this->slots as $slot) {
+		foreach($this->getDrawDeck()->getSlots() as $slot) {
 			$cardName = $slot->getCard()->getName();
 			if(!key_exists($cardName, $copiesAndDeckLimit)) {
 				$copiesAndDeckLimit[$cardName] = [

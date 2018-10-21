@@ -67,6 +67,8 @@ ui.set_max_qty = function set_max_qty() {
 		var max_value = record.deck_limit || 2;
 		if(record.type_code=='character' && !record.is_unique) {
 			max_value = Math.min(parseInt(30 / parseInt(record.points, 10)));
+		} else if (_.includes(['upgrade', 'support', 'event'], record.type_code) && app.deck.is_included('08143')) {
+			max_value++;
 		}
 
 		var max_qty = {
@@ -437,8 +439,13 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
 	var update_all = app.deck.set_card_copies(card_code, quantity);
 	ui.refresh_deck();
 
+	//if "Double Down" (Across the Galaxy #143) was selected or unselected...
+	if(card_code=='08143') {
+		ui.set_max_qty(); //...refresh max quantity
+	}
+
 	if(update_all) {
-		ui.refresh_list();
+		ui.refresh_list(_.includes(['08143'], card_code));
 	}
 	else {
 		ui.refresh_row(card_code);

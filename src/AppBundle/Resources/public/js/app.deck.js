@@ -227,6 +227,13 @@ deck.get_cards = function get_cards(sort, query) {
 }
 
 /**
+* @memberOf deck
+*/
+deck.is_included = function is_included(code) {
+	return deck.get_cards(null, {code: code}).length > 0;
+}
+
+/**
  * @memberOf deck
  */
 deck.get_draw_deck = function get_draw_deck(sort) {
@@ -423,8 +430,8 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	});
 	app.deck_history && app.deck_history.notify_change();
 
-	//list of cards which, by rules, deny or allow some cards
-	if(_.includes(['01045', '07089'], card_code))
+	//list of cards which, by rules, deny or allow some cards, or modify cards' max quantity
+	if(_.includes(['01045', '07089', '08135', '08143'], card_code))
 		updated_other_card = true; //force list refresh
 
 	return updated_other_card;
@@ -525,14 +532,18 @@ deck.get_problem = function get_problem() {
 		return 'no_battlefield';
 	}
 
-	if(deck.get_battlefields().length > (deck.get_cards(null, {code: '07127'}).length == 1 ? 2 : 1)) {
+	if(deck.get_battlefields().length > (deck.is_included('07127') == 1 ? 2 : 1)) {
 		return 'too_many_battlefields';
 	}
 
 	// too many copies of one card
-	if(_.findKey(deck.get_copies_and_deck_limit(), function(value) {
-	    return value.nb_copies > value.deck_limit;
-	}) != null) return 'too_many_copies';
+	var deckLimits = _(deck.get_copies_and_deck_limit())
+		.values()
+		.filter(v => v.nb_copies > v.deck_limit)
+		.map(v => v.nb_copies - v.deck_limit)
+		.value();
+	if(deckLimits.length > (deck.is_included('08143') ? 2 : 0)) return 'too_many_copies';
+	if(deck.is_included('08143') && _.some(deckLimits, v => v > 1)) return 'too_many_copies';
 
 	// no invalid card
 	if(deck.get_invalid_cards().length > 0) {
@@ -569,7 +580,7 @@ deck.can_include_card = function can_include_card(card) {
 	if(!deck.within_format_sets(card)) return false;
 
 	// No Allegiance (AtG #155) special case
-	if(deck.get_cards(null, {code: '08155'}).length > 0) {
+	if(deck.is_included('08155')) {
 		if(card.type_code==='character' && _.includes(['hero', 'villain'], card.affiliation_code))
 			return false;
 	}
@@ -581,19 +592,19 @@ deck.can_include_card = function can_include_card(card) {
 	if(card.affiliation_code === affiliation_code) return true;
 
 	// Finn (AW #45) special case
-	if(deck.get_cards(null, {code: '01045'}).length > 0) {
+	if(deck.is_included('01045')) {
 		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.includes(['vehicle','weapon'], card.subtype_code))
 			return true;
 	}
 
 	// Bo-Katan Kryze (WotF #89) special case
-	if(deck.get_cards(null, {code: '07089'}).length > 0) {
+	if(deck.is_included('07089')) {
 		if(card.affiliation_code==='villain' && card.faction_code==='yellow' && card.type_code==='upgrade')
 			return true;
 	}
 
 	// Qi'Ra (AtG #135) special case
-	if(deck.get_cards(null, {code: '08135'}).length > 0) {
+	if(deck.is_included('08135')) {
 		if(card.faction_code==='yellow' && card.type_code==='event')
 			return true;
 	}

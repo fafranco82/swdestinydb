@@ -146,8 +146,13 @@ class DeckValidationHelper
 			return 'too_many_battlefields';
 		}
 
+		$maxLimitExceeded = $deck->getSlots()->isSlotIncluded("08143") ? 2 : 0;
+		$limitExceeded = 0;
 		foreach($deck->getSlots()->getCopiesAndDeckLimit() as $cardName => $value) {
-			if($value['deck_limit'] && $value['copies'] > $value['deck_limit']) return 'too_many_copies';
+			if($value['deck_limit'] && ($value['copies'] - $value['deck_limit']) > 1) return 'too_many_copies';
+			if($value['deck_limit'] && $value['copies'] > $value['deck_limit']) $limitExceeded++;
+			if($limitExceeded > $maxLimitExceeded)
+				return 'too_many_copies';
 		}
 
 		if(!empty($this->getInvalidCards($deck))) {

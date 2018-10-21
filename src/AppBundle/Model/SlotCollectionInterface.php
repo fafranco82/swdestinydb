@@ -27,6 +27,12 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function getSlotByCode($code);
 
 	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isSlotIncluded($code);
+
+	/**
 	 * Get all slots sorted by type code
 	 * @return array
 	 */
