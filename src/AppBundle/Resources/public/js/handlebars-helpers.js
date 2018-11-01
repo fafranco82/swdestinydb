@@ -8,7 +8,7 @@
     });
 
     Handlebars.registerHelper('int_or_x', function(value, opt) {
-        if(!_.isNumber(value))
+        if(_.isNaN(_.toNumber(value)))
             return 'X';
         else
             return value;
@@ -54,8 +54,8 @@
     });
 
     Handlebars.registerHelper('dieside', function(side) {
-    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'ID': 'indirect', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield', 'X': ''};
-    	var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
+    	var codes = {'-': 'blank', 'MD': 'melee', 'RD': 'ranged', 'ID': 'indirect', 'Dr': 'disrupt', 'Dc': 'discard', 'F': 'focus', 'R': 'resource', 'Sp': 'special', 'Sh': 'shield', '*': ''};
+    	var elems = /^([-+]?)(\d+|X)?([-*A-VYZ][a-zA-Z]?)(\d*?)$/.exec(side);
         var side = {
             code: elems[3],
             icon: codes[elems[3]],

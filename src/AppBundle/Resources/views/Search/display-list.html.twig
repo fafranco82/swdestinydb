@@ -36,7 +36,7 @@
 	{% if card.has_die %}
 	{% for side in card.sides %}
 	<td class="text-center die-face text-nowrap" data-th="Die">
-		{% if side.modifier %}+{% endif %}{% if not side.type or side.type.code not in ['-', 'Sp'] %}{{ macros.nonzero_or_x(side.value) }}{% endif %}{% if side.type %}<span class="icon icon-{{side.type.icon}}"></span>{% endif %}{% if side.cost %}/{{side.cost}}{% endif %}
+		{% if side.modifier %}+{% endif %}{% if not side.type or side.type.code not in ['-', 'Sp'] %}{{ macros.integer_or_x(side.value) }}{% endif %}{% if side.type %}<span class="icon icon-{{side.type.icon}}"></span>{% endif %}{% if side.cost %}/{{side.cost}}{% endif %}
 	</td>
 	{% endfor %}
 	{% else %}

@@ -22,7 +22,7 @@ AppBundle\Entity\Side:
                 strategy: AUTO
         value:
             type: smallint
-            nullable: false
+            nullable: true
         modifier:
             type: smallint
             nullable: true

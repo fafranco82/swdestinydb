@@ -655,18 +655,23 @@ class ImportStdCommand extends ContainerAwareCommand
 				
 				$orig = $side->toString();
 
-				preg_match('/^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/', $sideData, $result);
+				preg_match('/^([-+]?)([0-9]*|X)?(RD|MD|ID|F|Dc|Dr|Sh|R|Sp|-|\*)(\d*?)$/', $sideData, $result);
 				list($all, $modifier, $value, $type, $cost) = $result;
 
-				if($type == 'X')
-					$side->setType(null);
+				if($type == '*')
+					$side->setType(NULL);
 				else if(!key_exists($type, $this->collections['SideType']))
 					throw new \Exception("There is no side type with code [$type]");
 				else
 					$side->setType($this->collections['SideType'][$type]);
 				
 				$side->setModifier($modifier=='+' ? 1 : 0);
-				$side->setValue((int) $value);
+
+				if($value=='X')
+					$side->setValue(NULL);
+				else
+					$side->setValue((int) $value);
+
 				$side->setCost((int) $cost);
 
 				if($orig !== $side->toString())
