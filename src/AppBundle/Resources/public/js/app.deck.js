@@ -431,7 +431,7 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	app.deck_history && app.deck_history.notify_change();
 
 	//list of cards which, by rules, deny or allow some cards, or modify cards' max quantity
-	if(_.includes(['01045', '07089', '08135', '08143'], card_code))
+	if(_.includes(['01045', '07089', '08090', '08135', '08143'], card_code))
 		updated_other_card = true; //force list refresh
 
 	return updated_other_card;
@@ -545,6 +545,9 @@ deck.get_problem = function get_problem() {
 	if(deckLimits.length > (deck.is_included('08143') ? 2 : 0)) return 'too_many_copies';
 	if(deck.is_included('08143') && _.some(deckLimits, v => v > 1)) return 'too_many_copies';
 
+	if(deck.is_included('08090') && deck.get_nb_cards(deck.get_cards(null, {affiliation_code: 'villain'})) > 5)
+		return 'too_many_copies';
+
 	// no invalid card
 	if(deck.get_invalid_cards().length > 0) {
 		return 'invalid_cards';
@@ -600,6 +603,12 @@ deck.can_include_card = function can_include_card(card) {
 	// Bo-Katan Kryze (WotF #89) special case
 	if(deck.is_included('07089')) {
 		if(card.affiliation_code==='villain' && card.faction_code==='yellow' && card.type_code==='upgrade')
+			return true;
+	}
+
+	// Leia Organa (AtG #90) special case
+	if(deck.is_included('08090')) {
+		if(card.affiliation_code==='villain')
 			return true;
 	}
 

@@ -76,6 +76,14 @@ class DeckValidationHelper
 			}
 		}
 
+		// Leia Organa (AtG #90) special case
+		if($deck->getSlots()->getSlotByCode('08090') != NULL) {
+			if($card->getAffiliation()->getCode()==='villain')
+			{
+				return true;
+			}
+		}
+
 		// Qi'Ra (AtG #135) special case
 		if($deck->getSlots()->getSlotByCode('08135') != NULL) {
 			if(    $card->getFaction()->getCode()==='yellow' 
@@ -154,6 +162,9 @@ class DeckValidationHelper
 			if($limitExceeded > $maxLimitExceeded)
 				return 'too_many_copies';
 		}
+
+		if($deck->getSlots()->isSlotIncluded('08090') && $deck->getSlots()->getCountByAffiliation()["villain"] > 5)
+			return 'too_many_copies';
 
 		if(!empty($this->getInvalidCards($deck))) {
 			return 'invalid_cards';

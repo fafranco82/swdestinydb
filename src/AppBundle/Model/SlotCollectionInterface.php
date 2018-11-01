@@ -51,6 +51,12 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	public function getCountByFaction();
 
 	/**
+	 * Get all slot counts sorted by affiliation code
+	 * @return array
+	 */
+	public function getCountByAffiliation();
+
+	/**
 	 * Get battlefield(s) as slots
 	 * @return \AppBundle\Model\SlotCollectionInterface
 	 */

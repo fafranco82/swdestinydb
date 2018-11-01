@@ -140,6 +140,18 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		return $countByFaction;
 	}
 
+	public function getCountByAffiliation() {
+		$countByAffiliation = ['villain' => 0, 'hero' => 0];
+
+		foreach($this->slots as $slot) {
+			$code = $slot->getCard()->getAffiliation()->getCode();
+			if(array_key_exists($code, $countByAffiliation)) {
+				$countByAffiliation[$code] += max($slot->getQuantity(), $slot->getDice());
+			}
+		}
+		return $countByAffiliation;
+	}
+
 	public function getBattlefieldDeck()
 	{
 		$battlefieldDeck = [];
