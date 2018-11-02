@@ -4,6 +4,8 @@ namespace AppBundle\Helper;
 use AppBundle\Model\SlotCollectionDecorator;
 use AppBundle\Model\SlotCollectionProviderInterface;
 
+use function Functional\some;
+
 class DeckValidationHelper
 {
 	
@@ -46,6 +48,19 @@ class DeckValidationHelper
 			{
 				return false;
 			}
+		}
+
+		// Solidarity (AtG #156) special case
+		if($card->getCode() == '08156') {
+			//all characters of the same color
+			if(count($deck->getSlots()->getCharacterDeck()->getFactions()) > 1)
+				return false;
+
+			//no more than one copy of every card
+			if(some($deck->getSlots()->getDrawDeck()->getContent(), function($slot, $code, $slots) {
+				return max($slot["quantity"], $slot["dice"]) > 1;
+			}))
+				return false;
 		}
 
 		if($card->getAffiliation()->getCode() === 'neutral') {

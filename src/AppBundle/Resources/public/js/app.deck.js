@@ -588,6 +588,16 @@ deck.can_include_card = function can_include_card(card) {
 			return false;
 	}
 
+	// Solidarity (AtG #156) special case
+	if(card.code == '08156') {
+		//all characters of same colors
+		if(_(deck.get_character_deck()).map('faction_code').uniq().value().length > 1)
+			return false;
+		//no more than 1 copy of each card
+		if(_(deck.get_draw_deck()).map('indeck.cards').max() > 1)
+			return false;
+	}
+
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;
 
