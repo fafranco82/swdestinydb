@@ -5,6 +5,8 @@ use AppBundle\Model\SlotCollectionDecorator;
 use AppBundle\Model\SlotCollectionProviderInterface;
 
 use function Functional\some;
+use function Functional\every;
+use function Functional\none;
 
 class DeckValidationHelper
 {
@@ -39,28 +41,6 @@ class DeckValidationHelper
 	public function canIncludeCard(SlotCollectionProviderInterface $deck, $card) {
 		if(!$this->withinFormatSets($card, $deck->getFormat())) {
 			return false;
-		}
-
-		// No Allegiance (AtG #155) special case
-		if($deck->getSlots()->getSlotByCode('08155') != NULL) {
-			if(    $card->getType()->getCode()==='character' 
-				&& in_array($card->getAffiliation()->getCode(), array('hero', 'villain')))
-			{
-				return false;
-			}
-		}
-
-		// Solidarity (AtG #156) special case
-		if($card->getCode() == '08156') {
-			//all characters of the same color
-			if(count($deck->getSlots()->getCharacterDeck()->getFactions()) > 1)
-				return false;
-
-			//no more than one copy of every card
-			if(some($deck->getSlots()->getDrawDeck()->getContent(), function($slot, $code, $slots) {
-				return max($slot["quantity"], $slot["dice"]) > 1;
-			}))
-				return false;
 		}
 
 		if($card->getAffiliation()->getCode() === 'neutral') {
@@ -150,6 +130,48 @@ class DeckValidationHelper
 
 		return false;
 	}
+
+	public function checkPlots(SlotCollectionProviderInterface $deck)
+	{
+		return every($deck->getSlots()->getPlotDeck(), function($slot) use($deck) {
+			switch($slot->getCard()->getCode()) {
+				//Retribution (AtG 54)
+				case '08054':
+					return some($deck->getSlots()->getCharacterDeck(), function($slot) {
+						$card = $slot->getCard();
+						$points = 0;
+						if($card->getIsUnique())
+						{
+							$pointValues = preg_split('/\//', $card->getPoints());
+							$points = intval($pointValues[$slot->getDice()-1], 10);
+						}
+						else
+						{
+							$points = intval($card->getPoints());
+						}
+						return $points >= 20;
+					});
+				//No Allegiance (AtG 155)
+				case '08155':
+					return none($deck->getSlots()->getCharacterDeck(), function($slot) {
+						return in_array($slot->getCard()->getAffiliation()->getCode(), ["villain", "hero"]);
+					});
+				//Solidarity (AtG 156)
+				case '08156':
+					if(count($deck->getSlots()->getCharacterDeck()->getFactions()) > 1)
+						return false;
+
+					if(some($deck->getSlots()->getDrawDeck()->getContent(), function($slot, $code, $slots) {
+						return max($slot["quantity"], $slot["dice"]) > 1;
+					}))
+						return false;
+
+					return true;
+				default:
+					return true;
+			}
+		});
+	}
 	
 	public function findProblem(SlotCollectionProviderInterface $deck)
 	{
@@ -167,6 +189,10 @@ class DeckValidationHelper
 
 		if(count($deck->getSlots()->getBattlefieldDeck()) > ($deck->getSlots()->getSlotByCode('07127') != NULL ? 2 : 1)) {
 			return 'too_many_battlefields';
+		}
+
+		if(!$this->checkPlots($deck)) {
+			return 'plot';
 		}
 
 		$maxLimitExceeded = $deck->getSlots()->isSlotIncluded("08143") ? 2 : 0;

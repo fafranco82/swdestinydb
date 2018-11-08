@@ -536,6 +536,10 @@ deck.get_problem = function get_problem() {
 		return 'too_many_battlefields';
 	}
 
+	if(!deck.check_plots()) {
+		return 'plot';
+	}
+
 	// too many copies of one card
 	var deckLimits = _(deck.get_copies_and_deck_limit())
 		.values()
@@ -561,6 +565,42 @@ deck.get_problem = function get_problem() {
 	return null;
 }
 
+var plotChecks = {
+	//Retribution (AtG 54)
+	'08054': function() {
+		return _.some(deck.get_character_deck(), function(card) {
+			var pointValue = card.is_unique ? parseInt(card.points.split('/')[card.indeck.dice-1], 10) : parseInt(card.points);
+			return pointValue >= 20;
+		});
+	},
+	//No Allegiance (AtG 155)
+	'08155': function() {
+		return _.every(deck.get_character_deck(), function(card) {
+			return !_.includes(['villain', 'hero'], card.affiliation_code);
+		});
+	},
+	//Solidarity (AtG 156)
+	'08156': function() {
+		var factions = _(deck.get_character_deck()).map('faction_code').uniq().value();
+		var cards = app.data.cards.find({
+			type_code: {$in: ['upgrade', 'event', 'support']},
+			indeck: {cards: {$gt: 1}}
+		});
+		return factions.length == 1 && cards.length == 0;
+	}
+};
+
+deck.check_plots = function check_plots() {
+	var plots = deck.get_plot_deck();
+	if(plots.length == 0) {
+		return true;
+	} else {
+		return _.every(plots, function(plot) {
+			return !!!plotChecks[plot.code] || plotChecks[plot.code]();
+		});
+	}
+}
+
 deck.get_invalid_cards = function get_invalid_cards() {
 	return _.filter(deck.get_cards(), function (card) {
 		return ! deck.can_include_card(card);
@@ -581,22 +621,6 @@ deck.get_notmatching_cards = function get_notmatching_cards() {
 deck.can_include_card = function can_include_card(card) {
 	// card not valid in format
 	if(!deck.within_format_sets(card)) return false;
-
-	// No Allegiance (AtG #155) special case
-	if(deck.is_included('08155')) {
-		if(card.type_code==='character' && _.includes(['hero', 'villain'], card.affiliation_code))
-			return false;
-	}
-
-	// Solidarity (AtG #156) special case
-	if(card.code == '08156') {
-		//all characters of same colors
-		if(_(deck.get_character_deck()).map('faction_code').uniq().value().length > 1)
-			return false;
-		//no more than 1 copy of each card
-		if(_(deck.get_draw_deck()).map('indeck.cards').max() > 1)
-			return false;
-	}
 
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;
