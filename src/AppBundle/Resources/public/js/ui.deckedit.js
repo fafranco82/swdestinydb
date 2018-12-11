@@ -67,7 +67,7 @@ ui.set_max_qty = function set_max_qty() {
 		var max_value = record.deck_limit || 2;
 		if(record.type_code=='character' && !record.is_unique) {
 			max_value = Math.min(parseInt(30 / parseInt(record.points, 10)));
-		} else if (_.includes(['upgrade', 'support', 'event'], record.type_code) && app.deck.is_included('08143')) {
+		} else if (_.includes(['upgrade', 'downgrade', 'support', 'event'], record.type_code) && app.deck.is_included('08143')) {
 			max_value++;
 		}
 
