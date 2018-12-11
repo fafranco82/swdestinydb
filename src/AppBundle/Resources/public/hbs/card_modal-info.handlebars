@@ -9,7 +9,7 @@
 		{{#in card.type_code "character" "plot"}}
 			{{trans "card.info.points"}}: {{card.points}}.
 		{{/in}}
-		{{#in card.type_code "upgrade" "support" "event"}}
+		{{#in card.type_code "upgrade" "downgrade" "support" "event"}}
 			{{trans "card.info.cost"}}: {{int_or_x card.cost}}.
 		{{/in}}
 		{{#compare card.type_code "character"}}

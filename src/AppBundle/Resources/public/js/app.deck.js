@@ -239,7 +239,7 @@ deck.is_included = function is_included(code) {
 deck.get_draw_deck = function get_draw_deck(sort) {
 	return deck.get_cards(sort, {
 		type_code: {
-			'$in' : ['upgrade', 'support', 'event']
+			'$in' : ['upgrade', 'downgrade', 'support', 'event']
 		}
 	});
 }

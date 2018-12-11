@@ -56,6 +56,16 @@
 {{macros.slot_plain(slot, slot.quantity)}}
 {% endfor %}
 
+{% set downgrades = deck.slots_by_type.downgrade %}
+{% if downgrades|length > 0 %}
+{{downgrades.0.card.type.name | upper}}
+{% for i in range (1,downgrades.0.card.type.name|length) %}-{% endfor %}
+{% endif %}
+
+{% for slot in downgrades %}
+{{macros.slot_plain(slot, slot.quantity)}}
+{% endfor %}
+
 
 {% set supports = deck.slots_by_type.support %}
 {% if supports|length > 0 %}

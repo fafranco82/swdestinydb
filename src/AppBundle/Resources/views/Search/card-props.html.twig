@@ -3,7 +3,7 @@
 {% if card.type_code == 'character' or card.type_code == 'plot' %}
 	{{'card.info.points' | trans}}: {{ card.points }}.
 {% endif %}
-{% if card.type_code == 'upgrade' or card.type_code == 'event' or card.type_code == 'support' %}
+{% if card.type_code == 'upgrade' or card.type_code == 'event' or card.type_code == 'support' or card.type_code == 'downgrade' %}
 	{{'card.info.cost' | trans}}: {{ macros.integer_or_x(card.cost) }}.
 {% endif %}
 {% if card.type_code == 'character' %}

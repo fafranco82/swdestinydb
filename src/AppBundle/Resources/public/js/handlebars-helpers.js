@@ -39,7 +39,11 @@
             'SoR': '<span class="icon-set-SoR"></span>',
             'EaW': '<span class="icon-set-EaW"></span>',
             'TPG': '<span class="icon-set-TPG"></span>',
-            'LEG': '<span class="icon-set-TPG"></span>'
+            'LEG': '<span class="icon-set-LEG"></span>',
+            'RIV': '<span class="icon-set-RIV"></span>',
+            'WotF': '<span class="icon-set-WotF"></span>',
+            'AtG': '<span class="icon-set-AtG"></span>',
+            'CON': '<span class="icon-set-CON"></span>'
         };
         
         _.forEach(icons, function(span, key) {

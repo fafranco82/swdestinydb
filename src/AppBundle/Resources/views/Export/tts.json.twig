@@ -216,6 +216,7 @@
 					"SidewaysCard": false,
 					"DeckIDs": [
 {% set allSlots = deck.slots_by_type.upgrade %}
+{% set allSlots = allSlots|merge(deck.slots_by_type.downgrade) %}
 {% set allSlots = allSlots|merge(deck.slots_by_type.support) %}
 {% set allSlots = allSlots|merge(deck.slots_by_type.event) %}
 {% for slot in allSlots %}

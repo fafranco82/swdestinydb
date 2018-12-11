@@ -95,7 +95,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	}
 	
 	public function getSlotsByType() {
-		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'character' => [], 'upgrade' => [], 'support' => [], 'event' => [] ];
+		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'character' => [], 'upgrade' => [], 'downgrade' => [], 'support' => [], 'event' => [] ];
 		foreach($this->slots as $slot) {
 			if(array_key_exists($slot->getCard()->getType()->getCode(), $slotsByType)) {
 				$slotsByType[$slot->getCard()->getType()->getCode()][] = $slot;
@@ -107,6 +107,10 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	public function getCountByType() {
 		$countByType = [ 
 			'upgrade' => array(
+				"cards" => 0,
+				"dice" => 0),
+
+			'downgrade' => array(
 				"cards" => 0,
 				"dice" => 0),
 
@@ -168,6 +172,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		$drawDeck = [];
 		foreach($this->slots as $slot) {
 			if($slot->getCard()->getType()->getCode() === 'upgrade'
+			|| $slot->getCard()->getType()->getCode() === 'downgrade'
 			|| $slot->getCard()->getType()->getCode() === 'support'
 			|| $slot->getCard()->getType()->getCode() === 'event') {
 				$drawDeck[] = $slot;
