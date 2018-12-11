@@ -427,6 +427,7 @@ ol {
 			@each $elem in (
 				(name: character, x: -75px, y: -72px),
 				(name: upgrade, x: -80px, y: -0px),
+				(name: downgrade, x: -90px, y: -240px),
 				(name: event, x: -80px, y: -24px),
 				(name: support, x: -73px, y: -88px),
 				(name: plot, x: -45px, y: -10px)) {
