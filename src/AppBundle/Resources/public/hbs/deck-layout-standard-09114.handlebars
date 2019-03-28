@@ -1,0 +1,171 @@
+<div class="deck-content">
+	<div class="row">
+		<div class="col-sm-6">
+			<h4 style="font-weight:bold">{{deck.get_affiliation_name}}</h4>
+			{{#if (deck.get_plot_points)}}
+			<div>
+				{{trans "decks.edit.meta.plots"}}:
+				{{transChoice "decks.edit.meta.points" (deck.get_plot_points) points=(deck.get_plot_points)}}
+			</div>
+			{{/if}}
+			<div>
+				{{trans "decks.edit.meta.characters"}}: 
+				{{transChoice "decks.edit.meta.points" (deck.get_character_points) points=(deck.get_character_points)}},
+				{{transChoice "decks.edit.meta.dice" (deck.get_character_dice) count=(deck.get_character_dice)}}
+			</div>
+			<div>
+				{{trans "decks.edit.meta.drawdeck"}}: 
+				{{transChoice "decks.edit.meta.cards" (deck.get_draw_deck_size) count=(deck.get_draw_deck_size)}},
+				{{transChoice "decks.edit.meta.dice" (deck.get_draw_deck_dice) count=(deck.get_draw_deck_dice)}}
+			</div>
+			<div>{{trans "decks.edit.meta.format"}}: {{deck.get_format_name}}</div>
+			<div>{{trans "decks.edit.meta.sets" sets=sets}}</div>
+			{{#if deck.get_problem}}
+			<div class="text-danger small">
+				<span class="fa fa-exclamation-triangle"></span>{{trans (concat "decks.problems." (deck.get_problem))}}
+			</div>
+			{{/if}}
+		</div>
+		<div class="col-sm-6">		
+			{{#with (cards "type_code" "battlefield")}}
+			<h5><span class="icon icon-battlefield"></span> {{this.0.type_name}} {{#compare (nb_cards this) 1 operator=">"}}({{nb_cards this}}){{/compare}}</h5>
+				{{#each this}}
+				<div class="deck-battlefield">
+					<div class="battlefield-thumbnail card-thumbnail-2x card-thumbnail-battlefield border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+					<div>
+						<a href="#" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+							{{name}}
+						</a>
+						{{#unless (own_enough_cards this)}}
+						<span class="fa fa-exclamation-triangle limited-pool-conflict" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
+						{{/unless}}
+					</div>
+				</div>
+				{{/each}}
+			{{/with}}
+		</div>
+	</div>
+	<div class="row">
+		{{#if (deck.get_plot_points)}}
+		<div class="col-sm-3">
+			<div>
+				{{#with (cards "type_code" "plot")}}
+				<h5><span class="icon icon-plot"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				<div class="plot-deck-list">
+					{{#each this}}
+					<div class="deck-plot">
+						<div class="plot-thumbnail card-thumbnail-2x card-thumbnail-plot border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+						<div class="plot-name">
+							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+								{{name}}
+							</a>
+							{{#unless (own_enough_cards this)}}
+							<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math this.indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
+							{{/unless}}
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				{{/with}}
+			</div>
+		</div>
+		{{/if}}
+		<div class="col-sm-9">
+			<div>
+				{{#with (deck.get_character_row_data)}}
+				<h5><span class="icon icon-character"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
+				<div class="character-deck-list">
+					{{#each this}}
+					<div class="deck-character">
+						<div class="character-thumbnail card-thumbnail-2x card-thumbnail-character border-{{faction_code}}" style="background-image:url('{{imagesrc}}')"></div>
+						<div class="character-name">
+							<span class="icon-{{type_code}} fg-{{faction_code}}"></span>
+							<a href="{{url}}" class="card card-tip fg-{{faction_code}} {{#unless (can_include this)}}invalid-card{{/unless}}" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+								{{name}}
+							</a>
+							{{#if is_unique}}
+								{{#unless (own_enough_dice this)}}
+								<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math indeck.dice "-" owned.dice}}" title="{{transChoice "limited_pool_conflict" owned.dice count=owned.dice}}"></span>
+								{{/unless}}
+							{{else}}
+								{{#unless (own_enough_cards original)}}
+								<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math original.indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
+								{{/unless}}
+							{{/if}}
+						</div>
+						<div class="character-dice">
+							{{indeck.dice}} <span class="icon-die"></span>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				{{/with}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		{{#*inline "section"}}
+			<div>
+				{{#with (cards key value)}}
+				<h5>
+					<span class="icon icon-{{this.0.type_code}}"></span> {{this.0.type_name}}
+					({{nb_cards this}} <span class="icon-cards"></span>{{#if (nb_dice this)}} {{nb_dice this}} <span class="icon-die"></span>{{/if}})
+				</h5>
+				{{#each this}}
+				<div{{#unless (can_include this)}} class="invalid-card"{{/unless}}>
+					{{#if (own_enough_cards this)}}
+						<span class="card-amount">x{{indeck.cards}}</span>
+					{{else}}
+						<span class="card-amount limited-pool-conflict limited-pool-conflict-{{math indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}">x{{indeck.cards}}</span>
+					{{/if}}
+					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>
+					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+						{{name}}
+					</a>
+                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+				</div>
+				{{/each}}
+				{{/with}}
+			</div>
+		{{/inline}}
+		{{#*inline "section_events"}}
+			<div>
+				{{#with (cards "type_code" "event" subtype="move" negate=(ternary moves false true))}}
+				<h5>
+					{{#if ../moves}}
+						{{subtype (lookup this 0) "move"}}
+					{{else}}
+						<span class="icon icon-event"></span>
+						{{this.0.type_name}}
+					{{/if}}
+					({{nb_cards this}} <span class="icon-cards"></span>{{#if (nb_dice this)}} {{nb_dice this}} <span class="icon-die"></span>{{/if}})
+				</h5>
+				{{#each this}}
+				<div{{#unless (can_include this)}} class="invalid-card"{{/unless}}>
+					{{#if (own_enough_cards this)}}
+						<span class="card-amount">x{{indeck.cards}}</span>
+					{{else}}
+						<span class="card-amount limited-pool-conflict limited-pool-conflict-{{math indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}">x{{indeck.cards}}</span>
+					{{/if}}
+					<span class="icon icon-{{type_code}} fg-{{faction_code}}"></span>
+					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
+						{{name}}
+					</a>
+                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+				</div>
+				{{/each}}
+				{{/with}}
+			</div>
+		{{/inline}}
+		<div class="col-sm-6 col-print-6">
+			{{> section key="type_code" value="upgrade"}}
+			{{> section key="type_code" value="downgrade"}}
+		</div>
+		<div class="col-sm-6 col-print-6">
+			{{> section key="type_code" value="support"}}
+			{{> section_events moves=false}}
+			{{> section_events moves=true}}
+		</div>
+	</div>
+</div>

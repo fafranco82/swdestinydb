@@ -15,7 +15,16 @@ var date_creation,
 
 Handlebars.registerHelper('cards', function(key, value, opt) {
     var query=[]; query[key] = value;
-    return app.deck.get_cards({name: 1}, query);
+    var cards = app.deck.get_cards({name: 1}, query);
+
+    if(opt.hash && opt.hash.subtype) {
+    	var predicate = card => _.map(card.subtypes, 'code').includes(opt.hash.subtype);
+    	if(!!opt.hash.negate)
+    		predicate = _.negate(predicate);
+    	cards = cards.filter(predicate);
+    }
+
+    return cards;
 });
 
 Handlebars.registerHelper('nb_cards', function(cards) {
@@ -34,12 +43,20 @@ Handlebars.registerHelper('own_enough_dice', function(card, options) {
     return app.deck.own_enough_dice(card);
 });
 
-
+Handlebars.registerHelper('subtype', function(card, subtype_code, options) {
+	console.log(subtype_code);
+	var subtype = _.find(card.subtypes, {code: subtype_code});
+	console.log(subtype);
+	return subtype && subtype.name; 
+});
 
 /*
  * Templates for the deck layout
  */
-var LayoutTemplate = Handlebars.templates['deck-layout-standard'];
+var templates = {
+	standard: Handlebars.templates['deck-layout-standard'],
+	"standard-09114": Handlebars.templates['deck-layout-standard-09114']
+}
 
 /**
  * @memberOf deck
@@ -264,6 +281,20 @@ deck.get_character_points = function get_character_points() {
 			return points + parseInt(character.points, 10) * character.indeck.dice;
 		}
 	}, 0);
+
+	//if Clone Commander Cody (AtG #73)
+	if(deck.is_included('08073')) {
+		//every Clone Trooper (LEG #38) cost 1 point less
+		var cloneTroopers = app.data.cards.findById('05038').indeck.cards;
+		points -= cloneTroopers;
+	}
+
+	//if General Grievous - Droid Armies Commander (CONV #21)
+	if(deck.is_included('09021')) {
+		//every droid cost 1 point less
+		var droids = deck.get_character_row_data().filter(card => _.map(card.subtypes, 'code').includes('droid')).length;
+		points -= droids;
+	}
 	return points;
 }
 
@@ -321,7 +352,16 @@ deck.get_plot_points = function get_plot_points() {
  */
 deck.get_draw_deck_size = function get_draw_deck_size(sort) {
 	var draw_deck = deck.get_draw_deck();
-	return deck.get_nb_cards(draw_deck);
+	var size = deck.get_nb_cards(draw_deck);
+
+	//if Lightsaber Mastery is included
+	if(deck.is_included("09114")) {
+		//up to 2 move events don't count towards deck size
+		var moves = deck.get_nb_cards(deck.get_cards().filter(card => _.map(card.subtypes, 'code').includes('move') && card.type_code==='event'));
+		if(moves > 0)
+			size -= _.min([moves, 2]);
+	}
+	return size;
 }
 /**
  * @memberOf deck
@@ -374,7 +414,12 @@ deck.display = function display(container, options) {
 	
 	options = _.extend({sort: 'type', cols: 2}, options);
 
-	var deck_content = LayoutTemplate({
+	var template = templates.standard;
+	if(deck.is_included('09114')) {
+		template = templates['standard-09114'];
+	}
+
+	var deck_content = template({
 		deck: this,
 		sets: _.map(deck.get_included_sets(), 'name').join(', ')
 	});
@@ -431,7 +476,7 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	app.deck_history && app.deck_history.notify_change();
 
 	//list of cards which, by rules, deny or allow some cards, or modify cards' max quantity
-	if(_.includes(['01045', '07089', '08090', '08135', '08143'], card_code))
+	if(_.includes(['01045', '07089', '08090', '08135', '08143', '09141', '09142'], card_code))
 		updated_other_card = true; //force list refresh
 
 	return updated_other_card;
@@ -549,8 +594,18 @@ deck.get_problem = function get_problem() {
 	if(deckLimits.length > (deck.is_included('08143') ? 2 : 0)) return 'too_many_copies';
 	if(deck.is_included('08143') && _.some(deckLimits, v => v > 1)) return 'too_many_copies';
 
+	/* Leia and Enfys Nest limits unimplemented until official aclarations about using them with Finn, Qi'Ra an Bo-Katan
 	if(deck.is_included('08090') && deck.get_nb_cards(deck.get_cards(null, {affiliation_code: 'villain'})) > 5)
 		return 'too_many_copies';
+
+	if(deck.is_included('09141') || deck.is_included('09142'))
+	{
+		var limit = deck.is_included('09141') ? 2 : 1;
+		var otherAffiliation = affiliation_code === 'villain' ? 'hero' : 'villain';
+		if(deck.get_nb_cards(deck.get_cards(null, {affiliation_code: otherAffiliation})) > limit)
+			return 'too_many_copies';
+	}
+	*/
 
 	// no invalid card
 	if(deck.get_invalid_cards().length > 0) {
@@ -649,6 +704,18 @@ deck.can_include_card = function can_include_card(card) {
 	// Qi'Ra (AtG #135) special case
 	if(deck.is_included('08135')) {
 		if(card.faction_code==='yellow' && card.type_code==='event')
+			return true;
+	}
+
+	// Enfys Nest (CONV #141) special case
+	if(deck.is_included('09141')) {
+		if(card.type_code !== 'character')
+			return true;
+	}
+
+	// Enfys Nest's Marauder (CONV #142) special case
+	if(deck.is_included('09142')) {
+		if(card.type_code !== 'character')
 			return true;
 	}
 

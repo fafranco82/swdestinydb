@@ -88,6 +88,22 @@ class DeckValidationHelper
 			}
 		}
 
+		// Enfys Nest (CONV #141) special case
+		if($deck->getSlots()->getSlotByCode('09141') != NULL) {
+			if($card->getType()->getCode()!=='character')
+			{
+				return true;
+			}
+		}
+
+		// Enfys Nest's Marauder (CONV #142) special case
+		if($deck->getSlots()->getSlotByCode('09142') != NULL) {
+			if($card->getType()->getCode()!=='character')
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -172,10 +188,37 @@ class DeckValidationHelper
 			}
 		});
 	}
+
+	private function getDeckSize(SlotCollectionProviderInterface $deck)
+	{
+		$size = $deck->getSlots()->getDrawDeck()->countCards();
+		$moves = 0;
+		foreach($deck->getSlots() as $slot)
+		{
+			$card = $slot->getCard();
+			if($card->getType()->getCode()=="event")
+			{
+				foreach($card->getSubtypes() as $subtype)
+				{
+					if($subtype->getCode() === "move") {
+						$moves += $slot->getQuantity();
+					}
+				}
+			}
+		}
+
+		if($moves > 0)
+		{
+			$size -= min($moves, 2);
+		}
+
+		return $size;
+	}
 	
 	public function findProblem(SlotCollectionProviderInterface $deck)
 	{
-		if($deck->getSlots()->getDrawDeck()->countCards() != 30) {
+		$deckSize = $this->getDeckSize($deck);
+		if($deckSize != 30) {
 			return 'incorrect_size';
 		}
 
@@ -204,8 +247,18 @@ class DeckValidationHelper
 				return 'too_many_copies';
 		}
 
+		/* Leia and Enfys Nest limits unimplemented until official aclarations about using them with Finn, Qi'Ra an Bo-Katan
 		if($deck->getSlots()->isSlotIncluded('08090') && $deck->getSlots()->getCountByAffiliation()["villain"] > 5)
 			return 'too_many_copies';
+
+		if($deck->getSlots()->isSlotIncluded('09141') || $deck->getSlots()->isSlotIncluded('09142'))
+		{
+			$limit = $deck->getSlots()->isSlotIncluded('09141') ? 2 : 1;
+			$otherAffiliation = $deck->getAffiliation()->getCode() == 'villain' ? 'hero' : 'villain';
+			if($deck->getSlots()->getCountByAffiliation()[$otherAffiliation] > $limit) 
+				return 'too_many_copies';
+		}
+		*/
 
 		if(!empty($this->getInvalidCards($deck))) {
 			return 'invalid_cards';

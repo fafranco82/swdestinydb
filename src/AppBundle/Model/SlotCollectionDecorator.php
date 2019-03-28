@@ -232,6 +232,35 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 			$points += $inc;
 		};
+
+		//if Clone Commander Cody (AtG #73)
+		if($this->isSlotIncluded("08073"))
+		{
+			//every Clone Trooper (LEG #38) cost 1 point less
+			foreach($this->getCharacterDeck()->getSlots() as $slot)
+			{
+				if($slot->getCard()->getCode()=="05038") {
+					$points -=  $slot->getQuantity();
+				}
+			}
+		}
+
+		//if General Grievous - Droid Armies Commander (CONV #21)
+		if($this->isSlotIncluded("09021"))
+		{
+			//every droid cost 1 point less
+			foreach($this->getCharacterDeck()->getSlots() as $slot)
+			{
+				foreach($slot->getCard()->getSubtypes() as $subtype)
+				{
+					if($subtype->getCode() == 'droid')
+					{
+						$points -= $slot->getQuantity();
+						break;
+					}
+				}
+			}
+		}
 		return $points;
 	}
 
