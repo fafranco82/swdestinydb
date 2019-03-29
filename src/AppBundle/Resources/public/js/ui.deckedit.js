@@ -67,7 +67,9 @@ ui.set_max_qty = function set_max_qty() {
 		var max_value = record.deck_limit || 2;
 		if(record.type_code=='character' && !record.is_unique) {
 			max_value = Math.min(parseInt(30 / parseInt(record.points, 10)));
-		} else if (_.includes(['upgrade', 'downgrade', 'support', 'event'], record.type_code) && app.deck.is_included('08143')) {
+		} else if (app.deck.is_included('08143') && _.includes(['upgrade', 'downgrade', 'support', 'event'], record.type_code)) {
+			max_value++;
+		}  else if (app.deck.is_included('09114') && record.type_code==='event' && _.map(record.subtypes, 'code').includes('move')) {
 			max_value++;
 		}
 
@@ -439,13 +441,15 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
 	var update_all = app.deck.set_card_copies(card_code, quantity);
 	ui.refresh_deck();
 
-	//if "Double Down" (Across the Galaxy #143) was selected or unselected...
-	if(card_code=='08143') {
+	//if one of the following or was selected or unselected...
+	// "Double Down" (Across the Galaxy #143)
+	// "Lightsaber Mastery" (Convergence #114)
+	if(['08143', '09114'].includes(card_code)) {
 		ui.set_max_qty(); //...refresh max quantity
 	}
 
 	if(update_all) {
-		ui.refresh_list(_.includes(['08143'], card_code));
+		ui.refresh_list(_.includes(['08143', '09114'], card_code));
 	}
 	else {
 		ui.refresh_row(card_code);

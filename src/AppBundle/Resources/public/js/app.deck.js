@@ -591,8 +591,10 @@ deck.get_problem = function get_problem() {
 		.filter(v => v.nb_copies > v.deck_limit)
 		.map(v => v.nb_copies - v.deck_limit)
 		.value();
-	if(deckLimits.length > (deck.is_included('08143') ? 2 : 0)) return 'too_many_copies';
-	if(deck.is_included('08143') && _.some(deckLimits, v => v > 1)) return 'too_many_copies';
+	if(deckLimits.length > (deck.is_included('08143') || deck.is_included('09114') ? 2 : 0))
+		return 'too_many_copies';
+	if((deck.is_included('08143') || deck.is_included('09114')) && _.some(deckLimits, v => v > 1))
+		return 'too_many_copies';
 
 	/* Leia and Enfys Nest limits unimplemented until official aclarations about using them with Finn, Qi'Ra an Bo-Katan
 	if(deck.is_included('08090') && deck.get_nb_cards(deck.get_cards(null, {affiliation_code: 'villain'})) > 5)
