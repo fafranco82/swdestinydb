@@ -192,24 +192,28 @@ class DeckValidationHelper
 	private function getDeckSize(SlotCollectionProviderInterface $deck)
 	{
 		$size = $deck->getSlots()->getDrawDeck()->countCards();
-		$moves = 0;
-		foreach($deck->getSlots() as $slot)
+
+		if($deck->getSlots()->isSlotIncluded("09114"))
 		{
-			$card = $slot->getCard();
-			if($card->getType()->getCode()=="event")
+			$moves = 0;
+			foreach($deck->getSlots() as $slot)
 			{
-				foreach($card->getSubtypes() as $subtype)
+				$card = $slot->getCard();
+				if($card->getType()->getCode()=="event")
 				{
-					if($subtype->getCode() === "move") {
-						$moves += $slot->getQuantity();
+					foreach($card->getSubtypes() as $subtype)
+					{
+						if($subtype->getCode() === "move") {
+							$moves += $slot->getQuantity();
+						}
 					}
 				}
 			}
-		}
 
-		if($moves > 0)
-		{
-			$size -= min($moves, 2);
+			if($moves > 0)
+			{
+				$size -= min($moves, 2);
+			}
 		}
 
 		return $size;
