@@ -84,9 +84,12 @@
             }
         });
 
-        categories = _.omit(categories, function(value, key) {
-            return !validTypes[key];
-        });
+        var validCategories = _(iData)
+            .values()
+            .sortBy('i')
+            .filter(function(e) { return validTypes[e.name]; })
+            .map('name')
+            .value();
 
         _.each(series, function(serie) {
             serie.data = _.filter(serie.data, function(value, index) {
@@ -107,7 +110,7 @@
             },
             xAxis: {
                 type: 'category',
-                categories: _.keys(categories),
+                categories: validCategories,
                 labels: {
                     useHTML: true,
                     formatter: function() {
