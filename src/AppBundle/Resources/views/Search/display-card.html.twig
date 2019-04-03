@@ -16,7 +16,7 @@
     <div class="col-md-9">
         <div class="row">
 {% for card in cards %}
-        	<div class="col-sm-7" style="margin-bottom:2em">
+        	<div class="col-sm-7" style="margin-bottom:2em" data-code="{{card.code}}">
         		<div>
         			<div class="panel panel-default border-{{ card.faction_code }}">
         				<div class="panel-heading border-{{ card.faction_code }} bg-{{ card.faction_code }}">

@@ -4,9 +4,10 @@
 	{
 		$('div.card-legality-table').each(function() {
 			var $table = $(this);
+			var code = $table.closest('[data-code]').data('code');
 			var tpl = Handlebars.templates['ui_card-legality'];
 			$table.html(tpl({
-				card: app.data.cards.findById(app.user.params.card_code),
+				card: app.data.cards.findById(code),
 				formats: app.data.formats.find({})
 			}));
 		});
@@ -16,10 +17,11 @@
 	{
 		$('div.card-balance-table').each(function() {
 			var $table = $(this);
+			var code = $table.closest('[data-code]').data('code');
 
 			var tpl = Handlebars.templates['ui_card-balance'];
 			$table.html(tpl({
-				card: app.data.cards.findById(app.user.params.card_code),
+				card: app.data.cards.findById(code),
 				formats: app.data.formats.find({})
 			}));
 		});
