@@ -687,7 +687,7 @@ deck.can_include_card = function can_include_card(card) {
 
 	// Finn (AW #45) special case
 	if(deck.is_included('01045')) {
-		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.includes(['vehicle','weapon'], card.subtype_code))
+		if(card.affiliation_code==='villain' && card.faction_code==='red' && _.some(card.subtypes, st => ['weapon', 'vehicle'].includes(st.code)))
 			return true;
 	}
 
