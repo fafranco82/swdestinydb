@@ -3,6 +3,8 @@
 namespace AppBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Format;
+
 /**
  * Decorator for a collection of SlotInterface 
  */
@@ -10,9 +12,10 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 {
 	protected $slots;
 	
-	public function __construct(\Doctrine\Common\Collections\Collection $slots)
+	public function __construct(\Doctrine\Common\Collections\Collection $slots, Format $format = NULL)
 	{
 		$this->slots = $slots;
+		$this->format = $format;
 	}
 	
 	public function add($element)
@@ -220,16 +223,23 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			$card = $slot->getCard();
 			if($card->getType()->getCode() != 'character') continue;
 
+			$formatPoints = $card->getPoints();
+			if($this->format && array_key_exists($card->getCode(), $this->format->getData()['balance']))
+			{
+				$formatPoints = $this->format->getData()["balance"][$card->getCode()];
+			}
+
 			$inc = 0;
 			if($card->getIsUnique())
 			{
-				$pointValues = preg_split('/\//', $card->getPoints());
+				$pointValues = preg_split('/\//', $formatPoints);
 				$inc = intval($pointValues[$slot->getDice()-1], 10);
 			}
 			else
 			{
-				$inc = intval($card->getPoints()) * $slot->getDice();
+				$inc = intval($formatPoints) * $slot->getDice();
 			}
+
 			$points += $inc;
 		};
 

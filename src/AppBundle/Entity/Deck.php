@@ -412,7 +412,7 @@ class Deck extends \AppBundle\Model\ExportableDeck implements \JsonSerializable,
      */
     public function getSlots()
     {
-        return new \AppBundle\Model\SlotCollectionDecorator($this->slots);
+        return new \AppBundle\Model\SlotCollectionDecorator($this->slots, $this->format);
     }
 
     /**
