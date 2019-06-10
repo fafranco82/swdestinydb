@@ -37,6 +37,17 @@ class DeckValidationHelper
 		}
 		return $notMatchingCards;
 	}
+
+	public function hasSubtype($card, $types)
+	{
+		if(!is_array($types)) $types = [$types];
+
+		return some($card->getSubtypes(), function($subtype) use ($types) {
+			return some($types, function($type) use($subtype) {
+				return $subtype->getCode() == $type;
+			});
+		});
+	}
 	
 	public function canIncludeCard(SlotCollectionProviderInterface $deck, $card) {
 		if(!$this->withinFormatSets($card, $deck->getFormat())) {
@@ -55,7 +66,7 @@ class DeckValidationHelper
 		if($deck->getSlots()->getSlotByCode('01045') != NULL) {
 			if(    $card->getAffiliation()->getCode()==='villain' 
 				&& $card->getFaction()->getCode()==='red' 
-				&& in_array($card->getSubtype()->getCode(), array('vehicle', 'weapon')))
+				&& $this->hasSubtype($card, ['vehicle', 'weapon']))
 			{
 				return true;
 			}
@@ -138,7 +149,7 @@ class DeckValidationHelper
 		if($deck->getSlots()->getSlotByCode('01045') != NULL) {
 			if(    $card->getAffiliation()->getCode()==='villain' 
 				&& $card->getFaction()->getCode()==='red' 
-				&& in_array($card->getSubtype()->getCode(), array('vehicle', 'weapon')))
+				&& $this->hasSubtype($card, ['vehicle', 'weapon']))
 			{
 				return true;
 			}
