@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/fafranco82/swdestinydb#readme",
   "dependencies": {
-    "handlebars": "^4.0.14"
+    "handlebars": ">=4.1.0"
   }
 }
