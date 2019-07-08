@@ -93,6 +93,9 @@
 								<span class="fa fa-exclamation-triangle limited-pool-conflict limited-pool-conflict-{{math original.indeck.cards "-" owned.cards}}" title="{{transChoice "limited_pool_conflict" owned.cards count=owned.cards}}"></span>
 								{{/unless}}
 							{{/if}}
+							{{#if (restricted code)}}
+		                    	<span class="fa fa-exclamation" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
+		                    {{/if}}
 						</div>
 						<div class="character-dice">
 							{{indeck.dice}} <span class="icon-die"></span>
@@ -123,7 +126,10 @@
 					<a href="#" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="{{code}}">
 						{{name}}
 					</a>
-                   {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+                    {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+                    {{#if (restricted code)}}
+                    	<span class="fa fa-exclamation" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
+                    {{/if}}
 				</div>
 				{{/each}}
 				{{/with}}
@@ -153,6 +159,9 @@
 						{{name}}
 					</a>
                    {{#if has_die}}(<span class="icon-die"></span>){{/if}}
+                   {{#if (restricted code)}}
+                   <span class="fa fa-exclamation" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
+                   {{/if}}
 				</div>
 				{{/each}}
 				{{/with}}

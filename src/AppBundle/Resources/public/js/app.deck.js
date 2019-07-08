@@ -50,6 +50,10 @@ Handlebars.registerHelper('subtype', function(card, subtype_code, options) {
 	return subtype && subtype.name; 
 });
 
+Handlebars.registerHelper('restricted', function(code) {
+	return _.includes(app.deck.get_format_data().data.restricted, code);
+});	
+
 /*
  * Templates for the deck layout
  */
@@ -428,7 +432,7 @@ deck.display = function display(container, options) {
 		.removeClass('deck-loading')
 		.empty();
 
-	$(container).append(deck_content);
+	$(container).append(deck_content).find('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
@@ -619,6 +623,11 @@ deck.get_problem = function get_problem() {
 		return 'faction_not_included';
 	}
 
+	// restricted list, no more than 1 of the restricted list can be included in the deck
+	if(deck.get_restricted_count() > 1) {
+		return 'restricted_list';
+	}
+
 	return null;
 }
 
@@ -666,7 +675,7 @@ deck.get_invalid_cards = function get_invalid_cards() {
 
 deck.get_notmatching_cards = function get_notmatching_cards() {
 	var character_factions = deck.get_nongray_factions(deck.get_character_deck());
-	return _.filter(deck.get_draw_deck(), function (card) {
+	return _.filter(deck.get_draw_deck().concat(deck.get_plot_deck()), function (card) {
 		return ! deck.card_spot_faction(card, character_factions);
 	});
 }
@@ -773,6 +782,16 @@ deck.own_enough_dice = function own_enough_dice(card) {
 	if(!card.owned) return true;
 
 	return card.indeck.dice <= card.owned.dice;
+}
+
+/**
+ * returns the number of cards in the restricted list that are included in the deck
+ * @memberOf deck
+ */
+deck.get_restricted_count = function get_restricted_count() {
+	return _.reduce(deck.get_format_data().data.restricted, function(sum, code) {
+		return sum + (deck.is_included(code) ? 1 : 0);
+	}, 0);
 }
 
 })(app.deck = {}, jQuery);

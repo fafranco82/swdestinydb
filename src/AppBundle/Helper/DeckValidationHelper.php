@@ -229,6 +229,14 @@ class DeckValidationHelper
 
 		return $size;
 	}
+
+	public function getRestrictedCount(SlotCollectionProviderInterface $deck)
+	{
+		$restrictedList = $deck->getFormat()->getData()["restricted"];
+		return array_reduce($restrictedList, function($sum, $code) use ($deck) {
+			return $sum + ($deck->getSlots()->isSlotIncluded($code) ? 1 : 0);
+		}, 0);
+	}
 	
 	public function findProblem(SlotCollectionProviderInterface $deck)
 	{
@@ -281,6 +289,10 @@ class DeckValidationHelper
 		
 		if(!empty($this->getNotMatchingCards($deck))) {
 			return 'faction_not_included';
+		}
+
+		if($this->getRestrictedCount($deck) > 1) {
+			return 'restricted_list';
 		}
 
 		return null;

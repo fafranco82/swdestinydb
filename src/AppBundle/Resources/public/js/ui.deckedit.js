@@ -7,6 +7,10 @@ var DisplayColumnsTpl = '',
 	Format = null,
 	Config = null;
 
+Handlebars.registerHelper('restricted', function(code) {
+	return _.includes(app.deck.get_format_data().data.restricted, code);
+});	
+
 /**
  * reads ui configuration from localStorage
  * @memberOf ui
@@ -622,6 +626,8 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		if(!row || refresh) row = divs[card.code] = ui.build_row(card);
 
 		row.data("code", card.code).addClass('card-container');
+
+		row.find('[data-toggle="tooltip"]').tooltip();
 
 		row.find('input[name="qty-' + card.code + '"]').each(
 			function(i, element) {
