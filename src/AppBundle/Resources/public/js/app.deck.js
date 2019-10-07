@@ -282,7 +282,7 @@ deck.get_character_points = function get_character_points() {
 		if(character.is_unique) {
 			return points + parseInt(character.points.split('/')[character.indeck.dice-1], 10);
 		} else {
-			return points + parseInt(character.points, 10) * character.indeck.dice;
+			return points + parseInt(character.points, 10) * character.indeck.cards;
 		}
 	}, 0);
 

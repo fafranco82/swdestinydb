@@ -203,10 +203,10 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 				if($slot->getCard()->getIsUnique()) {
 					$characterRow[] = $slot;
 				} else {
-					$totalDice = $slot->getDice();
+					$totalCards = $slot->getQuantity();
 					$slot->setDice(1);
 					$slot->setQuantity(1);
-					for($i = 0; $i < $totalDice; $i++) {
+					for($i = 0; $i < $totalCards; $i++) {
 						$characterRow[] = $slot;
 					}
 				}
@@ -237,7 +237,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 			else
 			{
-				$inc = intval($formatPoints) * $slot->getDice();
+				$inc = intval($formatPoints) * $slot->getQuantity();
 			}
 
 			$points += $inc;
