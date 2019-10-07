@@ -653,6 +653,13 @@ var plotChecks = {
 			indeck: {cards: {$gt: 1}}
 		});
 		return factions.length == 1 && cards.length == 0;
+	},
+	//Temporarty Truce (SoH 119)
+	'11119': function() {
+		var greys = deck.get_draw_deck().filter(card => card.faction_code=='gray');
+		var nonReylo = deck.get_cards(null, {type_code: 'character', name: {$nin: ['Rey', 'Kylo Ren']}});
+
+		return greys.length+nonReylo.length == 0;
 	}
 };
 
@@ -728,6 +735,11 @@ deck.can_include_card = function can_include_card(card) {
 	if(deck.is_included('09142')) {
 		if(card.type_code !== 'character')
 			return true;
+	}
+
+	// Temporary Truce (SoH #119) special case
+	if(deck.is_included('11119')) {
+		return true;
 	}
 
 	// if none above => no

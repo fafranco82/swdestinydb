@@ -46,10 +46,9 @@
 		</div>
 	</div>
 	<div class="row">
-		{{#if (deck.get_plot_points)}}
+		{{#with (cards "type_code" "plot")}}
 		<div class="col-sm-3">
 			<div>
-				{{#with (cards "type_code" "plot")}}
 				<h5><span class="icon icon-plot"></span> {{this.0.type_name}} ({{nb_cards this}})</h5>
 				<div class="plot-deck-list">
 					{{#each this}}
@@ -67,10 +66,9 @@
 					</div>
 					{{/each}}
 				</div>
-				{{/with}}
 			</div>
 		</div>
-		{{/if}}
+		{{/with}}
 		<div class="col-sm-9">
 			<div>
 				{{#with (deck.get_character_row_data)}}

@@ -115,6 +115,11 @@ class DeckValidationHelper
 			}
 		}
 
+		// Temporary Truce (SoH #119) special case
+		if($deck->getSlots()->getSlotByCode('11119') != NULL) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -194,6 +199,19 @@ class DeckValidationHelper
 						return false;
 
 					return true;
+				//Temporary Truce (SoH 119)
+			    case '11119':
+			    	if(some($deck->getSlots()->getDrawDeck()->getSlots(), function($slot) {
+						return $slot->getCard()->getFaction()->getCode() == 'gray';
+					}))
+			    		return false;
+
+			    	if(some($deck->getSlots()->getCharacterDeck()->getSlots(), function($slot) {
+						return $slot->getCard()->getName() !== 'Rey' && $slot->getCard()->getName() !== 'Kylo Ren';
+					})) 
+			    		return false;
+
+			    	return true;
 				default:
 					return true;
 			}
