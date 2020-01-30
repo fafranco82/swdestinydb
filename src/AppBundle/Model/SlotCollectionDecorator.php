@@ -106,6 +106,16 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		}
 		return $slotsByType;
 	}
+
+	public function getSlotsByAffiliation() {
+		$getSlotsByAffiliation = [ 'villain' => [], 'hero' => [], 'neutral' => [] ];
+		foreach($this->slots as $slot) {
+			if(array_key_exists($slot->getCard()->getAffiliation()->getCode(), $getSlotsByAffiliation)) {
+				$getSlotsByAffiliation[$slot->getCard()->getAffiliation()->getCode()][] = $slot;
+			}
+		}
+		return $getSlotsByAffiliation;
+	}
 	
 	public function getCountByType() {
 		$countByType = [ 
@@ -271,6 +281,30 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 				}
 			}
 		}
+
+		//if Kanan Jarrus - Jedi Exile (CONV #55)
+		if($this->isSlotIncluded("12055"))
+		{
+			//reduce cost if there is other spectre
+			$otherSpectre = false;
+			foreach($this->getCharacterDeck()->getSlots() as $slot)
+			{
+				if($slot->getCard()->getCode() !== '12005') {
+					foreach($slot->getCard()->getSubtypes() as $subtype)
+					{
+						if($subtype->getCode() == 'spectre')
+						{
+							$otherSpectre = true;
+							break;
+						}
+					}
+				}
+			}
+			if($otherSpectre) {
+				$points -= 1;
+			}
+		}
+
 		return $points;
 	}
 
@@ -295,6 +329,41 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 
 			$points += intval($card->getPoints()) * $slot->getQuantity();
 		};
+
+		//if Director Krennic - Death Star Mastermind (CM #21)
+		if($this->isSlotIncluded("12021"))
+		{
+			//every death star plot cost 1 point less
+			foreach($this->getPlotDeck()->getSlots() as $slot)
+			{
+				foreach($slot->getCard()->getSubtypes() as $subtype)
+				{
+					if($subtype->getCode() == 'death-star')
+					{
+						$points -= $slot->getQuantity();
+						break;
+					}
+				}
+			}
+		}
+
+		//if Luke Skywalker - Red Five (CM #56)
+		if($this->isSlotIncluded("12056"))
+		{
+			//every death star plot cost 1 point less
+			foreach($this->getPlotDeck()->getSlots() as $slot)
+			{
+				foreach($slot->getCard()->getSubtypes() as $subtype)
+				{
+					if($subtype->getCode() == 'death-star')
+					{
+						$points -= $slot->getQuantity();
+						break;
+					}
+				}
+			}
+		}
+
 		return $points;
 	}
 

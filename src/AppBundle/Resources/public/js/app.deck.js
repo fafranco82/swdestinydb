@@ -299,6 +299,14 @@ deck.get_character_points = function get_character_points() {
 		var droids = deck.get_character_row_data().filter(card => _.map(card.subtypes, 'code').includes('droid')).length;
 		points -= droids;
 	}
+
+	//if Kanan Jarrus - Jedi Exile (CONV #55)
+	if(deck.is_included('12055')) {
+		if(deck.get_character_row_data().filter(card => card.code !== '12055' && _.map(card.subtypes, 'code').includes('spectre')).length > 0) {
+			points -= 1;
+		}
+	}
+
 	return points;
 }
 
@@ -348,6 +356,21 @@ deck.get_plot_points = function get_plot_points() {
 	var points = _.reduce(deck.get_plot_deck(), function(points, plot) {
 		return points + parseInt(plot.points, 10) * plot.indeck.cards;
 	}, 0);
+
+	//if Director Krennic - Death Star Mastermind (CM #21)
+	if(deck.is_included('12021')) {
+		//every death star plot cost 1 point less
+		var plots = deck.get_plot_deck().filter(card => _.map(card.subtypes, 'code').includes('death-star')).length;
+		points -= plots;
+	}
+
+	//if Luke Skywalker - Red Five (CM #56)
+	if(deck.is_included('12021')) {
+		//every death star plot cost 1 point less
+		var plots = deck.get_plot_deck().filter(card => _.map(card.subtypes, 'code').includes('death-star')).length;
+		points -= plots;
+	}
+
 	return points;
 }
 
@@ -480,7 +503,7 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	app.deck_history && app.deck_history.notify_change();
 
 	//list of cards which, by rules, deny or allow some cards, or modify cards' max quantity
-	if(_.includes(['01045', '07089', '08090', '08135', '08143', '09141', '09142'], card_code))
+	if(_.includes(['01045', '07089', '08090', '08135', '08143', '09141', '09142', '12003'], card_code))
 		updated_other_card = true; //force list refresh
 
 	return updated_other_card;
@@ -613,6 +636,13 @@ deck.get_problem = function get_problem() {
 	}
 	*/
 
+	if(deck.is_included('12003')) {
+		var heroCards = deck.get_cards(null, {affiliation_code: 'hero'});
+		if(heroCards.length > 4 || deck.get_nb_cards(heroCards) > heroCards.length) {
+			return 'too_many_copies';
+		}
+	}
+
 	// no invalid card
 	if(deck.get_invalid_cards().length > 0) {
 		return 'invalid_cards';
@@ -660,6 +690,12 @@ var plotChecks = {
 		var nonReylo = deck.get_cards(null, {type_code: 'character', name: {$nin: ['Rey', 'Kylo Ren']}});
 
 		return greys.length+nonReylo.length == 0;
+	},
+	//Spectre Cell (CM 104)
+	'12104': function() {
+		return _.every(deck.get_character_deck(), function(card) {
+			return _.includes(_.map(card.subtypes, 'code'), 'spectre');
+		});
 	}
 };
 
@@ -740,6 +776,13 @@ deck.can_include_card = function can_include_card(card) {
 	// Temporary Truce (SoH #119) special case
 	if(deck.is_included('11119')) {
 		return true;
+	}
+
+	// Pong Krell (CM #3)
+	if(deck.is_included('12003')) {
+		if(card.faction_code==='blue' && card.affiliation_code==='hero' && card.type_code !== 'character') {
+			return true;
+		}
 	}
 
 	// if none above => no

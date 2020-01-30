@@ -37,6 +37,12 @@ interface SlotCollectionInterface extends \Countable, \IteratorAggregate, \Array
 	 * @return array
 	 */
 	public function getSlotsByType();
+
+	/**
+	 * Get all slots sorted by affiliation code
+	 * @return array
+	 */
+	public function getSlotsByAffiliation();
 	
 	/**
 	 * Get all slot counts sorted by type code

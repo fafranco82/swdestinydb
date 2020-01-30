@@ -120,6 +120,16 @@ class DeckValidationHelper
 			return true;
 		}
 
+		// Pong Krell (CM #3) special case
+		if($deck->getSlots()->getSlotByCode('12003') != NULL) {
+			if(    $card->getAffiliation()->getCode()==='hero' 
+				&& $card->getFaction()->getCode()==='blue' 
+				&& $card->getType()->getCode()!=='character')
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -212,6 +222,18 @@ class DeckValidationHelper
 			    		return false;
 
 			    	return true;
+			    //Spectre Cell (CM 104)
+			    case '12104': 
+			    	return every($deck->getSlots()->getCharacterDeck(), function($slot) {
+			    		foreach($slot->getCard()->getSubtypes() as $subtype)
+						{
+							if($subtype->getCode() == 'spectre')
+							{
+								return true;
+							}
+						}
+						return false;
+			    	});
 				default:
 					return true;
 			}
@@ -300,6 +322,14 @@ class DeckValidationHelper
 				return 'too_many_copies';
 		}
 		*/
+
+		if($deck->getSlots()->isSlotIncluded('12003')) {
+			$heroCards = count($deck->getSlots()->getSlotsByAffiliation()["hero"]);
+			$heroCopies = $deck->getSlots()->getCountByAffiliation()["hero"];
+			if($heroCopies > $heroCards || $heroCards > 4) {
+				return 'too_many_copies';
+			}
+		}
 
 		if(!empty($this->getInvalidCards($deck))) {
 			return 'invalid_cards';
