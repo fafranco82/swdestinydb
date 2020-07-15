@@ -526,7 +526,7 @@ class ImportStdCommand extends ContainerAwareCommand
 		$metadata = $this->em->getClassMetadata($entityName);
 		
 		if(!key_exists($key, $data)) {
-			if($isMandatory) {
+			if($isMandatory && $this->isSideA($data)) {
 				throw new \Exception("Missing key [$key] in ".json_encode($data));
 			} else {
 				$data[$key] = null;
@@ -540,6 +540,11 @@ class ImportStdCommand extends ContainerAwareCommand
 		$fieldName = $metadata->fieldNames[$key];
 		
 		$this->copyFieldValueToEntity($entity, $entityName, $fieldName, $value);
+	}
+
+	protected function isSideA($data)
+	{
+		return preg_match("/[0-9A]$/", $data['code']);
 	}
 
 	protected function getEntityFromData($entityName, $data, $mandatoryKeys, $foreignKeys, $optionalKeys)
