@@ -1,18 +1,19 @@
 @font-face {
   font-family: 'swdestiny';
-  src:  url('../fonts/swdestiny.eot?d5fz91');
-  src:  url('../fonts/swdestiny.eot?d5fz91#iefix') format('embedded-opentype'),
-    url('../fonts/swdestiny.ttf?d5fz91') format('truetype'),
-    url('../fonts/swdestiny.woff?d5fz91') format('woff'),
-    url('../fonts/swdestiny.svg?d5fz91#swdestiny') format('svg');
+  src:  url('../fonts/swdestiny.eot?wy9ydj');
+  src:  url('../fonts/swdestiny.eot?wy9ydj#iefix') format('embedded-opentype'),
+    url('../fonts/swdestiny.ttf?wy9ydj') format('truetype'),
+    url('../fonts/swdestiny.woff?wy9ydj') format('woff'),
+    url('../fonts/swdestiny.svg?wy9ydj#swdestiny') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change ../fonts */
+  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'swdestiny' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -34,11 +35,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-set-SoR:before {
-  content: "\e90e";
-}
 .icon-set-AW:before {
   content: "\e90d";
+}
+.icon-set-SoR:before {
+  content: "\e90e";
 }
 .icon-set-EaW:before {
   content: "\e90f";
@@ -66,6 +67,9 @@
 }
 .icon-set-SoH:before {
   content: "\e91a";
+}
+.icon-set-FA:before {
+  content: "\e91b";
 }
 .icon-collectors:before {
   content: "\e90c";
