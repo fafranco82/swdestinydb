@@ -74,15 +74,26 @@
 					"CardID": {{ battlefield.card.ttscardid }},
 					"SidewaysCard": true,
 					"CustomDeck": {
-                  {# All Battlefields use CustomDeck 18 #}
-                  "18": {
-                     "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
-                     "BackURL": "{{backUrl}}",
-                     "NumWidth": 10,
-                     "NumHeight": 7,
-                     "BackIsHidden": true,
-                     "UniqueBack": false
-                  }
+            {# All Battlefields use CustomDeck 18 #}
+            {% if battlefield.card.set.code == "TR" %}
+              "18": {
+               "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
+               "BackURL": "{{backUrl}}",
+               "NumWidth": 10,
+               "NumHeight": 7,
+               "BackIsHidden": false,
+               "UniqueBack": true
+              }
+            {% else %}
+              "18": {
+               "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
+               "BackURL": "{{backUrl}}",
+               "NumWidth": 10,
+               "NumHeight": 7,
+               "BackIsHidden": true,
+               "UniqueBack": false
+              }
+            {% endif %}
 					},
 					"LuaScript": "",
 					"LuaScriptState": "",
@@ -122,14 +133,25 @@
 					"SidewaysCard": false,
 					"CustomDeck": {
 						{# All Plots use CustomDeck 473 #}
-						"473": {
-							"FaceURL": "http://cloud-3.steamusercontent.com/ugc/910157197472506127/6038134EFC06C9B338C589EA58F3638B38B47AAF/",
-							"BackURL": "{{backUrl}}",
-							"NumWidth": 10,
-							"NumHeight": 7,
-							"BackIsHidden": true,
-							"UniqueBack": false
-						}
+						{% if plot.card.set.code == "TR" %}
+						  "473": {
+					  		"FaceURL": "http://cloud-3.steamusercontent.com/ugc/910157197472506127/6038134EFC06C9B338C589EA58F3638B38B47AAF/",
+  							"BackURL": "{{backUrl}}",
+  							"NumWidth": 10,
+  							"NumHeight": 7,
+  							"BackIsHidden": false,
+  							"UniqueBack": true
+  						}
+  					{% else %}
+  					  "473": {
+						  	"FaceURL": "http://cloud-3.steamusercontent.com/ugc/910157197472506127/6038134EFC06C9B338C589EA58F3638B38B47AAF/",
+					  		"BackURL": "{{backUrl}}",
+					  		"NumWidth": 10,
+					  		"NumHeight": 7,
+					  		"BackIsHidden": true,
+					  		"UniqueBack": false
+					  	}
+						{% endif %}
 					},
 					"LuaScript": "",
 					"LuaScriptState": "",
@@ -170,14 +192,25 @@
 			    "CardID": {{ slot.card.ttscardid }},
 			    "SidewaysCard": false,
 			    "CustomDeck": {
-			      "13": {
-			        "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
-			        "BackURL": "{{backUrl}}",
-			        "NumWidth": 10,
-			        "NumHeight": 7,
-			        "BackIsHidden": true,
-			        "UniqueBack": false
-			      }
+	  		    {% if slot.card.set.code == "TR" %}
+	  		      "13": {
+	  		        "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
+	  		        "BackURL": "{{backUrl}}",
+	  		        "NumWidth": 10,
+	  		        "NumHeight": 7,
+	  		        "BackIsHidden": false,
+	  		        "UniqueBack": true
+	  		      }
+	  				{% else %}
+	  				  "13": {
+	  		        "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
+	  		        "BackURL": "{{backUrl}}",
+	  		        "NumWidth": 10,
+			          "NumHeight": 7,
+			          "BackIsHidden": true,
+			          "UniqueBack": false
+			        }
+					  {% endif %}
 			    },
 			    "LuaScript": "",
 			    "LuaScriptState": "",
@@ -454,4 +487,3 @@
 	],
 	"TabStates": {}
 }
-
