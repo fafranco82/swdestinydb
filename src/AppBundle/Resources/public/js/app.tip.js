@@ -1,6 +1,6 @@
 (function app_tip(tip, $) {
 
-var cards_zoom_regexp = /card\/(\d\d\d\d\d)$/,
+var cards_zoom_regexp = /card\/(.{0,1}\d\d\d\d\d.{0,1})$/,
 	mode = 'text',
 	hide_event = 'mouseout',
 	CardTipTemplate = Handlebars.templates['tip-card'];
@@ -35,7 +35,7 @@ function display_card_on_element(card, element, event) {
 			event: hide_event
 		}
 	};
-	
+
 	$(element).qtip(qtip, event);
 }
 
