@@ -53,7 +53,7 @@ class CardsData
 			'[TPG]' => '<span class="icon-set-TPG"></span>',
 			'[LEG]' => '<span class="icon-set-LEG"></span>'
 		];
-		
+
 		return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);
 	}
 
@@ -70,21 +70,21 @@ class CardsData
 		{
 			/** @Ignore */
 			$translated = $this->translator->trans('keyword.'.$keyword.".name", array(), "messages", $locale);
-			
+
 			$text = preg_replace_callback("/\b($translated)\b/i", function ($matches) use ($keyword) {
 				return "<abbr data-keyword=\"$keyword\">".$matches[1]."</abbr>";
 			}, $text);
 		}
-		
-		
-		
+
+
+
 		return $text;
 	}
-	
+
 	public function splitInParagraphs($text)
 	{
 		if(empty($text)) return '';
-		return implode(array_map(function ($l) { return "<p>$l</p>"; }, preg_split('/[\r\n]+/', $text)));	
+		return implode(array_map(function ($l) { return "<p>$l</p>"; }, preg_split('/[\r\n]+/', $text)));
 	}
 
 	public function allsetsdata()
@@ -115,18 +115,18 @@ class CardsData
 	{
 		$list_sets = $this->doctrine->getRepository('AppBundle:Set')->findAll();
 		$sets = [];
-		
+
 		/* @var $set \AppBundle\Entity\Cycle */
 		foreach($list_sets as $set) {
 			$known = count($set->getCards());
 			$max = $set->getSize();
-		
+
 			$label = $set->getName();
-				
+
 			if($known < $max) {
 				$label = sprintf("%s (%d/%d)", $label,$known, $max);
 			}
-		
+
 			$sets[] = [
 					"code" => $set->getCode(),
 					"label" => $label,
@@ -134,10 +134,10 @@ class CardsData
 					"url" => $this->router->generate('cards_list', array('set_code' => $set->getCode()), UrlGeneratorInterface::ABSOLUTE_URL),
 			];
 		}
-			
+
 		return $sets;
 	}
-	
+
 	public function getPrimaryFactions()
 	{
 		$factions = $this->doctrine->getRepository('AppBundle:Faction')->findPrimaries();
@@ -276,7 +276,7 @@ class CardsData
 						{
 							$or = [];
 							foreach($condition as $arg) {
-								$code = preg_match('/^\d\d\d\d\d$/u', $arg);
+								$code = preg_match('/^.{0,1}\d\d\d\d\d.{0,1}$/u', $arg);
 								$acronym = preg_match('/^[A-Z]{2,}$/', $arg);
 								if($code) {
 									$or[] = "(c.code = ?$i)";
@@ -392,7 +392,7 @@ class CardsData
 	    		if(array_key_exists('joinTable', $associationMapping))
 	    		{
 	    			$associationEntities = $card->$getter();
-	    			if(count($associationEntities) == 0) continue; 
+	    			if(count($associationEntities) == 0) continue;
 
 	    			$cardinfo[$fieldName] = [];
 	    			foreach($associationEntities->getValues() as $associationEntity)
@@ -486,7 +486,7 @@ class CardsData
 			$cardinfo['text'] = $this->replaceSymbols($cardinfo['text']);
 			$cardinfo['text'] = $this->addAbbrTags($cardinfo['text']);
 			$cardinfo['text'] = $this->splitInParagraphs($cardinfo['text']);
-			
+
 			$cardinfo['flavor'] = $this->replaceSymbols($cardinfo['flavor']);
 		}
 
@@ -623,7 +623,7 @@ class CardsData
 				unset($conditions[$i]);
 			}
 		}
-		
+
 		return array_values($conditions);
 	}
 
@@ -652,7 +652,7 @@ class CardsData
 
         return $response;
     }
-    
+
     public function getDistinctTraits()
     {
     	/**
@@ -664,7 +664,7 @@ class CardsData
     	$qb->select('c.traits');
     	$qb->distinct();
     	$result = $qb->getQuery()->getResult();
-    	
+
     	$traits = [];
     	foreach($result as $card) {
     		$subs = explode('.', $card["traits"]);
@@ -672,6 +672,6 @@ class CardsData
     			$traits[trim($sub)] = 1;
     		}
     	}
-    	 
+
     }
 }
