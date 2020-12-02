@@ -605,7 +605,10 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		container = $('#collection-table'),
 		filters = ui.get_filters(),
 		query = $.extend({}, app.smart_filter.get_query(filters), {
-			reprint_of: {$exists: false}
+			/* 
+			Do not hide reprinted cards, displays them all if needed
+			reprint_of: {$exists: false} 
+			*/
 		}, true),
 		orderBy = {};
 
