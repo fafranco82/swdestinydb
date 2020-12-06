@@ -253,7 +253,14 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 
 			$inc = 0;
-			if($card->getIsUnique())
+			if($slot instanceof Deckslot && $slot->getDices()) {
+				
+				foreach(explode(",", $slot->getDices()) as $i) {
+					$pointValues = preg_split('/\//', $formatPoints);
+					$inc += intval($pointValues[$i-1], 10);
+				}
+			}
+			else if($card->getIsUnique())
 			{
 				$pointValues = preg_split('/\//', $formatPoints);
 				$inc = intval($pointValues[$slot->getDice()-1], 10);

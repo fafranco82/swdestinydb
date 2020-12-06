@@ -278,7 +278,12 @@ deck.get_character_deck = function get_character_deck(sort) {
  */
 deck.get_character_points = function get_character_points() {
 	var points = _.reduce(deck.get_character_deck(), function(points, character) {
-		if(character.is_unique) {
+		if(character.indeck.dices) {
+			for(var i=0;i<character.indeck.dices.length;i++) {
+				points += parseInt(character.points.split('/')[character.indeck.dices[i]-1], 10);
+			}
+			return points;
+		} else if(character.is_unique) {
 			return points + parseInt(character.points.split('/')[character.indeck.dice-1], 10);
 		} else {
 			return points + parseInt(character.points, 10) * character.indeck.cards;
