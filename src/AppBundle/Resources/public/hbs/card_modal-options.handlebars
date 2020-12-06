@@ -1,15 +1,43 @@
-<div class="btn-group" data-toggle="buttons">
-	{{#range 0 card.maxqty.cards inclusive=true}}
-	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">
-		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>
-		{{this}}
-	</label>
-	{{/range}}
-</div>
-{{#if second_die}} 
-<div class="btn-group" data-toggle="buttons">
-	<label class="btn btn-default btn-xs">
-		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>
-	</label>
-</div>
+{{#if multiple_copies}}
+
+	{{#each card.indeck.dices}}
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-xs btn-default{{#compare 0 this}} active{{/compare}}">
+				<input type="radio" name="{{../prefix}}-qty-{{../card.code}}-{{@index}}" value="0" /> 0
+			</label>
+			<label class="btn btn-xs btn-default{{#compare 1 this}} active{{/compare}}">
+				<input type="radio" name="{{../prefix}}-qty-{{../card.code}}-{{@index}}" value="1" /> 1
+			</label>
+			<label class="btn btn-xs btn-default{{#compare 2 this}} active{{/compare}}">
+				<input type="radio" name="{{../prefix}}-qty-{{../card.code}}-{{@index}}" value="2" /> 2 <span class="icon-die"></span>
+			</label>
+		</div>
+	{{/each}}
+
+{{else if unique_character}}
+
+	<div class="btn-group" data-toggle="buttons">
+		{{#range 0 card.maxqty.dice inclusive=false}}
+		<label class="btn btn-xs btn-default{{#compare this ../card.indeck.dice}} active{{/compare}}">
+			<input type="radio" name="{{../prefix}}-qty-{{../card.code}}" value="{{this}}"/>
+			{{this}}
+		</label>
+		{{/range}}
+		<label class="btn btn-xs btn-default{{#compare card.maxqty.dice card.indeck.dice}} active{{/compare}}">
+			<input type="radio" name="{{../prefix}}-qty-{{card.code}}" value="{{card.maxqty.dice}}"/>
+			{{card.maxqty.dice}} <span class="icon-die"></span>
+		</label>
+	</div>
+
+{{else}}
+
+	<div class="btn-group" data-toggle="buttons">
+		{{#range 0 card.maxqty.cards inclusive=true}}
+		<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">
+			<input type="radio" name="{{../prefix}}-qty-{{../card.code}}" value="{{this}}"/>
+			{{this}}
+		</label>
+		{{/range}}
+	</div>
+
 {{/if}}

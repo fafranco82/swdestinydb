@@ -648,6 +648,7 @@ class BuilderController extends Controller
                     $info = $this->get('cards_data')->getCardInfo($character->getCard(), false);
                     $info['qty'] = $character->getQuantity();
                     $info['dice'] = $character->getDice();
+                    $info['dices'] = $character->getDices();
                     $characters[] = $info;
                 }
 

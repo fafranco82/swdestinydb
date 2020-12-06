@@ -4,6 +4,7 @@ namespace AppBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Format;
+use AppBundle\Entity\Deckslot;
 
 /**
  * Decorator for a collection of SlotInterface 
@@ -98,12 +99,13 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	}
 	
 	public function getSlotsByType() {
-		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'character' => [], 'upgrade' => [], 'downgrade' => [], 'support' => [], 'event' => [] ];
+		$slotsByType = [ 'battlefield' => [], 'plot' => [], 'upgrade' => [], 'downgrade' => [], 'support' => [], 'event' => [] ];
 		foreach($this->slots as $slot) {
 			if(array_key_exists($slot->getCard()->getType()->getCode(), $slotsByType)) {
 				$slotsByType[$slot->getCard()->getType()->getCode()][] = $slot;
 			}
 		}
+		$slotsByType['character'] = $this->getCharacterArray();
 		return $slotsByType;
 	}
 
@@ -205,13 +207,19 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		return new SlotCollectionDecorator(new ArrayCollection($characterDeck));
 	}
 
-	public function getCharacterRow()
+	public function getCharacterArray()
 	{
 		$characterRow = [];
 		foreach($this->slots as $slot) {
 			if($slot->getCard()->getType()->getCode() === 'character') {
 				if($slot->getCard()->getIsUnique()) {
 					$characterRow[] = $slot;
+				} else if($slot instanceof Deckslot && $slot->getDices()) {
+					foreach(explode(",", $slot->getDices()) as $i) {
+						$slot->setDice($i);
+						$slot->setQuantity(1);
+						$characterRow[] = clone $slot;
+					}
 				} else {
 					$totalCards = $slot->getQuantity();
 					$slot->setDice(1);
@@ -222,7 +230,12 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 				}
 			}
 		}
-		return new SlotCollectionDecorator(new ArrayCollection($characterRow));
+		return $characterRow;
+	}
+
+	public function getCharacterRow()
+	{
+		return new SlotCollectionDecorator(new ArrayCollection($this->getCharacterArray()));
 	}
 
 	public function getCharacterPoints()
@@ -404,10 +417,18 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	{
 		$arr = array ();
 		foreach ( $this->slots as $slot ) {
-			$arr [$slot->getCard()->getCode()] = array(
-				"quantity" => $slot->getQuantity(),
-				"dice" => $slot->getDice()
-			);
+			if($slot instanceof Deckslot) {
+				$arr [$slot->getCard()->getCode()] = array(
+					"quantity" => $slot->getQuantity(),
+					"dice" => $slot->getDice(),
+					"dices" => $slot->getDices()
+				);
+			} else {
+				$arr [$slot->getCard()->getCode()] = array(
+					"quantity" => $slot->getQuantity(),
+					"dice" => $slot->getDice()
+				);
+			}
 		}
 		ksort ( $arr );
 		return $arr;

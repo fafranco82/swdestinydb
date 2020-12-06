@@ -21,7 +21,6 @@ card_modal.typeahead = function typeahead(event, card) {
 
 var NameTemplate = Handlebars.templates['card_modal-name'];
 var InfoTemplate = Handlebars.templates['card_modal-info'];
-var OptionsTemplate = Handlebars.templates['card_modal-options'];
 
 function fill_modal (code) {
 	var card = app.data.cards.findById(code),
@@ -37,22 +36,7 @@ function fill_modal (code) {
 
 	var qtyelt = modal.find('.modal-qty');
 	if(qtyelt) {
-
-		qtyelt.html(OptionsTemplate({
-			card: card,
-			second_die: card.type_code=='character' && card.is_unique && card.maxqty.dice > 1
-		}));
-
-		qtyelt.find('input[name="2nd-' + card.code + '"]').each(function(i, element) {
-			// if that switch is NOT the one with the new quantity, uncheck it
-			// else, check it
-			if($(element).val() != card.indeck.dice) {
-				$(element).prop('checked', false).closest('label').removeClass('active');
-			} else {
-				$(element).prop('checked', true).closest('label').addClass('active');
-			}
-		});
-
+		qtyelt.html(app.ui.build_quantity_options(card, 'modal'));
 	} else {
 		if(qtyelt) qtyelt.closest('.row').remove();
 	}

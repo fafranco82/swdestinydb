@@ -107,6 +107,7 @@ class Deckslot implements \AppBundle\Model\SlotInterface
     {
         return $this->card;
     }
+	
     /**
      * @var integer
      */
@@ -136,4 +137,33 @@ class Deckslot implements \AppBundle\Model\SlotInterface
     {
         return $this->dice;
     }
+	
+	/**
+	 * @var string
+	 */
+	private $dices;
+
+	/**
+	 * Set dices
+	 *
+	 * @param string $dices
+	 *
+	 * @return Deckslot
+	 */
+	public function setDices($dices)
+	{
+		$this->dices = $dices;
+
+		return $this;
+	}
+
+	/**
+	 * Get dices
+	 *
+	 * @return string
+	 */
+	public function getDices()
+	{
+		return $this->dices;
+	}
 }

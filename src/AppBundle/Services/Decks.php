@@ -128,11 +128,13 @@ class Decks
 		foreach ($content as $card_code => $qtys) {
 			$qty = $qtys['quantity'];
 			$dice = $qtys['dice'];
+			$dices = $qtys['dices'];
 			
 			$card = $cards[$card_code];
 			$slot = new Deckslot();
 			$slot->setQuantity($qty);
 			$slot->setDice($dice);
+			$slot->setDices($dices);
 			$slot->setCard($card);
 			$slot->setDeck($deck);
 			$deck->addSlot($slot);
