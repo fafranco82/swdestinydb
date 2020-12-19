@@ -692,7 +692,11 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
+		cb(app.data.cards.find({name: regexp}));
+		/* 
+		Do not hide reprinted cards, displays them all if needed
 		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
+		*/
 	}
 
 	$('#filter-text').typeahead({
