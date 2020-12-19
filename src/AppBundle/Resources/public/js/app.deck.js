@@ -731,6 +731,9 @@ deck.can_include_card = function can_include_card(card) {
 	// card not valid in format
 	if(!deck.within_format_sets(card)) return false;
 
+	// banned card
+	if(_.includes(app.deck.get_format_data().data.banned, card.code)) return false;
+
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;
 

@@ -10,7 +10,15 @@
 		<tr>
 			{{#each formats as |format formatId|}}
 			<td class="text-center fg-{{../card.faction_code}} {{#unless (legal ../card.code format.code)}}no-{{/unless}}legal">
-				<span class="fa fa-lg {{ternary (legal ../card.code format.code) 'fa-check-circle' 'fa-ban'}}"></span>
+			    {{#if (errata ../card.code format.code)}}
+					<span class="fa fa-lg fa-exclamation-triangle" data-toggle="tooltip" title="{{trans 'card.format.errata'}}"></span>
+				{{else}}
+					{{#if (banned ../card.code format.code)}}
+						<span class="fa fa-lg fa-times-circle" data-toggle="tooltip" title="{{trans 'card.format.banned'}}"></span>
+					{{else}}
+						<span class="fa fa-lg {{ternary (legal ../card.code format.code) 'fa-check-circle' 'fa-ban'}}"></span>
+					{{/if}}
+				{{/if}}
 			</td>
 			{{/each}}
 		</tr>
