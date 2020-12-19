@@ -203,7 +203,9 @@ ui.build_set_selector = function build_set_selector() {
 	    }
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
-		var checked = !!record.available;
+		// var checked = !!record.available;
+		// ... Give priority to the sets belonging to the format you are editing ?
+		var checked = _.includes(app.deck.get_format_data().data.sets, record.code);
 		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
