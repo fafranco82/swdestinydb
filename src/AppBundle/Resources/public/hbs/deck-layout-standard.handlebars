@@ -94,6 +94,9 @@
 							{{#if (restricted code)}}
 		                    	<span class="fa fa-exclamation" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
 		                    {{/if}}
+							{{#if (errata code)}}
+		                    	<span class="fa fa-exclamation" title="{{trans 'card.format.errata'}}" data-toggle="tooltip"></span>
+		                    {{/if}}
 						</div>
 						<div class="character-dice">
 							{{indeck.dice}} <span class="icon-die"></span>
@@ -130,6 +133,9 @@
                    {{#if (restricted code)}}
                    <span class="fa fa-exclamation" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
                    {{/if}}
+				   {{#if (errata code)}}
+					   <span class="fa fa-exclamation" title="{{trans 'card.format.errata'}}" data-toggle="tooltip"></span>
+				   {{/if}}
 				</div>
 				{{/each}}
 				{{/with}}
