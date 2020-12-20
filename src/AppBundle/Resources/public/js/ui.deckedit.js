@@ -627,7 +627,8 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		var unusable = !app.deck.can_include_card(card);
 		if (!Config['show-unusable'] && unusable) return;
 		if (Config['show-only-owned'] && card.maxqty.cards==0) return;
-
+		if(card.type_code=='plot' && !card.points) return; // Hide some plots face B
+		
 		var row = divs[card.code];
 		if(!row || refresh) row = divs[card.code] = ui.build_row(card);
 
