@@ -162,7 +162,6 @@
 				{# Characters #}
 				{% for slot in deck.slots_by_type.character %}
 				{% set slotLabel = slot.card.name~(slot.card.subtitle is defined and slot.card.subtitle != "" ? ", "~slot.card.subtitle : "")%}
-				{% for i in range (1, min(slot.dice,slot.card.deckLimit)) %}
 				{
 			    "Name": "Card",
 			    "Transform": {
@@ -177,7 +176,7 @@
 			      "scaleZ": 1.42055011
 			    },
 			    "Nickname": "{{ slotLabel|replace({"\"":"\\\""})|raw }}",
-			    "Description": "{% if slot.dice == 2 and slot.card.deckLimit == 1 %}elite {% endif %}{{slot.card.set.code}} {{slot.card.position}}",
+			    "Description": "{% if slot.dice == 2 %}elite {% endif %}{{slot.card.set.code}} {{slot.card.position}}",
 			    "ColorDiffuse": {
 			      "r": 0.713235259,
 			      "g": 0.713235259,
@@ -217,7 +216,6 @@
 					"GUID": "{{ deck.guidArray[guidCount] }}"
 					{% set guidCount = guidCount + 1 %}
 			  },
-				{% endfor %}
 				{% endfor %}
 				{# Deck of Other Cards #}
 				{
