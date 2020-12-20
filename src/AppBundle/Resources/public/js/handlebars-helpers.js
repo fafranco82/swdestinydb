@@ -91,7 +91,11 @@
         if(app.data && app.data.formats && app.data.cards) {
             var card = app.data.cards.findById(card_code);
             var format = app.data.formats.findById(format_code);
-
+			
+			//if card has been banned in this format
+			if(_.includes(format.data.banned, card_code))
+				return false;
+				
             //if card's set included in legal sets of the format
             if(_.includes(format.data.sets, card.set_code))
                 return true;
@@ -118,6 +122,30 @@
         
         return false;
     });
+	
+	Handlebars.registerHelper('errata', function(card_code, format_code) {
+		if(arguments < 2)
+			throw new Error("Handlerbars Helper 'errata' needs 2 parameters");
+
+		if(app.data && app.data.formats) {
+			var format = app.data.formats.findById(format_code);
+			return _.includes(format.data.errata, card_code);
+		}
+
+		return false;
+	});
+	
+	Handlebars.registerHelper('banned', function(card_code, format_code) {
+		if(arguments < 2)
+			throw new Error("Handlerbars Helper 'banned' needs 2 parameters");
+
+		if(app.data && app.data.formats) {
+			var format = app.data.formats.findById(format_code);
+			return _.includes(format.data.banned, card_code);
+		}
+
+		return false;
+	});
 
     Handlebars.registerHelper('balance', function(card_code, format_code) {
         if(arguments < 2)
