@@ -203,7 +203,9 @@ ui.build_set_selector = function build_set_selector() {
 	    }
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
-		var checked = !!record.available;
+		// var checked = !!record.available;
+		// ... Give priority to the sets belonging to the format you are editing ?
+		var checked = _.includes(app.deck.get_format_data().data.sets, record.code);
 		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
@@ -605,7 +607,10 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		container = $('#collection-table'),
 		filters = ui.get_filters(),
 		query = $.extend({}, app.smart_filter.get_query(filters), {
-			reprint_of: {$exists: false}
+			/* 
+			Do not hide reprinted cards, displays them all if needed
+			reprint_of: {$exists: false} 
+			*/
 		}, true),
 		orderBy = {};
 
@@ -689,7 +694,11 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
+		cb(app.data.cards.find({name: regexp}));
+		/* 
+		Do not hide reprinted cards, displays them all if needed
 		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
+		*/
 	}
 
 	$('#filter-text').typeahead({
