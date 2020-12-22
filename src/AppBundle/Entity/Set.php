@@ -13,7 +13,8 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
                 'position' => $this->position,
                 'cgdb_id_start' => $this->cgdbIdStart,
                 'cgdb_id_end' => $this->cgdbIdEnd,
-                'size' => $this->size
+                'size' => $this->size,
+				'project_name' => $this->projectName
         ];
     }
     
@@ -44,6 +45,11 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
      * @var string
      */
     private $code;
+
+	/**
+     * @var string
+     */
+    private $projectName;
 
     /**
      * @var string
@@ -141,6 +147,30 @@ class Set implements \Gedmo\Translatable\Translatable, \Serializable
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set project name
+     *
+     * @param string $projectName
+     *
+     * @return Set
+     */
+    public function setProjectName($projectName)
+    {
+        $this->projectName = $projectName;
+
+        return $this;
+    }
+
+    /**
+     * Get project name
+     *
+     * @return string
+     */
+    public function getProjectName()
+    {
+        return $this->projectName;
     }
 
     /**

@@ -11,6 +11,10 @@ Handlebars.registerHelper('restricted', function(code) {
 	return _.includes(app.deck.get_format_data().data.restricted, code);
 });	
 
+Handlebars.registerHelper('errata', function(code) {
+	return _.includes(app.deck.get_format_data().data.errata, code);
+});	
+
 /**
  * reads ui configuration from localStorage
  * @memberOf ui
@@ -82,7 +86,7 @@ ui.set_max_qty = function set_max_qty() {
 			dice: record.has_die ? max_value : 0
 		}
 
-		if(record.type_code=='character' && record.is_unique) {
+		if(record.type_code=='character') {
 			max_qty.dice = record.points.split('/').length;
 		}
 
@@ -203,7 +207,9 @@ ui.build_set_selector = function build_set_selector() {
 	    }
 	}).forEach(function(record) {
 		// checked or unchecked ? checked by default
-		var checked = !!record.available;
+		// var checked = !!record.available;
+		// ... Give priority to the sets belonging to the format you are editing ?
+		var checked = _.includes(app.deck.get_format_data().data.sets, record.code);
 		$('<li><a href="#"><label><input type="checkbox" name="' + record.code + '"' + (checked ? ' checked="checked"' : '') + '>' + record.name + '</label></a></li>').appendTo('[data-filter=set_code]');
 	});
 }
@@ -358,18 +364,24 @@ ui.on_list_quantity_change = function on_list_quantity_change(event) {
 	var row = $(this).closest('.card-container');
 	var code = row.data('code');
 	var quantity = parseInt($(this).val(), 10);
-	ui.on_quantity_change(code, quantity);
-}
-
-/**
- * @memberOf ui
- * @param event
- */
-ui.on_list_2nd_die_toggle = function on_list_2nd_die_toggle(event) {
-	var row = $(this).closest('.card-container');
-	var code = row.data('code');
-	var active = $(this).prop('checked');
-	ui.on_2nd_die_change(code, active);
+	
+	var dices;
+	if($('input[name=list-qty-'+code+'-0]').length) {
+		dices = [];
+		for(var i = 0; i < 10; i++) {
+			if(!$('input[name=list-qty-'+code+'-'+i+']').length) {
+				break;
+			}
+			if($('label.active input[name=list-qty-'+code+'-'+i+']').length) {
+				var qty = parseInt($('label.active input[name=list-qty-'+code+'-'+i+']').val());
+				if(qty > 0) {
+					dices.push(qty);
+				}
+			}
+		}
+	}
+	
+	ui.on_quantity_change(code, quantity, dices);
 }
 
 /**
@@ -380,25 +392,25 @@ ui.on_modal_quantity_change = function on_modal_quantity_change(event) {
 	var modal = $('#cardModal');
 	var code =  modal.data('code');
 	var quantity = parseInt($(this).val(), 10);
+	
+	var dices;
+	if($('input[name=modal-qty-'+code+'-0]').length) {
+		dices = [];
+		for(var i = 0; i < 10; i++) {
+			if(!$('input[name=modal-qty-'+code+'-'+i+']').length) {
+				break;
+			}
+			if($('label.active input[name=modal-qty-'+code+'-'+i+']').length) {
+				var qty = parseInt($('label.active input[name=modal-qty-'+code+'-'+i+']').val());
+				if(qty > 0) {
+					dices.push(qty);
+				}
+			}
+		}
+	}
+	
 	modal.modal('hide');
-	ui.on_quantity_change(code, quantity);
-
-	setTimeout(function () {
-		$('#filter-text').typeahead('val', '').focus();
-	}, 100);
-}
-
-
-/**
- * @memberOf ui
- * @param event
- */
-ui.on_modal_2nd_die_toggle = function on_modal_2nd_die_toggle(event) {
-	var modal = $('#cardModal');
-	var code =  modal.data('code');
-	var active = $(this).prop('checked');
-	modal.modal('hide');
-	ui.on_2nd_die_change(code, active);
+	ui.on_quantity_change(code, quantity, dices);
 
 	setTimeout(function () {
 		$('#filter-text').typeahead('val', '').focus();
@@ -417,32 +429,25 @@ ui.refresh_row = function refresh_row(card_code) {
 
 		// rows[card_code] is the card row of our card
 		// for each "quantity switch" on that row
-		row.find('input[name="qty-' + card_code + '"]').each(function(i, element) {
-			// if that switch is NOT the one with the new quantity, uncheck it
-			// else, check it
-			if($(element).val() != quantity) {
-				$(element).prop('checked', false).closest('label').removeClass('active');
-			} else {
-				$(element).prop('checked', true).closest('label').addClass('active');
-			}
-		});
-		row.find('input[name="2nd-' + card_code + '"]').each(function(i, element) {
-			// if that switch is NOT the one with the new quantity, uncheck it
-			// else, check it
-			if($(element).val() != dice) {
-				$(element).prop('checked', false).closest('label').removeClass('active');
-			} else {
-				$(element).prop('checked', true).closest('label').addClass('active');
-			}
-		});
+		for(var i=0; i < card.maxqty.cards; i++) {
+			row.find('input[name="qty-' + i + '-' + card_code + '"]').each(function(i, element) {
+				// if that switch is NOT the one with the new quantity, uncheck it
+				// else, check it
+				if($(element).val() != quantity) {
+					$(element).prop('checked', false).closest('label').removeClass('active');
+				} else {
+					$(element).prop('checked', true).closest('label').addClass('active');
+				}
+			});
+		}
 	});
 }
 
 /**
  * @memberOf ui
  */
-ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
-	var update_all = app.deck.set_card_copies(card_code, quantity);
+ui.on_quantity_change = function on_quantity_change(card_code, quantity, dices) {
+	var update_all = app.deck.set_card_copies(card_code, quantity, dices);
 	ui.refresh_deck();
 
 	//if one of the following or was selected or unselected...
@@ -454,20 +459,6 @@ ui.on_quantity_change = function on_quantity_change(card_code, quantity) {
 
 	if(update_all) {
 		ui.refresh_list(_.includes(['08143', '09114'], card_code));
-	}
-	else {
-		ui.refresh_row(card_code);
-	}
-}
-/**
- * @memberOf ui
- */
-ui.on_2nd_die_change = function on_2nd_die_change(card_code, active) {
-	var update_all = !!(app.deck.set_card_copies(card_code, 1) + app.deck.set_card_dice(card_code, active ? 2 : 1));
-	ui.refresh_deck();
-
-	if(update_all) {
-		ui.refresh_list();
 	}
 	else {
 		ui.refresh_row(card_code);
@@ -516,14 +507,12 @@ ui.setup_event_handlers = function setup_event_handlers() {
 
 	$('#config-options').on('change', 'input', ui.on_config_change);
 	$('#collection').on('change', 'input[type=radio]', ui.on_list_quantity_change);
-	$('#collection').on('change', 'input[type=checkbox]', ui.on_list_2nd_die_toggle);
 
 	$('#cardModal').on('keypress', function(event) {
 		var num = parseInt(event.which, 10) - 48;
 		$('#cardModal input[type=radio][value=' + num + ']').trigger('change');
 	});
 	$('#cardModal').on('change', 'input[type=radio]', ui.on_modal_quantity_change);
-	$('#cardModal').on('change', 'input[type=checkbox]', ui.on_modal_2nd_die_toggle);
 	$('thead').on('click', 'a[data-sort]', ui.on_table_sort_click);
 
 }
@@ -561,28 +550,42 @@ ui.update_list_template = function update_list_template() {
 	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-'+Config['display-column']+'columns'];
 }
 
+var OptionsTemplate = Handlebars.templates['card_modal-options'];
+
+ui.build_quantity_options = function build_quantity_options(card, prefix) {
+	
+	var multiple_copies = (card.type_code == 'character' && !card.is_unique && card.maxqty.dice > 1);
+	if(multiple_copies) {
+		if(!card.indeck.dices) {
+			card.indeck.dices = [];
+			for(var i = 0; i < card.maxqty.cards; i++) {
+				// Will provide some kind of retro-compatibility
+				card.indeck.dices.push(i < card.indeck.cards ? 1 : 0);
+			}
+		} else {
+			for(var i = card.indeck.dices.length; i < card.maxqty.cards; i++) {
+				card.indeck.dices.push(0);
+			}
+		}
+	}
+
+	return OptionsTemplate({
+		card: card,
+		prefix: prefix,
+		unique_character: (card.type_code == 'character' && card.is_unique),
+		multiple_copies: multiple_copies
+	});
+}
+
 /**
  * builds a row for the list of available cards
  * @memberOf ui
  */
 ui.build_row = function build_row(card) {
-	var radios = '', radioTpl = _.template(
-		'<label class="btn btn-xs btn-default <%= active %>"><input type="radio" name="qty-<%= card.code %>" value="<%= i %>"><%= i %></label>'
-	);
-
-	for (var i = 0; i <= card.maxqty.cards; i++) {
-		radios += radioTpl({
-			i: i,
-			active: (i == card.indeck.cards ? ' active' : ''),
-			card: card
-		});
-	}
-
 	var html = DisplayColumnsTpl({
-		radios: radios,
+		qty_options: ui.build_quantity_options(card, 'list'),
 		url: Routing.generate('cards_zoom', {card_code:card.code}),
 		card: card,
-		second_die: card.type_code=='character' && card.is_unique && card.maxqty.dice > 1
 	});
 	return $(html);
 }
@@ -605,7 +608,10 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		container = $('#collection-table'),
 		filters = ui.get_filters(),
 		query = $.extend({}, app.smart_filter.get_query(filters), {
-			reprint_of: {$exists: false}
+			/* 
+			Do not hide reprinted cards, displays them all if needed
+			reprint_of: {$exists: false} 
+			*/
 		}, true),
 		orderBy = {};
 
@@ -621,7 +627,8 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 		var unusable = !app.deck.can_include_card(card);
 		if (!Config['show-unusable'] && unusable) return;
 		if (Config['show-only-owned'] && card.maxqty.cards==0) return;
-
+		if(card.type_code=='plot' && !card.points) return; // Hide some plots face B
+		
 		var row = divs[card.code];
 		if(!row || refresh) row = divs[card.code] = ui.build_row(card);
 
@@ -629,24 +636,15 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 
 		row.find('[data-toggle="tooltip"]').tooltip();
 
-		row.find('input[name="qty-' + card.code + '"]').each(
-			function(i, element) {
+		for(var i=0; i < card.maxqty.cards; i++) {
+			row.find('input[name="qty-' + i + '-' + card.code + '"]').each(function(i, element) {
 				if($(element).val() == card.indeck.cards) {
 					$(element).prop('checked', true).closest('label').addClass('active');
 				} else {
 					$(element).prop('checked', false).closest('label').removeClass('active');
 				}
-			}
-		);
-		row.find('input[name="2nd-' + card.code + '"]').each(function(i, element) {
-			// if that switch is NOT the one with the new quantity, uncheck it
-			// else, check it
-			if($(element).val() != card.indeck.dice) {
-				$(element).prop('checked', false).closest('label').removeClass('active');
-			} else {
-				$(element).prop('checked', true).closest('label').addClass('active');
-			}
-		});
+			});
+		}
 
 		if (unusable) {
 			row.find('label').addClass("disabled").find('input[type=radio]').prop("disabled", true);
@@ -689,7 +687,11 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
+		cb(app.data.cards.find({name: regexp}));
+		/* 
+		Do not hide reprinted cards, displays them all if needed
 		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
+		*/
 	}
 
 	$('#filter-text').typeahead({

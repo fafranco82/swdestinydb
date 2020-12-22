@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/css/bootstrap-markdown.min.css">
     {% stylesheets filter="cssrewrite,scssphp" output="css/app.css"
       'bundles/app/css/bootstrap.css'
-    	'bundles/app/css/style.scss'
+	  'bundles/app/css/bootstrap-essentials.css'
+      'bundles/app/css/style.scss'
       'bundles/app/css/icons.css'
       'bundles/app/css/languages.css'
     %}
@@ -61,9 +62,25 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ path('cards_search') }}">{{ 'nav.advancedsearch' | trans}}</a></li>
                 <li class="divider"></li>
-              {% for line in cards_data.allsetsdata() %}
-                <li><a href="{{ line['url'] }}">{{ line['label'] | raw }}</a></li>
-              {% endfor %}
+				{% set projectName = null %}
+	            {% for line in cards_data.allsetsdata() %}
+	              {% if projectName != line['projectName'] %}
+					{% if projectName != null %}
+	                  </ul>
+	                </li>
+	                {% endif %}
+	                {% set projectName = line['projectName'] %}
+	                <li class="divider"></li>
+	                <li class="dropdown-submenu">
+	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">{{ projectName }}</span><span class="caret"></span></a>
+	                  <ul class="dropdown-menu">
+	              {% endif %}
+	              	    <li><a href="{{ line['url'] }}">{{ line['label'] | raw }}</a></li>
+	            {% endfor %}
+	            {% if projectName != null %}
+	                  </ul>
+	                </li>
+	            {% endif %}
               </ul>
             </li>
             <li class="dropdown">
@@ -192,14 +209,15 @@
   
   {% javascripts filter="?jsqueeze" output="js/app.js"
     '@AppBundle/Resources/public/js/bootstrap.js'
-		'@AppBundle/Resources/public/js/fdb-all.min.js'
+	'@AppBundle/Resources/public/js/bootstrap-essentials.js'
+	'@AppBundle/Resources/public/js/fdb-all.min.js'
     '@AppBundle/Resources/public/js/jquery.toc.min.js'
     '@AppBundle/Resources/public/js/app.collection.js'
-		'@AppBundle/Resources/public/js/app.data.js'
-		'@AppBundle/Resources/public/js/app.format.js'
-		'@AppBundle/Resources/public/js/app.tip.js'
-		'@AppBundle/Resources/public/js/app.card_modal.js'
-		'@AppBundle/Resources/public/js/app.user.js'
+	'@AppBundle/Resources/public/js/app.data.js'
+	'@AppBundle/Resources/public/js/app.format.js'
+	'@AppBundle/Resources/public/js/app.tip.js'
+	'@AppBundle/Resources/public/js/app.card_modal.js'
+	'@AppBundle/Resources/public/js/app.user.js'
     '@AppBundle/Resources/public/js/app.binomial.js'
     '@AppBundle/Resources/public/js/app.hypergeometric.js'
     '@AppBundle/Resources/public/js/app.draw_simulator.js'
@@ -210,8 +228,8 @@
     '@AppBundle/Resources/public/js/app.diff.js'
     '@AppBundle/Resources/public/js/app.deck_history.js'
     '@AppBundle/Resources/public/js/app.deck_charts.js'
-		'@AppBundle/Resources/public/js/app.ui.js'
-    %}
+	'@AppBundle/Resources/public/js/app.ui.js'
+  %}
 	  <script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 

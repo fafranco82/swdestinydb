@@ -44,14 +44,16 @@ Handlebars.registerHelper('own_enough_dice', function(card, options) {
 });
 
 Handlebars.registerHelper('subtype', function(card, subtype_code, options) {
-	console.log(subtype_code);
 	var subtype = _.find(card.subtypes, {code: subtype_code});
-	console.log(subtype);
 	return subtype && subtype.name; 
 });
 
 Handlebars.registerHelper('restricted', function(code) {
 	return _.includes(app.deck.get_format_data().data.restricted, code);
+});	
+
+Handlebars.registerHelper('errata', function(code) {
+	return _.includes(app.deck.get_format_data().data.errata, code);
 });	
 
 /*
@@ -115,7 +117,8 @@ deck.set_slots = function set_slots(slots) {
 			app.data.cards.updateById(code, {
 				indeck: {
 					cards: slots[code].quantity,
-					dice: slots[code].dice
+					dice: slots[code].dice,
+					dices: (slots[code].dices ? slots[code].dices.split(',').map(Number) : null)
 				}
 			});
 		}
@@ -279,7 +282,12 @@ deck.get_character_deck = function get_character_deck(sort) {
  */
 deck.get_character_points = function get_character_points() {
 	var points = _.reduce(deck.get_character_deck(), function(points, character) {
-		if(character.is_unique) {
+		if(character.indeck.dices) {
+			for(var i=0;i<character.indeck.dices.length;i++) {
+				points += parseInt(character.points.split('/')[character.indeck.dices[i]-1], 10);
+			}
+			return points;
+		} else if(character.is_unique) {
 			return points + parseInt(character.points.split('/')[character.indeck.dice-1], 10);
 		} else {
 			return points + parseInt(character.points, 10) * character.indeck.cards;
@@ -324,6 +332,18 @@ deck.get_character_row_data = function get_character_row_data() {
 	return _.flatten(_.map(deck.get_character_deck(), function(card) {
 		if(card.is_unique) {
 			return card;
+		} else if(card.indeck.dices) {
+			var spread = [];
+			for(var i=0;i<card.indeck.dices.length;i++) {
+				var clone = _.clone(card);
+				clone.indeck = {
+					cards: 1,
+					dice: card.indeck.dices[i]
+				};
+				clone.original = card;
+				spread.push(clone);
+			}
+			return spread;
 		} else {
 			var spread = [];
 			for(var i=0;i<card.indeck.cards;i++) {
@@ -464,7 +484,7 @@ deck.display = function display(container, options) {
  * @memberOf deck
  * @return boolean true if at least one other card quantity was updated
  */
-deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
+deck.set_card_copies = function set_card_copies(card_code, nb_copies, dices) {
 	var card = app.data.cards.findById(card_code);
 	if(!card) return false;
 
@@ -494,12 +514,15 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies) {
 	// except for unique characters when you can only hava a copy, but one
 	// or more dice. Still then, the UI only allow you to select one copy,
 	// so if 1 copy is selected for a unique character, 1 die is selected also.
+	// Dices : Manage elite non-unique characters by allowing multiple copies of them
 	app.data.cards.updateById(card_code, {
 		indeck: {
-			cards: nb_copies,
-			dice: card.has_die ? nb_copies : 0
+			cards: dices ? dices.length : nb_copies,
+			dice: dices ? dices.length : (card.has_die ? nb_copies : 0),
+			dices: dices
 		}
 	});
+	
 	app.deck_history && app.deck_history.notify_change();
 
 	//list of cards which, by rules, deny or allow some cards, or modify cards' max quantity
@@ -546,7 +569,8 @@ deck.get_content = function get_content() {
 	cards.forEach(function (card) {
 		content[card.code] = {
 			quantity: card.indeck.cards,
-			dice: card.indeck.dice
+			dice: card.indeck.dice,
+			dices: (card.indeck.dices ? card.indeck.dices.join(',') : null)
 		};
 	});
 	return content;
@@ -730,6 +754,9 @@ deck.get_notmatching_cards = function get_notmatching_cards() {
 deck.can_include_card = function can_include_card(card) {
 	// card not valid in format
 	if(!deck.within_format_sets(card)) return false;
+
+	// banned card
+	if(_.includes(app.deck.get_format_data().data.banned, card.code)) return false;
 
 	// neutral card => yes
 	if(card.affiliation_code === 'neutral') return true;

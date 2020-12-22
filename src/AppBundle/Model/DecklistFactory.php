@@ -74,6 +74,7 @@ class DecklistFactory
 			$decklistslot->setCard($slot->getCard());
 			$decklistslot->setQuantity($slot->getQuantity());
 			$decklistslot->setDice($slot->getDice());
+			$decklistslot->setDices($slot->getDices());
 			$decklistslot->setDecklist($decklist);
 			$decklist->getSlots()->add($decklistslot);
 		}

@@ -225,7 +225,7 @@
                 tooltip: {
                     headerFormat: "<b>{point.key}</b><br/>",
                     pointFormat: Translator.trans("decks.charts.rarity.tooltip.amount", {
-                        amount: "<b>{point.y}</b>", 
+                        amount: "<b>{point.y}</b>",
                         total: "<b>{point.total}</b>"
                     })+" ({point.percentage:.2f}%)"
                 },
@@ -273,16 +273,14 @@
             var amount = card.is_unique ? 1 : card.indeck.dice;
             var symbolsDie = {};
             card.sides.forEach(function(side) {
-                var elems = /^([-+]?)(\d*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
+                var elems = /^([-+]?)([0-9X]*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
                 var symbol = elems[3];
-                if(symbol != 'X') {
-                    var category = _.find(categories, {code: symbol});
-                    category.faces = category.faces + amount;
-                    if(elems[1]!='+') category.directFaces += amount;
-                    if(!_.hasIn(symbolsDie, symbol)) {
-                        category.dice = category.dice + amount;
-                        symbolsDie[symbol] = 1;
-                    }
+                var category = _.find(categories, {code: symbol});
+                category.faces = category.faces + amount;
+                if(elems[1]!='+') category.directFaces += amount;
+                if(!_.hasIn(symbolsDie, symbol)) {
+                    category.dice = category.dice + amount;
+                    symbolsDie[symbol] = 1;
                 }
             });
         });

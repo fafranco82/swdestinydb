@@ -10,6 +10,7 @@
 				card: app.data.cards.findById(code),
 				formats: app.data.formats.find({})
 			}));
+			$table.find('[data-toggle="tooltip"]').tooltip();
 		});
 	}
 

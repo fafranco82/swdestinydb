@@ -96,12 +96,16 @@ class CardsData
 			$known = count($set->getCards());
 			$max = $set->getSize();
 
-			$label = $set->getPosition() . '. <span class="icon-set-'.$set->getCode().'"></span> ' . $set->getName();
+			// This +100 position trick will allow to have side project numbered as 1-based
+			$index = $set->getPosition() > 99 ? $set->getPosition() % 100 : $set->getPosition();
+			$label = sprintf("%02d", $index) . '. <span class="icon-set-'.$set->getCode().'"></span> ' . $set->getName();
+
 			if($known < $max) {
 				$label = sprintf("%s (%d/%d)", $label, $known, $max);
 			}
 
 			$lines[] = array(
+					"projectName" => $set->getProjectName(),
 					"code" => $set->getCode(),
 					"label" => $label,
 					"available" => $set->getDateRelease() ? true : false,

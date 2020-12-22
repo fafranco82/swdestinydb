@@ -272,10 +272,13 @@ class DeckValidationHelper
 
 	public function getRestrictedCount(SlotCollectionProviderInterface $deck)
 	{
-		$restrictedList = $deck->getFormat()->getData()["restricted"];
-		return array_reduce($restrictedList, function($sum, $code) use ($deck) {
-			return $sum + ($deck->getSlots()->isSlotIncluded($code) ? 1 : 0);
-		}, 0);
+		if(array_key_exists("restricted", $deck->getFormat()->getData())) {
+			$restrictedList = $deck->getFormat()->getData()["restricted"];
+			return array_reduce($restrictedList, function($sum, $code) use ($deck) {
+				return $sum + ($deck->getSlots()->isSlotIncluded($code) ? 1 : 0);
+			}, 0);
+		}
+		return 0;
 	}
 	
 	public function findProblem(SlotCollectionProviderInterface $deck)

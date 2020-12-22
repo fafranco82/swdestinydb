@@ -1,24 +1,13 @@
 <tr data-code="{{card.code}}"> 
     <td>
-        <div class="btn-group" data-toggle="buttons">
-        	{{#range 0 card.maxqty.cards inclusive=true}}
-        	<label class="btn btn-xs btn-default{{#compare this ../card.indeck.cards}} active{{/compare}}">
-        		<input type="radio" name="qty-{{../card.code}}" value="{{this}}"/>
-        		{{this}}
-        	</label>
-        	{{/range}}
-        </div>
-        {{#if second_die}}
-        <div class="btn-group" data-toggle="buttons">
-        	<label class="btn btn-default btn-xs">
-        		<input type="checkbox" name="2nd-{{card.code}}" value="2"/>2 <span class="icon-die"></span>
-        	</label>
-        </div>
-        {{/if}}
+        {{{qty_options}}}
     </td>
     <td>
         {{#if (restricted card.code)}}
         <span class="fa fa-exclamation text-danger" title="{{trans 'card.info.restricted'}}" data-toggle="tooltip"></span>
+        {{/if}}
+		{{#if (errata card.code)}}
+        <span class="fa fa-exclamation text-danger" title="{{trans 'card.format.errata'}}" data-toggle="tooltip"></span>
         {{/if}}
     </td>
     <td> 
