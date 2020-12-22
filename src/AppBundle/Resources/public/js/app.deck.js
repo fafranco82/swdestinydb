@@ -52,7 +52,7 @@ Handlebars.registerHelper('restricted', function(code) {
 	return _.includes(app.deck.get_format_data().data.restricted, code);
 });	
 
-Handlebars.registerHelper('errata', function(code) {
+Handlebars.registerHelper('erratad', function(code) {
 	return _.includes(app.deck.get_format_data().data.errata, code);
 });	
 
