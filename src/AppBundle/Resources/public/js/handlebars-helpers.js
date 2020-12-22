@@ -135,9 +135,9 @@
 		return false;
 	});
 	
-	Handlebars.registerHelper('banned', function(card_code, format_code) {
+	Handlebars.registerHelper('ban', function(card_code, format_code) {
 		if(arguments < 2)
-			throw new Error("Handlerbars Helper 'banned' needs 2 parameters");
+			throw new Error("Handlerbars Helper 'ban' needs 2 parameters");
 
 		if(app.data && app.data.formats) {
 			var format = app.data.formats.findById(format_code);

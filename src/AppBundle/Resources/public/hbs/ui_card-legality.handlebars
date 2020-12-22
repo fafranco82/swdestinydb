@@ -13,7 +13,7 @@
 			    {{#if (errata ../card.code format.code)}}
 					<span class="fa fa-lg fa-exclamation-triangle" data-toggle="tooltip" title="{{trans 'card.format.errata'}}"></span>
 				{{else}}
-					{{#if (banned ../card.code format.code)}}
+					{{#if (ban ../card.code format.code)}}
 						<span class="fa fa-lg fa-times-circle" data-toggle="tooltip" title="{{trans 'card.format.banned'}}"></span>
 					{{else}}
 						<span class="fa fa-lg {{ternary (legal ../card.code format.code) 'fa-check-circle' 'fa-ban'}}"></span>
