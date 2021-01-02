@@ -453,6 +453,18 @@ class CardsData
 	    	$cardinfo['reprint_of'] = $card->getReprintOf()->getCode();
 	    }
 
+		if(!$card->getParallelDiceOf()->isEmpty())
+	    {
+		    $cardinfo['parallel_dice_of'] = [];
+		    foreach ($card->getParallelDiceOf() as $parallelDie) {
+		    	$cardinfo['parallel_dice_of'][] = $parallelDie->getCode();
+		    }
+		}
+
+	    if($card->getParallelDie() != NULL)
+	    {
+	    	$cardinfo['parallel_die'] = $card->getParallelDie()->getCode();
+	    }
 
 		$cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 

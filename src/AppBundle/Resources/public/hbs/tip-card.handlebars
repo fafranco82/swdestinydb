@@ -73,3 +73,20 @@
 		</ul>
 	</div>
 {{/if}}
+{{#if card.parallel_die}}
+	{{#with (card card.parallel_die)}}
+		<div class="card-parallel-die">{{trans 'card.info.parallelDie' card=(concat (set_icon set_code) ' ' set_name " #" position)}}.</div>
+	{{/with}}
+{{/if}}
+{{#if card.parallel_dice_of}}
+	<div class="card-parallel-dice-of">
+		{{trans "card.info.parallelDiceOf"}}:
+		<ul class="card-parallel-dice-of-list">
+			{{#each card.parallel_dice_of}}
+			{{#with (card this)}}
+			<li><span class="icon-set-{{set_code}}"></span> {{set_name}} #{{position}}</li>
+			{{/with}}
+			{{/each}}
+		</ul>
+	</div>
+{{/if}}
