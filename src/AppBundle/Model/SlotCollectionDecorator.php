@@ -5,6 +5,7 @@ namespace AppBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Deckslot;
+use AppBundle\Entity\Decklistslot;
 
 /**
  * Decorator for a collection of SlotInterface 
@@ -214,7 +215,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			if($slot->getCard()->getType()->getCode() === 'character') {
 				if($slot->getCard()->getIsUnique()) {
 					$characterRow[] = $slot;
-				} else if($slot instanceof Deckslot && $slot->getDices()) {
+				} else if(($slot instanceof Deckslot || $slot instanceof Decklistslot) && $slot->getDices()) {
 					foreach(explode(",", $slot->getDices()) as $i) {
 						$slot->setDice($i);
 						$slot->setQuantity(1);
@@ -253,7 +254,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 
 			$inc = 0;
-			if($slot instanceof Deckslot && $slot->getDices()) {
+			if(($slot instanceof Deckslot || $slot instanceof Decklistslot) && $slot->getDices()) {
 				
 				foreach(explode(",", $slot->getDices()) as $i) {
 					$pointValues = preg_split('/\//', $formatPoints);
@@ -424,7 +425,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	{
 		$arr = array ();
 		foreach ( $this->slots as $slot ) {
-			if($slot instanceof Deckslot) {
+			if($slot instanceof Deckslot || $slot instanceof Decklistslot) {
 				$arr [$slot->getCard()->getCode()] = array(
 					"quantity" => $slot->getQuantity(),
 					"dice" => $slot->getDice(),
