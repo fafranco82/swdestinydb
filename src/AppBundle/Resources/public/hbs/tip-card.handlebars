@@ -75,7 +75,7 @@
 {{/if}}
 {{#if card.parallel_die}}
 	{{#with (card card.parallel_die)}}
-		<div class="card-parallel-die">{{trans 'card.info.parallelDie' card=(concat (set_icon set_code) ' ' set_name " #" position)}}.</div>
+		<div class="card-parallel-die">{{trans 'card.info.parallelDie' card=(concat name ' ' (set_icon set_code) " #" position)}}.</div>
 	{{/with}}
 {{/if}}
 {{#if card.parallel_dice_of}}
@@ -84,7 +84,7 @@
 		<ul class="card-parallel-dice-of-list">
 			{{#each card.parallel_dice_of}}
 			{{#with (card this)}}
-			<li><span class="icon-set-{{set_code}}"></span> {{set_name}} #{{position}}</li>
+			<li>{{name}} <span class="icon-set-{{set_code}}"></span> #{{position}}</li>
 			{{/with}}
 			{{/each}}
 		</ul>

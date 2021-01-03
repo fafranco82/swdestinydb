@@ -17,7 +17,7 @@
 {% endif %}
 {% if card.parallel_die is defined %}
 	{% set parallelDie=cards_data.get_card_by_code(card.parallel_die) %}
-	<div class="card-parallel-die">{{ 'card.info.parallelDie' | trans({'%card%': '<a href="'~path('cards_zoom',{card_code:card.parallel_die})~'"><span class="icon-set-'~parallelDie.set_code~'"></span> '~parallelDie.set_name~' #'~parallelDie.position~'</a>'}) | raw }}.</div>
+	<div class="card-parallel-die">{{ 'card.info.parallelDie' | trans({'%card%': '<a href="'~path('cards_zoom',{card_code:card.parallel_die})~'">'~parallelDie.name~' <span class="icon-set-'~parallelDie.set_code~'"></span> #'~parallelDie.position~'</a>'}) | raw }}.</div>
 {% endif %}
 {% if card.parallel_dice_of is defined %}
 	<div class="card-parallel-dice-of">
@@ -25,7 +25,7 @@
 		<ul class="card-parallel-dice-of-list">
 			{% for code in card.parallel_dice_of %}
 			{% set parallelDie=cards_data.get_card_by_code(code) %}
-			<li><a href="{{path('cards_zoom',{card_code:code})}}"><span class="icon-set-{{parallelDie.set_code}}"></span> {{parallelDie.set_name}} #{{parallelDie.position}}</a></li>
+			<li><a href="{{path('cards_zoom',{card_code:code})}}">{{parallelDie.name}} <span class="icon-set-{{parallelDie.set_code}}"></span> #{{parallelDie.position}}</a></li>
 			{% endfor %}
 		</ul>
 	</div>
