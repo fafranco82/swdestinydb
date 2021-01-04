@@ -35,26 +35,26 @@ class CardsData
 	 */
 	public function replaceSymbols($text)
 	{
-		static $displayTextReplacements = [
-			'[blank]' => '<span class="icon-blank"></span>',
-			'[discard]' => '<span class="icon-discard"></span>',
-			'[disrupt]' => '<span class="icon-disrupt"></span>',
-			'[focus]' => '<span class="icon-focus"></span>',
-			'[melee]' => '<span class="icon-melee"></span>',
-			'[ranged]' => '<span class="icon-ranged"></span>',
-			'[indirect]' => '<span class="icon-indirect"></span>',
-			'[shield]' => '<span class="icon-shield"></span>',
-			'[resource]' => '<span class="icon-resource"></span>',
-			'[special]' => '<span class="icon-special"></span>',
-			'[unique]' => '<span class="icon-unique"></span>',
-			'[AW]' => '<span class="icon-set-AW"></span>',
-			'[SoR]' => '<span class="icon-set-SoR"></span>',
-			'[EaW]' => '<span class="icon-set-EaW"></span>',
-			'[TPG]' => '<span class="icon-set-TPG"></span>',
-			'[LEG]' => '<span class="icon-set-LEG"></span>'
-		];
-
-		return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);
+		if($text != '') {
+			// Look for fixed game icons
+			$text = preg_replace('/\\[(blank|discard|disrupt|focus|melee|ranged|indirect|shield|resource|special|unique)\\]/i', '<span class="icon-$1"></span>', $text);
+			
+			// Look for set icons with as card number, and try to link to it
+			$text = preg_replace_callback('|\\(\\[([A-Za-z]*)\\][ ]*([0-9]*)([A-Z]*)\\)|', function($matches) {
+				$set = $this->doctrine->getRepository('AppBundle:Set')->findByCode($matches[1]);
+				if($set) {
+					// Rebuild card code from set position and given id
+					$card_code = sprintf('%02d%03d%s', $set->getPosition(), $matches[2], $matches[3]);
+					$url = $this->router->generate('cards_zoom', array('card_code' => $card_code), UrlGeneratorInterface::ABSOLUTE_URL);
+					return '(<a href="'.$url.'"><span class="icon-set-'.$matches[1].'"></span>'.$matches[2].'</a>)';
+				}
+				return $matches[0];
+			}, $text);
+			
+			// Automatically look for remaining icons as set icons
+			$text = preg_replace('/\\[([A-Za-z]*)\\]/i', '<span class="icon-set-$1"></span>', $text);
+		}
+		return $text;
 	}
 
 	/**
