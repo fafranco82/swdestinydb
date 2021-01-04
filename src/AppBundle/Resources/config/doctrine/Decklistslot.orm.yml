@@ -25,3 +25,6 @@ AppBundle\Entity\Decklistslot:
             type: smallint
         dice:
             type: smallint
+        dices:
+             type: string
+             length: 20
