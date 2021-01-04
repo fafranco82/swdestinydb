@@ -74,6 +74,13 @@
 	                <li class="dropdown-submenu">
 	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">{{ projectName }}</span><span class="caret"></span></a>
 	                  <ul class="dropdown-menu">
+                      
+                      {% if projectName == 'A Renewed Hope' %}
+                        <li><a href="https://swdrenewedhope.com" target="_blank"><span class="fa fa-external-link fa-fw"></span> {{ projectName }}</a></li>
+                      {% elseif projectName == 'The Coruscant Initiative' %}
+                        <li><a href="https://www.coruscant-initiative.org"  target="_blank"><span class="fa fa-external-link fa-fw"></span> {{ projectName }}</a></li>
+                      {% endif %}
+                      
 	              {% endif %}
 	              	    <li><a href="{{ line['url'] }}">{{ line['label'] | raw }}</a></li>
 	            {% endfor %}
