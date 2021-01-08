@@ -42,11 +42,21 @@ AppBundle\Entity\Card:
             joinColumn:
                 name: reprint_of
                 referencedColumnName: id
+        parallelDie:
+            targetEntity: Card
+            inversedBy: parallelDiceOf
+            joinColumn:
+                name: parallel_die
+                referencedColumnName: id
     oneToMany:
         reprints:
             targetEntity: Card
             orderBy: {'code': 'ASC'}
             mappedBy: reprintOf
+        parallelDiceOf:
+            targetEntity: Card
+            orderBy: {'code': 'ASC'}
+            mappedBy: parallelDie
         reviews:
             targetEntity: Review
             orderBy: {'dateCreation':'DESC'}

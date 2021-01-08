@@ -22,33 +22,17 @@
     });
 
     Handlebars.registerHelper('text', function(text, opt) {
-        var str = text || '';
-        var icons = {
-            'blank': '<span class="icon-blank"></span>',
-            'discard': '<span class="icon-discard"></span>',
-            'disrupt': '<span class="icon-disrupt"></span>',
-            'focus': '<span class="icon-focus"></span>',
-            'melee': '<span class="icon-melee"></span>',
-            'ranged': '<span class="icon-ranged"></span>',
-            'indirect': '<span class="icon-indirect"></span>',
-            'shield': '<span class="icon-shield"></span>',
-            'resource': '<span class="icon-resource"></span>',
-            'special': '<span class="icon-special"></span>',
-            'unique': '<span class="icon-unique"></span>',
-            'AW': '<span class="icon-set-AW"></span>',
-            'SoR': '<span class="icon-set-SoR"></span>',
-            'EaW': '<span class="icon-set-EaW"></span>',
-            'TPG': '<span class="icon-set-TPG"></span>',
-            'LEG': '<span class="icon-set-LEG"></span>',
-            'RIV': '<span class="icon-set-RIV"></span>',
-            'WotF': '<span class="icon-set-WotF"></span>',
-            'AtG': '<span class="icon-set-AtG"></span>',
-            'CON': '<span class="icon-set-CON"></span>'
-        };
-        
-        _.forEach(icons, function(span, key) {
-            str = str.replace(new RegExp("\\["+key+"\\]", "g"), span);
-        });
+		if(!text) {
+			return new Handlebars.SafeString('<p></p>');
+		}
+        var str = text;
+		
+		// Look for fixed game icons
+		str = str.replace(new RegExp("\\[(blank|discard|disrupt|focus|melee|ranged|indirect|shield|resource|special|unique)\\]", "g"), '<span class="icon-$1"></span>');
+		
+		// Automatically look for remaining icons as set icons
+		str = str.replace(new RegExp("\\[([A-Za-z]*)\\]", "g"), '<span class="icon-set-$1"></span>');
+		
         str = str.split("\n").join('</p><p>');
         return new Handlebars.SafeString('<p>'+str+'</p>');
     });

@@ -315,6 +315,34 @@ deck.get_character_points = function get_character_points() {
 		}
 	}
 
+	//if Luke Skywalker - Seeking The Path (TR #2A)
+	if(deck.is_included('13002A')) {
+		var teamup = ['Obi-Wan Kenobi','Yoda'];
+		var characters = deck.get_character_row_data().filter(card => teamup.includes(card.name)).length;
+		points -= characters;
+	}
+
+	//if Closing In (TR #6A)
+	if(deck.is_included('13006A')) {
+		//every bounty-hunter cost 1 point less
+		var bh = deck.get_character_row_data().filter(card => _.map(card.subtypes, 'code').includes('bounty-hunter')).length;
+		points -= bh;
+	}
+
+	//if Rescue Han Solo (TR #7A)
+	if(deck.is_included('13007A')) {
+		var teamup = ['Chewbacca','Lando Calrissian','Leia Organa','Luke Skywalker'];
+		var characters = deck.get_character_row_data().filter(card => teamup.includes(card.name)).length;
+		points -= characters;
+	}
+
+	//if Rescue The Princess (EC #44B)
+	if(deck.is_included('701044B')) {
+		var teamup = ['Chewbacca','Han Solo','Luke Skywalker','Obi-Wan Kenobi'];
+		var characters = deck.get_character_row_data().filter(card => teamup.includes(card.name)).length;
+		points -= characters;
+	}
+
 	return points;
 }
 

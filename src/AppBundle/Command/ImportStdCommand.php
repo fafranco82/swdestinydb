@@ -603,6 +603,7 @@ class ImportStdCommand extends ContainerAwareCommand
 			$this->importCardDieSides($entity, $data);
 
 			$this->setReprintOf($entity, $data);
+			$this->setParallelDie($entity, $data);
 		}
 
 		// special case for StarterPack
@@ -697,10 +698,28 @@ class ImportStdCommand extends ContainerAwareCommand
 				$reprintOfCard = $this->em->getRepository("AppBundle:Card")->findOneBy(['code' => $data['reprint_of']]);
 
 			if(!$reprintOfCard)
-				throw new \Exception('Card ['.$card->getName().'] is marked as reprint of a card that doen\'t exists: '.$data["reprint_of"]);
+				throw new \Exception('Card ['.$card->getName().'] is marked as reprint of a card that doesn\'t exists: '.$data["reprint_of"]);
 
 			$card->setReprintOf($reprintOfCard);
 			$reprintOfCard->addReprint($card);
+		}
+	}
+	
+	protected function setParallelDie(Card $card, $data)
+	{
+		if(array_key_exists("parallel_die", $data))
+		{
+			$parallelDiceOfCard = NULL;
+			if(array_key_exists($data["parallel_die"], $this->tempCardMap))
+				$parallelDiceOfCard = $this->tempCardMap[$data["parallel_die"]];
+			else
+				$parallelDiceOfCard = $this->em->getRepository("AppBundle:Card")->findOneBy(['code' => $data['parallel_die']]);
+
+			if(!$parallelDiceOfCard)
+				throw new \Exception('Card ['.$card->getName().'] is marked as having parallel die a card that doesn\'t exists: '.$data["parallel_die"]);
+
+			$card->setParallelDie($parallelDiceOfCard);
+			$parallelDiceOfCard->addParallelDie($card);
 		}
 	}
 	

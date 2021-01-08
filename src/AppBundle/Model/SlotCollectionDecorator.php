@@ -5,6 +5,7 @@ namespace AppBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Format;
 use AppBundle\Entity\Deckslot;
+use AppBundle\Entity\Decklistslot;
 
 /**
  * Decorator for a collection of SlotInterface 
@@ -214,7 +215,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			if($slot->getCard()->getType()->getCode() === 'character') {
 				if($slot->getCard()->getIsUnique()) {
 					$characterRow[] = $slot;
-				} else if($slot instanceof Deckslot && $slot->getDices()) {
+				} else if(($slot instanceof Deckslot || $slot instanceof Decklistslot) && $slot->getDices()) {
 					foreach(explode(",", $slot->getDices()) as $i) {
 						$slot->setDice($i);
 						$slot->setQuantity(1);
@@ -253,7 +254,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 			}
 
 			$inc = 0;
-			if($slot instanceof Deckslot && $slot->getDices()) {
+			if(($slot instanceof Deckslot || $slot instanceof Decklistslot) && $slot->getDices()) {
 				
 				foreach(explode(",", $slot->getDices()) as $i) {
 					$pointValues = preg_split('/\//', $formatPoints);
@@ -272,59 +273,42 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 
 			$points += $inc;
 		};
-
+		
 		//if Clone Commander Cody (AtG #73)
-		if($this->isSlotIncluded("08073"))
-		{
-			//every Clone Trooper (LEG #38) cost 1 point less
-			foreach($this->getCharacterDeck()->getSlots() as $slot)
-			{
-				if($slot->getCard()->getCode()=="05038") {
-					$points -=  $slot->getQuantity();
-				}
-			}
+		if($this->isSlotIncluded("08073")) {
+			$points += $this->removeOneForOtherCharacterCodes(array('05038'), '08073');
 		}
 
 		//if General Grievous - Droid Armies Commander (CONV #21)
-		if($this->isSlotIncluded("09021"))
-		{
-			//every droid cost 1 point less
-			foreach($this->getCharacterDeck()->getSlots() as $slot)
-			{
-				foreach($slot->getCard()->getSubtypes() as $subtype)
-				{
-					if($subtype->getCode() == 'droid')
-					{
-						$points -= $slot->getQuantity();
-						break;
-					}
-				}
-			}
+		if($this->isSlotIncluded('09021')) {
+			$points += $this->removeOneForOtherCharacterSubtype('droid', '09021');
 		}
 
 		//if Kanan Jarrus - Jedi Exile (CONV #55)
-		if($this->isSlotIncluded("12055"))
-		{
-			//reduce cost if there is other spectre
-			$otherSpectre = false;
-			foreach($this->getCharacterDeck()->getSlots() as $slot)
-			{
-				if($slot->getCard()->getCode() !== '12005') {
-					foreach($slot->getCard()->getSubtypes() as $subtype)
-					{
-						if($subtype->getCode() == 'spectre')
-						{
-							$otherSpectre = true;
-							break;
-						}
-					}
-				}
-			}
-			if($otherSpectre) {
-				$points -= 1;
-			}
+		if($this->isSlotIncluded("12055")) {
+			$points += $this->removeOneForOtherCharacterSubtype('spectre', '12055', false);
 		}
 
+		//if Luke Skywalker - Seeking The Path (TR #2A)
+		if($this->isSlotIncluded("13002A")) {
+			$points += $this->removeOneForOtherCharacterNames(array('Obi-Wan Kenobi','Yoda'), '13002A');
+		}
+		
+		//if Closing In (TR #6A)
+		if($this->isSlotIncluded("13006A")) {
+			$points += $this->removeOneForOtherCharacterSubtype('bounty-hunter', '13006A');
+		}
+		
+		//if Rescue Han Solo (TR #7A)
+		if($this->isSlotIncluded("13007A")) {
+			$points += $this->removeOneForOtherCharacterNames(array('Chewbacca','Lando Calrissian','Leia Organa','Luke Skywalker'), '13007A');
+		}
+
+		//if Rescue The Princess (EC #44B)
+		if($this->isSlotIncluded("701044B")) {
+			$points += $this->removeOneForOtherCharacterNames(array('Chewbacca','Han Solo','Luke Skywalker','Obi-Wan Kenobi'), '701044B');
+		}
+		
 		return $points;
 	}
 
@@ -351,37 +335,13 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		};
 
 		//if Director Krennic - Death Star Mastermind (CM #21)
-		if($this->isSlotIncluded("12021"))
-		{
-			//every death star plot cost 1 point less
-			foreach($this->getPlotDeck()->getSlots() as $slot)
-			{
-				foreach($slot->getCard()->getSubtypes() as $subtype)
-				{
-					if($subtype->getCode() == 'death-star')
-					{
-						$points -= $slot->getQuantity();
-						break;
-					}
-				}
-			}
+		if($this->isSlotIncluded("12021")) {
+			$points += $this->removeOneForPlotSubtype('death-star');
 		}
 
 		//if Luke Skywalker - Red Five (CM #56)
-		if($this->isSlotIncluded("12056"))
-		{
-			//every death star plot cost 1 point less
-			foreach($this->getPlotDeck()->getSlots() as $slot)
-			{
-				foreach($slot->getCard()->getSubtypes() as $subtype)
-				{
-					if($subtype->getCode() == 'death-star')
-					{
-						$points -= $slot->getQuantity();
-						break;
-					}
-				}
-			}
+		if($this->isSlotIncluded("12056")) {
+			$points += $this->removeOneForPlotSubtype('death-star');
 		}
 
 		return $points;
@@ -424,7 +384,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 	{
 		$arr = array ();
 		foreach ( $this->slots as $slot ) {
-			if($slot instanceof Deckslot) {
+			if($slot instanceof Deckslot || $slot instanceof Decklistslot) {
 				$arr [$slot->getCard()->getCode()] = array(
 					"quantity" => $slot->getQuantity(),
 					"dice" => $slot->getDice(),
@@ -441,4 +401,57 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
 		return $arr;
 	}
 	
+	/** New methods for managing cards handlind point values **/
+
+	protected function removeOneForOtherCharacterSubtype($subtype, $currentCard, $forEachOne = true) {
+		return $this->removeOneForOtherSubtype($this->getCharacterDeck(), $subtype, $currentCard, $forEachOne);
+	}
+	
+	protected function removeOneForPlotSubtype($subtype) {
+		return $this->removeOneForOtherSubtype($this->getPlotDeck(), $subtype, '', false);
+	}
+	
+	protected function removeOneForOtherSubtype($deck, $subtype, $currentCard, $forEachOne = true) {
+		return $this->removeOneForFiltered($deck, $currentCard, $forEachOne, 
+			function($card) use ($subtype) { 
+				foreach ($card->getSubtypes() as $subtypeObject) {
+					if($subtypeObject->getCode() == $subtype) {
+						return true;
+					}
+				}
+				return false; 
+			}
+		);
+	}
+	
+	protected function removeOneForOtherCharacterCodes($characters, $currentCard, $forEachOne = true) {
+		return $this->removeOneForFiltered($this->getCharacterDeck(), $currentCard, $forEachOne, 
+			function($card) use ($characters) { return in_array($card->getCode(), $characters); }
+		);
+	}
+	
+	protected function removeOneForOtherCharacterNames($characters, $currentCard, $forEachOne = true) {
+		return $this->removeOneForFiltered($this->getCharacterDeck(), $currentCard, $forEachOne, 
+			function($card) use ($characters) { return in_array($card->getName(), $characters); }
+		);
+	}
+	
+	protected function removeOneForFiltered($deck, $cardCode, $forEachOne, $filter) {
+		$points = 0;
+		foreach($deck->getSlots() as $slot) {
+			// Do not apply on self
+			if($slot->getCard()->getCode() == $cardCode) {
+				break;
+			}
+			if(call_user_func($filter, $slot->getCard())) {
+				if($forEachOne) {
+					$points -= $slot->getQuantity();
+				} else {
+					return -1;
+				}
+			}
+		}
+		return $points;
+	}
+
 }

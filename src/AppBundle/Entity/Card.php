@@ -989,4 +989,73 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     {
         return $this->reprintOf;
     }
+	
+	/**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parallelDiceOf;
+
+    /**
+     * @var \AppBundle\Entity\Card
+     */
+    private $parallelDie;
+
+
+    /**
+     * Add reprint
+     *
+     * @param \AppBundle\Entity\Card $reprint
+     *
+     * @return Card
+     */
+    public function addParallelDie(\AppBundle\Entity\Card $parallelDie)
+    {
+        $this->parallelDiceOf[] = $parallelDie;
+
+        return $this;
+    }
+
+    /**
+     * Remove reprint
+     *
+     * @param \AppBundle\Entity\Card $reprint
+     */
+    public function removeParallelDie(\AppBundle\Entity\Card $parallelDie)
+    {
+        $this->parallelDiceOf->removeElement($parallelDie);
+    }
+
+    /**
+     * Get reprints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParallelDiceOf()
+    {
+        return $this->parallelDiceOf;
+    }
+
+    /**
+     * Set parallelDiceOf
+     *
+     * @param \AppBundle\Entity\Card $parallelDie
+     *
+     * @return Card
+     */
+    public function setParallelDie(\AppBundle\Entity\Card $parallelDie = null)
+    {
+        $this->parallelDie = $parallelDie;
+
+        return $this;
+    }
+
+    /**
+     * Get parallelDie
+     *
+     * @return \AppBundle\Entity\Card
+     */
+    public function getParallelDie()
+    {
+        return $this->parallelDie;
+    }
 }
