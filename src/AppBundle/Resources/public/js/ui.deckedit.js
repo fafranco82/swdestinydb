@@ -687,11 +687,13 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
-		cb(app.data.cards.find({name: regexp}));
-		/* 
-		Do not hide reprinted cards, displays them all if needed
-		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
-		*/
+		var cards = app.data.cards.find({name: regexp });
+		// Take the "show unusable cards" option onto account
+		// As there are far more news cards than before
+		if (!Config['show-unusable']) {
+			cards = cards.filter(card => app.deck.can_include_card(card));
+		}
+		cb(cards);
 	}
 
 	$('#filter-text').typeahead({
