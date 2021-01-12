@@ -407,19 +407,18 @@ ui.refresh_row = function refresh_row(card_code) {
 		var card = app.data.cards.findById(card_code);
 		var quantity = card.indeck.cards;
 		var dice = card.indeck.dice;
-
-		// rows[card_code] is the card row of our card
-		// for each "quantity switch" on that row
-		for(var i=0; i < card.maxqty.cards; i++) {
-			row.find('input[name="qty-' + i + '-' + card_code + '"]').each(function(i, element) {
-				// if that switch is NOT the one with the new quantity, uncheck it
-				// else, check it
-				if($(element).val() != quantity) {
-					$(element).prop('checked', false).closest('label').removeClass('active');
-				} else {
-					$(element).prop('checked', true).closest('label').addClass('active');
-				}
-			});
+		var dices = card.indeck.dices;
+		
+		if(quantity > 0 && dices) {
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card_code + '-' + i +'"]').prop('checked', false).closest('label').removeClass('active');
+			}
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card_code + '-' + i +'"][value="'+ dices[i] +'"]').prop('checked', true).closest('label').addClass('active');
+			}
+		} else {
+			row.find('input[name="list-qty-' + card_code +'"]').prop('checked', false).closest('label').removeClass('active');
+			row.find('input[name="list-qty-' + card_code +'"][value="'+ quantity +'"]').prop('checked', true).closest('label').addClass('active');
 		}
 	});
 }
@@ -617,14 +616,19 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 
 		row.find('[data-toggle="tooltip"]').tooltip();
 
-		for(var i=0; i < card.maxqty.cards; i++) {
-			row.find('input[name="qty-' + i + '-' + card.code + '"]').each(function(i, element) {
-				if($(element).val() == card.indeck.cards) {
-					$(element).prop('checked', true).closest('label').addClass('active');
-				} else {
-					$(element).prop('checked', false).closest('label').removeClass('active');
-				}
-			});
+		var quantity = card.indeck.cards;
+		var dices = card.indeck.dices;
+		
+		if(quantity > 0 && dices) {
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card.code + '-' + i +'"]').prop('checked', false).closest('label').removeClass('active');
+			}
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card.code + '-' + i +'"][value="'+ dices[i] +'"]').prop('checked', true).closest('label').addClass('active');
+			}
+		} else {
+			row.find('input[name="list-qty-' + card.code +'"]').prop('checked', false).closest('label').removeClass('active');
+			row.find('input[name="list-qty-' + card.code +'"][value="'+ quantity +'"]').prop('checked', true).closest('label').addClass('active');
 		}
 
 		if (unusable) {
