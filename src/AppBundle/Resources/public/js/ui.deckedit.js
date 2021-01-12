@@ -30,7 +30,6 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		'show-unusable': false,
 		'show-only-deck': false,
 		'show-only-owned': true,
-		'display-column': 1,
 		'show-suggestions': 0,
 		'buttons-behavior': 'cumulative'
 	}, Config || {});
@@ -52,7 +51,7 @@ ui.write_config_to_storage = function write_config_to_storage() {
  */
 ui.init_config_buttons = function init_config_buttons() {
 	// radio
-	['display-column', 'core-set', 'show-suggestions', 'buttons-behavior'].forEach(function (radio) {
+	['core-set', 'show-suggestions', 'buttons-behavior'].forEach(function (radio) {
 		$('input[name='+radio+'][value='+Config[radio]+']').prop('checked', true);
 	});
 	// checkbox
@@ -317,10 +316,6 @@ ui.on_config_change = function on_config_change(event) {
 			ui.set_max_qty();
 			ui.reset_list();
 			break;
-		case 'display-column':
-			ui.update_list_template();
-			ui.refresh_list();
-			break;
 		case 'show-suggestions':
 			ui.toggle_suggestions();
 			ui.refresh_list();
@@ -547,7 +542,7 @@ ui.get_filters = function get_filters() {
  * @memberOf ui
  */
 ui.update_list_template = function update_list_template() {
-	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-'+Config['display-column']+'columns'];
+	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-1columns'];
 }
 
 var OptionsTemplate = Handlebars.templates['card_modal-options'];
@@ -620,7 +615,7 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 	});
 	if(SortKey !== 'name') orderBy['name'] = 1;
 	var cards = app.data.cards.find(query, {'$orderBy': orderBy});
-	var divs = CardDivs[ Config['display-column'] - 1 ];
+	var divs = CardDivs[0];
 
 	cards.forEach(function (card) {
 		if (Config['show-only-deck'] && !card.indeck.cards) return;
@@ -648,10 +643,6 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 
 		if (unusable) {
 			row.find('label').addClass("disabled").find('input[type=radio]').prop("disabled", true);
-		}
-
-		if (Config['display-column'] > 1 && (counter % Config['display-column'] === 0)) {
-			container = $('<div class="row"></div>').appendTo($('#collection-grid'));
 		}
 
 		container.append(row);
