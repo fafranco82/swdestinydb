@@ -28,8 +28,6 @@
 	<i class="fa fa-spinner fa-spin fa-5x"></i>
 </div>
 
-{% include 'AppBundle:Builder:table-suggestions.html.twig' %}
-
 <form method="POST" action="{{ path('deck_save') }}" id="save_form" role="form">
 	<input type="hidden" id="deck-save-id" name="id" value="{{ deck.id }}">
 	<input type="hidden" id="deck-save-as-copy" name="copy" value="0">

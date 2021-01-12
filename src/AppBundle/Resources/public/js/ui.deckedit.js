@@ -30,7 +30,6 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		'show-unusable': false,
 		'show-only-deck': false,
 		'show-only-owned': true,
-		'show-suggestions': 0,
 		'buttons-behavior': 'cumulative'
 	}, Config || {});
 }
@@ -51,7 +50,7 @@ ui.write_config_to_storage = function write_config_to_storage() {
  */
 ui.init_config_buttons = function init_config_buttons() {
 	// radio
-	['core-set', 'show-suggestions', 'buttons-behavior'].forEach(function (radio) {
+	['core-set', 'buttons-behavior'].forEach(function (radio) {
 		$('input[name='+radio+'][value='+Config[radio]+']').prop('checked', true);
 	});
 	// checkbox
@@ -316,21 +315,8 @@ ui.on_config_change = function on_config_change(event) {
 			ui.set_max_qty();
 			ui.reset_list();
 			break;
-		case 'show-suggestions':
-			ui.toggle_suggestions();
-			ui.refresh_list();
-			break;
 		default:
 			ui.refresh_list();
-	}
-}
-
-ui.toggle_suggestions = function toggle_suggestions() {
-	if(Config['show-suggestions'] == 0) {
-		$('#table-suggestions').hide();
-	}
-	else {
-		$('#table-suggestions').show();
 	}
 }
 
@@ -657,7 +643,6 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 ui.on_deck_modified = function on_deck_modified() {
 	ui.refresh_deck();
 	ui.refresh_list();
-	app.suggestions && app.suggestions.compute();
 }
 
 
@@ -733,7 +718,6 @@ ui.on_dom_loaded = function on_dom_loaded() {
 	ui.init_config_buttons();
 	ui.init_filter_help();
 	ui.update_sort_caret();
-	ui.toggle_suggestions();
 	ui.setup_event_handlers();
 	app.textcomplete && app.textcomplete.setup('#description');
 	app.markdown && app.markdown.setup('#description', '#description-preview')
