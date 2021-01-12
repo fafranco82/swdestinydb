@@ -480,15 +480,7 @@ class CardsData
             $cardinfo['imagesrc'] = null;
         }
 
-		// look for another card with the same name to set the label
-		/*$homonyms = $this->doctrine->getRepository('AppBundle:Card')->findBy(['name' => $card->getName()]);
-		if(count($homonyms) > 1) {
-			$cardinfo['label'] = $card->getName() . ' (' . $card->getSet()->getCode() . ')';
-		} else {
-			$cardinfo['label'] = $card->getName();
-		}*/
-
-		$cardinfo['label'] = $card->getName();
+		$cardinfo['label'] = '<span class="icon-set-'.$card->getSet()->getCode().'"></span> '.$card->getName();
 		if($card->getSubtitle())
 			$cardinfo['label'] .= ' - ' . $card->getSubtitle();
 
