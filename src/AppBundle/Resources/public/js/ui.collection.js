@@ -297,6 +297,31 @@ ui.on_submit_form = function on_submit_form(event) {
 			ui.on_quantity_change(code, otherColl, otherQty);
 	}
  }
+ 
+ /**
+  * sets up event handlers ; dataloaded not fired yet
+  * @memberOf ui
+  */
+  ui.on_all_spin = function on_all_spin(event) {
+ 	event.stopPropagation();
+
+	var inc = $(this).text()=='+' ? 1 : -1;
+	$('.card-container').each(function(index, element) {
+		var row = $(element);
+		var code = row.data('code');
+		
+		var qty = parseInt(row.find('[data-spin=cards]').find('span.value').text(), 10) + inc;
+		if(qty >= 0)
+			ui.on_quantity_change(code, 'cards', qty);
+			
+		//if cards and dice linked, update the other coll
+		if(Config['link-cards-dice']) {
+			var qty = parseInt(row.find('[data-spin=dice]').find('span.value').text(), 10) + inc;
+			if(qty >= 0)
+				ui.on_quantity_change(code, 'dice', qty);
+		}
+	})
+  }
 
 /**
  * sets up event handlers ; dataloaded not fired yet
@@ -400,6 +425,7 @@ ui.setup_event_handlers = function setup_event_handlers() {
 	$('#btn-save').on('click', ui.on_submit_form);
 
 	$('#collection').on('click', 'button.btn-spin', ui.on_button_spin);
+	$('#collection').on('click', 'button.btn-all-spin', ui.on_all_spin);
 
 	$('#filter-text').on('input', ui.on_input_smartfilter);
 	$('#config-options').on('change', 'input', ui.on_config_change);
