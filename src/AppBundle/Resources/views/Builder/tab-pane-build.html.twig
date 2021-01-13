@@ -16,26 +16,6 @@
 			    <li><a href="#"><label><input type="checkbox" name="show-unusable"> {{ 'decks.edit.build.options.show.unusable' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="checkbox" name="show-only-deck"> {{ 'decks.edit.build.options.show.onlyused' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="checkbox" name="show-only-owned"> {{ 'decks.edit.build.options.show.onlyowned' | trans }}</label></a></li>
-				{% for i in 1..3 %}
-				<li>
-					<a href="#">
-						<label>
-							<input type="radio" name="display-column" value="{{i}}">
-							{% transchoice i with {'%cols%': i} %}decks.edit.build.options.display{% endtranschoice %}
-						</label>
-					</a>
-				</li>
-				{% endfor %}
-				{% for i in [0, 3, 10] %}
-				<li>
-					<a href="#">
-						<label>
-							<input type="radio" name="show-suggestions" value="{{i}}">
-							{% transchoice i with {'%count%': i} %}decks.edit.build.options.suggestions{% endtranschoice %}
-						</label>
-					</a>
-				</li>
-				{% endfor %}
 				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="cumulative"> {{ 'decks.edit.build.options.filter_button.cumulative' | trans }}</label></a></li>
 				<li><a href="#"><label><input type="radio" name="buttons-behavior" value="exclusive"> {{ 'decks.edit.build.options.filter_button.exclusive' | trans }}</label></a></li>
 			</ul>

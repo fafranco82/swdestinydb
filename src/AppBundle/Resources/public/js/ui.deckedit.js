@@ -30,8 +30,6 @@ ui.read_config_from_storage = function read_config_from_storage() {
 		'show-unusable': false,
 		'show-only-deck': false,
 		'show-only-owned': true,
-		'display-column': 1,
-		'show-suggestions': 0,
 		'buttons-behavior': 'cumulative'
 	}, Config || {});
 }
@@ -52,7 +50,7 @@ ui.write_config_to_storage = function write_config_to_storage() {
  */
 ui.init_config_buttons = function init_config_buttons() {
 	// radio
-	['display-column', 'core-set', 'show-suggestions', 'buttons-behavior'].forEach(function (radio) {
+	['core-set', 'buttons-behavior'].forEach(function (radio) {
 		$('input[name='+radio+'][value='+Config[radio]+']').prop('checked', true);
 	});
 	// checkbox
@@ -317,25 +315,8 @@ ui.on_config_change = function on_config_change(event) {
 			ui.set_max_qty();
 			ui.reset_list();
 			break;
-		case 'display-column':
-			ui.update_list_template();
-			ui.refresh_list();
-			break;
-		case 'show-suggestions':
-			ui.toggle_suggestions();
-			ui.refresh_list();
-			break;
 		default:
 			ui.refresh_list();
-	}
-}
-
-ui.toggle_suggestions = function toggle_suggestions() {
-	if(Config['show-suggestions'] == 0) {
-		$('#table-suggestions').hide();
-	}
-	else {
-		$('#table-suggestions').show();
 	}
 }
 
@@ -426,19 +407,18 @@ ui.refresh_row = function refresh_row(card_code) {
 		var card = app.data.cards.findById(card_code);
 		var quantity = card.indeck.cards;
 		var dice = card.indeck.dice;
-
-		// rows[card_code] is the card row of our card
-		// for each "quantity switch" on that row
-		for(var i=0; i < card.maxqty.cards; i++) {
-			row.find('input[name="qty-' + i + '-' + card_code + '"]').each(function(i, element) {
-				// if that switch is NOT the one with the new quantity, uncheck it
-				// else, check it
-				if($(element).val() != quantity) {
-					$(element).prop('checked', false).closest('label').removeClass('active');
-				} else {
-					$(element).prop('checked', true).closest('label').addClass('active');
-				}
-			});
+		var dices = card.indeck.dices;
+		
+		if(quantity > 0 && dices) {
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card_code + '-' + i +'"]').prop('checked', false).closest('label').removeClass('active');
+			}
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card_code + '-' + i +'"][value="'+ dices[i] +'"]').prop('checked', true).closest('label').addClass('active');
+			}
+		} else {
+			row.find('input[name="list-qty-' + card_code +'"]').prop('checked', false).closest('label').removeClass('active');
+			row.find('input[name="list-qty-' + card_code +'"][value="'+ quantity +'"]').prop('checked', true).closest('label').addClass('active');
 		}
 	});
 }
@@ -547,7 +527,7 @@ ui.get_filters = function get_filters() {
  * @memberOf ui
  */
 ui.update_list_template = function update_list_template() {
-	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-'+Config['display-column']+'columns'];
+	DisplayColumnsTpl = Handlebars.templates['ui_deckedit-display-1columns'];
 }
 
 var OptionsTemplate = Handlebars.templates['card_modal-options'];
@@ -620,7 +600,7 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 	});
 	if(SortKey !== 'name') orderBy['name'] = 1;
 	var cards = app.data.cards.find(query, {'$orderBy': orderBy});
-	var divs = CardDivs[ Config['display-column'] - 1 ];
+	var divs = CardDivs[0];
 
 	cards.forEach(function (card) {
 		if (Config['show-only-deck'] && !card.indeck.cards) return;
@@ -636,22 +616,23 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 
 		row.find('[data-toggle="tooltip"]').tooltip();
 
-		for(var i=0; i < card.maxqty.cards; i++) {
-			row.find('input[name="qty-' + i + '-' + card.code + '"]').each(function(i, element) {
-				if($(element).val() == card.indeck.cards) {
-					$(element).prop('checked', true).closest('label').addClass('active');
-				} else {
-					$(element).prop('checked', false).closest('label').removeClass('active');
-				}
-			});
+		var quantity = card.indeck.cards;
+		var dices = card.indeck.dices;
+		
+		if(quantity > 0 && dices) {
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card.code + '-' + i +'"]').prop('checked', false).closest('label').removeClass('active');
+			}
+			for(var i=0; i < dices.length; i++) {
+				row.find('input[name="list-qty-' + card.code + '-' + i +'"][value="'+ dices[i] +'"]').prop('checked', true).closest('label').addClass('active');
+			}
+		} else {
+			row.find('input[name="list-qty-' + card.code +'"]').prop('checked', false).closest('label').removeClass('active');
+			row.find('input[name="list-qty-' + card.code +'"][value="'+ quantity +'"]').prop('checked', true).closest('label').addClass('active');
 		}
 
 		if (unusable) {
 			row.find('label').addClass("disabled").find('input[type=radio]').prop("disabled", true);
-		}
-
-		if (Config['display-column'] > 1 && (counter % Config['display-column'] === 0)) {
-			container = $('<div class="row"></div>').appendTo($('#collection-grid'));
 		}
 
 		container.append(row);
@@ -666,7 +647,6 @@ ui.refresh_list = _.debounce(function refresh_list(refresh) {
 ui.on_deck_modified = function on_deck_modified() {
 	ui.refresh_deck();
 	ui.refresh_list();
-	app.suggestions && app.suggestions.compute();
 }
 
 
@@ -687,11 +667,13 @@ ui.setup_typeahead = function setup_typeahead() {
 	function findMatches(q, cb) {
 		if(q.match(/^\w:/)) return;
 		var regexp = new RegExp(q, 'i');
-		cb(app.data.cards.find({name: regexp}));
-		/* 
-		Do not hide reprinted cards, displays them all if needed
-		cb(app.data.cards.find({name: regexp, reprint_of: {$exists: false}}));
-		*/
+		var cards = app.data.cards.find({name: regexp });
+		// Take the "show unusable cards" option onto account
+		// As there are far more news cards than before
+		if (!Config['show-unusable']) {
+			cards = cards.filter(card => app.deck.can_include_card(card));
+		}
+		cb(cards);
 	}
 
 	$('#filter-text').typeahead({
@@ -740,7 +722,6 @@ ui.on_dom_loaded = function on_dom_loaded() {
 	ui.init_config_buttons();
 	ui.init_filter_help();
 	ui.update_sort_caret();
-	ui.toggle_suggestions();
 	ui.setup_event_handlers();
 	app.textcomplete && app.textcomplete.setup('#description');
 	app.markdown && app.markdown.setup('#description', '#description-preview')
