@@ -52,6 +52,15 @@ $(function () {
 		}
 		card_modal.display_modal(event, element);
 	}}, '.card');
+	
+	$('[data-dismiss="modal"]').on({ click: function(event) {
+		// try to empty filter text if needed
+		setTimeout(function () {
+			let tmp = document.createElement("div");
+   			tmp.innerHTML = $('#filter-text').val();
+			$('#filter-text').typeahead('val', tmp.textContent || tmp.innerText || "").focus();
+		}, 100);
+	}});
 
 })
 
