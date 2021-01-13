@@ -274,13 +274,15 @@
             var symbolsDie = {};
             card.sides.forEach(function(side) {
                 var elems = /^([-+]?)([0-9X]*?)([-A-Z][a-zA-Z]?)(\d*?)$/.exec(side);
-                var symbol = elems[3];
-                var category = _.find(categories, {code: symbol});
-                category.faces = category.faces + amount;
-                if(elems[1]!='+') category.directFaces += amount;
-                if(!_.hasIn(symbolsDie, symbol)) {
-                    category.dice = category.dice + amount;
-                    symbolsDie[symbol] = 1;
+                if(elems && elems.length > 2) {
+	                var symbol = elems[3];
+	                var category = _.find(categories, {code: symbol});
+	                category.faces = category.faces + amount;
+	                if(elems[1]!='+') category.directFaces += amount;
+	                if(!_.hasIn(symbolsDie, symbol)) {
+	                    category.dice = category.dice + amount;
+	                    symbolsDie[symbol] = 1;
+	                }
                 }
             });
         });
