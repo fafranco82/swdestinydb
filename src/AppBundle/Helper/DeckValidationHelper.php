@@ -284,8 +284,13 @@ class DeckValidationHelper
 	public function findProblem(SlotCollectionProviderInterface $deck)
 	{
 		$deckSize = $this->getDeckSize($deck);
-		if($deckSize != 30) {
-			return 'incorrect_size';
+		if($deck->getSlots()->isSlotIncluded("15101")) {
+		  if($deckSize != 40) {
+			  return 'incorrect_size';
+		  }
+		  elseif($deckSize != 30) {
+			  return 'incorrect_size';
+		  }
 		}
 
 		if($deck->getSlots()->getCharacterPoints()+$deck->getSlots()->getPlotPoints() > 30) {
