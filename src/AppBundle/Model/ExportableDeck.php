@@ -50,7 +50,7 @@ class ExportableDeck
 		$slots = $this->getSlots();
 
 		$guidArray = [];
-		for ($i = 1; $i <= 40; $i++) {
+		for ($i = 1; $i <= 50; $i++) {
 			array_push($guidArray, bin2hex(openssl_random_pseudo_bytes(3)));
 		}
 

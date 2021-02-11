@@ -29,7 +29,8 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
                 'flavor',
                 'text',
                 'cost',
-                'subtitle'
+                'subtitle',
+                'flip_card'
         ];
     
         $externalFields = [
@@ -216,6 +217,11 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
      * @var \AppBundle\Entity\Rarity
      */
     private $rarity;
+
+    /**
+     * @var boolean
+     */
+    private $flipCard;
 
     /**
      * Constructor
@@ -1057,5 +1063,32 @@ class Card implements \Gedmo\Translatable\Translatable, \Serializable
     public function getParallelDie()
     {
         return $this->parallelDie;
+    }
+
+    /**
+     * Set flipCard
+     *
+     * @param boolean $flipCard
+     *
+     * @return Card
+     */
+    public function setFlipCard($flipCard)
+    {
+        if($flipCard == null)
+            $this->flipCard = FALSE;
+        else
+            $this->flipCard = $flipCard;
+
+        return $this;
+    }
+
+    /**
+     * Get flipCard
+     *
+     * @return boolean
+     */
+    public function getFlipCard()
+    {
+        return $this->flipCard;
     }
 }

@@ -526,8 +526,11 @@ deck.set_card_copies = function set_card_copies(card_code, nb_copies, dices) {
 				break;
 			}
 		case 'plot':
+			if(card_code == '15101')
+				break;
 			app.data.cards.update({
-				type_code: card.type_code
+				type_code: card.type_code,
+				code: { $ne: '15101' }
 			}, {
 				indeck: {
 					cards: 0,
@@ -643,8 +646,9 @@ deck.get_copies_and_deck_limit = function get_copies_and_deck_limit() {
  */
 deck.get_problem = function get_problem() {
 	
-	// at least 30 others cards
-	if(deck.get_draw_deck_size() != 30) {
+	// at least 30 others cards (40 if RM #101  plot is present)
+	var deckSize = deck.is_included('15101') ? 40 : 30;
+	if(deck.get_draw_deck_size() != deckSize) {
 		return 'incorrect_size';
 	}
 

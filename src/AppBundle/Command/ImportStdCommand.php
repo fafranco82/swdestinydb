@@ -442,7 +442,8 @@ class ImportStdCommand extends ContainerAwareCommand
 					'text',
 					'cost',
 					'subtitle',
-					'ttscardid'					
+					'ttscardid',
+					'flip_card'			
 			]);
 			if($card) {
 				$result[] = $card;
@@ -478,6 +479,7 @@ class ImportStdCommand extends ContainerAwareCommand
 	{
 		$metadata = $this->em->getClassMetadata($entityName);
 		$type = $metadata->fieldMappings[$fieldName]['type'];
+
 
 		// new value, by default what json gave us is the correct typed value
 		$newStringValue = $newTypedValue = $newJsonValue;
@@ -529,6 +531,8 @@ class ImportStdCommand extends ContainerAwareCommand
 		if(!key_exists($key, $data)) {
 			if($isMandatory && $this->isSideA($data)) {
 				throw new \Exception("Missing key [$key] in ".json_encode($data));
+			} else if ($key === "flip_card") {
+				$data[$key] = FALSE;
 			} else {
 				$data[$key] = null;
 			}

@@ -164,6 +164,10 @@ AppBundle\Entity\Card:
             type: boolean
             nullable: false
             column: has_errata
+        flipCard:
+            type: boolean
+            nullable: false
+            column: flip_card
     uniqueConstraints:
         card_code_idx:
             columns: [ code ]

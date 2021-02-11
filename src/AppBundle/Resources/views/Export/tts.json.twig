@@ -75,7 +75,7 @@
 					"SidewaysCard": true,
 					"CustomDeck": {
             {# All Battlefields use CustomDeck 18 #}
-            {% if battlefield.card.set.code == "TR" %}
+            {% if battlefield.card.set.code == "TR" or battlefield.card.flipCard %}
               "18": {
                "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LUHgyNXVudlY4OVE",
                "BackURL": "{{backUrl}}",
@@ -133,7 +133,7 @@
 					"SidewaysCard": false,
 					"CustomDeck": {
 						{# All Plots use CustomDeck 473 #}
-						{% if plot.card.set.code == "TR" %}
+						{% if plot.card.set.code == "TR"  or plot.card.flipCard %}
 						  "473": {
 					  		"FaceURL": "http://cloud-3.steamusercontent.com/ugc/910157197472506127/6038134EFC06C9B338C589EA58F3638B38B47AAF/",
   							"BackURL": "{{backUrl}}",
@@ -191,7 +191,7 @@
 			    "CardID": {{ slot.card.ttscardid }},
 			    "SidewaysCard": false,
 			    "CustomDeck": {
-	  		    {% if slot.card.set.code == "TR" %}
+	  		    {% if slot.card.set.code == "TR" or slot.card.flipCard %}
 	  		      "13": {
 	  		        "FaceURL": "http://drive.google.com/uc?id=0B0v-LHuAfe7LX3UxM0ctWVRyTmc",
 	  		        "BackURL": "{{backUrl}}",
