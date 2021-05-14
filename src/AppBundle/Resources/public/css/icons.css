@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'swdestiny';
-  src:  url('../fonts/swdestiny.eot?f1zsri');
-  src:  url('../fonts/swdestiny.eot?f1zsri#iefix') format('embedded-opentype'),
-    url('../fonts/swdestiny.ttf?f1zsri') format('truetype'),
-    url('../fonts/swdestiny.woff?f1zsri') format('woff'),
-    url('../fonts/swdestiny.svg?f1zsri#swdestiny') format('svg');
+  src:  url('../fonts/swdestiny.eot?3x5pgy');
+  src:  url('../fonts/swdestiny.eot?3x5pgy#iefix') format('embedded-opentype'),
+    url('../fonts/swdestiny.ttf?3x5pgy') format('truetype'),
+    url('../fonts/swdestiny.woff?3x5pgy') format('woff'),
+    url('../fonts/swdestiny.svg?3x5pgy#swdestiny') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -73,6 +73,12 @@
 .icon-set-EC:before {
   content: "\e91e";
 }
+.icon-set-PW:before {
+  content: "\e920";
+}
+.icon-set-HS:before {
+  content: "\e921";
+}
 .icon-collectors:before {
   content: "\e90c";
 }
@@ -135,7 +141,4 @@
 }
 .icon-die:before {
   content: "\e90a";
-}
-.icon-set-PW:before {
-  content: "\e920";
 }
