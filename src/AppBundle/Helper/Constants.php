@@ -7,7 +7,10 @@ class Constants
 	const KEYWORDS = [
 		'guardian',
 		'redeploy',
-		'ambush'
+		'ambush',
+		'detect',
+		'renew',
+		'piloting'
 	];
 
 	const ICONS = [
