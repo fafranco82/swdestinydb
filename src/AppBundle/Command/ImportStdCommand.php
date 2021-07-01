@@ -31,7 +31,7 @@ class ImportStdCommand extends ContainerAwareCommand
 	{
 		$this
 		->setName('app:import:std')
-		->setDescription('Import cards data file in json format from a copy of https://github.com/Alsciende/thronesdb-json-data')
+		->setDescription('Import cards data file in json format from a copy of https://github.com/fafranco82/swdestinydb-json-data')
 		->addArgument(
 				'path',
 				InputArgument::REQUIRED,
@@ -159,8 +159,8 @@ class ImportStdCommand extends ContainerAwareCommand
 		// formats
 
 		$output->writeln("Importing Formats...");
-		$setsFileInfo = $this->getFileInfo($path, 'formats.json');
-		$imported = $this->importFormatsJsonFile($setsFileInfo);
+		$formatFileInfo = $this->getFileInfo($path, 'formats.json');
+		$imported = $this->importFormatsJsonFile($formatFileInfo);
 		$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
 		if(count($imported)) {
 			$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
@@ -190,7 +190,25 @@ class ImportStdCommand extends ContainerAwareCommand
 				
 		// third, cards
 		
-		$output->writeln("Importing Cards...");
+		$this->tempCardMap = [];
+		foreach ($this->em->getRepository('AppBundle:Set')->findAll() as $set) {
+			$name = $set->getName();
+			$code = $set->getCode();
+			$output->writeln("Importing cards from set $name...");
+			$fileinfo = $this->getFileInfo($path, "set/$code.json");
+			$imported = $this->importCardsJsonFile($fileinfo);
+			if(count($imported)) {
+				$question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+				if(!$helper->ask($input, $output, $question)) {
+					die();
+				}
+			}
+			$this->em->flush();
+		}
+		$this->loadCollection('Card');
+		$output->writeln("Done.");
+
+		/*
 		$fileSystemIterator = $this->getFileSystemIterator($path);
 		$this->tempCardMap = [];
 		foreach ($fileSystemIterator as $fileinfo) {
@@ -205,7 +223,7 @@ class ImportStdCommand extends ContainerAwareCommand
 		}
 		$this->loadCollection('Card');
 		$output->writeln("Done.");
-		
+		*/
 		$output->writeln("Importing Starter Packs...");
 		$starterPacksFileInfo = $this->getFileInfo($path, 'starterPacks.json');
 		$imported = $this->importStarterPacksJsonFile($starterPacksFileInfo);
@@ -216,6 +234,7 @@ class ImportStdCommand extends ContainerAwareCommand
 				die();
 			}
 		}
+
 		$this->em->flush();
 		$output->writeln("Done.");
 	}
