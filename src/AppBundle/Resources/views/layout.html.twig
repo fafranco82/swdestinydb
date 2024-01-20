@@ -74,13 +74,13 @@
 	                <li class="dropdown-submenu">
 	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">{{ projectName }}</span><span class="caret"></span></a>
 	                  <ul class="dropdown-menu">
-                      
+
                       {% if projectName == 'A Renewed Hope' %}
                         <li><a href="https://swdrenewedhope.com" target="_blank"><span class="fa fa-external-link fa-fw"></span> {{ projectName }}</a></li>
                       {% elseif projectName == 'The Coruscant Initiative' %}
                         <li><a href="https://www.coruscant-initiative.org"  target="_blank"><span class="fa fa-external-link fa-fw"></span> {{ projectName }}</a></li>
                       {% endif %}
-                      
+
 	              {% endif %}
 	              	    <li><a href="{{ line['url'] }}">{{ line['label'] | raw }}</a></li>
 	            {% endfor %}
@@ -103,7 +103,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-search"></span></a>
                 <div class="dropdown-menu">
                   <form action="{{ path('cards_find') }}" target="_blank">
-                    <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
+                    <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q" autocorrect="off" autocapitalize="off" spellcheck="false">
                   </form>
               </div>
             </li>
@@ -132,7 +132,7 @@
           </ul>
           <form class="navbar-form navbar-right visible-lg-block visible-xs-block external" action="{{ path('cards_find') }}" target="_blank">
             <div class="form-group">
-              <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q">
+              <input type="text" placeholder="{{ 'nav.cardsearch' | trans }}" class="form-control" name="q" autocorrect="off" autocapitalize="off" spellcheck="false">
             </div>
           </form>
         </div><!--/.navbar-collapse -->
@@ -178,7 +178,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/js/bootstrap-markdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.3.0/handlebars.runtime.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/async/2.5.0/async.min.js"></script>
-    {% javascripts 
+    {% javascripts
       '@AppBundle/Resources/public/js/bootstrap-markdown.es.js'
       '@AppBundle/Resources/public/js/handlebars-helpers.js' %}
         <script src="{{ asset_url }}"></script>
@@ -206,14 +206,14 @@
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		{% include 'AppBundle:Default:google-analytics.html.twig' %}
 	{% endif %}
-  
+
   {% javascripts filter="?jsqueeze" output="js/templates.js"
     '@AppBundle/Resources/public/hbs/*.handlebars'
     '@AppBundle/Resources/public/js/register-partials.js'
     %}
     <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
-  
+
   {% javascripts filter="?jsqueeze" output="js/app.js"
     '@AppBundle/Resources/public/js/bootstrap.js'
 	'@AppBundle/Resources/public/js/bootstrap-essentials.js'
