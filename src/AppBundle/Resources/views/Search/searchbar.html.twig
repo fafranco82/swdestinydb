@@ -2,7 +2,7 @@
 	<form method="GET" action="{{ path('cards_find') }}" id="search-form" role="form">
 		<div class="col-sm-4">
 		<div class="input-group" style="margin-bottom:.5em">
-		  <input type="text" class="form-control smart-filter-help" size="30" name="q" tabindex="1" value="{{ q|default('') }}">
+		  <input type="text" class="form-control smart-filter-help" size="30" name="q" tabindex="1" value="{{ q|default('') }}" autocorrect="off" autocapitalize="off" spellcheck="false">
 		  <span class="input-group-btn">
 		      <button class="btn btn-primary" type="submit">{{ 'search.label' | trans}}</button>
 		  </span>
